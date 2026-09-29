@@ -3776,6 +3776,11 @@
             document.getElementById('import-file-input').click();
         }
 
+        // Nightly backups (backups branch) store the database as-is: locations keyed by ID and a `settings` object
+        function isDatabaseBackup(data) {
+            return isPlainObject(data.settings) || (isPlainObject(data.locations) && !Array.isArray(data.locations));
+        }
+
         function handleImportJSON(event) {
             const file = event.target.files[0];
             event.target.value = '';
@@ -3787,8 +3792,14 @@
                     const imported = JSON.parse(e.target.result);
                     if (isPlainObject(imported)) {
                         if (Sync.mode === 'cloud' && !confirm('This replaces the shared inventory, locations and timers for EVERYONE. Continue?')) return;
-                        appState = { ...appState, ...imported };
-                        if (!isPlainObject(imported.stock)) appState.stock = null; // older backup: its inventory goes to the Main Stash
+                        if (isDatabaseBackup(imported)) {
+                            // Nightly backup file: a copy of the database itself
+                            applySharedTree(imported);
+                        } else {
+                            // Export State file from this page
+                            appState = { ...appState, ...imported };
+                            if (!isPlainObject(imported.stock)) appState.stock = null; // older backup: its inventory goes to the Main Stash
+                        }
                         normalizeState();
                         syncWebhookInput();
                         saveState();

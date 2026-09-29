@@ -1,0 +1,24 @@
+name: Nightly database backup
+
+on:
+  schedule:
+    - cron: '17 7 * * *'   # every day at 07:17 UTC
+  workflow_dispatch:        # "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Back up the database to the backups branch
+        env:
+          BACKUP_REMOTE: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        run: ./scripts/backup-database.sh
