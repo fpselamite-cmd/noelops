@@ -205,6 +205,22 @@
 
         .dx-modal { position: fixed; inset: 0; z-index: 200; background: rgba(2, 5, 3, 0.75); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px; }
         .dx-modal.hidden { display: none; }
+        .dt-preview { background: #313338; border-radius: 12px; padding: 14px 16px; color: #dbdee1; font-size: 14px; }
+        .dt-msg { display: flex; gap: 14px; }
+        .dt-av { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+        .dt-av-default { background: #5865f2; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .dt-head { display: flex; align-items: center; gap: 6px; }
+        .dt-name { color: #f2f3f5; font-weight: 600; }
+        .dt-app { background: #5865f2; color: #fff; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+        .dt-time { color: #949ba4; font-size: 12px; }
+        .dt-embed { margin-top: 4px; background: #2b2d31; border-left: 4px solid #229d44; border-radius: 4px; padding: 10px 14px 12px 12px; max-width: 460px; }
+        .dt-title { color: #f2f3f5; font-weight: 700; margin-bottom: 4px; word-break: break-word; }
+        .dt-desc { line-height: 1.35; margin-bottom: 8px; white-space: pre-wrap; word-break: break-word; }
+        .dt-fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 12px; margin-bottom: 8px; }
+        .dt-fields .full { grid-column: 1 / -1; }
+        .dt-fields .fn { color: #f2f3f5; font-weight: 700; }
+        .dt-foot { font-size: 12px; color: #b5bac1; }
+        .dt-ts { background: rgba(88, 101, 242, 0.25); border-radius: 3px; padding: 0 2px; }
         .dx-modal-solid { background: rgba(2, 5, 3, 0.96); }
         .dx-check { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; border-radius: 10px; background: rgba(6, 10, 7, 0.7); border: 1px solid rgba(74, 222, 128, 0.12); cursor: pointer; }
         .dx-check input { width: auto !important; margin-top: 2px; accent-color: #22c55e; }
@@ -657,6 +673,56 @@
 
                 </div>
 
+                <!-- Discord harvest message editor -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                    <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center"><i class="fa-brands fa-discord text-lg"></i></div>
+                        <div>
+                            <h2 class="font-bold text-white text-base">Discord Message</h2>
+                            <p class="text-xs text-slate-400">Change what the harvest alert says. Click a tag to insert it where your cursor is; it's filled in with that harvest's details.</p>
+                        </div>
+                    </div>
+                    <form id="dt-form" onsubmit="saveDiscordTemplate(event)" oninput="renderDiscordPreview()" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="block text-xs font-semibold text-slate-300">Bot name
+                                    <input id="dt-username" type="text" maxlength="80" onfocus="lastDiscordField=this.id" class="dx-input mt-1 w-full">
+                                </label>
+                                <label class="block text-xs font-semibold text-slate-300">Bot picture <span class="font-normal text-slate-500">(image link, optional)</span>
+                                    <input id="dt-avatar" type="url" placeholder="https://…/NoelOpsLogo.png" class="dx-input mt-1 w-full">
+                                </label>
+                            </div>
+                            <label class="block text-xs font-semibold text-slate-300">Title
+                                <input id="dt-title" type="text" maxlength="256" onfocus="lastDiscordField=this.id" class="dx-input mt-1 w-full">
+                            </label>
+                            <label class="block text-xs font-semibold text-slate-300">Message
+                                <textarea id="dt-description" rows="3" maxlength="2000" onfocus="lastDiscordField=this.id" class="dx-input mt-1 w-full"></textarea>
+                            </label>
+                            <div class="text-xs font-semibold text-slate-300">Tags <div id="dt-tags" class="mt-1"></div></div>
+                            <label class="block text-xs font-semibold text-slate-300">Footer
+                                <input id="dt-footer" type="text" maxlength="200" onfocus="lastDiscordField=this.id" class="dx-input mt-1 w-full">
+                            </label>
+                            <div class="flex flex-wrap items-center gap-4">
+                                <label class="flex items-center gap-2 text-xs font-semibold text-slate-300">Side color
+                                    <input id="dt-color" type="color" class="h-8 w-12 rounded border border-weed-900 bg-transparent cursor-pointer">
+                                </label>
+                                <label class="flex items-center gap-2 text-xs font-semibold text-slate-300">
+                                    <input id="dt-fields" type="checkbox" class="accent-green-500"> Show Postal / Pots / Ready At details
+                                </label>
+                            </div>
+                            <div class="flex flex-wrap gap-2 pt-1">
+                                <button type="submit" class="px-4 py-2 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs shadow-md"><i class="fa-solid fa-floppy-disk mr-1"></i> Save Message</button>
+                                <button type="button" onclick="sendTestHarvestMessage()" class="px-4 py-2 rounded-xl bg-darkbg border border-indigo-800 text-indigo-300 hover:bg-indigo-950 text-xs"><i class="fa-solid fa-paper-plane mr-1"></i> Send Test</button>
+                                <button type="button" onclick="resetDiscordTemplate()" class="px-3 py-2 rounded-xl bg-red-950/60 border border-red-800 text-red-300 text-xs"><i class="fa-solid fa-rotate-left mr-1"></i> Reset to Default</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs font-semibold text-slate-300 mb-2">Preview <span class="font-normal text-slate-500">(with sample values)</span></div>
+                            <div id="dt-preview" class="dt-preview"></div>
+                        </div>
+                    </form>
+                </div>
+
                 <!-- Crew & Permissions -->
                 <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-weed-900 pb-3">
@@ -939,6 +1005,7 @@
             selectedInvBucket: 'all', // Inventory tab: 'all' or a bucket key
             locations: null, // null = never loaded, seeded with DEFAULT_LOCATIONS
             webhookUrl: '',
+            discordTemplate: null, // Harvest message wording (shared); null = defaults
             badgeImages: {}, // Per-browser strain logo overrides (data URLs), keyed by strain id
             selectedPlannerLocId: '7078', // Selected planner location tab
             masterLogo: null, // Per-browser header logo override; null = repo default
@@ -991,6 +1058,7 @@
             if (!isPlainObject(appState.badgeImages)) appState.badgeImages = {};
             if (typeof appState.masterLogo !== 'string' || !appState.masterLogo) appState.masterLogo = null;
             if (typeof appState.webhookUrl !== 'string') appState.webhookUrl = '';
+            appState.discordTemplate = normalizeDiscordTemplate(appState.discordTemplate);
             if (typeof appState.crewName !== 'string') appState.crewName = '';
             if (!Array.isArray(appState.activity)) appState.activity = [];
             appState.activity = appState.activity
@@ -1142,7 +1210,7 @@
             return {
                 stock: JSON.parse(JSON.stringify(state.stock || {})),
                 locations,
-                settings: { webhookUrl: state.webhookUrl || '' },
+                settings: { webhookUrl: state.webhookUrl || '', discordTemplate: normalizeDiscordTemplate(state.discordTemplate) },
                 activity,
                 history: JSON.parse(JSON.stringify(state.history || {})),
                 crew: JSON.parse(JSON.stringify(state.crew || {}))
@@ -1159,6 +1227,7 @@
                 .filter(isPlainObject)
                 .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
             appState.webhookUrl = isPlainObject(tree.settings) && typeof tree.settings.webhookUrl === 'string' ? tree.settings.webhookUrl : '';
+            appState.discordTemplate = isPlainObject(tree.settings) ? tree.settings.discordTemplate : null;
             appState.activity = Object.entries(isPlainObject(tree.activity) ? tree.activity : {})
                 .filter(([, record]) => isPlainObject(record))
                 .map(([id, record]) => ({ ...record, id }));
@@ -2044,6 +2113,7 @@
             renderPresence();
             updateWebhookPill();
             renderCrewPanel();
+            renderDiscordEditor();
             const badge = document.getElementById('active-timers-badge');
             if (badge) badge.innerText = visibleLocations().length;
             const postalList = document.getElementById('timers-postal-list');
@@ -3143,24 +3213,189 @@
             });
         }
 
+        // ---- Discord harvest message (editable in Admin → Discord Message) ----
+        const DEFAULT_DISCORD_TEMPLATE = {
+            username: 'NoelOps Operations Command',
+            avatarUrl: '',
+            title: '🌿 Harvest Ready: Postal {postal}',
+            description: '{alias} has finished its {duration} cycle and is ready to harvest.',
+            footer: 'NoelOps FiveM RP Operations',
+            color: '#229d44',
+            showFields: true
+        };
+        const DISCORD_TAGS = [
+            ['{postal}', 'Postal ID', '7078'],
+            ['{alias}', 'Location alias', 'Leon VW'],
+            ['{duration}', 'Timer length', '36h'],
+            ['{pots}', 'Pot count', '10'],
+            ['{readyAt}', 'Ready time (UTC)', 'Tue, 29 Sep 2026 14:14:00 GMT'],
+            ['{readyLocal}', "Ready time in each reader's own time zone", '<t:…:f>']
+        ];
+
+        function normalizeDiscordTemplate(template) {
+            const t = isPlainObject(template) ? template : {};
+            const text = (key, max) => (typeof t[key] === 'string' ? t[key] : DEFAULT_DISCORD_TEMPLATE[key]).slice(0, max);
+            return {
+                username: text('username', 80),
+                avatarUrl: text('avatarUrl', 500),
+                title: text('title', 256),
+                description: text('description', 2000),
+                footer: text('footer', 200),
+                color: /^#[0-9a-f]{6}$/i.test(t.color) ? t.color.toLowerCase() : DEFAULT_DISCORD_TEMPLATE.color,
+                showFields: typeof t.showFields === 'boolean' ? t.showFields : DEFAULT_DISCORD_TEMPLATE.showFields
+            };
+        }
+
+        function harvestTagValues(loc) {
+            const readyMs = loc.startTime + durationSecs(loc) * 1000;
+            return {
+                '{postal}': String(loc.id),
+                '{alias}': loc.alias || 'Grow Operation',
+                '{duration}': formatDuration(loc.durationHours),
+                '{pots}': String(loc.pots || 0),
+                '{readyAt}': new Date(readyMs).toUTCString(),
+                '{readyLocal}': `<t:${Math.floor(readyMs / 1000)}:f>`
+            };
+        }
+
+        function fillTags(text, values) {
+            return String(text || '').replace(/\{[a-zA-Z]+\}/g, tag => (tag in values ? values[tag] : tag));
+        }
+
+        function buildHarvestPayload(loc, template = appState.discordTemplate) {
+            const t = normalizeDiscordTemplate(template);
+            const values = harvestTagValues(loc);
+            const embed = {
+                title: fillTags(t.title, values) || undefined,
+                description: fillTags(t.description, values) || undefined,
+                color: parseInt(t.color.slice(1), 16)
+            };
+            if (t.showFields) {
+                embed.fields = [
+                    { name: 'Postal', value: values['{postal}'], inline: true },
+                    { name: 'Pots', value: values['{pots}'], inline: true },
+                    { name: 'Ready At', value: values['{readyAt}'], inline: false }
+                ];
+            }
+            if (t.footer) embed.footer = { text: fillTags(t.footer, values) };
+            const payload = { username: fillTags(t.username, values) || DEFAULT_DISCORD_TEMPLATE.username, embeds: [embed] };
+            if (t.avatarUrl) payload.avatar_url = t.avatarUrl;
+            return payload;
+        }
+
         function sendHarvestWebhook(loc) {
             if (!appState.webhookUrl) return;
-            postDiscordWebhook({
-                username: "NoelOps Operations Command",
-                embeds: [{
-                    title: `🌿 Harvest Ready: Postal ${loc.id}`,
-                    description: `${loc.alias || 'Grow Operation'} has finished its ${formatDuration(loc.durationHours)} cycle and is ready to harvest.`,
-                    color: 2268484,
-                    fields: [
-                        { name: "Postal", value: String(loc.id), inline: true },
-                        { name: "Pots", value: String(loc.pots || 0), inline: true },
-                        { name: "Ready At", value: new Date(loc.startTime + durationSecs(loc) * 1000).toUTCString(), inline: false }
-                    ],
-                    footer: { text: "NoelOps FiveM RP Operations" }
-                }]
-            }).then(ok => {
+            postDiscordWebhook(buildHarvestPayload(loc)).then(ok => {
                 if (!ok) showAlert(`Harvest webhook for Postal ${loc.id} failed to send.`, 'warning');
             });
+        }
+
+        // ---- Admin editor ----
+        function discordFormTemplate() {
+            const v = id => document.getElementById(id);
+            return normalizeDiscordTemplate({
+                username: v('dt-username').value.trim(),
+                avatarUrl: v('dt-avatar').value.trim(),
+                title: v('dt-title').value,
+                description: v('dt-description').value,
+                footer: v('dt-footer').value,
+                color: v('dt-color').value,
+                showFields: v('dt-fields').checked
+            });
+        }
+
+        // Sample location for the preview and the test message: the first one this person can see
+        function sampleHarvestLocation() {
+            const loc = visibleLocations()[0] || { id: '7078', alias: 'Leon VW', durationHours: 36, pots: 10 };
+            return { ...loc, startTime: syncNow() - durationSecs(loc) * 1000 };
+        }
+
+        function renderDiscordEditor(force, template) {
+            const form = document.getElementById('dt-form');
+            if (!form) return;
+            // Don't overwrite what the admin is typing when someone else's change arrives
+            if (!force && form.contains(document.activeElement)) return;
+            const t = normalizeDiscordTemplate(template || appState.discordTemplate);
+            document.getElementById('dt-username').value = t.username;
+            document.getElementById('dt-avatar').value = t.avatarUrl;
+            document.getElementById('dt-title').value = t.title;
+            document.getElementById('dt-description').value = t.description;
+            document.getElementById('dt-footer').value = t.footer;
+            document.getElementById('dt-color').value = t.color;
+            document.getElementById('dt-fields').checked = t.showFields;
+            document.getElementById('dt-tags').innerHTML = DISCORD_TAGS.map(([tag, label]) =>
+                `<button type="button" class="dx-pill" title="${escapeHtml(label)}" onclick="insertDiscordTag(${jsArg(tag)})">${escapeHtml(tag)}</button>`).join('');
+            renderDiscordPreview();
+        }
+
+        let lastDiscordField = 'dt-description';
+
+        function insertDiscordTag(tag) {
+            const field = document.getElementById(lastDiscordField);
+            const start = field.selectionStart ?? field.value.length;
+            const end = field.selectionEnd ?? field.value.length;
+            field.value = field.value.slice(0, start) + tag + field.value.slice(end);
+            field.focus();
+            field.setSelectionRange(start + tag.length, start + tag.length);
+            renderDiscordPreview();
+        }
+
+        // Discord-style mock of the message with sample values
+        function renderDiscordPreview() {
+            const box = document.getElementById('dt-preview');
+            if (!box) return;
+            const payload = buildHarvestPayload(sampleHarvestLocation(), discordFormTemplate());
+            const e = payload.embeds[0];
+            // Show {readyLocal} the way Discord displays it
+            const shown = text => escapeHtml(text || '').replace(/&lt;t:(\d+):f&gt;/g, (m, secs) =>
+                `<span class="dt-ts">${escapeHtml(new Date(secs * 1000).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }))}</span>`);
+            const warn = /discord/i.test(payload.username) ? `<p class="text-[11px] text-amber-300 mt-2">Discord won't accept a bot name containing "discord".</p>` : '';
+            box.innerHTML = `
+                <div class="dt-msg">
+                    ${payload.avatar_url
+                        ? `<img src="${escapeHtml(payload.avatar_url)}" alt="" class="dt-av" onerror="this.replaceWith(Object.assign(document.createElement('span'), { className: 'dt-av dt-av-default', textContent: '🌿' }))">`
+                        : `<span class="dt-av dt-av-default">🌿</span>`}
+                    <div class="min-w-0 flex-1">
+                        <div class="dt-head"><span class="dt-name">${escapeHtml(payload.username)}</span><span class="dt-app">APP</span><span class="dt-time">Today</span></div>
+                        <div class="dt-embed" style="border-left-color:${escapeHtml(discordFormTemplate().color)}">
+                            ${e.title ? `<div class="dt-title">${shown(e.title)}</div>` : ''}
+                            ${e.description ? `<div class="dt-desc">${shown(e.description)}</div>` : ''}
+                            ${e.fields ? `<div class="dt-fields">${e.fields.map(f => `<div class="${f.inline ? '' : 'full'}"><div class="fn">${escapeHtml(f.name)}</div><div>${shown(f.value)}</div></div>`).join('')}</div>` : ''}
+                            ${e.footer ? `<div class="dt-foot">${shown(e.footer.text)}</div>` : ''}
+                        </div>
+                    </div>
+                </div>${warn}`;
+        }
+
+        function saveDiscordTemplate(event) {
+            event.preventDefault();
+            if (!allowed('admin')) return;
+            const template = discordFormTemplate();
+            if (/discord/i.test(template.username)) return showAlert('Discord won\'t accept a bot name containing "discord". Pick another name.', 'warning');
+            if (template.avatarUrl && !/^https:\/\/\S+$/i.test(template.avatarUrl)) return showAlert('The avatar must be an https:// image link.', 'warning');
+            if (!template.title.trim() && !template.description.trim()) return showAlert('Add a title or a message.', 'warning');
+            writeShared({ 'settings/discordTemplate': template });
+            document.activeElement && document.activeElement.blur();
+            logActivity({ pre: 'updated the', hi: 'Discord harvest message' });
+            showAlert('Discord harvest message saved.', 'success');
+        }
+
+        function resetDiscordTemplate() {
+            if (!allowed('admin')) return;
+            if (!confirm('Reset the Discord harvest message to the original wording?')) return;
+            writeShared({ 'settings/discordTemplate': { ...DEFAULT_DISCORD_TEMPLATE } });
+            if (document.activeElement) document.activeElement.blur();
+            renderDiscordEditor(true, DEFAULT_DISCORD_TEMPLATE);
+            showAlert('Discord harvest message reset to the original.', 'info');
+        }
+
+        function sendTestHarvestMessage() {
+            if (!allowed('admin')) return;
+            if (!appState.webhookUrl) return showAlert('Save a Discord Webhook URL first.', 'warning');
+            const payload = buildHarvestPayload(sampleHarvestLocation(), discordFormTemplate());
+            postDiscordWebhook(payload).then(ok => showAlert(ok
+                ? 'Test harvest message sent to Discord (using what\'s in the editor, even if not saved).'
+                : 'Discord didn\'t accept the message. Check the webhook URL and the avatar link.', ok ? 'success' : 'warning'));
         }
 
         // Resolves to true on success; never rejects

@@ -59,6 +59,21 @@ The first browser to connect uploads its current data to the empty database, so 
 
 The rules above let anyone who has the site's link read and change the data, and the Firebase config in `index.html` is public. That's fine for a private crew tool, but anyone who finds the link could edit or wipe the numbers, so use **Admin → Export State** now and then to keep a backup.
 
+## Discord harvest message
+
+**Admin → Discord Message** changes what the harvest alert says: bot name and picture, title, message, footer, side color, and whether the Postal / Pots / Ready At details are shown. Tags are filled in per harvest:
+
+| Tag | Becomes |
+|---|---|
+| `{postal}` | Postal ID |
+| `{alias}` | Location alias |
+| `{duration}` | Timer length, e.g. `36h` |
+| `{pots}` | Pot count |
+| `{readyAt}` | Ready time in UTC |
+| `{readyLocal}` | Ready time shown in each reader's own time zone |
+
+The preview updates as you type, **Send Test** posts what's in the editor to your channel (even before saving), and **Reset to Default** brings back the original wording.
+
 ## Crew & permissions
 
 In **Admin → Crew & Permissions** you can add crew members, each with a name and a 4-8 digit PIN.
