@@ -19,4 +19,4 @@ Each strain loads its logo from this folder. The file name must match the strain
 - A missing file shows a "No Logo" placeholder instead of breaking the page.
 - Uploading a logo in **Admin → Strain Logos** overrides it in that browser only; the reset button goes back to the file here.
 
-The header logo is `leonopslogo.png` in the repo root.
+The header logo is `NoelOpsLogo.png` in the repo root.
