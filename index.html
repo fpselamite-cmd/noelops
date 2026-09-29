@@ -108,14 +108,125 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #22c55e;
         }
+        /* ---------- Dashboard redesign ---------- */
+        body {
+            background-image:
+                radial-gradient(900px 500px at 12% -10%, rgba(34, 197, 94, 0.16), transparent 60%),
+                radial-gradient(700px 500px at 100% 110%, rgba(16, 185, 129, 0.10), transparent 60%),
+                radial-gradient(rgba(74, 222, 128, 0.06) 1px, transparent 1px);
+            background-size: auto, auto, 22px 22px;
+        }
+        .dx-glass { background: rgba(16, 26, 19, 0.72); border: 1px solid rgba(74, 222, 128, 0.14); border-radius: 18px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04); }
+        .dx-muted { color: #8a9a8e; }
+        .dx-mono { font-family: 'JetBrains Mono', monospace; }
+        .dx-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 22px; align-items: start; }
+        .dx-sec { display: flex; align-items: center; justify-content: space-between; margin: 0 0 12px; }
+        .dx-sec h2 { font-size: 15px; font-weight: 700; letter-spacing: 0.02em; color: #e6efe8; }
+        .dx-sec button { font-size: 12px; color: #4ade80; font-weight: 600; }
+        .dx-sec button:hover { color: #86efac; }
+        .dx-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(74, 222, 128, 0.28); background: rgba(5, 46, 22, 0.6); color: #4ade80; font-weight: 800; letter-spacing: 0.05em; }
+        .dx-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.18), 0 0 10px #4ade80; }
+        .dx-av { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; border: 2px solid #0b140e; flex-shrink: 0; }
+        .dx-stack { display: flex; cursor: pointer; }
+        .dx-stack .dx-av { margin-left: -8px; }
+        .dx-stack .dx-av:first-child { margin-left: 0; }
+
+        .dx-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+        .dx-stat { padding: 18px 18px 14px; position: relative; overflow: hidden; min-height: 116px; }
+        .dx-stat .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #8a9a8e; font-weight: 700; }
+        .dx-stat .num { font-size: 34px; font-weight: 800; margin: 6px 0 2px; line-height: 1.15; }
+        .dx-stat .delta { font-size: 12px; font-weight: 700; color: #4ade80; }
+        .dx-stat svg { position: absolute; right: 14px; top: 48px; opacity: 0.9; }
+        .dx-stat.hot { border-color: rgba(74, 222, 128, 0.45); box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.25), 0 0 40px rgba(34, 197, 94, 0.18); }
+        .dx-stat.hot .num { color: #4ade80; text-shadow: 0 0 18px rgba(74, 222, 128, 0.55); }
+
+        .dx-timers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+        .dx-tm { padding: 18px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .dx-tm .top { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; gap: 8px; }
+        .dx-tm .pid { font-size: 20px; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-tm .alias { font-size: 12px; color: #8a9a8e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+        .dx-ring { position: relative; width: 140px; height: 140px; margin: 8px 0 12px; }
+        .dx-ring .c { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .dx-ring .t { font-size: 20px; font-weight: 800; }
+        .dx-ring .s { font-size: 10px; color: #8a9a8e; letter-spacing: 0.1em; margin-top: 2px; text-transform: uppercase; }
+        .dx-ring-fg { transition: stroke-dashoffset 0.8s ease; }
+        .dx-tm.ready { border-color: rgba(74, 222, 128, 0.55); box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.3), 0 0 50px rgba(34, 197, 94, 0.28); }
+        .dx-tm.ready .dx-ring { border-radius: 50%; box-shadow: 0 0 34px rgba(74, 222, 128, 0.35), inset 0 0 24px rgba(74, 222, 128, 0.25); }
+        .dx-tm.ready .t { color: #4ade80; text-shadow: 0 0 16px rgba(74, 222, 128, 0.8); }
+        .dx-tm .foot { font-size: 11px; color: #8a9a8e; min-height: 34px; display: flex; align-items: center; }
+        .dx-status { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 99px; letter-spacing: 0.06em; white-space: nowrap; }
+        .dx-status.run { background: rgba(251, 191, 36, 0.12); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.35); }
+        .dx-status.rdy { background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.6); }
+        .dx-status.idle { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.25); }
+        .dx-btn { border-radius: 10px; padding: 8px 14px; font-weight: 800; font-size: 12px; width: 100%; transition: all 0.2s; }
+        .dx-btn-g { background: linear-gradient(180deg, #22c55e, #16a34a); color: #fff; box-shadow: 0 6px 18px rgba(34, 197, 94, 0.35); }
+        .dx-btn-g:hover { filter: brightness(1.1); }
+        .dx-btn-o { background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.28); }
+        .dx-btn-o:hover { background: rgba(34, 197, 94, 0.22); }
+
+        .dx-strains { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+        .dx-sc { padding: 14px 14px 12px; display: flex; flex-direction: column; align-items: center; position: relative; transition: border-color 0.4s, box-shadow 0.4s; }
+        .dx-sc .logo { width: 118px; height: 118px; margin-bottom: 8px; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.6)); }
+        .dx-sc .name { font-weight: 800; font-size: 13px; text-align: center; }
+        .dx-sc .row { width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-top: 6px; gap: 6px; }
+        .dx-sc .row b { font-size: 13px; }
+        .dx-bar { width: 100%; height: 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.06); overflow: hidden; margin-top: 6px; }
+        .dx-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #16a34a, #4ade80); }
+        .dx-sc.flash { border-color: rgba(74, 222, 128, 0.7); box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.4), 0 0 36px rgba(34, 197, 94, 0.35); }
+        .dx-flashtag { position: absolute; top: 10px; left: 10px; right: 10px; width: max-content; max-width: calc(100% - 20px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 800; color: #04130a; background: #4ade80; padding: 2px 7px; border-radius: 99px; z-index: 2; }
+
+        .dx-panel { padding: 18px; margin-bottom: 22px; }
+        .dx-feed li { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(74, 222, 128, 0.08); font-size: 12.5px; line-height: 1.4; }
+        .dx-feed li:last-child { border: 0; }
+        .dx-feed .when { font-size: 11px; color: #8a9a8e; }
+        .dx-feed b { color: #f1f5f2; }
+        .dx-feed b.g, .dx-toast b.g { color: #4ade80; }
+        .dx-chart { display: flex; align-items: flex-end; gap: 10px; height: 130px; padding-top: 8px; }
+        .dx-chart > div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; font-size: 10px; color: #8a9a8e; height: 100%; }
+        .dx-chart span { width: 100%; border-radius: 6px 6px 2px 2px; background: linear-gradient(180deg, #4ade80, #166534); min-height: 3px; }
+        .dx-chart .today span { box-shadow: 0 0 16px rgba(74, 222, 128, 0.6); }
+        .dx-chart .today { color: #4ade80; font-weight: 700; }
+
+        .dx-toasts { position: fixed; right: 24px; bottom: 24px; z-index: 100; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; pointer-events: none; max-width: calc(100vw - 32px); }
+        .dx-toast { pointer-events: auto; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 14px; background: rgba(10, 20, 13, 0.94); border: 1px solid rgba(74, 222, 128, 0.45); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 197, 94, 0.2); font-size: 13px; color: #e6efe8; max-width: 420px; animation: dxToastIn 0.25s ease-out; transition: opacity 0.3s, transform 0.3s; }
+        .dx-toast.warning { border-color: rgba(251, 191, 36, 0.55); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.15); }
+        .dx-toast.info { border-color: rgba(129, 140, 248, 0.5); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); }
+        .dx-toast.out { opacity: 0; transform: translateY(8px); }
+        @keyframes dxToastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+        .dx-modal { position: fixed; inset: 0; z-index: 200; background: rgba(2, 5, 3, 0.75); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px; }
+        .dx-modal.hidden { display: none; }
+        .dx-modal-card { width: 100%; max-width: 380px; max-height: 100%; overflow-y: auto; padding: 28px; text-align: center; }
+        .dx-modal-card img { width: 160px; height: 96px; object-fit: cover; }
+        .dx-modal-card input { width: 100%; background: #060a07; border: 1px solid rgba(74, 222, 128, 0.28); border-radius: 12px; padding: 11px 14px; font-size: 15px; color: #e6efe8; text-align: center; outline: none; }
+        .dx-modal-card input:focus { border-color: #4ade80; box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15); }
+
+        @media (max-width: 1180px) {
+            .dx-layout { grid-template-columns: minmax(0, 1fr); }
+            .dx-strains { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        }
+        @media (max-width: 960px) {
+            .dx-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .dx-timers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .dx-strains { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+        @media (max-width: 640px) {
+            .dx-stat .num { font-size: 26px; }
+            .dx-stat svg { display: none; }
+            .dx-timers { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
+            .dx-tm { min-width: 220px; scroll-snap-align: start; }
+            .dx-strains { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .dx-sc .logo { width: 92px; height: 92px; }
+            .dx-toasts { right: 16px; bottom: 16px; }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between text-slate-100">
 
     <div>
         <header class="sticky top-0 z-50 glass-card border-b border-weed-900/60 bg-darkbg/90 backdrop-blur-md">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between h-20">
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20 gap-4">
                     
                     <!-- Master Logo & Branding -->
                     <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
@@ -129,17 +240,11 @@
                               <span class="relative inline-flex rounded-full h-3 w-3 bg-weed-500"></span>
                             </span>
                         </div>
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-2xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-weed-300 via-weed-400 to-emerald-400 font-mono">NOEL<span class="text-white">OPS</span></span>
-                                <span class="text-xs px-2 py-0.5 rounded bg-weed-950 text-weed-400 border border-weed-800 font-mono">v2.5</span>
-                            </div>
-                            <p class="text-xs text-slate-400 font-medium">Grow Operations Dashboard</p>
-                        </div>
+                        <div class="hidden xl:block text-[11px] font-extrabold tracking-[0.14em] text-slate-400">GROW OPS</div>
                     </div>
 
                     <!-- Navigation Links -->
-                    <nav class="hidden md:flex space-x-2 bg-darkcard/90 p-1.5 rounded-xl border border-weed-900/60">
+                    <nav class="hidden md:flex space-x-1 bg-darkcard/90 p-1.5 rounded-xl border border-weed-900/60 whitespace-nowrap">
                         <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-weed-600 text-white shadow-md shadow-weed-900/50">
                             <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
@@ -163,21 +268,17 @@
                         </button>
                     </nav>
 
-                    <!-- Status Indicator & Live Time -->
-                    <div class="hidden lg:flex items-center space-x-4">
-                        <div class="text-right">
-                            <div id="live-clock" class="text-xs font-mono font-bold text-weed-400">00:00:00 UTC</div>
-                            <div class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">Current Time</div>
+                    <!-- Who's online, sync status & live time -->
+                    <div class="hidden lg:flex items-center space-x-4 whitespace-nowrap">
+                        <div class="flex items-center space-x-2" onclick="openNameModal()" title="Who's online. Click to change your name.">
+                            <div id="presence-stack" class="dx-stack"></div>
+                            <span id="presence-count" class="text-xs text-slate-400 cursor-pointer"></span>
                         </div>
-                        <div class="h-8 w-[1px] bg-weed-900"></div>
                         <div id="sync-status-pill" class="flex items-center space-x-1.5 text-xs px-2.5 py-1 rounded-full border bg-slate-900 text-slate-400 border-slate-800" title="Shared data sync status">
                             <i class="fa-solid fa-tower-broadcast text-[10px]"></i>
                             <span id="sync-status-text">Local Only</span>
                         </div>
-                        <div id="webhook-status-pill" class="flex items-center space-x-1.5 text-xs px-2.5 py-1 rounded-full bg-amber-950/50 text-amber-400 border border-amber-800/60" title="Discord Webhook Status">
-                            <i class="fa-solid fa-circle-exclamation text-[10px]"></i>
-                            <span id="webhook-status-text">Webhook Unset</span>
-                        </div>
+                        <div id="live-clock" class="text-xs font-mono font-bold text-weed-400">00:00:00 UTC</div>
                     </div>
 
                     <!-- Mobile Navigation Hamburger -->
@@ -200,110 +301,31 @@
             </div>
         </header>
 
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            
-            <!-- Alert Banner Container -->
-            <div id="alert-container" class="mb-6 hidden"></div>
+        <main class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-            <section id="tab-dashboard" class="tab-content space-y-6">
-                
-                <!-- Live Grow Operations Ticker Bar (Top of Dashboard) -->
-                <div class="glass-card rounded-2xl p-4 border-weed-900/60 bg-gradient-to-r from-weed-950/60 via-darkcard to-weed-950/60">
-                    <div class="flex items-center justify-between mb-3 px-1">
-                        <div class="flex items-center space-x-2">
-                            <span class="relative flex h-2.5 w-2.5">
-                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-weed-400 opacity-75"></span>
-                              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-weed-500"></span>
-                            </span>
-                            <h2 class="text-xs font-bold uppercase tracking-wider text-weed-300">Live Grow Operations</h2>
+            <section id="tab-dashboard" class="tab-content">
+                <div class="dx-layout">
+                    <div class="min-w-0">
+                        <div id="dx-stats" class="dx-stats"></div>
+
+                        <div class="dx-sec"><h2>Grow Operations</h2><button onclick="switchTab('timers')">Manage timers →</button></div>
+                        <div id="dx-timers" class="dx-timers"></div>
+
+                        <div class="dx-sec"><h2>Strain Vault</h2><button onclick="switchTab('inventory')">Open vault →</button></div>
+                        <div id="dx-strains" class="dx-strains"></div>
+                    </div>
+
+                    <aside class="min-w-0">
+                        <div class="dx-glass dx-panel">
+                            <div class="dx-sec"><h2>Live Activity</h2><span class="dx-chip"><span class="dx-dot"></span>LIVE</span></div>
+                            <ul id="dx-feed" class="dx-feed"></ul>
                         </div>
-                        <button onclick="switchTab('timers')" class="text-[11px] text-weed-400 hover:text-weed-300 font-semibold flex items-center space-x-1">
-                            <span>Manage All Timers</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <!-- Horizontal Scroll Ticker Bar -->
-                    <div id="dashboard-timers-quicklook" class="flex space-x-4 overflow-x-auto pb-2 pt-1 scrollbar-thin scrollbar-thumb-weed-800">
-                        <!-- Dynamic timer ticker cards injected via JS -->
-                    </div>
+                        <div class="dx-glass dx-panel">
+                            <div class="dx-sec"><h2>Bricks this week</h2><span id="dx-week-total" class="dx-mono dx-muted text-xs"></span></div>
+                            <div id="dx-chart" class="dx-chart"></div>
+                        </div>
+                    </aside>
                 </div>
-
-                <!-- Hero Metrics Cards Banner -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    
-                    <!-- Stat Card 1 -->
-                    <div class="glass-card rounded-2xl p-5 relative overflow-hidden group">
-                        <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <i class="fa-solid fa-cubes text-7xl text-weed-400"></i>
-                        </div>
-                        <p class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">Total Bricks on Hand</p>
-                        <div class="flex items-baseline space-x-2">
-                            <span id="dash-total-bricks" class="text-3xl font-extrabold text-white font-mono">0</span>
-                            <span class="text-xs text-weed-400 font-medium">Ready Bricks</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-2">Packaged & ready for distribution</p>
-                    </div>
-
-                    <!-- Stat Card 2 -->
-                    <div class="glass-card rounded-2xl p-5 relative overflow-hidden group border-weed-500/30">
-                        <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <i class="fa-solid fa-calculator text-7xl text-weed-400"></i>
-                        </div>
-                        <p class="text-xs uppercase font-bold tracking-wider text-weed-400 mb-1">Potential Bricks</p>
-                        <div class="flex items-baseline space-x-2">
-                            <span id="dash-potential-bricks" class="text-3xl font-extrabold text-weed-400 font-mono neon-text-green">0</span>
-                            <span class="text-xs text-slate-400">Bricks</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-2"><i class="fa-solid fa-circle-info text-weed-500 mr-1"></i>From <span id="dash-total-trimmed">0</span> trimmed bud (750/brick)</p>
-                    </div>
-
-                    <!-- Stat Card 3 -->
-                    <div class="glass-card rounded-2xl p-5 relative overflow-hidden group">
-                        <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <i class="fa-solid fa-seedling text-7xl text-emerald-400"></i>
-                        </div>
-                        <p class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">Untrimmed Reserve</p>
-                        <div class="flex items-baseline space-x-2">
-                            <span id="dash-total-untrimmed" class="text-3xl font-extrabold text-slate-100 font-mono">0</span>
-                            <span class="text-xs text-slate-400">Units</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-2">Awaiting trimming process</p>
-                    </div>
-
-                    <!-- Stat Card 4 -->
-                    <div class="glass-card rounded-2xl p-5 relative overflow-hidden group border-coca-500/30">
-                        <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <i class="fa-solid fa-leaf text-7xl text-coca-400"></i>
-                        </div>
-                        <p class="text-xs uppercase font-bold tracking-wider text-coca-400 mb-1">Coca Leaves Stock</p>
-                        <div class="flex items-baseline space-x-2">
-                            <span id="dash-coca-count" class="text-3xl font-extrabold text-sky-200 font-mono">0</span>
-                            <span class="text-xs text-coca-400">Leaves</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-2">Secondary Op Inventory</p>
-                    </div>
-
-                </div>
-
-                <!-- 2x5 Grid for 10 Strain Vertical Cards -->
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-2">
-                            <i class="fa-solid fa-chart-simple text-weed-400"></i>
-                            <h2 class="text-lg font-bold tracking-wide text-white">Strain Vault Overview</h2>
-                        </div>
-                        <button onclick="switchTab('inventory')" class="text-xs text-weed-400 hover:text-weed-300 font-semibold flex items-center space-x-1">
-                            <span>Manage Strains Vault</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <div id="dashboard-strain-quicklook" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                        <!-- Populated dynamically via JS in 2x5 vertical cards format -->
-                    </div>
-                </div>
-
             </section>
 
             <section id="tab-inventory" class="tab-content hidden space-y-8">
@@ -697,6 +719,21 @@
         </div>
     </footer>
 
+    <!-- Corner notifications -->
+    <div id="toast-stack" class="dx-toasts" aria-live="polite"></div>
+
+    <!-- Crew name prompt (once per device) -->
+    <div id="name-modal" class="dx-modal hidden">
+        <form class="dx-glass dx-modal-card space-y-4" onsubmit="saveCrewName(event)">
+            <img src="NoelOpsLogo.png" alt="NoelOps" width="160" height="96" class="rounded-xl mx-auto border border-weed-800">
+            <h2 class="text-xl font-black text-white">Who's on shift?</h2>
+            <p class="text-xs text-slate-400">Your name shows in the live activity feed and in who's online. It's saved on this device.</p>
+            <input id="crew-name-input" type="text" maxlength="20" required autocomplete="nickname" placeholder="Your name">
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px">Let's go</button>
+            <button type="button" id="name-modal-cancel" onclick="closeNameModal()" class="hidden text-xs text-slate-400 hover:text-white">Cancel</button>
+        </form>
+    </div>
+
     <!-- Firebase config: kept in its own block so a pasting mistake here can't break the rest of the page.
          Paste only the { ... } object from the Firebase console, not its "const firebaseConfig =" line. -->
     <script>
@@ -752,16 +789,22 @@
             webhookUrl: '',
             badgeImages: {}, // Per-browser strain logo overrides (data URLs), keyed by strain id
             selectedPlannerLocId: '7078', // Selected planner location tab
-            masterLogo: null // Per-browser header logo override; null = repo default
+            masterLogo: null, // Per-browser header logo override; null = repo default
+            crewName: '', // This device's crew member name
+            activity: [], // Shared activity feed, newest first
+            history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
+            presence: [] // Who's online right now (live mode only, never saved)
         };
 
         function initApp() {
             loadState();
+            recordDailySnapshot();
             setAdminUnlocked(isAdminUnlocked());
             renderAll();
             startMainClock();
             setInterval(tickTimers, 1000);
             initSync();
+            if (!appState.crewName) openNameModal();
         }
 
         // Escape a value for safe insertion into innerHTML
@@ -802,6 +845,16 @@
             if (!isPlainObject(appState.badgeImages)) appState.badgeImages = {};
             if (typeof appState.masterLogo !== 'string' || !appState.masterLogo) appState.masterLogo = null;
             if (typeof appState.webhookUrl !== 'string') appState.webhookUrl = '';
+            if (typeof appState.crewName !== 'string') appState.crewName = '';
+            if (!Array.isArray(appState.activity)) appState.activity = [];
+            appState.activity = appState.activity
+                .filter(a => isPlainObject(a) && a.id && typeof a.who === 'string' && Number(a.ts) > 0)
+                .sort((a, b) => b.ts - a.ts);
+            if (!isPlainObject(appState.history)) appState.history = {};
+            Object.keys(appState.history).forEach(key => {
+                if (!/^\d{4}-\d{2}-\d{2}$/.test(key) || !isPlainObject(appState.history[key])) delete appState.history[key];
+            });
+            if (!Array.isArray(appState.presence)) appState.presence = [];
 
             if (!Array.isArray(appState.locations)) {
                 appState.locations = JSON.parse(JSON.stringify(DEFAULT_LOCATIONS));
@@ -891,11 +944,18 @@
                     order: Number.isFinite(loc.order) ? loc.order : idx
                 };
             });
+            const activity = {};
+            (state.activity || []).forEach(entry => {
+                const { id, ...record } = entry;
+                activity[id] = record;
+            });
             return {
                 inventory: JSON.parse(JSON.stringify(state.inventory || {})),
                 coca: { quantity: (state.coca && state.coca.quantity) || 0 },
                 locations,
-                settings: { webhookUrl: state.webhookUrl || '' }
+                settings: { webhookUrl: state.webhookUrl || '' },
+                activity,
+                history: JSON.parse(JSON.stringify(state.history || {}))
             };
         }
 
@@ -907,6 +967,11 @@
                 .filter(isPlainObject)
                 .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
             appState.webhookUrl = isPlainObject(tree.settings) && typeof tree.settings.webhookUrl === 'string' ? tree.settings.webhookUrl : '';
+            appState.activity = Object.entries(isPlainObject(tree.activity) ? tree.activity : {})
+                .filter(([, record]) => isPlainObject(record))
+                .map(([id, record]) => ({ ...record, id }));
+            appState.history = isPlainObject(tree.history) ? tree.history : {};
+            appState.presence = Object.values(isPlainObject(tree.presence) ? tree.presence : {}).filter(isPlainObject);
             normalizeState();
         }
 
@@ -935,6 +1000,7 @@
             const tree = buildSharedTree(appState);
             Object.entries(changes).forEach(([path, value]) => setPath(tree, path, value));
             applySharedTree(tree);
+            recordDailySnapshot();
             saveState();
             renderAll();
             return Promise.resolve();
@@ -966,6 +1032,193 @@
             loc.harvestAlertSent = true;
             saveState();
             return Promise.resolve(true);
+        }
+
+        // ---------------------------------------------------------------------
+        // Crew name, who's online, activity feed and daily history
+        // ---------------------------------------------------------------------
+        const CLIENT_ID = Math.random().toString(36).slice(2, 10); // this open page
+        const ACTIVITY_KEEP = 50;
+        const HISTORY_KEEP_DAYS = 30;
+        const SYSTEM_NAME = 'NoelOps';
+        let presenceRef = null;
+        let lastActivity = null; // lets rapid repeat presses (+100, +100...) merge into one feed entry
+        let activityFeedPrimed = false;
+
+        // UTC calendar day, `daysBack` days ago, as 'YYYY-MM-DD'
+        function dayKey(daysBack = 0) {
+            return new Date(syncNow() - daysBack * 86400000).toISOString().slice(0, 10);
+        }
+
+        function initials(name) {
+            const parts = String(name || '?').trim().split(/\s+/).filter(Boolean);
+            if (parts.length === 0) return '?';
+            return (parts.length > 1 ? parts[0][0] + parts[1][0] : parts[0][0]).toUpperCase();
+        }
+
+        const AVATAR_COLORS = [
+            ['#86efac', '#22c55e', '#04130a'], ['#fde68a', '#f59e0b', '#1a1203'], ['#a5b4fc', '#6366f1', '#ffffff'],
+            ['#f9a8d4', '#db2777', '#ffffff'], ['#67e8f9', '#0891b2', '#04121a'], ['#fdba74', '#ea580c', '#1a0c03']
+        ];
+
+        function avatarHtml(name) {
+            if (name === SYSTEM_NAME) {
+                return `<span class="dx-av" style="background:#052e16;color:#4ade80;border-color:#166534" title="NoelOps"><i class="fa-solid fa-cannabis"></i></span>`;
+            }
+            let hash = 0;
+            for (const ch of String(name)) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
+            const [from, to, text] = AVATAR_COLORS[hash % AVATAR_COLORS.length];
+            return `<span class="dx-av" style="background:linear-gradient(135deg,${from},${to});color:${text}" title="${escapeHtml(name)}">${escapeHtml(initials(name))}</span>`;
+        }
+
+        function openNameModal() {
+            const modal = document.getElementById('name-modal');
+            const input = document.getElementById('crew-name-input');
+            const cancel = document.getElementById('name-modal-cancel');
+            if (!modal || !input) return;
+            input.value = appState.crewName || '';
+            if (cancel) cancel.classList.toggle('hidden', !appState.crewName);
+            modal.classList.remove('hidden');
+            setTimeout(() => input.focus(), 50);
+        }
+
+        function closeNameModal() {
+            if (!appState.crewName) return; // a name is needed the first time
+            document.getElementById('name-modal').classList.add('hidden');
+        }
+
+        function saveCrewName(event) {
+            event.preventDefault();
+            const name = document.getElementById('crew-name-input').value.trim().replace(/\s+/g, ' ').slice(0, 20);
+            if (!name) return;
+            const isNew = !appState.crewName;
+            appState.crewName = name;
+            saveState();
+            document.getElementById('name-modal').classList.add('hidden');
+            registerPresence();
+            renderPresence();
+            showAlert(isNew ? `Welcome to the crew, ${name}!` : `You're now showing as ${name}.`, 'success');
+        }
+
+        // Live mode: this page appears under presence/ until it disconnects
+        function registerPresence() {
+            if (Sync.mode !== 'cloud' || !appState.crewName) return;
+            if (!presenceRef) presenceRef = Sync.root.child('presence').push();
+            presenceRef.onDisconnect().remove();
+            presenceRef.set({ name: appState.crewName, client: CLIENT_ID, since: timestampValue() })
+                .catch(err => console.error('Presence update failed:', err));
+        }
+
+        function renderPresence() {
+            const stack = document.getElementById('presence-stack');
+            const count = document.getElementById('presence-count');
+            if (!stack || !count) return;
+            const names = [];
+            if (appState.crewName) names.push(appState.crewName);
+            appState.presence.forEach(p => {
+                if (p.client !== CLIENT_ID && typeof p.name === 'string' && p.name && !names.includes(p.name)) names.push(p.name);
+            });
+            stack.innerHTML = names.slice(0, 4).map(avatarHtml).join('') +
+                (names.length > 4 ? `<span class="dx-av" style="background:#1b2a1e;color:#8a9a8e">+${names.length - 4}</span>` : '');
+            count.textContent = names.length === 0 ? 'Set your name' : `${names.length} online`;
+        }
+
+        function newActivityId() {
+            return Sync.mode === 'cloud'
+                ? Sync.root.child('activity').push().key
+                : `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+        }
+
+        // Add a line to the shared activity feed: "<who> <pre> <hi> <post>", with <hi> highlighted.
+        // With `merge`, repeat actions on the same thing within a minute update one line (+100, +100 → +200).
+        function logActivity(entry, merge) {
+            const now = syncNow();
+            let id, amount = null;
+            const canMerge = merge && lastActivity && lastActivity.key === merge.key && now - lastActivity.ts < 60000 &&
+                appState.activity.some(a => a.id === lastActivity.id);
+            if (canMerge) {
+                id = lastActivity.id;
+                amount = lastActivity.amount + merge.amount;
+            } else {
+                id = newActivityId();
+                if (merge) amount = merge.amount;
+            }
+
+            const changes = {};
+            if (merge && amount === 0) {
+                changes[`activity/${id}`] = null; // e.g. +100 then -100: nothing to report
+                lastActivity = null;
+            } else {
+                const text = merge ? merge.format(amount) : entry;
+                changes[`activity/${id}`] = {
+                    who: entry.who || appState.crewName || 'Someone',
+                    client: CLIENT_ID,
+                    pre: text.pre || '',
+                    hi: text.hi || '',
+                    post: text.post || '',
+                    strain: entry.strain || null,
+                    ts: timestampValue()
+                };
+                lastActivity = merge ? { key: merge.key, id, amount, ts: now } : null;
+            }
+
+            // Keep the feed from growing forever
+            const kept = appState.activity.filter(a => a.id !== id);
+            kept.slice(ACTIVITY_KEEP - 1).forEach(old => { changes[`activity/${old.id}`] = null; });
+            return writeShared(changes);
+        }
+
+        function signedAmount(amount) {
+            return `${amount > 0 ? '+' : '−'}${Math.abs(amount).toLocaleString()}`;
+        }
+
+        const FIELD_LABELS = { untrimmed: 'untrimmed', trimmed: 'trimmed', bricks: 'bricks' };
+
+        function fieldLabel(field, amount) {
+            return field === 'bricks' && Math.abs(amount) === 1 ? 'brick' : FIELD_LABELS[field];
+        }
+
+        // Toast + card highlight for feed entries that arrived from someone else's device
+        function announceRemoteActivity(previous) {
+            if (!activityFeedPrimed) {
+                activityFeedPrimed = true; // the first snapshot is history, not news
+                return;
+            }
+            const recentCutoff = syncNow() - 60000;
+            appState.activity.forEach(entry => {
+                if (entry.client === CLIENT_ID || entry.ts < recentCutoff) return;
+                if (previous.has(entry.id) && previous.get(entry.id) === entry.hi) return;
+                showActivityToast(entry);
+                if (entry.strain) {
+                    dashFlashes[entry.strain] = { label: `${entry.hi} · ${entry.who.split(' ')[0]}`, until: Date.now() + 6000 };
+                }
+            });
+        }
+
+        // Save today's totals (for trend lines and "today" deltas) whenever they change
+        function recordDailySnapshot() {
+            const key = dayKey();
+            const totals = currentTotals();
+            const saved = appState.history[key] || {};
+            const changed = Object.keys(totals).some(field => saved[field] !== totals[field]);
+            const cutoff = dayKey(HISTORY_KEEP_DAYS);
+            const expired = Object.keys(appState.history).filter(k => k < cutoff);
+            if (!changed && expired.length === 0) return;
+
+            if (Sync.mode === 'cloud') {
+                const changes = {};
+                Object.entries(totals).forEach(([field, value]) => { changes[`history/${key}/${field}`] = value; });
+                expired.forEach(k => { changes[`history/${k}`] = null; });
+                Sync.root.update(changes).catch(err => console.error('History update failed:', err));
+            } else {
+                appState.history[key] = { ...saved, ...totals };
+                expired.forEach(k => delete appState.history[k]);
+            }
+        }
+
+        // Count bricks made per day for the weekly chart
+        function recordBricksMade(delta) {
+            if (delta !== 0) adjustShared(`history/${dayKey()}/bricksMade`, delta);
         }
 
         function handleSyncWriteError(err) {
@@ -1010,17 +1263,25 @@
             });
             Sync.db.ref('.info/connected').on('value', snap => {
                 setSyncStatus(snap.val() ? 'live' : 'offline');
+                if (snap.val()) registerPresence();
             });
 
             Sync.root.on('value', snap => {
                 const tree = snap.val();
-                if (!tree) {
-                    // Empty database: seed it once with this browser's current data
-                    Sync.root.transaction(current => current || buildSharedTree(appState)).catch(handleSyncWriteError);
+                if (!isPlainObject(tree) || !isPlainObject(tree.inventory)) {
+                    // No shared data yet (the database may already hold presence entries):
+                    // seed it once with this browser's current data
+                    Sync.root.transaction(current => (isPlainObject(current) && isPlainObject(current.inventory))
+                        ? undefined
+                        : { ...(isPlainObject(current) ? current : {}), ...buildSharedTree(appState) })
+                        .catch(handleSyncWriteError);
                     return;
                 }
                 const focus = captureFocusedInput();
+                const previousActivity = new Map(appState.activity.map(a => [a.id, a.hi]));
                 applySharedTree(tree);
+                announceRemoteActivity(previousActivity);
+                recordDailySnapshot();
                 saveState(); // cache so the next page load renders instantly
                 syncWebhookInput();
                 renderAll();
@@ -1078,7 +1339,8 @@
         // Returns false (and warns) if the browser refuses to store the state, e.g. storage quota exceeded
         function saveState() {
             try {
-                localStorage.setItem('noelops_v2_state', JSON.stringify(appState));
+                const { presence, ...persisted } = appState;
+                localStorage.setItem('noelops_v2_state', JSON.stringify(persisted));
                 return true;
             } catch (e) {
                 console.error('Failed to save state to localStorage:', e);
@@ -1193,6 +1455,7 @@
             renderTimersPage();
             renderAdminTable();
             renderAdminStrainLogos();
+            renderPresence();
             updateWebhookPill();
             const badge = document.getElementById('active-timers-badge');
             if (badge) badge.innerText = appState.locations.length;
@@ -1284,103 +1547,250 @@
             }).join('');
         }
 
-        // Dashboard View Renderer
-        function renderDashboard() {
-            let totalBricks = 0;
-            let potentialBricks = 0;
-            let totalTrimmed = 0;
-            let totalUntrimmed = 0;
+        // ---------------------------------------------------------------------
+        // Dashboard
+        // ---------------------------------------------------------------------
+        const BRICK_SIZE = 750;
+        const RING_RADIUS = 60;
+        const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
+        // Strain cards that just changed on someone else's device: { strainId: { label, until } }
+        const dashFlashes = {};
+        let dashTimerSignature = '';
+
+        function currentTotals() {
+            const totals = { bricks: 0, potential: 0, trimmed: 0, untrimmed: 0, coca: toCount(appState.coca.quantity) };
             DEFAULT_STRAINS.forEach(strain => {
-                const inv = appState.inventory[strain.id] || { untrimmed: 0, trimmed: 0, bricks: 0 };
-                totalBricks += Number(inv.bricks || 0);
-                totalTrimmed += Number(inv.trimmed || 0);
-                totalUntrimmed += Number(inv.untrimmed || 0);
-                potentialBricks += Math.floor(Number(inv.trimmed || 0) / 750);
+                const inv = appState.inventory[strain.id];
+                totals.bricks += inv.bricks;
+                totals.trimmed += inv.trimmed;
+                totals.untrimmed += inv.untrimmed;
+                totals.potential += Math.floor(inv.trimmed / BRICK_SIZE);
             });
-
-            document.getElementById('dash-total-bricks').innerText = totalBricks.toLocaleString();
-            document.getElementById('dash-potential-bricks').innerText = potentialBricks.toLocaleString();
-            document.getElementById('dash-total-trimmed').innerText = totalTrimmed.toLocaleString();
-            document.getElementById('dash-total-untrimmed').innerText = totalUntrimmed.toLocaleString();
-            document.getElementById('dash-coca-count').innerText = (appState.coca.quantity || 0).toLocaleString();
-
-            renderTimerTicker();
-
-            // Populate 2x5 Strain Cards Grid on Dashboard
-            const strainContainer = document.getElementById('dashboard-strain-quicklook');
-            if (strainContainer) {
-                strainContainer.innerHTML = DEFAULT_STRAINS.map(strain => {
-                    const inv = appState.inventory[strain.id] || { untrimmed: 0, trimmed: 0, bricks: 0 };
-                    const potential = Math.floor(Number(inv.trimmed || 0) / 750);
-
-                    return `
-                        <div class="glass-card rounded-2xl p-4 flex flex-col items-center text-center justify-between border-weed-900/60 bg-gradient-to-b ${strain.color}">
-                            <div class="w-full text-center">
-                                <h3 class="font-extrabold text-sm ${strain.nameColor} truncate tracking-wide">${strain.name}</h3>
-                            </div>
-
-                            <div class="w-24 h-24 my-3 flex items-center justify-center overflow-hidden">
-                                ${getStrainLogo(strain.id)}
-                            </div>
-
-                            <div class="w-full space-y-1.5 pt-2 border-t border-weed-900/40 text-xs">
-                                <div class="flex justify-between items-center font-mono">
-                                    <span class="text-slate-400 text-[10px] uppercase">Trimmed:</span>
-                                    <span class="font-bold text-slate-200">${inv.trimmed.toLocaleString()}</span>
-                                </div>
-                                <div class="flex justify-between items-center font-mono">
-                                    <span class="text-slate-400 text-[10px] uppercase">Potential:</span>
-                                    <span class="font-bold text-weed-400">${potential}</span>
-                                </div>
-                                <div class="flex justify-between items-center font-mono">
-                                    <span class="text-slate-400 text-[10px] uppercase">Bricks:</span>
-                                    <span class="font-extrabold text-white">${inv.bricks.toLocaleString()}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
+            return totals;
         }
 
-        // Live timer ticker bar; re-rendered every second while the dashboard is visible
-        function renderTimerTicker() {
-            const tickerContainer = document.getElementById('dashboard-timers-quicklook');
-            if (tickerContainer) {
-                tickerContainer.innerHTML = appState.locations.map(loc => {
-                    const elapsedSecs = loc.startTime ? Math.max(0, Math.floor((syncNow() - loc.startTime) / 1000)) : 0;
-                    const totalSecs = loc.durationHours * 3600;
-                    const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
-                    const pct = loc.startTime ? Math.min(100, (elapsedSecs / totalSecs) * 100) : 0;
+        function renderDashboard() {
+            renderDashStats();
+            renderDashTimers();
+            renderDashStrains();
+            renderActivityFeed();
+            renderBricksChart();
+        }
 
-                    let statusText = 'INACTIVE';
-                    let statusBg = 'bg-slate-900 text-slate-400 border-slate-800';
-                    
-                    if (loc.startTime) {
-                        if (remainingSecs === 0) {
-                            statusText = 'READY!';
-                            statusBg = 'bg-weed-950 text-weed-400 border-weed-500 animate-pulse';
-                        } else {
-                            statusText = formatTime(remainingSecs);
-                            statusBg = 'bg-amber-950/60 text-amber-300 border-amber-800';
-                        }
-                    }
-
-                    return `
-                        <div class="min-w-[200px] bg-darkcard/90 border border-weed-900 rounded-xl p-3 flex flex-col justify-between shrink-0 hover:border-weed-600 transition-all">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-sm font-black text-white font-mono">${escapeHtml(loc.id)}</span>
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border font-mono ${statusBg}">${statusText}</span>
-                            </div>
-                            <div class="text-[10px] text-slate-400 truncate mb-2">${escapeHtml(loc.alias || 'Grow Operation')}</div>
-                            <div class="w-full bg-darkbg rounded-full h-1.5 border border-weed-950 overflow-hidden">
-                                <div class="bg-gradient-to-r from-weed-600 to-weed-400 h-full transition-all duration-500" style="width: ${pct}%"></div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
+        // Last 7 daily values of a total (oldest first), carrying the last known value over quiet days
+        function dailySeries(field, current) {
+            const keys = Object.keys(appState.history).sort();
+            const series = [];
+            for (let back = 6; back >= 1; back--) {
+                const day = dayKey(back);
+                const known = keys.filter(k => k <= day && appState.history[k][field] !== undefined).pop();
+                series.push(known ? appState.history[known][field] : null);
             }
+            series.push(current);
+            const firstKnown = series.findIndex(v => v !== null);
+            return firstKnown === -1 ? [current] : series.slice(firstKnown);
+        }
+
+        function sparklineSvg(values, color) {
+            if (values.length < 2) return '';
+            const min = Math.min(...values), max = Math.max(...values);
+            const points = values.map((v, i) => {
+                const x = (i / (values.length - 1)) * 110;
+                const y = max === min ? 18 : 32 - ((v - min) / (max - min)) * 28;
+                return `${x.toFixed(1)},${y.toFixed(1)}`;
+            }).join(' ');
+            return `<svg width="84" height="36" viewBox="0 0 110 36" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" points="${points}"/></svg>`;
+        }
+
+        function deltaHtml(values, unit, color) {
+            if (values.length < 2) return '';
+            const diff = values[values.length - 1] - values[values.length - 2];
+            if (diff === 0) return `<div class="delta dx-muted">No change today</div>`;
+            const up = diff > 0;
+            const tone = color || (up ? '#4ade80' : '#fbbf24');
+            return `<div class="delta" style="color:${tone}">${up ? '▲' : '▼'} ${Math.abs(diff).toLocaleString()}${unit ? ' ' + unit : ''} today</div>`;
+        }
+
+        function renderDashStats() {
+            const box = document.getElementById('dx-stats');
+            if (!box) return;
+            const t = currentTotals();
+            const tiles = [
+                { key: 'bricks', label: 'Bricks on hand', value: t.bricks, color: '#4ade80', sub: 'Packaged & ready' },
+                { key: 'potential', label: 'Potential bricks', value: t.potential, color: '#4ade80', hot: true, sub: `from ${t.trimmed.toLocaleString()} trimmed`, fixedSub: true },
+                { key: 'untrimmed', label: 'Untrimmed reserve', value: t.untrimmed, color: '#fbbf24', sub: 'Awaiting trimming' },
+                { key: 'coca', label: 'Coca leaves', value: t.coca, color: '#38bdf8', sub: 'Secondary op stock', labelColor: '#38bdf8', numColor: '#bae6fd', deltaColor: '#38bdf8' }
+            ];
+            box.innerHTML = tiles.map(tile => {
+                const series = dailySeries(tile.key, tile.value);
+                const delta = tile.fixedSub ? '' : deltaHtml(series, '', tile.deltaColor);
+                const sub = tile.fixedSub || !delta ? `<div class="delta" style="color:${tile.hot ? '#4ade80' : '#8a9a8e'}">${escapeHtml(tile.sub)}</div>` : delta;
+                return `
+                    <div class="dx-glass dx-stat ${tile.hot ? 'hot' : ''}">
+                        <div class="lbl" style="${tile.labelColor ? `color:${tile.labelColor}` : tile.hot ? 'color:#4ade80' : ''}">${tile.label}</div>
+                        <div class="num dx-mono" style="${tile.numColor ? `color:${tile.numColor}` : ''}">${tile.value.toLocaleString()}</div>
+                        ${sub}
+                        ${sparklineSvg(series, tile.color)}
+                    </div>`;
+            }).join('');
+        }
+
+        function timerState(loc) {
+            const totalSecs = loc.durationHours * 3600;
+            if (!loc.startTime) return { status: 'idle', totalSecs, remainingSecs: totalSecs, pct: 0 };
+            const elapsedSecs = Math.max(0, Math.floor((syncNow() - loc.startTime) / 1000));
+            const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
+            return {
+                status: remainingSecs === 0 ? 'ready' : 'running',
+                totalSecs,
+                remainingSecs,
+                pct: Math.min(100, (elapsedSecs / totalSecs) * 100)
+            };
+        }
+
+        // "Ready ~ 18:30", "Ready ~ 09:15 tomorrow", "Ready ~ Thu 09:15" in the viewer's own time zone
+        function readyAtLabel(loc) {
+            const readyAt = new Date(loc.startTime + loc.durationHours * 3600 * 1000 - Sync.serverOffset);
+            const time = readyAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const today = new Date();
+            const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+            if (readyAt.toDateString() === today.toDateString()) return `Ready ~ ${time} your time`;
+            if (readyAt.toDateString() === tomorrow.toDateString()) return `Ready ~ ${time} tomorrow`;
+            return `Ready ~ ${readyAt.toLocaleDateString([], { weekday: 'short' })} ${time}`;
+        }
+
+        function renderDashTimers() {
+            const box = document.getElementById('dx-timers');
+            if (!box) return;
+            if (appState.locations.length === 0) {
+                box.innerHTML = `<div class="dx-glass dx-tm" style="grid-column:1/-1"><p class="dx-muted text-sm py-6">No grow locations yet. Add one in Admin.</p></div>`;
+                dashTimerSignature = '';
+                return;
+            }
+
+            const states = appState.locations.map(loc => [loc, timerState(loc)]);
+            dashTimerSignature = states.map(([loc, st]) => `${loc.id}:${st.status}:${loc.startTime}`).join('|');
+
+            box.innerHTML = states.map(([loc, st]) => {
+                const ready = st.status === 'ready', idle = st.status === 'idle';
+                const statusChip = ready ? '<span class="dx-status rdy">READY</span>'
+                    : idle ? '<span class="dx-status idle">IDLE</span>' : '<span class="dx-status run">RUNNING</span>';
+                const offset = RING_CIRCUMFERENCE * (1 - (ready ? 100 : st.pct) / 100);
+                const ring = idle
+                    ? `<circle cx="70" cy="70" r="${RING_RADIUS}" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none" stroke-dasharray="6 8"/>`
+                    : `<circle cx="70" cy="70" r="${RING_RADIUS}" stroke="rgba(255,255,255,.06)" stroke-width="10" fill="none"/>
+                       <circle class="dx-ring-fg" cx="70" cy="70" r="${RING_RADIUS}" stroke="${ready ? '#4ade80' : 'url(#dx-ring-grad)'}" stroke-width="10" fill="none" stroke-linecap="round"
+                           stroke-dasharray="${RING_CIRCUMFERENCE.toFixed(1)}" stroke-dashoffset="${offset.toFixed(1)}" transform="rotate(-90 70 70)"/>`;
+                const center = ready
+                    ? `<div class="t">READY</div><div class="s">Harvest now</div>`
+                    : idle
+                        ? `<div class="t dx-mono dx-muted">${formatTime(Math.round(st.totalSecs))}</div><div class="s">Not started</div>`
+                        : `<div class="t dx-mono dx-ring-t">${formatTime(st.remainingSecs)}</div><div class="s dx-ring-s">${Math.floor(st.pct)}% grown</div>`;
+                const foot = ready
+                    ? `<button onclick="harvestAndRestart(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-seedling mr-1"></i> Harvest &amp; Restart</button>`
+                    : idle
+                        ? `<button onclick="startTimer(${jsArg(loc.id)})" class="dx-btn dx-btn-o"><i class="fa-solid fa-play mr-1"></i> Start ${escapeHtml(loc.durationHours)}h cycle</button>`
+                        : escapeHtml(readyAtLabel(loc));
+
+                return `
+                    <div class="dx-glass dx-tm ${ready ? 'ready' : ''}" data-dx-loc="${escapeHtml(loc.id)}">
+                        <div class="top"><span class="pid dx-mono">${escapeHtml(loc.id)}</span>${statusChip}</div>
+                        <div class="alias">${escapeHtml(loc.alias || 'Grow Operation')}</div>
+                        <div class="dx-ring">
+                            <svg width="140" height="140" aria-hidden="true">
+                                <defs><linearGradient id="dx-ring-grad"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#86efac"/></linearGradient></defs>
+                                ${ring}
+                            </svg>
+                            <div class="c">${center}</div>
+                        </div>
+                        <div class="foot w-full justify-center">${foot}</div>
+                    </div>`;
+            }).join('');
+        }
+
+        // Every second: update the running countdowns in place, or re-render when a timer changes state
+        function tickDashTimers() {
+            const signature = appState.locations.map(loc => `${loc.id}:${timerState(loc).status}:${loc.startTime}`).join('|');
+            if (signature !== dashTimerSignature) {
+                renderDashTimers();
+                return;
+            }
+            document.querySelectorAll('#dx-timers [data-dx-loc]').forEach(card => {
+                const loc = appState.locations.find(l => l.id === card.dataset.dxLoc);
+                if (!loc) return;
+                const st = timerState(loc);
+                if (st.status !== 'running') return;
+                const t = card.querySelector('.dx-ring-t');
+                const sub = card.querySelector('.dx-ring-s');
+                const fg = card.querySelector('.dx-ring-fg');
+                if (t) t.textContent = formatTime(st.remainingSecs);
+                if (sub) sub.textContent = `${Math.floor(st.pct)}% grown`;
+                if (fg) fg.setAttribute('stroke-dashoffset', (RING_CIRCUMFERENCE * (1 - st.pct / 100)).toFixed(1));
+            });
+        }
+
+        function renderDashStrains() {
+            const box = document.getElementById('dx-strains');
+            if (!box) return;
+            const now = Date.now();
+            box.innerHTML = DEFAULT_STRAINS.map(strain => {
+                const inv = appState.inventory[strain.id];
+                const toNext = BRICK_SIZE - (inv.trimmed % BRICK_SIZE);
+                const pct = ((inv.trimmed % BRICK_SIZE) / BRICK_SIZE) * 100;
+                const flash = dashFlashes[strain.id] && dashFlashes[strain.id].until > now ? dashFlashes[strain.id] : null;
+                return `
+                    <div class="dx-glass dx-sc ${flash ? 'flash' : ''}">
+                        ${flash ? `<span class="dx-flashtag">${escapeHtml(flash.label)}</span>` : ''}
+                        <div class="logo">${getStrainLogo(strain.id)}</div>
+                        <div class="name ${strain.nameColor}">${escapeHtml(strain.name)}</div>
+                        <div class="row"><span class="dx-muted">Trimmed</span><b class="dx-mono">${inv.trimmed.toLocaleString()}</b></div>
+                        <div class="dx-bar"><i style="width:${pct.toFixed(1)}%"></i></div>
+                        <div class="row"><span class="dx-muted">${toNext.toLocaleString()} to next brick</span><b class="dx-mono text-white" title="Bricks on hand">${inv.bricks.toLocaleString()} <i class="fa-solid fa-cube text-amber-500 text-[11px]"></i></b></div>
+                    </div>`;
+            }).join('');
+        }
+
+        function relativeTime(ts) {
+            const secs = Math.max(0, Math.floor((syncNow() - ts) / 1000));
+            if (secs < 45) return 'just now';
+            if (secs < 3600) return `${Math.max(1, Math.round(secs / 60))} min ago`;
+            if (secs < 86400) return `${Math.round(secs / 3600)} h ago`;
+            return new Date(ts - Sync.serverOffset).toLocaleDateString([], { month: 'short', day: 'numeric' });
+        }
+
+        function activityTextHtml(entry) {
+            return `<b>${escapeHtml(entry.who)}</b> ${escapeHtml(entry.pre || '')} <b class="g">${escapeHtml(entry.hi || '')}</b> ${escapeHtml(entry.post || '')}`;
+        }
+
+        function renderActivityFeed() {
+            const list = document.getElementById('dx-feed');
+            if (!list) return;
+            const entries = appState.activity.slice(0, 8);
+            list.innerHTML = entries.length === 0
+                ? `<li class="dx-muted">No activity yet. Changes the crew makes show up here live.</li>`
+                : entries.map(entry => `
+                    <li>${avatarHtml(entry.who)}<div class="min-w-0">${activityTextHtml(entry)}<div class="when">${relativeTime(entry.ts)}</div></div></li>`).join('');
+        }
+
+        function renderBricksChart() {
+            const chart = document.getElementById('dx-chart');
+            const totalEl = document.getElementById('dx-week-total');
+            if (!chart) return;
+            const letters = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+            const days = [];
+            for (let back = 6; back >= 0; back--) {
+                const key = dayKey(back);
+                const made = toCount(appState.history[key] && appState.history[key].bricksMade);
+                days.push({ key, made, letter: letters[new Date(key + 'T00:00:00Z').getUTCDay()], today: back === 0 });
+            }
+            const max = Math.max(1, ...days.map(d => d.made));
+            const total = days.reduce((sum, d) => sum + d.made, 0);
+            if (totalEl) totalEl.textContent = `${total} total`;
+            chart.innerHTML = days.map(d => `
+                <div class="${d.today ? 'today' : ''}" title="${d.key}: ${d.made} bricks">
+                    <span style="height:${Math.max(3, (d.made / max) * 100)}px"></span>${d.letter}
+                </div>`).join('');
         }
 
         function renderInventory() {
@@ -1452,25 +1862,60 @@
             if (cocaInput && cocaInput !== document.activeElement) cocaInput.value = appState.coca.quantity || 0;
         }
 
+        function strainName(strainId) {
+            const strain = DEFAULT_STRAINS.find(s => s.id === strainId);
+            return strain ? strain.name : strainId;
+        }
+
         function adjustQuantity(strainId, field, delta) {
+            const current = appState.inventory[strainId] ? appState.inventory[strainId][field] : 0;
+            const applied = Math.max(-current, delta); // what actually changes once clamped at zero
             adjustShared(`inventory/${strainId}/${field}`, delta);
+            if (applied === 0) return;
+            if (field === 'bricks') recordBricksMade(applied);
+            logActivity({ strain: strainId }, {
+                key: `inv:${strainId}:${field}`,
+                amount: applied,
+                format: amount => ({
+                    pre: amount > 0 ? 'added' : 'removed',
+                    hi: `${signedAmount(amount)} ${fieldLabel(field, amount)}`,
+                    post: `${amount > 0 ? 'to' : 'from'} ${strainName(strainId)}`
+                })
+            });
         }
 
         function updateQuantityFromInput(strainId, field, inputEl) {
-            writeShared({ [`inventory/${strainId}/${field}`]: toCount(parseInt(inputEl.value, 10)) });
+            const value = toCount(parseInt(inputEl.value, 10));
+            const current = appState.inventory[strainId] ? appState.inventory[strainId][field] : 0;
+            writeShared({ [`inventory/${strainId}/${field}`]: value });
+            if (value === current) return;
+            if (field === 'bricks') recordBricksMade(value - current);
+            logActivity({ strain: strainId, pre: 'set', hi: `${FIELD_LABELS[field]} to ${value.toLocaleString()}`, post: `for ${strainName(strainId)}` });
         }
 
         function adjustCoca(delta) {
+            const applied = Math.max(-toCount(appState.coca.quantity), delta);
             adjustShared('coca/quantity', delta);
+            if (applied === 0) return;
+            logActivity({}, {
+                key: 'coca',
+                amount: applied,
+                format: amount => ({ pre: amount > 0 ? 'added' : 'removed', hi: `${signedAmount(amount)} coca leaves` })
+            });
         }
 
         function updateCocaFromInput() {
             const input = document.getElementById('coca-quantity-input');
-            if (input) writeShared({ 'coca/quantity': toCount(parseInt(input.value, 10)) });
+            if (!input) return;
+            const value = toCount(parseInt(input.value, 10));
+            if (value === toCount(appState.coca.quantity)) return;
+            writeShared({ 'coca/quantity': value });
+            logActivity({ pre: 'set', hi: `coca leaves to ${value.toLocaleString()}` });
         }
 
         function resetCoca() {
             writeShared({ 'coca/quantity': 0 });
+            logActivity({ pre: 'reset', hi: 'coca leaves to 0' });
         }
 
         function renderGrowPlanner() {
@@ -1604,12 +2049,16 @@
 
         function updateLocationTotalPots(locId, newPots) {
             if (!appState.locations.some(l => l.id === locId)) return;
-            writeShared({ [locPath(locId, 'pots')]: Math.max(1, parseInt(newPots, 10) || 10) });
+            const pots = Math.max(1, parseInt(newPots, 10) || 10);
+            writeShared({ [locPath(locId, 'pots')]: pots });
+            logActivity({ pre: 'set', hi: `${pots} pots`, post: `at Postal ${locId}` });
         }
 
         function updateLocationStrainPots(locId, strainId, pots) {
             if (!appState.locations.some(l => l.id === locId)) return;
-            writeShared({ [locPath(locId, `strainPots/${strainId}`)]: toCount(parseInt(pots, 10)) });
+            const count = toCount(parseInt(pots, 10));
+            writeShared({ [locPath(locId, `strainPots/${strainId}`)]: count });
+            logActivity({ strain: strainId, pre: 'planned', hi: `${count} ${strainName(strainId)} pots`, post: `at Postal ${locId}` });
         }
 
         function autoBalanceLocationPots(locId) {
@@ -1625,6 +2074,7 @@
                 });
 
                 writeShared({ [locPath(locId, 'strainPots')]: strainPots });
+                logActivity({ pre: 'auto-balanced pots at', hi: `Postal ${locId}` });
                 showAlert(`Auto-balanced ${totalPots} pots across 10 strains for Postal ${locId}`, 'success');
             }
         }
@@ -1706,8 +2156,19 @@
         function startTimer(locId) {
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
+                const restarting = Boolean(loc.startTime);
                 writeShared(timerChanges([loc], true));
+                logActivity({ pre: restarting ? 'restarted timer' : 'started timer', hi: `Postal ${locId}` });
                 showAlert(`Timer started for Postal ${locId} (${loc.durationHours} Hours)`, 'success');
+            }
+        }
+
+        function harvestAndRestart(locId) {
+            const loc = appState.locations.find(l => l.id === locId);
+            if (loc) {
+                writeShared(timerChanges([loc], true));
+                logActivity({ pre: 'harvested', hi: `Postal ${locId}`, post: 'and restarted the cycle' });
+                showAlert(`Postal ${locId} harvested. New ${loc.durationHours}h cycle started.`, 'success');
             }
         }
 
@@ -1715,29 +2176,41 @@
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
                 writeShared(timerChanges([loc], false));
+                logActivity({ pre: 'stopped timer', hi: `Postal ${locId}` });
                 showAlert(`Timer stopped for Postal ${locId}`, 'info');
             }
         }
 
         function startAllTimers() {
             writeShared(timerChanges(appState.locations, true));
+            logActivity({ pre: 'started', hi: 'all timers' });
             showAlert('All location timers started simultaneously!', 'success');
         }
 
         function resetAllTimersPrompt() {
             if (confirm('Are you sure you want to stop and reset all location grow timers?')) {
                 writeShared(timerChanges(appState.locations, false));
+                logActivity({ pre: 'reset', hi: 'all timers' });
                 showAlert('All grow timers reset to zero.', 'info');
             }
         }
 
+        let tickCount = 0;
+
         function tickTimers() {
             checkHarvestAlerts();
 
-            // Re-render ticker bar and timers tab if visible
+            // Update the dashboard and timers tab if visible
             const dashTab = document.getElementById('tab-dashboard');
             if (dashTab && !dashTab.classList.contains('hidden')) {
-                renderTimerTicker();
+                tickDashTimers();
+                tickCount++;
+                if (tickCount % 30 === 0) renderActivityFeed(); // refresh "4 min ago" labels
+                const now = Date.now();
+                if (Object.values(dashFlashes).some(f => f.expired !== true && f.until <= now)) {
+                    Object.values(dashFlashes).forEach(f => { if (f.until <= now) f.expired = true; });
+                    renderDashStrains();
+                }
             }
 
             const timersTab = document.getElementById('tab-timers');
@@ -1760,7 +2233,10 @@
                 pendingHarvestClaims.add(claimId);
 
                 claimHarvestAlert(loc).then(won => {
-                    if (won) sendHarvestWebhook(loc);
+                    if (won) {
+                        sendHarvestWebhook(loc);
+                        logActivity({ who: SYSTEM_NAME, pre: '', hi: `Postal ${loc.id} is ready`, post: 'to harvest' });
+                    }
                     renderAdminTable();
                 });
             });
@@ -1809,6 +2285,7 @@
             const input = document.getElementById('admin-webhook-url');
             if (input) {
                 writeShared({ 'settings/webhookUrl': input.value.trim() });
+                logActivity({ pre: 'updated the', hi: 'Discord webhook' });
                 showAlert('Discord Webhook URL saved successfully!', 'success');
             }
         }
@@ -1916,6 +2393,7 @@
                     order: syncNow() // sorts after existing locations
                 }
             });
+            logActivity({ pre: 'added location', hi: `Postal ${id}` });
 
             idInput.value = '';
             aliasInput.value = '';
@@ -1925,6 +2403,7 @@
         function deleteLocation(locId) {
             if (confirm(`Are you sure you want to delete grow location Postal ${locId}?`)) {
                 writeShared({ [locPath(locId)]: null });
+                logActivity({ pre: 'deleted location', hi: `Postal ${locId}` });
                 showAlert(`Location Postal ${locId} deleted.`, 'info');
             }
         }
@@ -2056,7 +2535,8 @@
                         syncWebhookInput();
                         saveState();
                         renderAll();
-                        if (Sync.mode === 'cloud') Sync.root.set(buildSharedTree(appState)).catch(handleSyncWriteError);
+                        if (Sync.mode === 'cloud') Sync.root.update(buildSharedTree(appState)).catch(handleSyncWriteError);
+                        logActivity({ pre: 'imported a', hi: 'backup' });
                         showAlert('NoelOps state successfully imported!', 'success');
                     } else {
                         showAlert('Invalid JSON state backup file.', 'warning');
@@ -2081,13 +2561,13 @@
             };
 
             if (shared) {
-                const defaults = { inventory: {}, coca: { quantity: 0 }, locations: null, webhookUrl: '' };
+                const defaults = { inventory: {}, coca: { quantity: 0 }, locations: null, webhookUrl: '', activity: [], history: {} };
                 const saved = appState;
                 appState = { ...appState, ...defaults };
                 normalizeState();
                 const tree = buildSharedTree(appState);
                 appState = saved;
-                Sync.root.set(tree).then(clearLocalAndReload).catch(handleSyncWriteError);
+                Sync.root.update(tree).then(clearLocalAndReload).catch(handleSyncWriteError);
             } else {
                 clearLocalAndReload();
             }
@@ -2102,35 +2582,28 @@
             setInterval(update, 1000);
         }
 
-        let alertTimeoutId = null;
+        const TOAST_ICONS = { success: 'fa-circle-check text-weed-400', warning: 'fa-triangle-exclamation text-amber-400', info: 'fa-circle-info text-indigo-300' };
+
+        function pushToast(innerHtml, type) {
+            const stack = document.getElementById('toast-stack');
+            if (!stack) return;
+            const toast = document.createElement('div');
+            toast.className = `dx-toast ${type}`;
+            toast.innerHTML = innerHtml;
+            stack.appendChild(toast);
+            while (stack.children.length > 4) stack.firstElementChild.remove();
+            setTimeout(() => {
+                toast.classList.add('out');
+                setTimeout(() => toast.remove(), 300);
+            }, type === 'warning' ? 6500 : 4500);
+        }
 
         function showAlert(message, type = 'info') {
-            const container = document.getElementById('alert-container');
-            if (!container) return;
-            container.classList.remove('hidden');
+            pushToast(`<i class="fa-solid ${TOAST_ICONS[type] || TOAST_ICONS.info}"></i><span>${escapeHtml(message)}</span>`, type);
+        }
 
-            const bgClass = type === 'success' ? 'bg-weed-950 border-weed-500 text-weed-300' :
-                            type === 'warning' ? 'bg-amber-950 border-amber-600 text-amber-300' :
-                            'bg-indigo-950 border-indigo-600 text-indigo-300';
-
-            const iconClass = type === 'success' ? 'fa-circle-check' : type === 'warning' ? 'fa-triangle-exclamation' : 'fa-circle-info';
-
-            container.innerHTML = `
-                <div class="p-4 rounded-xl border ${bgClass} flex items-center justify-between shadow-lg transition-all">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid ${iconClass} text-base"></i>
-                        <span class="text-xs font-bold">${escapeHtml(message)}</span>
-                    </div>
-                    <button onclick="this.parentElement.remove()" class="text-xs opacity-70 hover:opacity-100"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-            `;
-
-            // Restart the countdown so an earlier alert's timer can't hide this one early
-            clearTimeout(alertTimeoutId);
-            alertTimeoutId = setTimeout(() => {
-                container.classList.add('hidden');
-                container.innerHTML = '';
-            }, 4000);
+        function showActivityToast(entry) {
+            pushToast(`${avatarHtml(entry.who)}<div>${activityTextHtml(entry)}</div>`, 'success');
         }
 
         // Initialize application when DOM window finishes loading
