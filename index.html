@@ -119,7 +119,7 @@
                     
                     <!-- Master Logo & Branding -->
                     <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
-                        <div id="master-logo-container" class="relative flex items-center justify-center w-12 h-12 rounded-xl bg-weed-950 border border-weed-500/40 text-weed-400 shadow-lg shadow-weed-950/60 overflow-hidden p-1 group">
+                        <div id="master-logo-container" class="relative flex items-center justify-center w-[84px] h-14 rounded-xl bg-weed-950 border border-weed-500/40 text-weed-400 shadow-lg shadow-weed-950/60 overflow-hidden group">
                             <!-- SVG Cannabis Leaf Fallback Icon -->
                             <svg class="w-8 h-8 fill-current text-weed-400 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" viewBox="0 0 24 24">
                                 <path d="M12,2C11.5,4 10,7 8,9C6,11 3,11.5 2,12C4,12.5 7,14 9,16C10,17 11,19 12,22C13,19 14,17 15,16C17,14 20,12.5 22,12C21,11.5 18,11 16,9C14,7 12.5,4 12,2M12,7C12.5,8.5 13.5,10 15,11C13.5,12 12.5,13.5 12,15C11.5,13.5 10.5,12 9,11C10.5,10 11.5,8.5 12,7Z"/>
@@ -158,8 +158,8 @@
                             <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
                         </button>
                         <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <i class="fa-solid fa-sliders"></i>
-                            <span>Admin Login</span>
+                            <i id="nav-admin-icon" class="fa-solid fa-lock"></i>
+                            <span>Admin</span>
                         </button>
                     </nav>
 
@@ -192,7 +192,7 @@
                 <button onclick="switchTab('inventory'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Inventory Vault</button>
                 <button onclick="switchTab('planner'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Planner</button>
                 <button onclick="switchTab('timers'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Timers</button>
-                <button onclick="switchTab('admin'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin Settings</button>
+                <button onclick="switchTab('admin'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
             </div>
         </header>
 
@@ -470,6 +470,25 @@
 
             </section>
 
+            <section id="tab-login" class="tab-content hidden">
+                <div class="max-w-sm mx-auto glass-card p-8 rounded-2xl border-weed-800/60 space-y-5 mt-8">
+                    <div class="text-center space-y-2">
+                        <div class="w-12 h-12 mx-auto rounded-2xl bg-weed-950 border border-weed-700 text-weed-400 flex items-center justify-center">
+                            <i class="fa-solid fa-lock text-xl"></i>
+                        </div>
+                        <h1 class="text-xl font-black text-white">Admin Login</h1>
+                        <p class="text-xs text-slate-400">Enter the admin password to manage settings.</p>
+                    </div>
+                    <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+                        <input type="password" id="admin-password-input" autocomplete="current-password" required placeholder="Password" class="w-full bg-darkbg border border-weed-900 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-weed-400">
+                        <p id="admin-login-error" class="hidden text-xs text-red-400 font-semibold"></p>
+                        <button type="submit" id="admin-login-submit" class="w-full py-2.5 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-bold text-sm transition-all shadow-md">
+                            <i class="fa-solid fa-right-to-bracket mr-1"></i> Log In
+                        </button>
+                    </form>
+                </div>
+            </section>
+
             <section id="tab-admin" class="tab-content hidden space-y-8">
                 
                 <!-- Admin Header -->
@@ -481,6 +500,9 @@
                         </h1>
                         <p class="text-xs text-slate-400 mt-1">Configure grow locations, strain logos, Discord webhooks, data exports, and operational parameters.</p>
                     </div>
+                    <button onclick="adminLogout()" class="px-3 py-2 rounded-xl bg-darkbg border border-weed-900 text-slate-300 hover:text-white hover:bg-weed-950 text-xs font-semibold transition-all shrink-0 ml-4">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Log Out
+                    </button>
                 </div>
 
                 <!-- Per-Strain Logo Manager -->
@@ -538,13 +560,13 @@
                             </div>
                             <div>
                                 <h2 class="font-bold text-white text-base">Master Syndicate Branding Logo</h2>
-                                <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">leonopslogo.png</span> from the repo. Uploads or URLs here override it in this browser only.</p>
+                                <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">NoelOpsLogo.png</span> from the repo. Uploads or URLs here override it in this browser only.</p>
                             </div>
                         </div>
 
                         <div class="space-y-3">
                             <div class="flex items-center space-x-4">
-                                <div id="admin-logo-preview" class="w-14 h-14 rounded-xl bg-darkbg border border-weed-800 flex items-center justify-center overflow-hidden p-1 shrink-0">
+                                <div id="admin-logo-preview" class="w-[84px] h-14 rounded-xl bg-darkbg border border-weed-800 flex items-center justify-center overflow-hidden p-1 shrink-0">
                                     <!-- Dynamic Logo Preview -->
                                 </div>
                                 <div class="space-y-2 flex-1">
@@ -692,7 +714,7 @@
         ];
 
         // Logo files served from the repo. Strain logos live at logos/<strain id>.png
-        const DEFAULT_MASTER_LOGO = 'leonopslogo.png';
+        const DEFAULT_MASTER_LOGO = 'NoelOpsLogo.png';
         const STRAIN_LOGO_DIR = 'logos';
         const UPLOADED_LOGO_MAX_PX = 256; // Uploads are downscaled so localStorage doesn't overflow
 
@@ -713,6 +735,7 @@
 
         function initApp() {
             loadState();
+            setAdminUnlocked(isAdminUnlocked());
             renderAll();
             startMainClock();
             setInterval(tickTimers, 1000);
@@ -810,8 +833,80 @@
             }
         }
 
+        // Basic client-side admin gate. NOTE: this only hides the admin page; it is not real security,
+        // since anyone can read this file. To change the password, replace the hash below with the
+        // output of: printf 'your-new-password' | sha256sum
+        const ADMIN_PASSWORD_SHA256 = '9ab2b86cce3aa66c189d97f7f503fcd524e298d19cc44227468fb214ee8ba817';
+        const ADMIN_SESSION_KEY = 'noelops_admin_unlocked';
+
+        function isAdminUnlocked() {
+            try {
+                return sessionStorage.getItem(ADMIN_SESSION_KEY) === '1';
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function setAdminUnlocked(unlocked) {
+            try {
+                if (unlocked) sessionStorage.setItem(ADMIN_SESSION_KEY, '1');
+                else sessionStorage.removeItem(ADMIN_SESSION_KEY);
+            } catch (e) {
+                console.error('Failed to update admin session:', e);
+            }
+            const icon = document.getElementById('nav-admin-icon');
+            if (icon) icon.className = unlocked ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock';
+        }
+
+        async function sha256Hex(text) {
+            const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+            return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function handleAdminLogin(event) {
+            event.preventDefault();
+            const input = document.getElementById('admin-password-input');
+            const error = document.getElementById('admin-login-error');
+            const submit = document.getElementById('admin-login-submit');
+            error.classList.add('hidden');
+
+            if (!window.crypto || !crypto.subtle) {
+                error.innerText = 'Login needs the page to be served over HTTPS.';
+                error.classList.remove('hidden');
+                return;
+            }
+
+            submit.disabled = true;
+            const hash = await sha256Hex(input.value);
+            input.value = '';
+
+            if (hash === ADMIN_PASSWORD_SHA256) {
+                submit.disabled = false;
+                setAdminUnlocked(true);
+                switchTab('admin');
+                showAlert('Admin unlocked.', 'success');
+            } else {
+                // Short delay to slow down repeated guessing
+                setTimeout(() => {
+                    submit.disabled = false;
+                    error.innerText = 'Incorrect password.';
+                    error.classList.remove('hidden');
+                    input.focus();
+                }, 800);
+            }
+        }
+
+        function adminLogout() {
+            setAdminUnlocked(false);
+            switchTab('dashboard');
+            showAlert('Logged out of admin.', 'info');
+        }
+
         // Navigation Tab Switching Logic
         function switchTab(tabId) {
+            const navTabId = tabId;
+            if (tabId === 'admin' && !isAdminUnlocked()) tabId = 'login';
+
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             const target = document.getElementById(`tab-${tabId}`);
             if (target) target.classList.remove('hidden');
@@ -820,9 +915,14 @@
                 btn.className = 'nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200';
             });
 
-            const activeBtn = document.getElementById(`nav-${tabId}`);
+            const activeBtn = document.getElementById(`nav-${navTabId}`);
             if (activeBtn) {
                 activeBtn.className = 'nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-weed-600 text-white shadow-md shadow-weed-900/50';
+            }
+
+            if (tabId === 'login') {
+                const input = document.getElementById('admin-password-input');
+                if (input) input.focus();
             }
         }
 
