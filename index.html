@@ -170,6 +170,10 @@
                             <div class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">Current Time</div>
                         </div>
                         <div class="h-8 w-[1px] bg-weed-900"></div>
+                        <div id="sync-status-pill" class="flex items-center space-x-1.5 text-xs px-2.5 py-1 rounded-full border bg-slate-900 text-slate-400 border-slate-800" title="Shared data sync status">
+                            <i class="fa-solid fa-tower-broadcast text-[10px]"></i>
+                            <span id="sync-status-text">Local Only</span>
+                        </div>
                         <div id="webhook-status-pill" class="flex items-center space-x-1.5 text-xs px-2.5 py-1 rounded-full bg-amber-950/50 text-amber-400 border border-amber-800/60" title="Discord Webhook Status">
                             <i class="fa-solid fa-circle-exclamation text-[10px]"></i>
                             <span id="webhook-status-text">Webhook Unset</span>
@@ -729,7 +733,7 @@
         let appState = {
             inventory: {},
             coca: { quantity: 0, notes: '' },
-            locations: [],
+            locations: null, // null = never loaded, seeded with DEFAULT_LOCATIONS
             webhookUrl: '',
             badgeImages: {}, // Per-browser strain logo overrides (data URLs), keyed by strain id
             selectedPlannerLocId: '7078', // Selected planner location tab
@@ -742,6 +746,7 @@
             renderAll();
             startMainClock();
             setInterval(tickTimers, 1000);
+            initSync();
         }
 
         // Escape a value for safe insertion into innerHTML
@@ -783,10 +788,12 @@
             if (typeof appState.masterLogo !== 'string' || !appState.masterLogo) appState.masterLogo = null;
             if (typeof appState.webhookUrl !== 'string') appState.webhookUrl = '';
 
-            if (!Array.isArray(appState.locations)) appState.locations = [];
+            if (!Array.isArray(appState.locations)) {
+                appState.locations = JSON.parse(JSON.stringify(DEFAULT_LOCATIONS));
+            }
             appState.locations = appState.locations
                 .filter(loc => isPlainObject(loc) && loc.id !== undefined && loc.id !== null && String(loc.id).trim() !== '')
-                .map(loc => ({
+                .map((loc, idx) => ({
                     ...loc,
                     id: String(loc.id).trim(),
                     alias: typeof loc.alias === 'string' ? loc.alias : '',
@@ -794,16 +801,12 @@
                     pots: Math.max(1, toCount(loc.pots) || 10),
                     startTime: Number(loc.startTime) > 0 ? Number(loc.startTime) : null,
                     strainPots: isPlainObject(loc.strainPots) ? loc.strainPots : {},
-                    harvestAlertSent: Boolean(loc.harvestAlertSent)
+                    harvestAlertSent: Boolean(loc.harvestAlertSent),
+                    order: Number.isFinite(Number(loc.order)) ? Number(loc.order) : idx
                 }));
 
-            // Ensure default locations exist if empty
-            if (appState.locations.length === 0) {
-                appState.locations = JSON.parse(JSON.stringify(DEFAULT_LOCATIONS));
-            }
-
             if (!appState.locations.some(l => l.id === appState.selectedPlannerLocId)) {
-                appState.selectedPlannerLocId = appState.locations[0].id;
+                appState.selectedPlannerLocId = appState.locations.length > 0 ? appState.locations[0].id : null;
             }
         }
 
@@ -821,7 +824,239 @@
 
         function syncWebhookInput() {
             const webhookInput = document.getElementById('admin-webhook-url');
-            if (webhookInput) webhookInput.value = appState.webhookUrl || '';
+            if (webhookInput && webhookInput !== document.activeElement) webhookInput.value = appState.webhookUrl || '';
+        }
+
+        // ---------------------------------------------------------------------
+        // Live shared data (Firebase Realtime Database)
+        //
+        // Paste your Firebase web app config below to share inventory, timers,
+        // locations and the webhook URL live between everyone. With null, data
+        // stays in this browser only. Setup steps are in README.md.
+        // ---------------------------------------------------------------------
+        const FIREBASE_CONFIG = null;
+        const FIREBASE_SDK_VERSION = '10.12.2';
+        const SHARED_DB_ROOT = 'noelops';
+
+        // mode: 'local' (this browser only) or 'cloud' (Firebase)
+        const Sync = { mode: 'local', status: 'local', db: null, root: null, serverOffset: 0 };
+
+        // Current time on the database server's clock, so timers agree across devices
+        function syncNow() {
+            return Date.now() + Sync.serverOffset;
+        }
+
+        // Value that becomes "now" when written: the server's clock in cloud mode
+        function timestampValue() {
+            return Sync.mode === 'cloud' ? firebase.database.ServerValue.TIMESTAMP : Date.now();
+        }
+
+        // Location ids become database keys, which can't contain . # $ [ ] /
+        function locKey(id) {
+            return encodeURIComponent(String(id)).replace(/\./g, '%2E');
+        }
+
+        function locPath(locId, field) {
+            return `locations/${locKey(locId)}` + (field ? `/${field}` : '');
+        }
+
+        // The shared part of appState, shaped the way it is stored in the database
+        function buildSharedTree(state) {
+            const locations = {};
+            (state.locations || []).forEach((loc, idx) => {
+                locations[locKey(loc.id)] = {
+                    id: loc.id,
+                    alias: loc.alias || '',
+                    durationHours: loc.durationHours,
+                    pots: loc.pots,
+                    startTime: loc.startTime || null,
+                    harvestAlertSent: Boolean(loc.harvestAlertSent),
+                    strainPots: { ...(loc.strainPots || {}) },
+                    order: Number.isFinite(loc.order) ? loc.order : idx
+                };
+            });
+            return {
+                inventory: JSON.parse(JSON.stringify(state.inventory || {})),
+                coca: { quantity: (state.coca && state.coca.quantity) || 0 },
+                locations,
+                settings: { webhookUrl: state.webhookUrl || '' }
+            };
+        }
+
+        function applySharedTree(tree) {
+            tree = isPlainObject(tree) ? tree : {};
+            appState.inventory = isPlainObject(tree.inventory) ? tree.inventory : {};
+            appState.coca = { quantity: isPlainObject(tree.coca) ? tree.coca.quantity : 0, notes: '' };
+            appState.locations = Object.values(isPlainObject(tree.locations) ? tree.locations : {})
+                .filter(isPlainObject)
+                .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+            appState.webhookUrl = isPlainObject(tree.settings) && typeof tree.settings.webhookUrl === 'string' ? tree.settings.webhookUrl : '';
+            normalizeState();
+        }
+
+        function getPath(obj, path) {
+            return path.split('/').reduce((node, key) => (isPlainObject(node) ? node[key] : undefined), obj);
+        }
+
+        function setPath(obj, path, value) {
+            const keys = path.split('/');
+            const last = keys.pop();
+            let node = obj;
+            keys.forEach(key => {
+                if (!isPlainObject(node[key])) node[key] = {};
+                node = node[key];
+            });
+            if (value === null) delete node[last];
+            else node[last] = value;
+        }
+
+        // Write shared data. `changes` maps paths like 'inventory/ogkush/trimmed' to new values (null deletes).
+        // In cloud mode the database echoes the change back through the live listener, which re-renders.
+        function writeShared(changes) {
+            if (Sync.mode === 'cloud') {
+                return Sync.root.update(changes).catch(handleSyncWriteError);
+            }
+            const tree = buildSharedTree(appState);
+            Object.entries(changes).forEach(([path, value]) => setPath(tree, path, value));
+            applySharedTree(tree);
+            saveState();
+            renderAll();
+            return Promise.resolve();
+        }
+
+        // Add delta to a counter without going below zero. Uses a transaction in cloud mode
+        // so two people pressing +100 at the same moment both count.
+        function adjustShared(path, delta) {
+            if (Sync.mode === 'cloud') {
+                return Sync.root.child(path)
+                    .transaction(current => Math.max(0, toCount(current) + delta))
+                    .catch(handleSyncWriteError);
+            }
+            const current = getPath(buildSharedTree(appState), path);
+            return writeShared({ [path]: Math.max(0, toCount(current) + delta) });
+        }
+
+        // Resolves true for exactly one device per harvest, so Discord gets one alert, not one per open page
+        function claimHarvestAlert(loc) {
+            if (Sync.mode === 'cloud') {
+                return Sync.root.child(locPath(loc.id, 'harvestAlertSent'))
+                    .transaction(sent => (sent ? undefined : true))
+                    .then(result => result.committed)
+                    .catch(err => {
+                        console.error('Harvest alert claim failed:', err);
+                        return false;
+                    });
+            }
+            loc.harvestAlertSent = true;
+            saveState();
+            return Promise.resolve(true);
+        }
+
+        function handleSyncWriteError(err) {
+            console.error('Live sync write failed:', err);
+            showAlert('Could not save to the shared database. Check your connection or the database rules.', 'warning');
+        }
+
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = () => reject(new Error(`Failed to load ${src}`));
+                document.head.appendChild(script);
+            });
+        }
+
+        async function initSync() {
+            if (!FIREBASE_CONFIG) {
+                setSyncStatus('local');
+                return;
+            }
+
+            setSyncStatus('connecting');
+            try {
+                const base = `https://www.gstatic.com/firebasejs/${FIREBASE_SDK_VERSION}`;
+                await loadScript(`${base}/firebase-app-compat.js`);
+                await loadScript(`${base}/firebase-database-compat.js`);
+                firebase.initializeApp(FIREBASE_CONFIG);
+                Sync.db = firebase.database();
+                Sync.root = Sync.db.ref(SHARED_DB_ROOT);
+            } catch (err) {
+                console.error('Live sync unavailable:', err);
+                setSyncStatus('error');
+                showAlert('Could not connect to live sync. Changes are only saved in this browser for now.', 'warning');
+                return;
+            }
+
+            Sync.mode = 'cloud';
+            Sync.db.ref('.info/serverTimeOffset').on('value', snap => {
+                Sync.serverOffset = Number(snap.val()) || 0;
+            });
+            Sync.db.ref('.info/connected').on('value', snap => {
+                setSyncStatus(snap.val() ? 'live' : 'offline');
+            });
+
+            Sync.root.on('value', snap => {
+                const tree = snap.val();
+                if (!tree) {
+                    // Empty database: seed it once with this browser's current data
+                    Sync.root.transaction(current => current || buildSharedTree(appState)).catch(handleSyncWriteError);
+                    return;
+                }
+                const focus = captureFocusedInput();
+                applySharedTree(tree);
+                saveState(); // cache so the next page load renders instantly
+                syncWebhookInput();
+                renderAll();
+                restoreFocusedInput(focus);
+            }, err => {
+                console.error('Live sync read failed:', err);
+                Sync.mode = 'local';
+                setSyncStatus('error');
+                showAlert('Live sync was refused by the database (check its rules). Changes are only saved in this browser.', 'warning');
+            });
+        }
+
+        function setSyncStatus(status) {
+            Sync.status = status;
+            const pill = document.getElementById('sync-status-pill');
+            const text = document.getElementById('sync-status-text');
+            if (!pill || !text) return;
+
+            const styles = {
+                live: ['bg-weed-950 text-weed-400 border-weed-700', 'Live Sync'],
+                connecting: ['bg-amber-950/50 text-amber-400 border-amber-800/60', 'Connecting…'],
+                offline: ['bg-red-950/50 text-red-300 border-red-800/60', 'Offline'],
+                error: ['bg-red-950/50 text-red-300 border-red-800/60', 'Sync Error'],
+                local: ['bg-slate-900 text-slate-400 border-slate-800', 'Local Only']
+            };
+            const [classes, label] = styles[status] || styles.local;
+            pill.className = `flex items-center space-x-1.5 text-xs px-2.5 py-1 rounded-full border ${classes}`;
+            text.innerText = label;
+            pill.title = status === 'offline'
+                ? 'Disconnected. Changes are kept and sent when the connection returns.'
+                : status === 'local' ? 'Data is saved in this browser only. See README.md to turn on live sync.' : 'Shared data sync status';
+        }
+
+        // Keep the cursor (and anything typed) in a number box when someone else's change re-renders the page
+        function captureFocusedInput() {
+            const el = document.activeElement;
+            if (!el || !el.dataset || !el.dataset.focusKey) return null;
+            return { key: el.dataset.focusKey, value: el.value, dirty: el.value !== el.defaultValue };
+        }
+
+        function restoreFocusedInput(focus) {
+            if (!focus) return;
+            const el = Array.from(document.querySelectorAll('[data-focus-key]')).find(e => e.dataset.focusKey === focus.key);
+            if (!el || el === document.activeElement) return;
+            if (focus.dirty) {
+                el.value = focus.value;
+                // The replacement box never saw the typing, so commit it ourselves when the user leaves it
+                el.addEventListener('blur', () => {
+                    if (el.value !== el.defaultValue) el.dispatchEvent(new Event('change'));
+                }, { once: true });
+            }
+            el.focus();
         }
 
         // Returns false (and warns) if the browser refuses to store the state, e.g. storage quota exceeded
@@ -1098,7 +1333,7 @@
             const tickerContainer = document.getElementById('dashboard-timers-quicklook');
             if (tickerContainer) {
                 tickerContainer.innerHTML = appState.locations.map(loc => {
-                    const elapsedSecs = loc.startTime ? Math.floor((Date.now() - loc.startTime) / 1000) : 0;
+                    const elapsedSecs = loc.startTime ? Math.max(0, Math.floor((syncNow() - loc.startTime) / 1000)) : 0;
                     const totalSecs = loc.durationHours * 3600;
                     const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
                     const pct = loc.startTime ? Math.min(100, (elapsedSecs / totalSecs) * 100) : 0;
@@ -1160,7 +1395,7 @@
                                 <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Untrimmed Bud Reserve</label>
                                 <div class="flex items-center space-x-2">
                                     <button onclick="adjustQuantity('${strain.id}', 'untrimmed', -100)" class="px-2.5 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">-100</button>
-                                    <input type="number" value="${inv.untrimmed}" onchange="updateQuantityFromInput('${strain.id}', 'untrimmed', this)" class="w-full bg-darkbg border border-weed-900 rounded-xl px-3 py-1.5 text-center font-bold text-slate-200 focus:outline-none focus:border-weed-500">
+                                    <input type="number" data-focus-key="inv-${strain.id}-untrimmed" value="${inv.untrimmed}" onchange="updateQuantityFromInput('${strain.id}', 'untrimmed', this)" class="w-full bg-darkbg border border-weed-900 rounded-xl px-3 py-1.5 text-center font-bold text-slate-200 focus:outline-none focus:border-weed-500">
                                     <button onclick="adjustQuantity('${strain.id}', 'untrimmed', 100)" class="px-2.5 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">+100</button>
                                 </div>
                             </div>
@@ -1170,7 +1405,7 @@
                                 <label class="block text-[10px] uppercase font-bold text-weed-400 mb-1">Trimmed Bud (750 = 1 Brick)</label>
                                 <div class="flex items-center space-x-2">
                                     <button onclick="adjustQuantity('${strain.id}', 'trimmed', -100)" class="px-2.5 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">-100</button>
-                                    <input type="number" value="${inv.trimmed}" onchange="updateQuantityFromInput('${strain.id}', 'trimmed', this)" class="w-full bg-darkbg border border-weed-800 rounded-xl px-3 py-1.5 text-center font-extrabold text-weed-300 focus:outline-none focus:border-weed-400">
+                                    <input type="number" data-focus-key="inv-${strain.id}-trimmed" value="${inv.trimmed}" onchange="updateQuantityFromInput('${strain.id}', 'trimmed', this)" class="w-full bg-darkbg border border-weed-800 rounded-xl px-3 py-1.5 text-center font-extrabold text-weed-300 focus:outline-none focus:border-weed-400">
                                     <button onclick="adjustQuantity('${strain.id}', 'trimmed', 100)" class="px-2.5 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">+100</button>
                                 </div>
                             </div>
@@ -1186,7 +1421,7 @@
                                 <label class="block text-[10px] uppercase font-bold text-slate-300 mb-1">Ready Bricks on Hand</label>
                                 <div class="flex items-center space-x-2">
                                     <button onclick="adjustQuantity('${strain.id}', 'bricks', -1)" class="px-3 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">-1</button>
-                                    <input type="number" value="${inv.bricks}" onchange="updateQuantityFromInput('${strain.id}', 'bricks', this)" class="w-full bg-darkbg border border-weed-800 rounded-xl px-3 py-1.5 text-center font-extrabold text-white focus:outline-none focus:border-weed-400">
+                                    <input type="number" data-focus-key="inv-${strain.id}-bricks" value="${inv.bricks}" onchange="updateQuantityFromInput('${strain.id}', 'bricks', this)" class="w-full bg-darkbg border border-weed-800 rounded-xl px-3 py-1.5 text-center font-extrabold text-white focus:outline-none focus:border-weed-400">
                                     <button onclick="adjustQuantity('${strain.id}', 'bricks', 1)" class="px-3 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">+1</button>
                                 </div>
                             </div>
@@ -1198,49 +1433,28 @@
             }).join('');
 
             const cocaInput = document.getElementById('coca-quantity-input');
-            if (cocaInput) cocaInput.value = appState.coca.quantity || 0;
+            if (cocaInput && cocaInput !== document.activeElement) cocaInput.value = appState.coca.quantity || 0;
         }
 
         function adjustQuantity(strainId, field, delta) {
-            if (!appState.inventory[strainId]) {
-                appState.inventory[strainId] = { untrimmed: 0, trimmed: 0, bricks: 0 };
-            }
-            const current = Number(appState.inventory[strainId][field] || 0);
-            appState.inventory[strainId][field] = Math.max(0, current + delta);
-            saveState();
-            renderAll();
+            adjustShared(`inventory/${strainId}/${field}`, delta);
         }
 
         function updateQuantityFromInput(strainId, field, inputEl) {
-            if (!appState.inventory[strainId]) {
-                appState.inventory[strainId] = { untrimmed: 0, trimmed: 0, bricks: 0 };
-            }
-            const val = Math.max(0, parseInt(inputEl.value, 10) || 0);
-            appState.inventory[strainId][field] = val;
-            saveState();
-            renderAll();
+            writeShared({ [`inventory/${strainId}/${field}`]: toCount(parseInt(inputEl.value, 10)) });
         }
 
         function adjustCoca(delta) {
-            const current = Number(appState.coca.quantity || 0);
-            appState.coca.quantity = Math.max(0, current + delta);
-            saveState();
-            renderAll();
+            adjustShared('coca/quantity', delta);
         }
 
         function updateCocaFromInput() {
             const input = document.getElementById('coca-quantity-input');
-            if (input) {
-                appState.coca.quantity = Math.max(0, parseInt(input.value, 10) || 0);
-                saveState();
-                renderAll();
-            }
+            if (input) writeShared({ 'coca/quantity': toCount(parseInt(input.value, 10)) });
         }
 
         function resetCoca() {
-            appState.coca.quantity = 0;
-            saveState();
-            renderAll();
+            writeShared({ 'coca/quantity': 0 });
         }
 
         function renderGrowPlanner() {
@@ -1311,7 +1525,7 @@
                         <div class="flex items-center space-x-4">
                             <div class="text-right">
                                 <label class="block text-[10px] uppercase font-bold text-slate-400">Location Pots</label>
-                                <input type="number" min="1" value="${locPots}" onchange="updateLocationTotalPots(${jsArg(loc.id)}, this.value)" class="w-20 bg-darkbg border border-weed-800 rounded-xl px-3 py-1 text-center font-bold font-mono text-weed-300 focus:outline-none focus:border-weed-400">
+                                <input type="number" min="1" data-focus-key="pots-${escapeHtml(loc.id)}" value="${locPots}" onchange="updateLocationTotalPots(${jsArg(loc.id)}, this.value)" class="w-20 bg-darkbg border border-weed-800 rounded-xl px-3 py-1 text-center font-bold font-mono text-weed-300 focus:outline-none focus:border-weed-400">
                             </div>
                             <button onclick="autoBalanceLocationPots(${jsArg(loc.id)})" class="px-3 py-2 rounded-xl bg-weed-950 border border-weed-800 hover:bg-weed-900 text-weed-300 text-xs font-semibold transition-all">
                                 <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Auto-Balance 10 Strains
@@ -1350,7 +1564,7 @@
                                         </div>
                                         <div>
                                             <label class="block text-[10px] text-slate-500 uppercase">Pots</label>
-                                            <input type="number" min="0" value="${potsAllocated}" onchange="updateLocationStrainPots(${jsArg(loc.id)}, ${jsArg(strain.id)}, this.value)" class="w-full bg-darkcard border border-weed-900 rounded-lg px-2 py-1 text-xs font-mono font-bold text-center text-white focus:outline-none focus:border-weed-500">
+                                            <input type="number" min="0" data-focus-key="sp-${escapeHtml(loc.id)}-${strain.id}" value="${potsAllocated}" onchange="updateLocationStrainPots(${jsArg(loc.id)}, ${jsArg(strain.id)}, this.value)" class="w-full bg-darkcard border border-weed-900 rounded-lg px-2 py-1 text-xs font-mono font-bold text-center text-white focus:outline-none focus:border-weed-500">
                                         </div>
                                         <div class="text-[10px] text-slate-400 font-mono flex justify-between">
                                             <span>~${Math.round(strainBuds)} Bud</span>
@@ -1373,22 +1587,13 @@
         }
 
         function updateLocationTotalPots(locId, newPots) {
-            const loc = appState.locations.find(l => l.id === locId);
-            if (loc) {
-                loc.pots = Math.max(1, parseInt(newPots, 10) || 10);
-                saveState();
-                renderAll();
-            }
+            if (!appState.locations.some(l => l.id === locId)) return;
+            writeShared({ [locPath(locId, 'pots')]: Math.max(1, parseInt(newPots, 10) || 10) });
         }
 
         function updateLocationStrainPots(locId, strainId, pots) {
-            const loc = appState.locations.find(l => l.id === locId);
-            if (loc) {
-                if (!loc.strainPots) loc.strainPots = {};
-                loc.strainPots[strainId] = Math.max(0, parseInt(pots, 10) || 0);
-                saveState();
-                renderGrowPlanner();
-            }
+            if (!appState.locations.some(l => l.id === locId)) return;
+            writeShared({ [locPath(locId, `strainPots/${strainId}`)]: toCount(parseInt(pots, 10)) });
         }
 
         function autoBalanceLocationPots(locId) {
@@ -1398,13 +1603,12 @@
                 const base = Math.floor(totalPots / 10);
                 const rem = totalPots % 10;
 
-                loc.strainPots = {};
+                const strainPots = {};
                 DEFAULT_STRAINS.forEach((strain, idx) => {
-                    loc.strainPots[strain.id] = base + (idx < rem ? 1 : 0);
+                    strainPots[strain.id] = base + (idx < rem ? 1 : 0);
                 });
 
-                saveState();
-                renderGrowPlanner();
+                writeShared({ [locPath(locId, 'strainPots')]: strainPots });
                 showAlert(`Auto-balanced ${totalPots} pots across 10 strains for Postal ${locId}`, 'success');
             }
         }
@@ -1414,7 +1618,7 @@
             if (!grid) return;
 
             grid.innerHTML = appState.locations.map(loc => {
-                const elapsedSecs = loc.startTime ? Math.floor((Date.now() - loc.startTime) / 1000) : 0;
+                const elapsedSecs = loc.startTime ? Math.max(0, Math.floor((syncNow() - loc.startTime) / 1000)) : 0;
                 const totalSecs = loc.durationHours * 3600;
                 const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
                 const pct = loc.startTime ? Math.min(100, (elapsedSecs / totalSecs) * 100) : 0;
@@ -1473,13 +1677,20 @@
             }).join('');
         }
 
+        // Changes that set (or clear) the timer on each of the given locations
+        function timerChanges(locations, running) {
+            const changes = {};
+            locations.forEach(loc => {
+                changes[locPath(loc.id, 'startTime')] = running ? timestampValue() : null;
+                changes[locPath(loc.id, 'harvestAlertSent')] = false;
+            });
+            return changes;
+        }
+
         function startTimer(locId) {
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
-                loc.startTime = Date.now();
-                loc.harvestAlertSent = false;
-                saveState();
-                renderAll();
+                writeShared(timerChanges([loc], true));
                 showAlert(`Timer started for Postal ${locId} (${loc.durationHours} Hours)`, 'success');
             }
         }
@@ -1487,33 +1698,19 @@
         function stopTimer(locId) {
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
-                loc.startTime = null;
-                loc.harvestAlertSent = false;
-                saveState();
-                renderAll();
+                writeShared(timerChanges([loc], false));
                 showAlert(`Timer stopped for Postal ${locId}`, 'info');
             }
         }
 
         function startAllTimers() {
-            const now = Date.now();
-            appState.locations.forEach(loc => {
-                loc.startTime = now;
-                loc.harvestAlertSent = false;
-            });
-            saveState();
-            renderAll();
+            writeShared(timerChanges(appState.locations, true));
             showAlert('All location timers started simultaneously!', 'success');
         }
 
         function resetAllTimersPrompt() {
             if (confirm('Are you sure you want to stop and reset all location grow timers?')) {
-                appState.locations.forEach(loc => {
-                    loc.startTime = null;
-                    loc.harvestAlertSent = false;
-                });
-                saveState();
-                renderAll();
+                writeShared(timerChanges(appState.locations, false));
                 showAlert('All grow timers reset to zero.', 'info');
             }
         }
@@ -1533,21 +1730,24 @@
             }
         }
 
+        // Harvests this page is already claiming, so the 1s tick doesn't claim the same one twice
+        const pendingHarvestClaims = new Set();
+
         // Fire a Discord alert once per cycle when a location's timer reaches zero
         function checkHarvestAlerts() {
-            let changed = false;
             appState.locations.forEach(loc => {
                 if (!loc.startTime || loc.harvestAlertSent) return;
-                if (Date.now() - loc.startTime >= loc.durationHours * 3600 * 1000) {
-                    loc.harvestAlertSent = true;
-                    changed = true;
-                    sendHarvestWebhook(loc);
-                }
+                if (syncNow() - loc.startTime < loc.durationHours * 3600 * 1000) return;
+
+                const claimId = `${loc.id}@${loc.startTime}`;
+                if (pendingHarvestClaims.has(claimId)) return;
+                pendingHarvestClaims.add(claimId);
+
+                claimHarvestAlert(loc).then(won => {
+                    if (won) sendHarvestWebhook(loc);
+                    renderAdminTable();
+                });
             });
-            if (changed) {
-                saveState();
-                renderAdminTable();
-            }
         }
 
         function sendHarvestWebhook(loc) {
@@ -1592,9 +1792,7 @@
         function saveWebhookUrl() {
             const input = document.getElementById('admin-webhook-url');
             if (input) {
-                appState.webhookUrl = input.value.trim();
-                saveState();
-                updateWebhookPill();
+                writeShared({ 'settings/webhookUrl': input.value.trim() });
                 showAlert('Discord Webhook URL saved successfully!', 'success');
             }
         }
@@ -1690,17 +1888,18 @@
                 return;
             }
 
-            appState.locations.push({
-                id: id,
-                alias: alias || `Postal ${id}`,
-                durationHours: durationHours,
-                pots: 10,
-                startTime: null,
-                strainPots: {}
+            writeShared({
+                [locPath(id)]: {
+                    id: id,
+                    alias: alias || `Postal ${id}`,
+                    durationHours: durationHours,
+                    pots: 10,
+                    startTime: null,
+                    harvestAlertSent: false,
+                    strainPots: {},
+                    order: syncNow() // sorts after existing locations
+                }
             });
-
-            saveState();
-            renderAll();
 
             idInput.value = '';
             aliasInput.value = '';
@@ -1709,12 +1908,7 @@
 
         function deleteLocation(locId) {
             if (confirm(`Are you sure you want to delete grow location Postal ${locId}?`)) {
-                appState.locations = appState.locations.filter(l => l.id !== locId);
-                if (appState.selectedPlannerLocId === locId) {
-                    appState.selectedPlannerLocId = appState.locations.length > 0 ? appState.locations[0].id : null;
-                }
-                saveState();
-                renderAll();
+                writeShared({ [locPath(locId)]: null });
                 showAlert(`Location Postal ${locId} deleted.`, 'info');
             }
         }
@@ -1840,11 +2034,13 @@
                 try {
                     const imported = JSON.parse(e.target.result);
                     if (isPlainObject(imported)) {
+                        if (Sync.mode === 'cloud' && !confirm('This replaces the shared inventory, locations and timers for EVERYONE. Continue?')) return;
                         appState = { ...appState, ...imported };
                         normalizeState();
                         syncWebhookInput();
                         saveState();
                         renderAll();
+                        if (Sync.mode === 'cloud') Sync.root.set(buildSharedTree(appState)).catch(handleSyncWriteError);
                         showAlert('NoelOps state successfully imported!', 'success');
                     } else {
                         showAlert('Invalid JSON state backup file.', 'warning');
@@ -1857,9 +2053,27 @@
         }
 
         function factoryResetData() {
-            if (confirm('CRITICAL: This will wipe all local inventory counts, locations, and settings! Proceed?')) {
+            const shared = Sync.mode === 'cloud';
+            const message = shared
+                ? 'CRITICAL: This wipes the SHARED inventory, locations, timers and webhook for EVERYONE, plus this browser\'s settings. Proceed?'
+                : 'CRITICAL: This will wipe all local inventory counts, locations, and settings! Proceed?';
+            if (!confirm(message)) return;
+
+            const clearLocalAndReload = () => {
                 try { localStorage.removeItem('noelops_v2_state'); } catch (e) { console.error(e); }
                 location.reload();
+            };
+
+            if (shared) {
+                const defaults = { inventory: {}, coca: { quantity: 0 }, locations: null, webhookUrl: '' };
+                const saved = appState;
+                appState = { ...appState, ...defaults };
+                normalizeState();
+                const tree = buildSharedTree(appState);
+                appState = saved;
+                Sync.root.set(tree).then(clearLocalAndReload).catch(handleSyncWriteError);
+            } else {
+                clearLocalAndReload();
             }
         }
 
