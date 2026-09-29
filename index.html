@@ -2082,6 +2082,10 @@
         function renderTimersPage() {
             const grid = document.getElementById('timers-grid');
             if (!grid) return;
+            if (appState.locations.length === 0) {
+                grid.innerHTML = `<div class="dx-glass p-8 text-center text-slate-400 text-sm" style="grid-column:1/-1">No grow locations yet. Add one in Admin to start a timer.</div>`;
+                return;
+            }
 
             grid.innerHTML = appState.locations.map(loc => {
                 const elapsedSecs = loc.startTime ? Math.max(0, Math.floor((syncNow() - loc.startTime) / 1000)) : 0;
