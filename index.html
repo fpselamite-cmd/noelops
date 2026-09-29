@@ -122,7 +122,7 @@
                         <div id="master-logo-container" class="relative flex items-center justify-center w-12 h-12 rounded-xl bg-weed-950 border border-weed-500/40 text-weed-400 shadow-lg shadow-weed-950/60 overflow-hidden p-1 group">
                             <!-- SVG Cannabis Leaf Fallback Icon -->
                             <svg class="w-8 h-8 fill-current text-weed-400 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" viewBox="0 0 24 24">
-                                <path d="M12,2C11.5,4 10,7 8,9C6,11 3,11.5 2,12C4,12.5 7,14 9,16C10,17 11,19 12,22C13,19 14,17 15,16C17,14 20,12.5 22,12C21,11.5 18,11 16,9C14,7 12.5,4 12,22M12,7C12.5,8.5 13.5,10 15,11C13.5,12 12.5,13.5 12,15C11.5,13.5 10.5,12 9,11C10.5,10 11.5,8.5 12,7Z"/>
+                                <path d="M12,2C11.5,4 10,7 8,9C6,11 3,11.5 2,12C4,12.5 7,14 9,16C10,17 11,19 12,22C13,19 14,17 15,16C17,14 20,12.5 22,12C21,11.5 18,11 16,9C14,7 12.5,4 12,2M12,7C12.5,8.5 13.5,10 15,11C13.5,12 12.5,13.5 12,15C11.5,13.5 10.5,12 9,11C10.5,10 11.5,8.5 12,7Z"/>
                             </svg>
                             <span class="absolute -top-1 -right-1 flex h-3 w-3 z-10">
                               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-weed-400 opacity-75"></span>
@@ -447,7 +447,7 @@
                             <h1 class="text-2xl font-black text-white">Active Grow Operations</h1>
                         </div>
                         <p class="text-xs text-slate-400 mt-1">
-                            Postals: <span class="text-weed-300 font-bold font-mono">7078, 9182, 10060, 7093</span>. Automatic webhooks alert crew upon maturity.
+                            Postals: <span id="timers-postal-list" class="text-weed-300 font-bold font-mono">&mdash;</span>. Automatic webhooks alert crew upon maturity.
                         </p>
                     </div>
 
@@ -479,34 +479,25 @@
                             <i class="fa-solid fa-user-shield text-weed-400"></i>
                             <span>Operations & Admin Management</span>
                         </h1>
-                        <p class="text-xs text-slate-400 mt-1">Configure grow locations, strain logos, discord webhooks, data exports, and operational parameters.</p>
+                        <p class="text-xs text-slate-400 mt-1">Configure grow locations, strain logos, Discord webhooks, data exports, and operational parameters.</p>
                     </div>
                 </div>
 
-                <!-- Dedicated 10-Badge Graphic Sheet Importer -->
+                <!-- Per-Strain Logo Manager -->
                 <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60 bg-gradient-to-r from-weed-950/40 via-darkcard to-weed-950/40">
                     <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                         <div class="w-8 h-8 rounded-lg bg-purple-950 text-purple-400 flex items-center justify-center">
-                            <i class="fa-solid fa-crop-simple text-lg"></i>
+                            <i class="fa-solid fa-images text-lg"></i>
                         </div>
                         <div>
-                            <h2 class="font-bold text-white text-base">Strain Graphic Badge Sheet Importer</h2>
-                            <p class="text-xs text-slate-400">Upload or drop a 2x5 grid image sheet to automatically slice and assign strain logos</p>
+                            <h2 class="font-bold text-white text-base">Strain Logos</h2>
+                            <p class="text-xs text-slate-400">Each strain loads its own file from <span class="font-mono text-weed-300">logos/&lt;strain&gt;.png</span> in the repo, so everyone sees the same logos. Uploads here override a logo in this browser only.</p>
                         </div>
                     </div>
 
-                    <div id="admin-dropzone-banner" onclick="document.getElementById('admin-sheet-file-input').click()" class="border-2 border-dashed border-weed-600/50 hover:border-weed-400 p-6 rounded-2xl text-center cursor-pointer transition-all bg-weed-950/30 group">
-                        <input type="file" id="admin-sheet-file-input" accept="image/*" onchange="handleBadgeSheetUpload(event)" class="hidden">
-                        <div class="flex flex-col items-center justify-center space-y-2">
-                            <div class="w-12 h-12 rounded-2xl bg-weed-900/80 text-weed-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-file-image"></i>
-                            </div>
-                            <div class="text-sm font-bold text-white">
-                                <span>Drop your 10-Strain Graphic Sheet image here or </span>
-                                <span class="text-weed-400 underline">Click to Select File</span>
-                            </div>
-                            <p class="text-xs text-slate-400">Slices the 2x5 grid directly into Acapulco Gold, Columbian Gold, Dosidos, Skunk1, OGKush, Pure Afghani, Rainbow Belts, Northern Lights, Lemonskunk, and Gelato41 badges.</p>
-                        </div>
+                    <input type="file" id="strain-logo-file-input" accept="image/*" onchange="handleStrainLogoFileUpload(event)" class="hidden">
+                    <div id="admin-strain-logos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                        <!-- Populated dynamically -->
                     </div>
                 </div>
 
@@ -547,7 +538,7 @@
                             </div>
                             <div>
                                 <h2 class="font-bold text-white text-base">Master Syndicate Branding Logo</h2>
-                                <p class="text-xs text-slate-400">Upload or set an image URL for the top-left header logo</p>
+                                <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">leonopslogo.png</span> from the repo. Uploads or URLs here override it in this browser only.</p>
                             </div>
                         </div>
 
@@ -565,7 +556,7 @@
                                     <div class="flex space-x-2">
                                         <input type="text" id="master-logo-url-input" placeholder="Or enter Image URL (https://...)" class="flex-1 bg-darkbg border border-weed-900 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-weed-400 font-mono">
                                         <button onclick="saveMasterLogoUrl()" class="px-3 py-1.5 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all">Set URL</button>
-                                        <button onclick="resetMasterLogo()" class="px-2.5 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 text-xs" title="Reset to Default Icon"><i class="fa-solid fa-rotate-left"></i></button>
+                                        <button onclick="resetMasterLogo()" class="px-2.5 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 text-xs" title="Reset to repo logo"><i class="fa-solid fa-rotate-left"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -678,18 +669,18 @@
     </footer>
 
     <script>
-        // 10 Strains arranged to match the 2x5 Badge Sheet Grid with custom strain title colors
+        // 10 Strains with custom strain title colors. Each strain logo loads from logos/<id>.png
         const DEFAULT_STRAINS = [
-            { id: 'acapulco', name: 'Acapulco Gold', color: 'from-orange-950/40 to-weed-950', nameColor: 'text-amber-400', gridPos: { r: 0, c: 0 } },
-            { id: 'columbian', name: 'Columbian Gold', color: 'from-yellow-950/40 to-weed-950', nameColor: 'text-yellow-400', gridPos: { r: 0, c: 1 } },
-            { id: 'dosidos', name: 'Dosidos', color: 'from-amber-950/40 to-weed-950', nameColor: 'text-orange-400', gridPos: { r: 0, c: 2 } },
-            { id: 'skunk1', name: 'Skunk1', color: 'from-green-950/40 to-weed-950', nameColor: 'text-green-400', gridPos: { r: 0, c: 3 } },
-            { id: 'ogkush', name: 'OGKush', color: 'from-teal-950/40 to-weed-950', nameColor: 'text-teal-300', gridPos: { r: 0, c: 4 } },
-            { id: 'afghani', name: 'Pure Afghani', color: 'from-emerald-950/40 to-weed-950', nameColor: 'text-emerald-400', gridPos: { r: 1, c: 0 } },
-            { id: 'rainbow', name: 'Rainbow Belts', color: 'from-indigo-950/40 to-weed-950', nameColor: 'text-indigo-400', gridPos: { r: 1, c: 1 } },
-            { id: 'nl', name: 'Northern Lights', color: 'from-purple-900/40 to-weed-950', nameColor: 'text-purple-400', gridPos: { r: 1, c: 2 } },
-            { id: 'lemonskunk', name: 'Lemonskunk', color: 'from-lime-950/40 to-weed-950', nameColor: 'text-lime-400', gridPos: { r: 1, c: 3 } },
-            { id: 'gelato41', name: 'Gelato41', color: 'from-pink-950/40 to-weed-950', nameColor: 'text-pink-400', gridPos: { r: 1, c: 4 } }
+            { id: 'acapulco', name: 'Acapulco Gold', color: 'from-orange-950/40 to-weed-950', nameColor: 'text-amber-400' },
+            { id: 'columbian', name: 'Columbian Gold', color: 'from-yellow-950/40 to-weed-950', nameColor: 'text-yellow-400' },
+            { id: 'dosidos', name: 'Dosidos', color: 'from-amber-950/40 to-weed-950', nameColor: 'text-orange-400' },
+            { id: 'skunk1', name: 'Skunk1', color: 'from-green-950/40 to-weed-950', nameColor: 'text-green-400' },
+            { id: 'ogkush', name: 'OGKush', color: 'from-teal-950/40 to-weed-950', nameColor: 'text-teal-300' },
+            { id: 'afghani', name: 'Pure Afghani', color: 'from-emerald-950/40 to-weed-950', nameColor: 'text-emerald-400' },
+            { id: 'rainbow', name: 'Rainbow Belts', color: 'from-indigo-950/40 to-weed-950', nameColor: 'text-indigo-400' },
+            { id: 'nl', name: 'Northern Lights', color: 'from-purple-900/40 to-weed-950', nameColor: 'text-purple-400' },
+            { id: 'lemonskunk', name: 'Lemonskunk', color: 'from-lime-950/40 to-weed-950', nameColor: 'text-lime-400' },
+            { id: 'gelato41', name: 'Gelato41', color: 'from-pink-950/40 to-weed-950', nameColor: 'text-pink-400' }
         ];
 
         // Default 4 Grow Operation Locations with 36-Hour Durations and default 10 pots
@@ -700,15 +691,24 @@
             { id: '7093', alias: 'Jay 1', durationHours: 36, pots: 10, startTime: null, strainPots: {} }
         ];
 
+        // Logo files served from the repo. Strain logos live at logos/<strain id>.png
+        const DEFAULT_MASTER_LOGO = 'leonopslogo.png';
+        const STRAIN_LOGO_DIR = 'logos';
+        const UPLOADED_LOGO_MAX_PX = 256; // Uploads are downscaled so localStorage doesn't overflow
+
+        const LEAF_SVG = `<svg class="w-8 h-8 fill-current text-weed-400 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" viewBox="0 0 24 24">
+                        <path d="M12,2C11.5,4 10,7 8,9C6,11 3,11.5 2,12C4,12.5 7,14 9,16C10,17 11,19 12,22C13,19 14,17 15,16C17,14 20,12.5 22,12C21,11.5 18,11 16,9C14,7 12.5,4 12,2M12,7C12.5,8.5 13.5,10 15,11C13.5,12 12.5,13.5 12,15C11.5,13.5 10.5,12 9,11C10.5,10 11.5,8.5 12,7Z"/>
+                    </svg>`;
+
         // Application State Object
         let appState = {
             inventory: {},
             coca: { quantity: 0, notes: '' },
             locations: [],
             webhookUrl: '',
-            badgeImages: {}, // Sliced strain badge data URLs
+            badgeImages: {}, // Per-browser strain logo overrides (data URLs), keyed by strain id
             selectedPlannerLocId: '7078', // Selected planner location tab
-            masterLogo: null // Custom top-left branding logo
+            masterLogo: null // Per-browser header logo override; null = repo default
         };
 
         function initApp() {
@@ -716,52 +716,98 @@
             renderAll();
             startMainClock();
             setInterval(tickTimers, 1000);
-            
-            // Register clipboard paste listener for easy 2x5 graphic sheet importing
-            document.addEventListener('paste', handleGlobalPaste);
         }
 
-        function loadState() {
-            const saved = localStorage.getItem('noelops_v2_state');
-            if (saved) {
-                try {
-                    const parsed = JSON.parse(saved);
-                    appState = { ...appState, ...parsed };
-                } catch (e) {
-                    console.error('Failed to load state from localStorage:', e);
-                }
-            }
+        // Escape a value for safe insertion into innerHTML
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, ch => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[ch]));
+        }
 
-            // Ensure all 10 strains are populated in inventory state
+        // Encode a value as a JS string literal usable inside an onclick="..." attribute
+        function jsArg(value) {
+            return escapeHtml(JSON.stringify(String(value)));
+        }
+
+        function toCount(value) {
+            return Math.max(0, Math.floor(Number(value) || 0));
+        }
+
+        function isPlainObject(value) {
+            return value !== null && typeof value === 'object' && !Array.isArray(value);
+        }
+
+        // Repair any missing or malformed fields (old saves, hand-edited or imported backups)
+        function normalizeState() {
+            if (!isPlainObject(appState.inventory)) appState.inventory = {};
             DEFAULT_STRAINS.forEach(strain => {
-                if (!appState.inventory[strain.id]) {
-                    appState.inventory[strain.id] = { untrimmed: 0, trimmed: 0, bricks: 0 };
-                }
+                const inv = isPlainObject(appState.inventory[strain.id]) ? appState.inventory[strain.id] : {};
+                appState.inventory[strain.id] = {
+                    untrimmed: toCount(inv.untrimmed),
+                    trimmed: toCount(inv.trimmed),
+                    bricks: toCount(inv.bricks)
+                };
             });
 
+            if (!isPlainObject(appState.coca)) appState.coca = { quantity: 0, notes: '' };
+            appState.coca.quantity = toCount(appState.coca.quantity);
+
+            if (!isPlainObject(appState.badgeImages)) appState.badgeImages = {};
+            if (typeof appState.masterLogo !== 'string' || !appState.masterLogo) appState.masterLogo = null;
+            if (typeof appState.webhookUrl !== 'string') appState.webhookUrl = '';
+
+            if (!Array.isArray(appState.locations)) appState.locations = [];
+            appState.locations = appState.locations
+                .filter(loc => isPlainObject(loc) && loc.id !== undefined && loc.id !== null && String(loc.id).trim() !== '')
+                .map(loc => ({
+                    ...loc,
+                    id: String(loc.id).trim(),
+                    alias: typeof loc.alias === 'string' ? loc.alias : '',
+                    durationHours: Number(loc.durationHours) > 0 ? Number(loc.durationHours) : 36,
+                    pots: Math.max(1, toCount(loc.pots) || 10),
+                    startTime: Number(loc.startTime) > 0 ? Number(loc.startTime) : null,
+                    strainPots: isPlainObject(loc.strainPots) ? loc.strainPots : {},
+                    harvestAlertSent: Boolean(loc.harvestAlertSent)
+                }));
+
             // Ensure default locations exist if empty
-            if (!appState.locations || appState.locations.length === 0) {
+            if (appState.locations.length === 0) {
                 appState.locations = JSON.parse(JSON.stringify(DEFAULT_LOCATIONS));
             }
 
-            // Ensure locations have strainPots configured
-            appState.locations.forEach(loc => {
-                if (!loc.strainPots) loc.strainPots = {};
-                if (!loc.pots) loc.pots = 10;
-            });
-
-            if (!appState.selectedPlannerLocId && appState.locations.length > 0) {
+            if (!appState.locations.some(l => l.id === appState.selectedPlannerLocId)) {
                 appState.selectedPlannerLocId = appState.locations[0].id;
-            }
-
-            const webhookInput = document.getElementById('admin-webhook-url');
-            if (webhookInput && appState.webhookUrl) {
-                webhookInput.value = appState.webhookUrl;
             }
         }
 
+        function loadState() {
+            try {
+                const saved = localStorage.getItem('noelops_v2_state');
+                if (saved) appState = { ...appState, ...JSON.parse(saved) };
+            } catch (e) {
+                console.error('Failed to load state from localStorage:', e);
+            }
+
+            normalizeState();
+            syncWebhookInput();
+        }
+
+        function syncWebhookInput() {
+            const webhookInput = document.getElementById('admin-webhook-url');
+            if (webhookInput) webhookInput.value = appState.webhookUrl || '';
+        }
+
+        // Returns false (and warns) if the browser refuses to store the state, e.g. storage quota exceeded
         function saveState() {
-            localStorage.setItem('noelops_v2_state', JSON.stringify(appState));
+            try {
+                localStorage.setItem('noelops_v2_state', JSON.stringify(appState));
+                return true;
+            } catch (e) {
+                console.error('Failed to save state to localStorage:', e);
+                showAlert('Could not save: browser storage is full or blocked. Remove some custom logo uploads and try again.', 'warning');
+                return false;
+            }
         }
 
         // Navigation Tab Switching Logic
@@ -792,20 +838,33 @@
             renderGrowPlanner();
             renderTimersPage();
             renderAdminTable();
+            renderAdminStrainLogos();
             updateWebhookPill();
             const badge = document.getElementById('active-timers-badge');
             if (badge) badge.innerText = appState.locations.length;
+            const postalList = document.getElementById('timers-postal-list');
+            if (postalList) postalList.innerText = appState.locations.map(l => l.id).join(', ') || '—';
+        }
+
+        // Image sources that failed to load, so re-renders show the fallback without re-requesting them
+        const missingImageSrcs = new Set();
+
+        // <img> that swaps itself for the fallback markup placed right after it if the file fails to load
+        function imgWithFallback(src, alt, imgClass, fallbackHtml) {
+            if (missingImageSrcs.has(src)) return fallbackHtml;
+            return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" class="${imgClass}" onerror="missingImageSrcs.add(this.getAttribute('src')); this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"><div class="hidden w-full h-full flex items-center justify-center">${fallbackHtml}</div>`;
         }
 
         function renderMasterLogo() {
             const container = document.getElementById('master-logo-container');
             const preview = document.getElementById('admin-logo-preview');
 
-            const logoHtml = appState.masterLogo
-                ? `<img src="${appState.masterLogo}" alt="NoelOps Logo" class="w-full h-full object-contain drop-shadow-md rounded-lg">`
-                : `<svg class="w-8 h-8 fill-current text-weed-400 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]" viewBox="0 0 24 24">
-                        <path d="M12,2C11.5,4 10,7 8,9C6,11 3,11.5 2,12C4,12.5 7,14 9,16C10,17 11,19 12,22C13,19 14,17 15,16C17,14 20,12.5 22,12C21,11.5 18,11 16,9C14,7 12.5,4 12,22M12,7C12.5,8.5 13.5,10 15,11C13.5,12 12.5,13.5 12,15C11.5,13.5 10.5,12 9,11C10.5,10 11.5,8.5 12,7Z"/>
-                    </svg>`;
+            const logoHtml = imgWithFallback(
+                appState.masterLogo || DEFAULT_MASTER_LOGO,
+                'NoelOps Logo',
+                'w-full h-full object-cover drop-shadow-md rounded-lg',
+                LEAF_SVG
+            );
 
             const pingHtml = `<span class="absolute -top-1 -right-1 flex h-3 w-3 z-10">
                               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-weed-400 opacity-75"></span>
@@ -816,21 +875,56 @@
             if (preview) preview.innerHTML = logoHtml;
 
             const urlInput = document.getElementById('master-logo-url-input');
-            if (urlInput && appState.masterLogo && appState.masterLogo.startsWith('http')) {
-                urlInput.value = appState.masterLogo;
+            if (urlInput) {
+                urlInput.value = appState.masterLogo && /^https?:\/\//i.test(appState.masterLogo) ? appState.masterLogo : '';
             }
         }
 
-        function getStrainLogo(strainId) {
-            if (appState.badgeImages && appState.badgeImages[strainId]) {
-                return `<img src="${appState.badgeImages[strainId]}" alt="${strainId}" class="w-full h-full object-contain drop-shadow-md rounded-xl hover:scale-105 transition-transform duration-200">`;
-            }
+        function getStrainLogoSrc(strainId) {
+            return appState.badgeImages[strainId] || `${STRAIN_LOGO_DIR}/${strainId}.png`;
+        }
 
-            // Tactical badge fallback graphics
-            return `<div class="w-full h-full flex flex-col items-center justify-center text-[10px] font-bold text-weed-400 bg-weed-950/80 rounded-xl p-2 text-center border border-weed-800 cursor-pointer hover:bg-weed-900/60 transition-colors" onclick="switchTab('admin')" title="Click to upload badge sheet in Admin">
+        function getStrainLogo(strainId) {
+            const strain = DEFAULT_STRAINS.find(s => s.id === strainId);
+            const fallback = `<div class="w-full h-full flex flex-col items-center justify-center text-[10px] font-bold text-weed-400 bg-weed-950/80 rounded-xl p-2 text-center border border-weed-800 cursor-pointer hover:bg-weed-900/60 transition-colors" onclick="switchTab('admin')" title="Add ${escapeHtml(STRAIN_LOGO_DIR)}/${escapeHtml(strainId)}.png to the repo, or upload one in Admin">
                         <i class="fa-solid fa-cannabis text-2xl mb-1 text-weed-400"></i>
-                        <span>Upload Badge</span>
+                        <span>No Logo</span>
                     </div>`;
+
+            return imgWithFallback(
+                getStrainLogoSrc(strainId),
+                strain ? strain.name : strainId,
+                'w-full h-full object-contain drop-shadow-md rounded-xl hover:scale-105 transition-transform duration-200',
+                fallback
+            );
+        }
+
+        function renderAdminStrainLogos() {
+            const grid = document.getElementById('admin-strain-logos-grid');
+            if (!grid) return;
+
+            grid.innerHTML = DEFAULT_STRAINS.map(strain => {
+                const isOverride = Boolean(appState.badgeImages[strain.id]);
+                const sourceLabel = isOverride
+                    ? '<span class="text-amber-300">Custom upload (this browser)</span>'
+                    : `<span class="text-slate-500 font-mono">${escapeHtml(STRAIN_LOGO_DIR)}/${escapeHtml(strain.id)}.png</span>`;
+
+                return `
+                    <div class="p-3 rounded-xl bg-darkbg/90 border border-weed-900 flex flex-col items-center text-center space-y-2">
+                        <span class="text-xs font-bold ${strain.nameColor} truncate w-full">${escapeHtml(strain.name)}</span>
+                        <div class="w-16 h-16 flex items-center justify-center">
+                            ${getStrainLogo(strain.id)}
+                        </div>
+                        <div class="text-[10px] truncate w-full">${sourceLabel}</div>
+                        <div class="flex w-full space-x-1">
+                            <button onclick="pickStrainLogo(${jsArg(strain.id)})" class="flex-1 py-1 rounded-lg bg-weed-950 border border-weed-700 text-weed-300 hover:bg-weed-900 text-[10px] font-bold transition-all" title="Upload a logo for this browser">
+                                <i class="fa-solid fa-upload mr-1"></i>Upload
+                            </button>
+                            ${isOverride ? `<button onclick="resetStrainLogo(${jsArg(strain.id)})" class="px-2 py-1 rounded-lg bg-red-950/60 border border-red-800 text-red-300 text-[10px]" title="Go back to the repo file"><i class="fa-solid fa-rotate-left"></i></button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         // Dashboard View Renderer
@@ -854,42 +948,7 @@
             document.getElementById('dash-total-untrimmed').innerText = totalUntrimmed.toLocaleString();
             document.getElementById('dash-coca-count').innerText = (appState.coca.quantity || 0).toLocaleString();
 
-            // Populate Live Timers Ticker Bar
-            const tickerContainer = document.getElementById('dashboard-timers-quicklook');
-            if (tickerContainer) {
-                tickerContainer.innerHTML = appState.locations.map(loc => {
-                    const elapsedSecs = loc.startTime ? Math.floor((Date.now() - loc.startTime) / 1000) : 0;
-                    const totalSecs = loc.durationHours * 3600;
-                    const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
-                    const pct = loc.startTime ? Math.min(100, (elapsedSecs / totalSecs) * 100) : 0;
-
-                    let statusText = 'INACTIVE';
-                    let statusBg = 'bg-slate-900 text-slate-400 border-slate-800';
-                    
-                    if (loc.startTime) {
-                        if (remainingSecs === 0) {
-                            statusText = 'READY!';
-                            statusBg = 'bg-weed-950 text-weed-400 border-weed-500 animate-pulse';
-                        } else {
-                            statusText = formatTime(remainingSecs);
-                            statusBg = 'bg-amber-950/60 text-amber-300 border-amber-800';
-                        }
-                    }
-
-                    return `
-                        <div class="min-w-[200px] bg-darkcard/90 border border-weed-900 rounded-xl p-3 flex flex-col justify-between shrink-0 hover:border-weed-600 transition-all">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-sm font-black text-white font-mono">${loc.id}</span>
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border font-mono ${statusBg}">${statusText}</span>
-                            </div>
-                            <div class="text-[10px] text-slate-400 truncate mb-2">${loc.alias || 'Grow Operation'}</div>
-                            <div class="w-full bg-darkbg rounded-full h-1.5 border border-weed-950 overflow-hidden">
-                                <div class="bg-gradient-to-r from-weed-600 to-weed-400 h-full transition-all duration-500" style="width: ${pct}%"></div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
+            renderTimerTicker();
 
             // Populate 2x5 Strain Cards Grid on Dashboard
             const strainContainer = document.getElementById('dashboard-strain-quicklook');
@@ -921,6 +980,45 @@
                                     <span class="text-slate-400 text-[10px] uppercase">Bricks:</span>
                                     <span class="font-extrabold text-white">${inv.bricks.toLocaleString()}</span>
                                 </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Live timer ticker bar; re-rendered every second while the dashboard is visible
+        function renderTimerTicker() {
+            const tickerContainer = document.getElementById('dashboard-timers-quicklook');
+            if (tickerContainer) {
+                tickerContainer.innerHTML = appState.locations.map(loc => {
+                    const elapsedSecs = loc.startTime ? Math.floor((Date.now() - loc.startTime) / 1000) : 0;
+                    const totalSecs = loc.durationHours * 3600;
+                    const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
+                    const pct = loc.startTime ? Math.min(100, (elapsedSecs / totalSecs) * 100) : 0;
+
+                    let statusText = 'INACTIVE';
+                    let statusBg = 'bg-slate-900 text-slate-400 border-slate-800';
+                    
+                    if (loc.startTime) {
+                        if (remainingSecs === 0) {
+                            statusText = 'READY!';
+                            statusBg = 'bg-weed-950 text-weed-400 border-weed-500 animate-pulse';
+                        } else {
+                            statusText = formatTime(remainingSecs);
+                            statusBg = 'bg-amber-950/60 text-amber-300 border-amber-800';
+                        }
+                    }
+
+                    return `
+                        <div class="min-w-[200px] bg-darkcard/90 border border-weed-900 rounded-xl p-3 flex flex-col justify-between shrink-0 hover:border-weed-600 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-black text-white font-mono">${escapeHtml(loc.id)}</span>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border font-mono ${statusBg}">${statusText}</span>
+                            </div>
+                            <div class="text-[10px] text-slate-400 truncate mb-2">${escapeHtml(loc.alias || 'Grow Operation')}</div>
+                            <div class="w-full bg-darkbg rounded-full h-1.5 border border-weed-950 overflow-hidden">
+                                <div class="bg-gradient-to-r from-weed-600 to-weed-400 h-full transition-all duration-500" style="width: ${pct}%"></div>
                             </div>
                         </div>
                     `;
@@ -1069,8 +1167,8 @@
                         : 'bg-darkbg text-slate-400 hover:text-white border-weed-900';
 
                     return `
-                        <button onclick="selectPlannerLocation('${loc.id}')" class="px-4 py-2 rounded-xl border text-xs transition-all font-mono whitespace-nowrap ${btnClass}">
-                            <span>${loc.id}</span>
+                        <button onclick="selectPlannerLocation(${jsArg(loc.id)})" class="px-4 py-2 rounded-xl border text-xs transition-all font-mono whitespace-nowrap ${btnClass}">
+                            <span>${escapeHtml(loc.id)}</span>
                             <span class="text-[10px] opacity-75 ml-1">(${loc.pots || 10} Pots)</span>
                         </button>
                     `;
@@ -1098,18 +1196,18 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-weed-900/60 pb-4">
                         <div>
                             <div class="flex items-center space-x-3">
-                                <span class="text-2xl font-black text-white font-mono">${loc.id}</span>
-                                <span class="text-xs px-2.5 py-0.5 rounded-full bg-weed-950 text-weed-400 border border-weed-800">${loc.alias || 'Location Strategy'}</span>
+                                <span class="text-2xl font-black text-white font-mono">${escapeHtml(loc.id)}</span>
+                                <span class="text-xs px-2.5 py-0.5 rounded-full bg-weed-950 text-weed-400 border border-weed-800">${escapeHtml(loc.alias || 'Location Strategy')}</span>
                             </div>
-                            <p class="text-xs text-slate-400 mt-1">Configure pot allocations per strain for Postal ${loc.id}</p>
+                            <p class="text-xs text-slate-400 mt-1">Configure pot allocations per strain for Postal ${escapeHtml(loc.id)}</p>
                         </div>
 
                         <div class="flex items-center space-x-4">
                             <div class="text-right">
                                 <label class="block text-[10px] uppercase font-bold text-slate-400">Location Pots</label>
-                                <input type="number" min="1" value="${locPots}" onchange="updateLocationTotalPots('${loc.id}', this.value)" class="w-20 bg-darkbg border border-weed-800 rounded-xl px-3 py-1 text-center font-bold font-mono text-weed-300 focus:outline-none focus:border-weed-400">
+                                <input type="number" min="1" value="${locPots}" onchange="updateLocationTotalPots(${jsArg(loc.id)}, this.value)" class="w-20 bg-darkbg border border-weed-800 rounded-xl px-3 py-1 text-center font-bold font-mono text-weed-300 focus:outline-none focus:border-weed-400">
                             </div>
-                            <button onclick="autoBalanceLocationPots('${loc.id}')" class="px-3 py-2 rounded-xl bg-weed-950 border border-weed-800 hover:bg-weed-900 text-weed-300 text-xs font-semibold transition-all">
+                            <button onclick="autoBalanceLocationPots(${jsArg(loc.id)})" class="px-3 py-2 rounded-xl bg-weed-950 border border-weed-800 hover:bg-weed-900 text-weed-300 text-xs font-semibold transition-all">
                                 <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Auto-Balance 10 Strains
                             </button>
                         </div>
@@ -1132,7 +1230,7 @@
 
                     <!-- Per Strain Pot Input Grid -->
                     <div class="space-y-3">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">Strain Pot Allocation (${loc.id})</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">Strain Pot Allocation (${escapeHtml(loc.id)})</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                             ${DEFAULT_STRAINS.map(strain => {
                                 const potsAllocated = Number((loc.strainPots && loc.strainPots[strain.id]) || 0);
@@ -1146,7 +1244,7 @@
                                         </div>
                                         <div>
                                             <label class="block text-[10px] text-slate-500 uppercase">Pots</label>
-                                            <input type="number" min="0" value="${potsAllocated}" onchange="updateLocationStrainPots('${loc.id}', '${strain.id}', this.value)" class="w-full bg-darkcard border border-weed-900 rounded-lg px-2 py-1 text-xs font-mono font-bold text-center text-white focus:outline-none focus:border-weed-500">
+                                            <input type="number" min="0" value="${potsAllocated}" onchange="updateLocationStrainPots(${jsArg(loc.id)}, ${jsArg(strain.id)}, this.value)" class="w-full bg-darkcard border border-weed-900 rounded-lg px-2 py-1 text-xs font-mono font-bold text-center text-white focus:outline-none focus:border-weed-500">
                                         </div>
                                         <div class="text-[10px] text-slate-400 font-mono flex justify-between">
                                             <span>~${Math.round(strainBuds)} Bud</span>
@@ -1215,7 +1313,7 @@
                 const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
                 const pct = loc.startTime ? Math.min(100, (elapsedSecs / totalSecs) * 100) : 0;
 
-                let displayClock = loc.durationHours + ':00:00';
+                let displayClock = formatTime(Math.round(totalSecs));
                 let isReady = false;
 
                 if (loc.startTime) {
@@ -1232,8 +1330,8 @@
                         
                         <div class="flex items-center justify-between border-b border-weed-900/50 pb-3">
                             <div>
-                                <h2 class="text-2xl font-black text-white font-mono tracking-wider">${loc.id}</h2>
-                                <p class="text-xs text-slate-400">${loc.alias || 'Grow Operation'}</p>
+                                <h2 class="text-2xl font-black text-white font-mono tracking-wider">${escapeHtml(loc.id)}</h2>
+                                <p class="text-xs text-slate-400">${escapeHtml(loc.alias || 'Grow Operation')}</p>
                             </div>
                             <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-full ${isReady ? 'bg-weed-950 text-weed-400 border border-weed-500 animate-pulse' : 'bg-darkbg text-slate-400 border border-weed-900'}">
                                 ${isReady ? 'READY' : (loc.startTime ? 'RUNNING' : 'IDLE')}
@@ -1253,11 +1351,11 @@
                         <!-- Action Buttons: Start/Restart & Stop -->
                         <div class="space-y-2">
                             <div class="grid grid-cols-2 gap-2">
-                                <button onclick="startTimer('${loc.id}')" class="py-2.5 px-3 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center space-x-1">
+                                <button onclick="startTimer(${jsArg(loc.id)})" class="py-2.5 px-3 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center space-x-1">
                                     <i class="fa-solid fa-play text-[10px]"></i>
                                     <span>${loc.startTime ? 'Restart' : 'Start'}</span>
                                 </button>
-                                <button onclick="stopTimer('${loc.id}')" class="py-2.5 px-3 rounded-xl bg-red-950/60 hover:bg-red-900 border border-red-800 text-red-200 font-bold text-xs transition-all flex items-center justify-center space-x-1">
+                                <button onclick="stopTimer(${jsArg(loc.id)})" class="py-2.5 px-3 rounded-xl bg-red-950/60 hover:bg-red-900 border border-red-800 text-red-200 font-bold text-xs transition-all flex items-center justify-center space-x-1">
                                     <i class="fa-solid fa-stop text-[10px]"></i>
                                     <span>Stop</span>
                                 </button>
@@ -1273,6 +1371,7 @@
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
                 loc.startTime = Date.now();
+                loc.harvestAlertSent = false;
                 saveState();
                 renderAll();
                 showAlert(`Timer started for Postal ${locId} (${loc.durationHours} Hours)`, 'success');
@@ -1283,6 +1382,7 @@
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
                 loc.startTime = null;
+                loc.harvestAlertSent = false;
                 saveState();
                 renderAll();
                 showAlert(`Timer stopped for Postal ${locId}`, 'info');
@@ -1293,6 +1393,7 @@
             const now = Date.now();
             appState.locations.forEach(loc => {
                 loc.startTime = now;
+                loc.harvestAlertSent = false;
             });
             saveState();
             renderAll();
@@ -1303,6 +1404,7 @@
             if (confirm('Are you sure you want to stop and reset all location grow timers?')) {
                 appState.locations.forEach(loc => {
                     loc.startTime = null;
+                    loc.harvestAlertSent = false;
                 });
                 saveState();
                 renderAll();
@@ -1311,16 +1413,67 @@
         }
 
         function tickTimers() {
+            checkHarvestAlerts();
+
             // Re-render ticker bar and timers tab if visible
             const dashTab = document.getElementById('tab-dashboard');
             if (dashTab && !dashTab.classList.contains('hidden')) {
-                renderDashboard();
+                renderTimerTicker();
             }
 
             const timersTab = document.getElementById('tab-timers');
             if (timersTab && !timersTab.classList.contains('hidden')) {
                 renderTimersPage();
             }
+        }
+
+        // Fire a Discord alert once per cycle when a location's timer reaches zero
+        function checkHarvestAlerts() {
+            let changed = false;
+            appState.locations.forEach(loc => {
+                if (!loc.startTime || loc.harvestAlertSent) return;
+                if (Date.now() - loc.startTime >= loc.durationHours * 3600 * 1000) {
+                    loc.harvestAlertSent = true;
+                    changed = true;
+                    sendHarvestWebhook(loc);
+                }
+            });
+            if (changed) {
+                saveState();
+                renderAdminTable();
+            }
+        }
+
+        function sendHarvestWebhook(loc) {
+            if (!appState.webhookUrl) return;
+            postDiscordWebhook({
+                username: "NoelOps Operations Command",
+                embeds: [{
+                    title: `🌿 Harvest Ready: Postal ${loc.id}`,
+                    description: `${loc.alias || 'Grow Operation'} has finished its ${loc.durationHours}h cycle and is ready to harvest.`,
+                    color: 2268484,
+                    fields: [
+                        { name: "Postal", value: String(loc.id), inline: true },
+                        { name: "Pots", value: String(loc.pots || 0), inline: true },
+                        { name: "Ready At", value: new Date(loc.startTime + loc.durationHours * 3600 * 1000).toUTCString(), inline: false }
+                    ],
+                    footer: { text: "NoelOps FiveM RP Operations" }
+                }]
+            }).then(ok => {
+                if (!ok) showAlert(`Harvest webhook for Postal ${loc.id} failed to send.`, 'warning');
+            });
+        }
+
+        // Resolves to true on success; never rejects
+        function postDiscordWebhook(payload) {
+            return fetch(appState.webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(res => res.ok).catch(err => {
+                console.error('Webhook error:', err);
+                return false;
+            });
         }
 
         function formatTime(totalSecs) {
@@ -1375,18 +1528,12 @@
                 }]
             };
 
-            fetch(appState.webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(res => {
-                if (res.ok) {
+            postDiscordWebhook(payload).then(ok => {
+                if (ok) {
                     showAlert('Test dispatch message sent to Discord!', 'success');
                 } else {
-                    showAlert('Failed to dispatch webhook. Verify URL format.', 'warning');
+                    showAlert('Failed to dispatch webhook. Verify the URL is correct.', 'warning');
                 }
-            }).catch(err => {
-                showAlert('Webhook Error: ' + err.message, 'warning');
             });
         }
 
@@ -1398,12 +1545,12 @@
             if (badge) badge.innerText = `${appState.locations.length} Active`;
 
             tbody.innerHTML = appState.locations.map(loc => {
-                const isRunning = loc.startTime !== null;
+                const isRunning = Boolean(loc.startTime);
 
                 return `
                     <tr class="hover:bg-weed-950/30 transition-colors">
-                        <td class="p-3 font-mono font-bold text-white">${loc.id}</td>
-                        <td class="p-3 text-slate-300">${loc.alias || 'N/A'}</td>
+                        <td class="p-3 font-mono font-bold text-white">${escapeHtml(loc.id)}</td>
+                        <td class="p-3 text-slate-300">${escapeHtml(loc.alias || 'N/A')}</td>
                         <td class="p-3 font-mono text-slate-300">${loc.durationHours} Hours</td>
                         <td class="p-3">
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${isRunning ? 'bg-weed-950 text-weed-400 border border-weed-700' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
@@ -1411,7 +1558,7 @@
                             </span>
                         </td>
                         <td class="p-3 text-right">
-                            <button onclick="deleteLocation('${loc.id}')" class="px-2.5 py-1 rounded bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold border border-red-800 transition-all">
+                            <button onclick="deleteLocation(${jsArg(loc.id)})" class="px-2.5 py-1 rounded bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold border border-red-800 transition-all">
                                 <i class="fa-solid fa-trash-can mr-1"></i> Delete
                             </button>
                         </td>
@@ -1466,91 +1613,95 @@
             }
         }
 
-        function handleBadgeSheetUpload(event) {
-            const file = event.target.files[0];
-            if (file) processBadgeSheetImage(file);
-        }
-
-        function handleGlobalPaste(event) {
-            const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-            for (let item of items) {
-                if (item.type.indexOf('image') === 0) {
-                    const blob = item.getAsFile();
-                    processBadgeSheetImage(blob);
-                    break;
-                }
-            }
-        }
-
-        function processBadgeSheetImage(fileOrBlob) {
+        // Read an image file and downscale it so it fits comfortably in localStorage
+        function readImageAsDataUrl(file, maxPx, callback) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
-                    sliceBadgeSheet(img);
+                    const scale = Math.min(1, maxPx / Math.max(img.width, img.height));
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.max(1, Math.round(img.width * scale));
+                    canvas.height = Math.max(1, Math.round(img.height * scale));
+                    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                    callback(canvas.toDataURL('image/webp', 0.9));
                 };
+                img.onerror = () => showAlert('That file could not be read as an image.', 'warning');
                 img.src = e.target.result;
             };
-            reader.readAsDataURL(fileOrBlob);
+            reader.onerror = () => showAlert('That file could not be read.', 'warning');
+            reader.readAsDataURL(file);
         }
 
-        function sliceBadgeSheet(img) {
-            const rows = 2;
-            const cols = 5;
-            const cellWidth = img.width / cols;
-            const cellHeight = img.height / rows;
+        let pendingStrainLogoId = null;
 
-            DEFAULT_STRAINS.forEach(strain => {
-                const canvas = document.createElement('canvas');
-                canvas.width = cellWidth;
-                canvas.height = cellHeight;
-                const ctx = canvas.getContext('2d');
+        function pickStrainLogo(strainId) {
+            pendingStrainLogoId = strainId;
+            document.getElementById('strain-logo-file-input').click();
+        }
 
-                const srcX = strain.gridPos.c * cellWidth;
-                const srcY = strain.gridPos.r * cellHeight;
+        function handleStrainLogoFileUpload(event) {
+            const file = event.target.files[0];
+            event.target.value = ''; // allow re-selecting the same file
+            const strainId = pendingStrainLogoId;
+            const strain = DEFAULT_STRAINS.find(s => s.id === strainId);
+            if (!file || !strain) return;
 
-                ctx.drawImage(img, srcX, srcY, cellWidth, cellHeight, 0, 0, cellWidth, cellHeight);
-                appState.badgeImages[strain.id] = canvas.toDataURL('image/png');
+            readImageAsDataUrl(file, UPLOADED_LOGO_MAX_PX, dataUrl => {
+                const previous = appState.badgeImages[strainId];
+                appState.badgeImages[strainId] = dataUrl;
+                if (!saveState()) {
+                    if (previous) appState.badgeImages[strainId] = previous;
+                    else delete appState.badgeImages[strainId];
+                    return;
+                }
+                renderAll();
+                showAlert(`${strain.name} logo updated for this browser.`, 'success');
             });
+        }
 
+        function resetStrainLogo(strainId) {
+            const strain = DEFAULT_STRAINS.find(s => s.id === strainId);
+            delete appState.badgeImages[strainId];
             saveState();
             renderAll();
-            showAlert('10-Strain Badge Sheet successfully sliced and assigned!', 'success');
+            showAlert(`${strain ? strain.name : strainId} logo reset to ${STRAIN_LOGO_DIR}/${strainId}.png`, 'info');
         }
 
         function handleMasterLogoFileUpload(event) {
             const file = event.target.files[0];
+            event.target.value = '';
             if (!file) return;
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                appState.masterLogo = e.target.result;
-                saveState();
+            readImageAsDataUrl(file, UPLOADED_LOGO_MAX_PX, dataUrl => {
+                const previous = appState.masterLogo;
+                appState.masterLogo = dataUrl;
+                if (!saveState()) {
+                    appState.masterLogo = previous;
+                    return;
+                }
                 renderMasterLogo();
-                showAlert('Master top-left branding logo updated!', 'success');
-            };
-            reader.readAsDataURL(file);
+                showAlert('Header logo updated for this browser!', 'success');
+            });
         }
 
         function saveMasterLogoUrl() {
             const url = document.getElementById('master-logo-url-input').value.trim();
-            if (!url) {
-                showAlert('Please enter a valid image URL', 'warning');
+            if (!/^https?:\/\/\S+$/i.test(url)) {
+                showAlert('Please enter a valid image URL starting with http:// or https://', 'warning');
                 return;
             }
             appState.masterLogo = url;
             saveState();
             renderMasterLogo();
-            showAlert('Master logo URL saved!', 'success');
+            showAlert('Header logo URL saved!', 'success');
         }
 
         function resetMasterLogo() {
             appState.masterLogo = null;
             saveState();
             renderMasterLogo();
-            const input = document.getElementById('master-logo-url-input');
-            if (input) input.value = '';
-            showAlert('Master logo reset to default icon.', 'info');
+            showAlert(`Header logo reset to ${DEFAULT_MASTER_LOGO}.`, 'info');
         }
 
         function exportDataJSON() {
@@ -1568,17 +1719,22 @@
 
         function handleImportJSON(event) {
             const file = event.target.files[0];
+            event.target.value = '';
             if (!file) return;
 
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const imported = JSON.parse(e.target.result);
-                    if (imported && typeof imported === 'object') {
+                    if (isPlainObject(imported)) {
                         appState = { ...appState, ...imported };
+                        normalizeState();
+                        syncWebhookInput();
                         saveState();
                         renderAll();
                         showAlert('NoelOps state successfully imported!', 'success');
+                    } else {
+                        showAlert('Invalid JSON state backup file.', 'warning');
                     }
                 } catch (err) {
                     showAlert('Invalid JSON state backup file.', 'warning');
@@ -1589,18 +1745,21 @@
 
         function factoryResetData() {
             if (confirm('CRITICAL: This will wipe all local inventory counts, locations, and settings! Proceed?')) {
-                localStorage.removeItem('noelops_v2_state');
+                try { localStorage.removeItem('noelops_v2_state'); } catch (e) { console.error(e); }
                 location.reload();
             }
         }
 
         function startMainClock() {
-            setInterval(() => {
-                const now = new Date();
+            const update = () => {
                 const clock = document.getElementById('live-clock');
-                if (clock) clock.innerText = now.toUTCString().split(' ')[4] + ' UTC';
-            }, 1000);
+                if (clock) clock.innerText = new Date().toUTCString().split(' ')[4] + ' UTC';
+            };
+            update();
+            setInterval(update, 1000);
         }
+
+        let alertTimeoutId = null;
 
         function showAlert(message, type = 'info') {
             const container = document.getElementById('alert-container');
@@ -1617,13 +1776,15 @@
                 <div class="p-4 rounded-xl border ${bgClass} flex items-center justify-between shadow-lg transition-all">
                     <div class="flex items-center space-x-3">
                         <i class="fa-solid ${iconClass} text-base"></i>
-                        <span class="text-xs font-bold">${message}</span>
+                        <span class="text-xs font-bold">${escapeHtml(message)}</span>
                     </div>
                     <button onclick="this.parentElement.remove()" class="text-xs opacity-70 hover:opacity-100"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             `;
 
-            setTimeout(() => {
+            // Restart the countdown so an earlier alert's timer can't hide this one early
+            clearTimeout(alertTimeoutId);
+            alertTimeoutId = setTimeout(() => {
                 container.classList.add('hidden');
                 container.innerHTML = '';
             }, 4000);
