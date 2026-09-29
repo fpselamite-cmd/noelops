@@ -633,8 +633,13 @@
                                     <input type="text" id="new-loc-id" required placeholder="e.g. 10420" class="w-full bg-darkbg border border-weed-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-weed-500 font-mono">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Default Duration (Hours)</label>
-                                    <input type="number" id="new-loc-hours" step="0.5" value="36" required class="w-full bg-darkbg border border-weed-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-weed-500 font-mono">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Timer Duration</label>
+                                    <div class="flex items-center space-x-2">
+                                        <input type="number" id="new-loc-hours" min="0" step="1" value="36" required aria-label="Hours" class="w-full bg-darkbg border border-weed-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-weed-500 font-mono">
+                                        <span class="text-xs text-slate-400">h</span>
+                                        <input type="number" id="new-loc-minutes" min="0" max="59" step="1" value="0" required aria-label="Minutes" class="w-full bg-darkbg border border-weed-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-weed-500 font-mono">
+                                        <span class="text-xs text-slate-400">m</span>
+                                    </div>
                                 </div>
                             </div>
                             <div>
@@ -734,6 +739,32 @@
         </form>
     </div>
 
+    <!-- Edit grow location -->
+    <div id="edit-location-modal" class="dx-modal hidden">
+        <form class="dx-glass dx-modal-card space-y-4 text-left" onsubmit="saveEditLocation(event)">
+            <h2 class="text-xl font-black text-white text-center">Edit Grow Location</h2>
+            <p class="text-xs text-slate-400 text-center">The alias, timer and pot plan stay with the location.</p>
+            <input type="hidden" id="edit-loc-original">
+            <label class="block text-xs font-semibold text-slate-300">Postal ID / Code
+                <input type="text" id="edit-loc-id" required class="mt-1 font-mono">
+            </label>
+            <label class="block text-xs font-semibold text-slate-300">Alias / Notes
+                <input type="text" id="edit-loc-alias" class="mt-1">
+            </label>
+            <div class="block text-xs font-semibold text-slate-300">Timer Duration
+                <div class="mt-1 flex items-center gap-2">
+                    <input type="number" id="edit-loc-hours" min="0" step="1" required aria-label="Hours" class="font-mono">
+                    <span class="text-slate-400">h</span>
+                    <input type="number" id="edit-loc-minutes" min="0" max="59" step="1" required aria-label="Minutes" class="font-mono">
+                    <span class="text-slate-400">m</span>
+                </div>
+            </div>
+            <p id="edit-loc-error" class="hidden text-xs text-red-400 font-semibold text-center"></p>
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px">Save Changes</button>
+            <button type="button" onclick="closeEditLocation()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
+        </form>
+    </div>
+
     <!-- Firebase config: kept in its own block so a pasting mistake here can't break the rest of the page.
          Paste only the { ... } object from the Firebase console, not its "const firebaseConfig =" line. -->
     <script>
@@ -769,7 +800,7 @@
             { id: '7078', alias: 'Leon VW', durationHours: 36, pots: 10, startTime: null, strainPots: {} },
             { id: '9182', alias: 'Leon JT', durationHours: 36, pots: 10, startTime: null, strainPots: {} },
             { id: '10060', alias: 'Benny Docks', durationHours: 36, pots: 10, startTime: null, strainPots: {} },
-            { id: '7093', alias: 'Jay 1', durationHours: 36, pots: 10, startTime: null, strainPots: {} }
+            { id: '9043', alias: 'Jay 1', durationHours: 36, pots: 10, startTime: null, strainPots: {} }
         ];
 
         // Logo files served from the repo. Strain logos live at logos/<strain id>.png
@@ -865,7 +896,7 @@
                     ...loc,
                     id: String(loc.id).trim(),
                     alias: typeof loc.alias === 'string' ? loc.alias : '',
-                    durationHours: Number(loc.durationHours) > 0 ? Number(loc.durationHours) : 36,
+                    durationHours: Number(loc.durationHours) > 0 ? Math.max(1, Math.round(Number(loc.durationHours) * 60)) / 60 : 36,
                     pots: Math.max(1, toCount(loc.pots) || 10),
                     startTime: Number(loc.startTime) > 0 ? Number(loc.startTime) : null,
                     strainPots: isPlainObject(loc.strainPots) ? loc.strainPots : {},
@@ -1637,7 +1668,7 @@
         }
 
         function timerState(loc) {
-            const totalSecs = loc.durationHours * 3600;
+            const totalSecs = durationSecs(loc);
             if (!loc.startTime) return { status: 'idle', totalSecs, remainingSecs: totalSecs, pct: 0 };
             const elapsedSecs = Math.max(0, Math.floor((syncNow() - loc.startTime) / 1000));
             const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
@@ -1651,7 +1682,7 @@
 
         // "Ready ~ 18:30", "Ready ~ 09:15 tomorrow", "Ready ~ Thu 09:15" in the viewer's own time zone
         function readyAtLabel(loc) {
-            const readyAt = new Date(loc.startTime + loc.durationHours * 3600 * 1000 - Sync.serverOffset);
+            const readyAt = new Date(loc.startTime + durationSecs(loc) * 1000 - Sync.serverOffset);
             const time = readyAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             const today = new Date();
             const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
@@ -1690,7 +1721,7 @@
                 const foot = ready
                     ? `<button onclick="harvestAndRestart(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-seedling mr-1"></i> Harvest &amp; Restart</button>`
                     : idle
-                        ? `<button onclick="startTimer(${jsArg(loc.id)})" class="dx-btn dx-btn-o"><i class="fa-solid fa-play mr-1"></i> Start ${escapeHtml(loc.durationHours)}h cycle</button>`
+                        ? `<button onclick="startTimer(${jsArg(loc.id)})" class="dx-btn dx-btn-o"><i class="fa-solid fa-play mr-1"></i> Start ${formatDuration(loc.durationHours)} cycle</button>`
                         : escapeHtml(readyAtLabel(loc));
 
                 return `
@@ -2089,7 +2120,7 @@
 
             grid.innerHTML = appState.locations.map(loc => {
                 const elapsedSecs = loc.startTime ? Math.max(0, Math.floor((syncNow() - loc.startTime) / 1000)) : 0;
-                const totalSecs = loc.durationHours * 3600;
+                const totalSecs = durationSecs(loc);
                 const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
                 const pct = loc.startTime ? Math.min(100, (elapsedSecs / totalSecs) * 100) : 0;
 
@@ -2163,7 +2194,7 @@
                 const restarting = Boolean(loc.startTime);
                 writeShared(timerChanges([loc], true));
                 logActivity({ pre: restarting ? 'restarted timer' : 'started timer', hi: `Postal ${locId}` });
-                showAlert(`Timer started for Postal ${locId} (${loc.durationHours} Hours)`, 'success');
+                showAlert(`Timer started for Postal ${locId} (${formatDuration(loc.durationHours)})`, 'success');
             }
         }
 
@@ -2172,7 +2203,7 @@
             if (loc) {
                 writeShared(timerChanges([loc], true));
                 logActivity({ pre: 'harvested', hi: `Postal ${locId}`, post: 'and restarted the cycle' });
-                showAlert(`Postal ${locId} harvested. New ${loc.durationHours}h cycle started.`, 'success');
+                showAlert(`Postal ${locId} harvested. New ${formatDuration(loc.durationHours)} cycle started.`, 'success');
             }
         }
 
@@ -2230,7 +2261,7 @@
         function checkHarvestAlerts() {
             appState.locations.forEach(loc => {
                 if (!loc.startTime || loc.harvestAlertSent) return;
-                if (syncNow() - loc.startTime < loc.durationHours * 3600 * 1000) return;
+                if (syncNow() - loc.startTime < durationSecs(loc) * 1000) return;
 
                 const claimId = `${loc.id}@${loc.startTime}`;
                 if (pendingHarvestClaims.has(claimId)) return;
@@ -2252,12 +2283,12 @@
                 username: "NoelOps Operations Command",
                 embeds: [{
                     title: `🌿 Harvest Ready: Postal ${loc.id}`,
-                    description: `${loc.alias || 'Grow Operation'} has finished its ${loc.durationHours}h cycle and is ready to harvest.`,
+                    description: `${loc.alias || 'Grow Operation'} has finished its ${formatDuration(loc.durationHours)} cycle and is ready to harvest.`,
                     color: 2268484,
                     fields: [
                         { name: "Postal", value: String(loc.id), inline: true },
                         { name: "Pots", value: String(loc.pots || 0), inline: true },
-                        { name: "Ready At", value: new Date(loc.startTime + loc.durationHours * 3600 * 1000).toUTCString(), inline: false }
+                        { name: "Ready At", value: new Date(loc.startTime + durationSecs(loc) * 1000).toUTCString(), inline: false }
                     ],
                     footer: { text: "NoelOps FiveM RP Operations" }
                 }]
@@ -2276,6 +2307,33 @@
                 console.error('Webhook error:', err);
                 return false;
             });
+        }
+
+        // Timer lengths are stored as hours but always handled in whole minutes
+        function durationMinutes(loc) {
+            return Math.max(1, Math.round(loc.durationHours * 60));
+        }
+
+        function durationSecs(loc) {
+            return durationMinutes(loc) * 60;
+        }
+
+        // 36 → "36h", 1.5 → "1h 30m", 0.75 → "45m"
+        function formatDuration(hours) {
+            const total = Math.max(1, Math.round(hours * 60));
+            const h = Math.floor(total / 60), m = total % 60;
+            return h && m ? `${h}h ${m}m` : h ? `${h}h` : `${m}m`;
+        }
+
+        // Total minutes from an hours box and a minutes box; null if not a valid duration of at least 1 minute
+        function readDurationInputs(hoursId, minutesId) {
+            const hoursRaw = document.getElementById(hoursId).value;
+            const minutesRaw = document.getElementById(minutesId).value;
+            const hours = hoursRaw === '' ? 0 : Number(hoursRaw);
+            const minutes = minutesRaw === '' ? 0 : Number(minutesRaw);
+            if (!Number.isInteger(hours) || !Number.isInteger(minutes) || hours < 0 || minutes < 0 || minutes > 59) return null;
+            const total = hours * 60 + minutes;
+            return total >= 1 ? total : null;
         }
 
         function formatTime(totalSecs) {
@@ -2352,13 +2410,16 @@
                     <tr class="hover:bg-weed-950/30 transition-colors">
                         <td class="p-3 font-mono font-bold text-white">${escapeHtml(loc.id)}</td>
                         <td class="p-3 text-slate-300">${escapeHtml(loc.alias || 'N/A')}</td>
-                        <td class="p-3 font-mono text-slate-300">${loc.durationHours} Hours</td>
+                        <td class="p-3 font-mono text-slate-300">${formatDuration(loc.durationHours)}</td>
                         <td class="p-3">
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${isRunning ? 'bg-weed-950 text-weed-400 border border-weed-700' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
                                 ${isRunning ? 'ACTIVE' : 'IDLE'}
                             </span>
                         </td>
-                        <td class="p-3 text-right">
+                        <td class="p-3 text-right whitespace-nowrap">
+                            <button onclick="openEditLocation(${jsArg(loc.id)})" class="px-2.5 py-1 mr-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700 transition-all">
+                                <i class="fa-solid fa-pen mr-1"></i> Edit
+                            </button>
                             <button onclick="deleteLocation(${jsArg(loc.id)})" class="px-2.5 py-1 rounded bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold border border-red-800 transition-all">
                                 <i class="fa-solid fa-trash-can mr-1"></i> Delete
                             </button>
@@ -2371,11 +2432,15 @@
         function handleAddNewLocation(e) {
             e.preventDefault();
             const idInput = document.getElementById('new-loc-id');
-            const hoursInput = document.getElementById('new-loc-hours');
+            const minutesTotal = readDurationInputs('new-loc-hours', 'new-loc-minutes');
             const aliasInput = document.getElementById('new-loc-alias');
 
             const id = idInput.value.trim();
-            const durationHours = parseFloat(hoursInput.value) || 36;
+            if (minutesTotal === null) {
+                showAlert('Enter a timer duration of at least 1 minute (minutes 0-59).', 'warning');
+                return;
+            }
+            const durationHours = minutesTotal / 60;
             const alias = aliasInput.value.trim();
 
             if (!id) return;
@@ -2402,6 +2467,61 @@
             idInput.value = '';
             aliasInput.value = '';
             showAlert(`New grow location Postal ${id} added!`, 'success');
+        }
+
+        function openEditLocation(locId) {
+            const loc = appState.locations.find(l => l.id === locId);
+            if (!loc) return;
+            document.getElementById('edit-loc-original').value = loc.id;
+            document.getElementById('edit-loc-id').value = loc.id;
+            document.getElementById('edit-loc-alias').value = loc.alias || '';
+            document.getElementById('edit-loc-hours').value = Math.floor(durationMinutes(loc) / 60);
+            document.getElementById('edit-loc-minutes').value = durationMinutes(loc) % 60;
+            document.getElementById('edit-loc-error').classList.add('hidden');
+            document.getElementById('edit-location-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('edit-loc-id').focus(), 50);
+        }
+
+        function closeEditLocation() {
+            document.getElementById('edit-location-modal').classList.add('hidden');
+        }
+
+        // Change a location's postal ID, alias or duration. A new ID moves the whole record
+        // (timer, pots, alias) to the new key in one write, so nothing is lost and no copy is left behind.
+        function saveEditLocation(event) {
+            event.preventDefault();
+            const originalId = document.getElementById('edit-loc-original').value;
+            const newId = document.getElementById('edit-loc-id').value.trim();
+            const alias = document.getElementById('edit-loc-alias').value.trim();
+            const minutesTotal = readDurationInputs('edit-loc-hours', 'edit-loc-minutes');
+            const error = document.getElementById('edit-loc-error');
+            const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
+
+            const loc = appState.locations.find(l => l.id === originalId);
+            if (!loc) return showError('This location was deleted by someone else.');
+            if (!newId) return showError('Enter a postal ID.');
+            if (minutesTotal === null) return showError('Enter a duration of at least 1 minute (minutes 0-59).');
+            const durationHours = minutesTotal / 60;
+            if (newId !== originalId && appState.locations.some(l => l.id === newId)) return showError(`Postal ${newId} already exists.`);
+
+            const record = buildSharedTree({ locations: [loc] }).locations[locKey(loc.id)];
+            const updated = { ...record, id: newId, alias, durationHours };
+            const changes = {};
+            if (newId !== originalId) changes[locPath(originalId)] = null;
+            changes[locPath(newId)] = updated;
+            if (appState.selectedPlannerLocId === originalId) {
+                appState.selectedPlannerLocId = newId; // keep the planner on the same location
+                saveState();
+            }
+            writeShared(changes);
+
+            const what = [];
+            if (newId !== originalId) what.push(`Postal ${originalId} → ${newId}`);
+            if (alias !== (loc.alias || '')) what.push(`alias "${alias || '—'}"`);
+            if (minutesTotal !== durationMinutes(loc)) what.push(`${formatDuration(durationHours)} timer`);
+            if (what.length) logActivity({ pre: 'edited location', hi: what.join(', ') });
+            closeEditLocation();
+            showAlert(newId !== originalId ? `Postal ${originalId} is now Postal ${newId}.` : `Postal ${newId} updated.`, 'success');
         }
 
         function deleteLocation(locId) {
