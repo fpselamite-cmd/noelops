@@ -515,6 +515,9 @@
                             <h2 class="font-bold text-white text-base">Strain Logos</h2>
                             <p class="text-xs text-slate-400">Each strain loads its own file from <span class="font-mono text-weed-300">logos/&lt;strain&gt;.png</span> in the repo, so everyone sees the same logos. Uploads here override a logo in this browser only.</p>
                         </div>
+                        <button id="reset-all-strain-logos-btn" onclick="resetAllStrainLogos()" class="hidden ml-auto px-3 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 hover:bg-red-900/80 text-xs font-semibold transition-all shrink-0" title="Remove every custom upload and use the repo files">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset All to Repo Files
+                        </button>
                     </div>
 
                     <input type="file" id="strain-logo-file-input" accept="image/*" onchange="handleStrainLogoFileUpload(event)" class="hidden">
@@ -1002,6 +1005,9 @@
         function renderAdminStrainLogos() {
             const grid = document.getElementById('admin-strain-logos-grid');
             if (!grid) return;
+
+            const resetAllBtn = document.getElementById('reset-all-strain-logos-btn');
+            if (resetAllBtn) resetAllBtn.classList.toggle('hidden', Object.keys(appState.badgeImages).length === 0);
 
             grid.innerHTML = DEFAULT_STRAINS.map(strain => {
                 const isOverride = Boolean(appState.badgeImages[strain.id]);
@@ -1758,6 +1764,13 @@
                 renderAll();
                 showAlert(`${strain.name} logo updated for this browser.`, 'success');
             });
+        }
+
+        function resetAllStrainLogos() {
+            appState.badgeImages = {};
+            saveState();
+            renderAll();
+            showAlert('All strain logos reset to the repo files.', 'info');
         }
 
         function resetStrainLogo(strainId) {
