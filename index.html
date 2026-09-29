@@ -172,6 +172,11 @@
         .dx-sc .row b { font-size: 13px; }
         .dx-bar { width: 100%; height: 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.06); overflow: hidden; margin-top: 6px; }
         .dx-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #16a34a, #4ade80); }
+        /* Logo sizes that don't depend on Tailwind loading */
+        .dx-sc .logo img, .dx-inv .logo img, #harvest-rows img { width: 100%; height: 100%; object-fit: contain; }
+        .dx-inv .logo, #harvest-rows label > span:first-child { display: flex; align-items: center; justify-content: center; }
+        .dx-tint { background: linear-gradient(180deg, rgba(var(--tint), 0.22) 0%, rgba(var(--tint), 0.06) 45%, rgba(16, 26, 19, 0.78) 100%); border-color: rgba(var(--tint), 0.32); }
+        .dx-tint:hover { border-color: rgba(var(--tint), 0.55); }
         .dx-sc.flash { border-color: rgba(74, 222, 128, 0.7); box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.4), 0 0 36px rgba(34, 197, 94, 0.35); }
         .dx-flashtag { position: absolute; top: 10px; left: 10px; right: 10px; width: max-content; max-width: calc(100% - 20px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 800; color: #04130a; background: #4ade80; padding: 2px 7px; border-radius: 99px; z-index: 2; }
 
@@ -200,6 +205,33 @@
         .dx-modal-card img { width: 160px; height: 96px; object-fit: cover; }
         .dx-modal-card input { width: 100%; background: #060a07; border: 1px solid rgba(74, 222, 128, 0.28); border-radius: 12px; padding: 11px 14px; font-size: 15px; color: #e6efe8; text-align: center; outline: none; }
         .dx-modal-card input:focus { border-color: #4ade80; box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15); }
+
+        .dx-modal-wide { max-width: 460px; }
+        .dx-modal-card #harvest-rows input { width: 7rem; flex-shrink: 0; text-align: right; padding: 6px 10px; font-size: 14px; }
+        .dx-input { background: #060a07; border: 1px solid rgba(74, 222, 128, 0.22); border-radius: 10px; padding: 7px 10px; color: #e6efe8; outline: none; }
+        .dx-input:focus { border-color: #4ade80; box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.12); }
+        select.dx-input option { background: #0b140e; }
+        .dx-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+        .dx-tab { white-space: nowrap; padding: 8px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; color: #8a9a8e; background: rgba(16, 26, 19, 0.72); border: 1px solid rgba(74, 222, 128, 0.14); transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .dx-tab:hover { color: #e6efe8; border-color: rgba(74, 222, 128, 0.3); }
+        .dx-tab.on { background: linear-gradient(180deg, #22c55e, #16a34a); color: #fff; border-color: transparent; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35); }
+        .dx-tab .count { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 1px 6px; border-radius: 99px; background: rgba(0, 0, 0, 0.25); }
+        .dx-tab .sub { font-weight: 500; opacity: 0.75; }
+        .dx-inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
+        .dx-inv { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+        .dx-inv .head { display: flex; align-items: center; gap: 12px; }
+        .dx-inv .head .logo { width: 64px; height: 64px; flex-shrink: 0; filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6)); }
+        .dx-inv .qrow { display: grid; grid-template-columns: 86px 34px 1fr 34px; gap: 6px; align-items: center; }
+        .dx-inv .qrow .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #8a9a8e; font-weight: 700; }
+        .dx-inv .qrow input { width: 100%; text-align: center; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 14px; }
+        .dx-step { height: 34px; border-radius: 9px; font-size: 13px; font-weight: 800; color: #86efac; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(74, 222, 128, 0.2); }
+        .dx-step:hover:not(:disabled) { background: rgba(34, 197, 94, 0.2); }
+        .dx-act { flex: 1; border-radius: 9px; padding: 7px 8px; font-size: 11px; font-weight: 800; background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.28); transition: all 0.2s; white-space: nowrap; }
+        .dx-act:hover:not(:disabled) { background: rgba(34, 197, 94, 0.24); }
+        .dx-act.solid { background: linear-gradient(180deg, #22c55e, #16a34a); color: #fff; border-color: transparent; }
+        .dx-act:disabled, .dx-step:disabled { opacity: 0.35; cursor: not-allowed; }
+        .dx-where { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; padding: 5px 0; border-top: 1px solid rgba(74, 222, 128, 0.08); }
+        .dx-where b { font-family: 'JetBrains Mono', monospace; color: #e6efe8; }
 
         @media (max-width: 1180px) {
             .dx-layout { grid-template-columns: minmax(0, 1fr); }
@@ -328,58 +360,21 @@
                 </div>
             </section>
 
-            <section id="tab-inventory" class="tab-content hidden space-y-8">
-                
-                <!-- Inventory Header -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6 rounded-2xl border-weed-900">
+            <section id="tab-inventory" class="tab-content hidden">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-weed-950 text-weed-400 text-xs border border-weed-800 font-mono">Vault Storage</span>
-                            <h1 class="text-2xl font-black text-white">Cannabis & Crop Inventory</h1>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-1">
-                            Formula: <span class="text-weed-400 font-semibold">750 Trimmed Bud = 1 Brick</span>. Strains cannot be mixed to create bricks.
-                        </p>
+                        <h1 class="text-2xl font-black text-white">Inventory Vault</h1>
+                        <p class="text-xs text-slate-400 mt-1">Stock is tracked per location. <span class="text-weed-400 font-semibold">750 trimmed = 1 brick</span>, and strains can't be mixed.</p>
                     </div>
+                    <label class="flex items-center gap-2 text-xs text-slate-400" title="Amount used by the − / + and Trim buttons">
+                        <span class="font-semibold">Step amount</span>
+                        <input id="inv-step" type="number" min="1" step="1" value="100" oninput="renderInventory()" class="dx-input w-24 text-center">
+                    </label>
                 </div>
-
-                <!-- 10 Weed Strains Vertical Grid -->
-                <div id="strains-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Cards injected dynamically via JS for 10 strains -->
-                </div>
-
-                <!-- Coca Leaves Section (Simplified Counter) -->
-                <div class="glass-card rounded-2xl p-6 border-sky-900/50 bg-gradient-to-br from-slate-950 via-darkcard to-sky-950/30">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-sky-900/40 pb-4 mb-6">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-xl bg-sky-950 border border-sky-600/40 flex items-center justify-center text-sky-400">
-                                <i class="fa-solid fa-leaf text-xl"></i>
-                            </div>
-                            <div>
-                                <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-                                    <span>Coca Leaves Counter</span>
-                                </h2>
-                                <p class="text-xs text-slate-400">Direct raw leaf stock tracking</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center space-x-2">
-                            <button onclick="adjustCoca(100)" class="px-3 py-1.5 rounded-lg bg-sky-950 border border-sky-800 text-sky-300 hover:bg-sky-900 text-xs font-semibold transition-all">+100</button>
-                            <button onclick="adjustCoca(500)" class="px-3 py-1.5 rounded-lg bg-sky-950 border border-sky-800 text-sky-300 hover:bg-sky-900 text-xs font-semibold transition-all">+500</button>
-                            <button onclick="adjustCoca(-100)" class="px-3 py-1.5 rounded-lg bg-sky-950 border border-sky-800 text-sky-300 hover:bg-sky-900 text-xs font-semibold transition-all">-100</button>
-                            <button onclick="resetCoca()" class="px-3 py-1.5 rounded-lg bg-red-950/60 border border-red-800 text-red-300 hover:bg-red-900/80 text-xs font-semibold transition-all"><i class="fa-solid fa-rotate-left mr-1"></i>Reset</button>
-                        </div>
-                    </div>
-
-                    <div class="max-w-md mx-auto space-y-2">
-                        <label class="block text-xs font-bold uppercase text-sky-300 text-center">Total Coca Leaves On Hand</label>
-                        <div class="relative">
-                            <input type="number" id="coca-quantity-input" onchange="updateCocaFromInput()" min="0" value="0" class="w-full bg-darkbg border border-sky-900 rounded-xl px-4 py-3 text-2xl font-mono font-bold text-center text-sky-200 focus:outline-none focus:border-sky-400">
-                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500">LEAVES</span>
-                        </div>
-                    </div>
-                </div>
-
+                <div id="inv-tabs" class="dx-tabs mb-5"></div>
+                <div id="inv-stats" class="dx-stats"></div>
+                <div id="inv-note" class="mb-4"></div>
+                <div id="inv-grid" class="dx-inv-grid"></div>
             </section>
 
             <section id="tab-planner" class="tab-content hidden space-y-8">
@@ -765,6 +760,43 @@
         </form>
     </div>
 
+    <!-- Move stock between locations -->
+    <div id="transfer-modal" class="dx-modal hidden">
+        <form class="dx-glass dx-modal-card dx-modal-wide space-y-4 text-left" onsubmit="saveTransfer(event)">
+            <h2 class="text-xl font-black text-white text-center">Move Stock</h2>
+            <p id="transfer-title" class="text-sm text-slate-300 text-center"></p>
+            <input type="hidden" id="transfer-from"><input type="hidden" id="transfer-strain">
+            <label id="transfer-field-row" class="block text-xs font-semibold text-slate-300">What to move
+                <select id="transfer-field" onchange="updateTransferAvailable(true)" class="dx-input mt-1 w-full">
+                    <option value="bricks">Bricks</option><option value="trimmed">Trimmed bud</option><option value="untrimmed">Untrimmed bud</option>
+                </select>
+            </label>
+            <label class="block text-xs font-semibold text-slate-300">Amount <span id="transfer-available" class="text-slate-500 font-normal"></span>
+                <input type="number" id="transfer-amount" min="1" step="1" required class="dx-input mt-1 w-full font-mono">
+            </label>
+            <label class="block text-xs font-semibold text-slate-300">Move to
+                <select id="transfer-to" class="dx-input mt-1 w-full"></select>
+            </label>
+            <p id="transfer-error" class="hidden text-xs text-red-400 font-semibold text-center"></p>
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-right-left mr-1"></i> Move</button>
+            <button type="button" onclick="closeTransfer()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Harvest intake -->
+    <div id="harvest-modal" class="dx-modal hidden">
+        <form class="dx-glass dx-modal-card dx-modal-wide space-y-3 text-left" onsubmit="saveHarvest(event)">
+            <h2 id="harvest-title" class="text-xl font-black text-white text-center">Harvest</h2>
+            <p class="text-xs text-slate-400 text-center">Enter the untrimmed bud collected for each strain. It's added to this location's stock and the timer restarts. Amounts start from the pot plan's estimate.</p>
+            <input type="hidden" id="harvest-loc">
+            <div id="harvest-rows" class="max-h-[46vh] overflow-y-auto pr-1 divide-y divide-weed-900/40"></div>
+            <p id="harvest-total" class="text-right text-xs font-mono text-weed-300"></p>
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-seedling mr-1"></i> Add to Stock &amp; Restart</button>
+            <button type="button" onclick="saveHarvest(null, true)" class="dx-btn dx-btn-o">Just Restart the Timer</button>
+            <button type="button" onclick="closeHarvestModal()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
+        </form>
+    </div>
+
     <!-- Firebase config: kept in its own block so a pasting mistake here can't break the rest of the page.
          Paste only the { ... } object from the Firebase console, not its "const firebaseConfig =" line. -->
     <script>
@@ -781,18 +813,18 @@
     </script>
 
     <script>
-        // 10 Strains with custom strain title colors. Each strain logo loads from logos/<id>.png
+        // 10 strains. `tint` (r,g,b) is the card colour, matched to each logo in logos/<id>.png
         const DEFAULT_STRAINS = [
-            { id: 'acapulco', name: 'Acapulco Gold', color: 'from-orange-950/40 to-weed-950', nameColor: 'text-amber-400' },
-            { id: 'columbian', name: 'Columbian Gold', color: 'from-yellow-950/40 to-weed-950', nameColor: 'text-yellow-400' },
-            { id: 'dosidos', name: 'Dosidos', color: 'from-amber-950/40 to-weed-950', nameColor: 'text-orange-400' },
-            { id: 'skunk1', name: 'Skunk1', color: 'from-green-950/40 to-weed-950', nameColor: 'text-green-400' },
-            { id: 'ogkush', name: 'OGKush', color: 'from-teal-950/40 to-weed-950', nameColor: 'text-teal-300' },
-            { id: 'afghani', name: 'Pure Afghani', color: 'from-emerald-950/40 to-weed-950', nameColor: 'text-emerald-400' },
-            { id: 'rainbow', name: 'Rainbow Belts', color: 'from-indigo-950/40 to-weed-950', nameColor: 'text-indigo-400' },
-            { id: 'nl', name: 'Northern Lights', color: 'from-purple-900/40 to-weed-950', nameColor: 'text-purple-400' },
-            { id: 'lemonskunk', name: 'Lemonskunk', color: 'from-lime-950/40 to-weed-950', nameColor: 'text-lime-400' },
-            { id: 'gelato41', name: 'Gelato41', color: 'from-pink-950/40 to-weed-950', nameColor: 'text-pink-400' }
+            { id: 'acapulco', name: 'Acapulco Gold', tint: '245,158,11', nameColor: 'text-amber-400' },
+            { id: 'columbian', name: 'Columbian Gold', tint: '212,160,23', nameColor: 'text-yellow-400' },
+            { id: 'dosidos', name: 'Dosidos', tint: '168,85,247', nameColor: 'text-purple-400' },
+            { id: 'skunk1', name: 'Skunk1', tint: '34,197,94', nameColor: 'text-green-400' },
+            { id: 'ogkush', name: 'OGKush', tint: '120,150,110', nameColor: 'text-teal-300' },
+            { id: 'afghani', name: 'Pure Afghani', tint: '100,116,139', nameColor: 'text-slate-300' },
+            { id: 'rainbow', name: 'Rainbow Belts', tint: '217,70,239', nameColor: 'text-fuchsia-400' },
+            { id: 'nl', name: 'Northern Lights', tint: '20,184,166', nameColor: 'text-teal-300' },
+            { id: 'lemonskunk', name: 'Lemonskunk', tint: '250,204,21', nameColor: 'text-yellow-300' },
+            { id: 'gelato41', name: 'Gelato41', tint: '244,114,182', nameColor: 'text-pink-400' }
         ];
 
         // Default 4 Grow Operation Locations with 36-Hour Durations and default 10 pots
@@ -812,10 +844,17 @@
                         <path d="M12,2C11.5,4 10,7 8,9C6,11 3,11.5 2,12C4,12.5 7,14 9,16C10,17 11,19 12,22C13,19 14,17 15,16C17,14 20,12.5 22,12C21,11.5 18,11 16,9C14,7 12.5,4 12,2M12,7C12.5,8.5 13.5,10 15,11C13.5,12 12.5,13.5 12,15C11.5,13.5 10.5,12 9,11C10.5,10 11.5,8.5 12,7Z"/>
                     </svg>`;
 
+        // Stock buckets: the Main Stash plus one per grow location (keyed by locKey(id)).
+        // '%' can never come out of locKey (it encodes '%' as '%25'), so this key can't clash with a location.
+        const STASH_KEY = '%stash';
+        const INV_FIELDS = ['untrimmed', 'trimmed', 'bricks'];
+
         // Application State Object
         let appState = {
-            inventory: {},
-            coca: { quantity: 0, notes: '' },
+            stock: null, // Per-location stock: { [bucket key]: { [strain id]: { untrimmed, trimmed, bricks }, coca } }
+            inventory: {}, // Totals across every location (derived from stock)
+            coca: { quantity: 0, notes: '' }, // Total coca across every location (derived from stock)
+            selectedInvBucket: 'all', // Inventory tab: 'all' or a bucket key
             locations: null, // null = never loaded, seeded with DEFAULT_LOCATIONS
             webhookUrl: '',
             badgeImages: {}, // Per-browser strain logo overrides (data URLs), keyed by strain id
@@ -860,18 +899,11 @@
 
         // Repair any missing or malformed fields (old saves, hand-edited or imported backups)
         function normalizeState() {
-            if (!isPlainObject(appState.inventory)) appState.inventory = {};
-            DEFAULT_STRAINS.forEach(strain => {
-                const inv = isPlainObject(appState.inventory[strain.id]) ? appState.inventory[strain.id] : {};
-                appState.inventory[strain.id] = {
-                    untrimmed: toCount(inv.untrimmed),
-                    trimmed: toCount(inv.trimmed),
-                    bricks: toCount(inv.bricks)
-                };
-            });
-
-            if (!isPlainObject(appState.coca)) appState.coca = { quantity: 0, notes: '' };
-            appState.coca.quantity = toCount(appState.coca.quantity);
+            if (!isPlainObject(appState.stock)) {
+                // One-time move from the old single inventory into the Main Stash
+                const legacy = isPlainObject(appState.inventory) ? appState.inventory : {};
+                appState.stock = { [STASH_KEY]: { ...legacy, coca: isPlainObject(appState.coca) ? appState.coca.quantity : 0 } };
+            }
 
             if (!isPlainObject(appState.badgeImages)) appState.badgeImages = {};
             if (typeof appState.masterLogo !== 'string' || !appState.masterLogo) appState.masterLogo = null;
@@ -907,6 +939,35 @@
             if (!appState.locations.some(l => l.id === appState.selectedPlannerLocId)) {
                 appState.selectedPlannerLocId = appState.locations.length > 0 ? appState.locations[0].id : null;
             }
+
+            // Every bucket (Main Stash, each location, any leftover) gets every strain + coca
+            [STASH_KEY, ...appState.locations.map(l => locKey(l.id))].forEach(key => {
+                if (!isPlainObject(appState.stock[key])) appState.stock[key] = {};
+            });
+            Object.keys(appState.stock).forEach(key => {
+                const bucket = isPlainObject(appState.stock[key]) ? appState.stock[key] : {};
+                const clean = { coca: toCount(bucket.coca) };
+                DEFAULT_STRAINS.forEach(strain => {
+                    const cell = isPlainObject(bucket[strain.id]) ? bucket[strain.id] : {};
+                    clean[strain.id] = { untrimmed: toCount(cell.untrimmed), trimmed: toCount(cell.trimmed), bricks: toCount(cell.bricks) };
+                });
+                appState.stock[key] = clean;
+            });
+
+            // Totals across every location, used by the dashboard
+            appState.inventory = {};
+            DEFAULT_STRAINS.forEach(strain => { appState.inventory[strain.id] = { untrimmed: 0, trimmed: 0, bricks: 0 }; });
+            let cocaTotal = 0;
+            Object.values(appState.stock).forEach(bucket => {
+                cocaTotal += bucket.coca;
+                DEFAULT_STRAINS.forEach(strain => {
+                    INV_FIELDS.forEach(field => { appState.inventory[strain.id][field] += bucket[strain.id][field]; });
+                });
+            });
+            appState.coca = { quantity: cocaTotal, notes: '' };
+
+            const buckets = inventoryBuckets().map(b => b.key);
+            if (appState.selectedInvBucket !== 'all' && !buckets.includes(appState.selectedInvBucket)) appState.selectedInvBucket = 'all';
         }
 
         function loadState() {
@@ -981,8 +1042,7 @@
                 activity[id] = record;
             });
             return {
-                inventory: JSON.parse(JSON.stringify(state.inventory || {})),
-                coca: { quantity: (state.coca && state.coca.quantity) || 0 },
+                stock: JSON.parse(JSON.stringify(state.stock || {})),
                 locations,
                 settings: { webhookUrl: state.webhookUrl || '' },
                 activity,
@@ -992,6 +1052,8 @@
 
         function applySharedTree(tree) {
             tree = isPlainObject(tree) ? tree : {};
+            // Older databases have one shared inventory instead of stock; normalizeState moves it to the Main Stash
+            appState.stock = isPlainObject(tree.stock) ? tree.stock : null;
             appState.inventory = isPlainObject(tree.inventory) ? tree.inventory : {};
             appState.coca = { quantity: isPlainObject(tree.coca) ? tree.coca.quantity : 0, notes: '' };
             appState.locations = Object.values(isPlainObject(tree.locations) ? tree.locations : {})
@@ -1047,6 +1109,58 @@
             }
             const current = getPath(buildSharedTree(appState), path);
             return writeShared({ [path]: Math.max(0, toCount(current) + delta) });
+        }
+
+        // Change several stock numbers together, all or nothing (e.g. trim, press, transfer, harvest).
+        // `mutator(stock)` edits a copy of the whole stock tree and returns a result, or false to cancel.
+        // In live mode this is a transaction, so it re-runs on the latest numbers if someone else changed them.
+        function mutateStock(mutator) {
+            let outcome = null;
+            const run = current => {
+                const copy = JSON.parse(JSON.stringify(isPlainObject(current) ? current : {}));
+                outcome = mutator(copy);
+                return outcome ? copy : undefined;
+            };
+            if (Sync.mode === 'cloud') {
+                return Sync.root.child('stock').transaction(run)
+                    .then(result => (result.committed ? outcome : null))
+                    .catch(err => { handleSyncWriteError(err); return null; });
+            }
+            const next = run(appState.stock);
+            if (!next) return Promise.resolve(null);
+            return writeShared({ stock: next }).then(() => outcome);
+        }
+
+        // A strain's numbers in one bucket of a raw stock tree, created if missing
+        function stockCell(stock, bucket, strainId) {
+            if (!isPlainObject(stock[bucket])) stock[bucket] = {};
+            const cell = isPlainObject(stock[bucket][strainId]) ? stock[bucket][strainId] : {};
+            stock[bucket][strainId] = { untrimmed: toCount(cell.untrimmed), trimmed: toCount(cell.trimmed), bricks: toCount(cell.bricks) };
+            return stock[bucket][strainId];
+        }
+
+        // Main Stash, each grow location, then any stock left under a key that no longer has a location
+        function inventoryBuckets() {
+            const buckets = [{ key: STASH_KEY, label: 'Main Stash', short: 'Main Stash' }];
+            appState.locations.forEach(loc => buckets.push({ key: locKey(loc.id), label: `Postal ${loc.id}`, short: loc.id, alias: loc.alias, locId: loc.id }));
+            Object.keys(appState.stock || {}).forEach(key => {
+                if (!buckets.some(b => b.key === key)) {
+                    let name = key;
+                    try { name = decodeURIComponent(key); } catch (e) { /* keep raw key */ }
+                    buckets.push({ key, label: `Postal ${name} (removed)`, short: `${name} (removed)`, orphan: true });
+                }
+            });
+            return buckets;
+        }
+
+        function bucketLabel(key) {
+            const bucket = inventoryBuckets().find(b => b.key === key);
+            return bucket ? bucket.label : key;
+        }
+
+        function bucketHasStock(bucket) {
+            return isPlainObject(bucket) && (toCount(bucket.coca) > 0 ||
+                DEFAULT_STRAINS.some(s => isPlainObject(bucket[s.id]) && INV_FIELDS.some(f => toCount(bucket[s.id][f]) > 0)));
         }
 
         // Resolves true for exactly one device per harvest, so Discord gets one alert, not one per open page
@@ -1299,14 +1413,24 @@
 
             Sync.root.on('value', snap => {
                 const tree = snap.val();
-                if (!isPlainObject(tree) || !isPlainObject(tree.inventory)) {
+                const hasData = t => isPlainObject(t) && (isPlainObject(t.stock) || isPlainObject(t.inventory));
+                if (!hasData(tree)) {
                     // No shared data yet (the database may already hold presence entries):
                     // seed it once with this browser's current data
-                    Sync.root.transaction(current => (isPlainObject(current) && isPlainObject(current.inventory))
+                    Sync.root.transaction(current => hasData(current)
                         ? undefined
                         : { ...(isPlainObject(current) ? current : {}), ...buildSharedTree(appState) })
                         .catch(handleSyncWriteError);
                     return;
+                }
+                if (!isPlainObject(tree.stock)) {
+                    // Older database: move the single shared inventory into the Main Stash, once, for everyone
+                    Sync.root.transaction(current => {
+                        if (!isPlainObject(current) || isPlainObject(current.stock)) return undefined;
+                        const legacy = isPlainObject(current.inventory) ? current.inventory : {};
+                        const coca = isPlainObject(current.coca) ? toCount(current.coca.quantity) : 0;
+                        return { ...current, stock: { [STASH_KEY]: { ...legacy, coca } }, inventory: null, coca: null };
+                    }).catch(handleSyncWriteError);
                 }
                 const focus = captureFocusedInput();
                 const previousActivity = new Map(appState.activity.map(a => [a.id, a.hi]));
@@ -1719,7 +1843,7 @@
                         ? `<div class="t dx-mono dx-muted">${formatTime(Math.round(st.totalSecs))}</div><div class="s">Not started</div>`
                         : `<div class="t dx-mono dx-ring-t">${formatTime(st.remainingSecs)}</div><div class="s dx-ring-s">${Math.floor(st.pct)}% grown</div>`;
                 const foot = ready
-                    ? `<button onclick="harvestAndRestart(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-seedling mr-1"></i> Harvest &amp; Restart</button>`
+                    ? `<button onclick="openHarvestModal(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-seedling mr-1"></i> Harvest &amp; Restart</button>`
                     : idle
                         ? `<button onclick="startTimer(${jsArg(loc.id)})" class="dx-btn dx-btn-o"><i class="fa-solid fa-play mr-1"></i> Start ${formatDuration(loc.durationHours)} cycle</button>`
                         : escapeHtml(readyAtLabel(loc));
@@ -1771,7 +1895,7 @@
                 const pct = ((inv.trimmed % BRICK_SIZE) / BRICK_SIZE) * 100;
                 const flash = dashFlashes[strain.id] && dashFlashes[strain.id].until > now ? dashFlashes[strain.id] : null;
                 return `
-                    <div class="dx-glass dx-sc ${flash ? 'flash' : ''}">
+                    <div class="dx-glass dx-sc dx-tint ${flash ? 'flash' : ''}" style="--tint:${strain.tint}">
                         ${flash ? `<span class="dx-flashtag">${escapeHtml(flash.label)}</span>` : ''}
                         <div class="logo">${getStrainLogo(strain.id)}</div>
                         <div class="name ${strain.nameColor}">${escapeHtml(strain.name)}</div>
@@ -1824,73 +1948,152 @@
                 </div>`).join('');
         }
 
+        function selectInvBucket(key) {
+            appState.selectedInvBucket = key;
+            saveState();
+            renderInventory();
+        }
+
+        function bucketTotals(bucket) {
+            const t = { bricks: 0, trimmed: 0, untrimmed: 0, potential: 0, coca: bucket ? bucket.coca : 0 };
+            if (!bucket) return t;
+            DEFAULT_STRAINS.forEach(strain => {
+                const c = bucket[strain.id];
+                t.bricks += c.bricks; t.trimmed += c.trimmed; t.untrimmed += c.untrimmed;
+                t.potential += Math.floor(c.trimmed / BRICK_SIZE);
+            });
+            return t;
+        }
+
         function renderInventory() {
-            const grid = document.getElementById('strains-grid');
+            const grid = document.getElementById('inv-grid');
             if (!grid) return;
+            const buckets = inventoryBuckets();
+            const view = appState.selectedInvBucket;
+            const isAll = view === 'all';
+            const bucket = isAll ? null : appState.stock[view];
+            const step = invStep();
 
-            grid.innerHTML = DEFAULT_STRAINS.map(strain => {
-                const inv = appState.inventory[strain.id] || { untrimmed: 0, trimmed: 0, bricks: 0 };
-                const potentialBricks = Math.floor(Number(inv.trimmed || 0) / 750);
+            // Tabs
+            const allTotals = currentTotals();
+            document.getElementById('inv-tabs').innerHTML =
+                `<button class="dx-tab ${isAll ? 'on' : ''}" onclick="selectInvBucket('all')"><i class="fa-solid fa-layer-group"></i>All <span class="count">${allTotals.bricks.toLocaleString()}</span></button>` +
+                buckets.map(b => `
+                    <button class="dx-tab ${view === b.key ? 'on' : ''}" onclick="selectInvBucket(${jsArg(b.key)})" title="${escapeHtml(b.label)}${b.alias ? ' · ' + escapeHtml(b.alias) : ''}">
+                        <i class="fa-solid ${b.key === STASH_KEY ? 'fa-warehouse' : b.orphan ? 'fa-triangle-exclamation' : 'fa-location-dot'}"></i>
+                        <span class="${b.key === STASH_KEY ? '' : 'font-mono'}">${escapeHtml(b.short)}</span>${b.alias ? `<span class="sub">${escapeHtml(b.alias)}</span>` : ''}
+                        <span class="count" title="Bricks">${bucketTotals(appState.stock[b.key]).bricks.toLocaleString()}</span>
+                    </button>`).join('');
 
+            // Summary tiles for this view
+            const t = isAll ? allTotals : bucketTotals(bucket);
+            const tiles = [
+                ['Bricks', t.bricks, '#e6efe8', ''],
+                ['Potential bricks', t.potential, '#4ade80', `from ${t.trimmed.toLocaleString()} trimmed`],
+                ['Untrimmed', t.untrimmed, '#e6efe8', 'waiting to be trimmed'],
+                ['Coca leaves', t.coca, '#bae6fd', '']
+            ];
+            document.getElementById('inv-stats').innerHTML = tiles.map(([label, value, color, sub]) => `
+                <div class="dx-glass dx-stat" style="min-height:96px">
+                    <div class="lbl">${label}</div>
+                    <div class="num dx-mono" style="color:${color}">${value.toLocaleString()}</div>
+                    ${sub ? `<div class="delta dx-muted">${sub}</div>` : ''}
+                </div>`).join('');
+
+            const current = buckets.find(b => b.key === view);
+            document.getElementById('inv-note').innerHTML = isAll
+                ? `<p class="text-xs text-slate-400"><i class="fa-solid fa-circle-info text-weed-500 mr-1"></i>Totals across every location. Pick a location tab to add, trim, press or move stock.</p>`
+                : current && current.orphan
+                    ? `<p class="text-xs text-amber-300"><i class="fa-solid fa-triangle-exclamation mr-1"></i>This location was removed. Move its stock somewhere else.</p>`
+                    : `<p class="text-xs text-slate-400"><i class="fa-solid ${view === STASH_KEY ? 'fa-warehouse' : 'fa-location-dot'} text-weed-500 mr-1"></i>Editing <b class="text-white">${escapeHtml(current ? current.label : '')}</b>${current && current.alias ? ` · ${escapeHtml(current.alias)}` : ''}. The − / + and Trim buttons use the step amount (${step.toLocaleString()}).</p>`;
+
+            grid.innerHTML = (isAll ? renderInvAllCards(buckets) : renderInvBucketCards(view, bucket, step)).join('');
+        }
+
+        // Where each strain is, across every bucket (read-only)
+        function renderInvAllCards(buckets) {
+            const whereList = pick => buckets
+                .map(b => ({ b, v: pick(appState.stock[b.key]) }))
+                .filter(x => x.v)
+                .map(x => `<div class="dx-where"><span class="dx-muted truncate">${escapeHtml(x.b.label)}${x.b.alias ? ' · ' + escapeHtml(x.b.alias) : ''}</span><b>${x.v}</b></div>`).join('')
+                || '<div class="dx-where"><span class="dx-muted">No stock anywhere</span></div>';
+
+            const coca = `
+                <div class="dx-glass dx-inv dx-tint" style="--tint:56,189,248">
+                    <div class="head"><div class="logo flex items-center justify-center text-3xl text-sky-400"><i class="fa-solid fa-leaf"></i></div>
+                        <div><div class="font-extrabold text-base text-sky-300">Coca Leaves</div><div class="dx-mono text-2xl font-extrabold text-sky-100">${appState.coca.quantity.toLocaleString()}</div></div></div>
+                    <div>${whereList(b => b.coca ? `${b.coca.toLocaleString()} leaves` : '')}</div>
+                </div>`;
+
+            return [coca, ...DEFAULT_STRAINS.map(strain => {
+                const inv = appState.inventory[strain.id];
                 return `
-                    <div class="glass-card rounded-2xl p-5 border-weed-900/60 bg-gradient-to-b ${strain.color} flex flex-col justify-between space-y-4">
-                        
-                        <div class="flex items-center justify-between border-b border-weed-900/50 pb-3">
-                            <h2 class="text-lg font-black ${strain.nameColor} tracking-wide">${strain.name}</h2>
-                            <span class="text-xs px-2 py-0.5 rounded bg-weed-950 text-weed-400 border border-weed-800 font-mono">750 = 1 Brick</span>
-                        </div>
+                    <div class="dx-glass dx-inv dx-tint" style="--tint:${strain.tint}">
+                        <div class="head"><div class="logo">${getStrainLogo(strain.id)}</div>
+                            <div class="min-w-0"><div class="font-extrabold text-base ${strain.nameColor}">${escapeHtml(strain.name)}</div>
+                            <div class="text-xs dx-muted"><b class="text-white dx-mono">${inv.bricks.toLocaleString()}</b> bricks · <b class="text-weed-300 dx-mono">${inv.trimmed.toLocaleString()}</b> trimmed · <b class="text-slate-200 dx-mono">${inv.untrimmed.toLocaleString()}</b> untrimmed</div></div></div>
+                        <div>${whereList(b => {
+                            const c = b[strain.id];
+                            if (!c.bricks && !c.trimmed && !c.untrimmed) return '';
+                            return [c.bricks ? `${c.bricks} bricks` : '', c.trimmed ? `${c.trimmed.toLocaleString()} trim` : '', c.untrimmed ? `${c.untrimmed.toLocaleString()} untrim` : ''].filter(Boolean).join(' · ');
+                        })}</div>
+                    </div>`;
+            })];
+        }
 
-                        <div class="w-32 h-32 mx-auto my-2 flex items-center justify-center">
-                            ${getStrainLogo(strain.id)}
-                        </div>
+        // Editable cards for one bucket
+        function renderInvBucketCards(key, bucket, step) {
+            const k = jsArg(key);
+            const qrow = (label, strainId, field, value, delta) => `
+                <div class="qrow">
+                    <span class="lbl">${label}</span>
+                    <button class="dx-step" onclick="adjustQuantity(${jsArg(strainId)}, '${field}', -${delta}, ${k})" ${value === 0 ? 'disabled' : ''} title="−${delta.toLocaleString()}">−</button>
+                    <input type="number" min="0" class="dx-input" data-focus-key="inv-${escapeHtml(key)}-${strainId}-${field}" value="${value}" onchange="updateQuantityFromInput(${jsArg(strainId)}, '${field}', this, ${k})">
+                    <button class="dx-step" onclick="adjustQuantity(${jsArg(strainId)}, '${field}', ${delta}, ${k})" title="+${delta.toLocaleString()}">+</button>
+                </div>`;
 
-                        <!-- Editable Fields Container -->
-                        <div class="space-y-3 font-mono text-xs">
-                            
-                            <!-- Untrimmed Bud Input -->
-                            <div>
-                                <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Untrimmed Bud Reserve</label>
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="adjustQuantity('${strain.id}', 'untrimmed', -100)" class="px-2.5 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">-100</button>
-                                    <input type="number" data-focus-key="inv-${strain.id}-untrimmed" value="${inv.untrimmed}" onchange="updateQuantityFromInput('${strain.id}', 'untrimmed', this)" class="w-full bg-darkbg border border-weed-900 rounded-xl px-3 py-1.5 text-center font-bold text-slate-200 focus:outline-none focus:border-weed-500">
-                                    <button onclick="adjustQuantity('${strain.id}', 'untrimmed', 100)" class="px-2.5 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">+100</button>
-                                </div>
-                            </div>
-
-                            <!-- Trimmed Bud Input -->
-                            <div>
-                                <label class="block text-[10px] uppercase font-bold text-weed-400 mb-1">Trimmed Bud (750 = 1 Brick)</label>
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="adjustQuantity('${strain.id}', 'trimmed', -100)" class="px-2.5 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">-100</button>
-                                    <input type="number" data-focus-key="inv-${strain.id}-trimmed" value="${inv.trimmed}" onchange="updateQuantityFromInput('${strain.id}', 'trimmed', this)" class="w-full bg-darkbg border border-weed-800 rounded-xl px-3 py-1.5 text-center font-extrabold text-weed-300 focus:outline-none focus:border-weed-400">
-                                    <button onclick="adjustQuantity('${strain.id}', 'trimmed', 100)" class="px-2.5 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">+100</button>
-                                </div>
-                            </div>
-
-                            <!-- Prospective Bricks Display -->
-                            <div class="p-2.5 rounded-xl bg-darkbg/90 border border-weed-900/80 flex items-center justify-between text-xs">
-                                <span class="text-slate-400 text-[11px]">Potential Bricks:</span>
-                                <span class="font-extrabold text-weed-400 text-sm">${potentialBricks} Bricks</span>
-                            </div>
-
-                            <!-- Bricks on Hand Input -->
-                            <div>
-                                <label class="block text-[10px] uppercase font-bold text-slate-300 mb-1">Ready Bricks on Hand</label>
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="adjustQuantity('${strain.id}', 'bricks', -1)" class="px-3 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">-1</button>
-                                    <input type="number" data-focus-key="inv-${strain.id}-bricks" value="${inv.bricks}" onchange="updateQuantityFromInput('${strain.id}', 'bricks', this)" class="w-full bg-darkbg border border-weed-800 rounded-xl px-3 py-1.5 text-center font-extrabold text-white focus:outline-none focus:border-weed-400">
-                                    <button onclick="adjustQuantity('${strain.id}', 'bricks', 1)" class="px-3 py-1 rounded-lg bg-darkbg border border-weed-900 text-slate-300 hover:bg-weed-950">+1</button>
-                                </div>
-                            </div>
-
-                        </div>
-
+            const coca = `
+                <div class="dx-glass dx-inv dx-tint" style="--tint:56,189,248">
+                    <div class="head"><div class="logo flex items-center justify-center text-3xl text-sky-400"><i class="fa-solid fa-leaf"></i></div>
+                        <div class="flex-1"><div class="font-extrabold text-base text-sky-300">Coca Leaves</div><div class="text-[11px] dx-muted">Secondary op stock</div></div>
+                        <button class="dx-step px-3" onclick="openTransfer(${k}, 'coca')" ${bucket.coca === 0 ? 'disabled' : ''} title="Move to another location"><i class="fa-solid fa-right-left"></i></button></div>
+                    <div class="qrow">
+                        <span class="lbl">Leaves</span>
+                        <button class="dx-step" onclick="adjustCoca(-${step}, ${k})" ${bucket.coca === 0 ? 'disabled' : ''}>−</button>
+                        <input type="number" min="0" class="dx-input" data-focus-key="inv-${escapeHtml(key)}-coca" value="${bucket.coca}" onchange="updateCocaFromInput(this, ${k})">
+                        <button class="dx-step" onclick="adjustCoca(${step}, ${k})">+</button>
                     </div>
-                `;
-            }).join('');
+                </div>`;
 
-            const cocaInput = document.getElementById('coca-quantity-input');
-            if (cocaInput && cocaInput !== document.activeElement) cocaInput.value = appState.coca.quantity || 0;
+            return [coca, ...DEFAULT_STRAINS.map(strain => {
+                const c = bucket[strain.id];
+                const toNext = BRICK_SIZE - (c.trimmed % BRICK_SIZE);
+                const pct = ((c.trimmed % BRICK_SIZE) / BRICK_SIZE) * 100;
+                const pressable = Math.floor(c.trimmed / BRICK_SIZE);
+                const trimAmount = Math.min(step, c.untrimmed);
+                const s = jsArg(strain.id);
+                const empty = !c.bricks && !c.trimmed && !c.untrimmed;
+                return `
+                    <div class="dx-glass dx-inv dx-tint" style="--tint:${strain.tint}">
+                        <div class="head">
+                            <div class="logo">${getStrainLogo(strain.id)}</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="font-extrabold text-base ${strain.nameColor} truncate">${escapeHtml(strain.name)}</div>
+                                <div class="text-[11px] dx-muted">${pressable ? `${pressable} ${pressable === 1 ? 'brick' : 'bricks'} ready to press` : `${toNext.toLocaleString()} trimmed to next brick`}</div>
+                                <div class="dx-bar"><i style="width:${pct.toFixed(1)}%"></i></div>
+                            </div>
+                            <button class="dx-step px-3" onclick="openTransfer(${k}, ${s})" ${empty ? 'disabled' : ''} title="Move to another location"><i class="fa-solid fa-right-left"></i></button>
+                        </div>
+                        ${qrow('Untrimmed', strain.id, 'untrimmed', c.untrimmed, step)}
+                        <div class="flex gap-2"><button class="dx-act" onclick="trimBud(${k}, ${s})" ${trimAmount === 0 ? 'disabled' : ''}><i class="fa-solid fa-scissors mr-1"></i>Trim ${trimAmount.toLocaleString()}</button></div>
+                        ${qrow('Trimmed', strain.id, 'trimmed', c.trimmed, step)}
+                        <div class="flex gap-2">
+                            <button class="dx-act" onclick="pressBricks(${k}, ${s}, false)" ${pressable ? '' : 'disabled'}><i class="fa-solid fa-cube mr-1"></i>Press 1 brick</button>
+                            <button class="dx-act solid" onclick="pressBricks(${k}, ${s}, true)" ${pressable > 1 ? '' : 'disabled'}>Press all${pressable > 1 ? ` (${pressable})` : ''}</button>
+                        </div>
+                        ${qrow('Bricks', strain.id, 'bricks', c.bricks, 1)}
+                    </div>`;
+            })];
         }
 
         function strainName(strainId) {
@@ -1898,55 +2101,219 @@
             return strain ? strain.name : strainId;
         }
 
-        function adjustQuantity(strainId, field, delta) {
-            const current = appState.inventory[strainId] ? appState.inventory[strainId][field] : 0;
+        // The bucket Inventory buttons act on: the selected tab, or the Main Stash when viewing All
+        function activeInvBucket() {
+            return appState.selectedInvBucket !== 'all' && appState.stock[appState.selectedInvBucket] ? appState.selectedInvBucket : STASH_KEY;
+        }
+
+        function invStep() {
+            const input = document.getElementById('inv-step');
+            return Math.max(1, toCount(input ? input.value : 100) || 100);
+        }
+
+        function adjustQuantity(strainId, field, delta, bucket = activeInvBucket()) {
+            const current = appState.stock[bucket] ? appState.stock[bucket][strainId][field] : 0;
             const applied = Math.max(-current, delta); // what actually changes once clamped at zero
-            adjustShared(`inventory/${strainId}/${field}`, delta);
+            adjustShared(`stock/${bucket}/${strainId}/${field}`, delta);
             if (applied === 0) return;
             if (field === 'bricks') recordBricksMade(applied);
             logActivity({ strain: strainId }, {
-                key: `inv:${strainId}:${field}`,
+                key: `inv:${bucket}:${strainId}:${field}`,
                 amount: applied,
                 format: amount => ({
                     pre: amount > 0 ? 'added' : 'removed',
                     hi: `${signedAmount(amount)} ${fieldLabel(field, amount)}`,
-                    post: `${amount > 0 ? 'to' : 'from'} ${strainName(strainId)}`
+                    post: `${amount > 0 ? 'to' : 'from'} ${strainName(strainId)} · ${bucketLabel(bucket)}`
                 })
             });
         }
 
-        function updateQuantityFromInput(strainId, field, inputEl) {
+        function updateQuantityFromInput(strainId, field, inputEl, bucket = activeInvBucket()) {
             const value = toCount(parseInt(inputEl.value, 10));
-            const current = appState.inventory[strainId] ? appState.inventory[strainId][field] : 0;
-            writeShared({ [`inventory/${strainId}/${field}`]: value });
+            const current = appState.stock[bucket] ? appState.stock[bucket][strainId][field] : 0;
+            writeShared({ [`stock/${bucket}/${strainId}/${field}`]: value });
             if (value === current) return;
             if (field === 'bricks') recordBricksMade(value - current);
-            logActivity({ strain: strainId, pre: 'set', hi: `${FIELD_LABELS[field]} to ${value.toLocaleString()}`, post: `for ${strainName(strainId)}` });
+            logActivity({ strain: strainId, pre: 'set', hi: `${FIELD_LABELS[field]} to ${value.toLocaleString()}`, post: `for ${strainName(strainId)} · ${bucketLabel(bucket)}` });
         }
 
-        function adjustCoca(delta) {
-            const applied = Math.max(-toCount(appState.coca.quantity), delta);
-            adjustShared('coca/quantity', delta);
+        function adjustCoca(delta, bucket = activeInvBucket()) {
+            const applied = Math.max(-(appState.stock[bucket] ? appState.stock[bucket].coca : 0), delta);
+            adjustShared(`stock/${bucket}/coca`, delta);
             if (applied === 0) return;
             logActivity({}, {
-                key: 'coca',
+                key: `coca:${bucket}`,
                 amount: applied,
-                format: amount => ({ pre: amount > 0 ? 'added' : 'removed', hi: `${signedAmount(amount)} coca leaves` })
+                format: amount => ({ pre: amount > 0 ? 'added' : 'removed', hi: `${signedAmount(amount)} coca leaves`, post: `· ${bucketLabel(bucket)}` })
             });
         }
 
-        function updateCocaFromInput() {
-            const input = document.getElementById('coca-quantity-input');
-            if (!input) return;
-            const value = toCount(parseInt(input.value, 10));
-            if (value === toCount(appState.coca.quantity)) return;
-            writeShared({ 'coca/quantity': value });
-            logActivity({ pre: 'set', hi: `coca leaves to ${value.toLocaleString()}` });
+        function updateCocaFromInput(inputEl, bucket = activeInvBucket()) {
+            const value = toCount(parseInt(inputEl.value, 10));
+            if (value === (appState.stock[bucket] ? appState.stock[bucket].coca : 0)) return;
+            writeShared({ [`stock/${bucket}/coca`]: value });
+            logActivity({ pre: 'set', hi: `coca leaves to ${value.toLocaleString()}`, post: `· ${bucketLabel(bucket)}` });
         }
 
-        function resetCoca() {
-            writeShared({ 'coca/quantity': 0 });
-            logActivity({ pre: 'reset', hi: 'coca leaves to 0' });
+        // Move up to `step` untrimmed bud into trimmed (1:1)
+        function trimBud(bucket, strainId) {
+            const step = invStep();
+            mutateStock(stock => {
+                const cell = stockCell(stock, bucket, strainId);
+                const amount = Math.min(step, cell.untrimmed);
+                if (amount === 0) return false;
+                cell.untrimmed -= amount;
+                cell.trimmed += amount;
+                return { amount };
+            }).then(result => {
+                if (!result) return showAlert(`No untrimmed ${strainName(strainId)} to trim here.`, 'warning');
+                logActivity({ strain: strainId, pre: 'trimmed', hi: `${result.amount.toLocaleString()} ${strainName(strainId)}`, post: `· ${bucketLabel(bucket)}` });
+            });
+        }
+
+        // Turn 750 trimmed into 1 brick (or as many as possible with `all`)
+        function pressBricks(bucket, strainId, all) {
+            mutateStock(stock => {
+                const cell = stockCell(stock, bucket, strainId);
+                const bricks = all ? Math.floor(cell.trimmed / BRICK_SIZE) : (cell.trimmed >= BRICK_SIZE ? 1 : 0);
+                if (bricks === 0) return false;
+                cell.trimmed -= bricks * BRICK_SIZE;
+                cell.bricks += bricks;
+                return { bricks };
+            }).then(result => {
+                if (!result) return showAlert(`Not enough trimmed ${strainName(strainId)} here (${BRICK_SIZE} per brick).`, 'warning');
+                recordBricksMade(result.bricks);
+                logActivity({ strain: strainId, pre: 'pressed', hi: `${result.bricks} ${result.bricks === 1 ? 'brick' : 'bricks'}`, post: `of ${strainName(strainId)} · ${bucketLabel(bucket)}` });
+                showAlert(`Pressed ${result.bricks} ${strainName(strainId)} ${result.bricks === 1 ? 'brick' : 'bricks'}.`, 'success');
+            });
+        }
+
+        // ---- Transfers between locations ----
+        const TRANSFER_FIELDS = { untrimmed: 'Untrimmed bud', trimmed: 'Trimmed bud', bricks: 'Bricks' };
+
+        function transferAvailable(bucket, strainId, field) {
+            const b = appState.stock[bucket];
+            if (!b) return 0;
+            return strainId === 'coca' ? b.coca : b[strainId][field];
+        }
+
+        function openTransfer(bucket, strainId) {
+            document.getElementById('transfer-from').value = bucket;
+            document.getElementById('transfer-strain').value = strainId;
+            document.getElementById('transfer-title').textContent =
+                `${strainId === 'coca' ? 'Coca leaves' : strainName(strainId)} from ${bucketLabel(bucket)}`;
+            document.getElementById('transfer-field-row').classList.toggle('hidden', strainId === 'coca');
+            const to = document.getElementById('transfer-to');
+            to.innerHTML = inventoryBuckets().filter(b => b.key !== bucket && !b.orphan)
+                .map(b => `<option value="${escapeHtml(b.key)}">${escapeHtml(b.label)}${b.alias ? ' · ' + escapeHtml(b.alias) : ''}</option>`).join('');
+            const field = document.getElementById('transfer-field');
+            // Default to the first kind of stock that has something to move
+            field.value = strainId === 'coca' ? 'bricks' : (INV_FIELDS.slice().reverse().find(f => transferAvailable(bucket, strainId, f) > 0) || 'bricks');
+            document.getElementById('transfer-error').classList.add('hidden');
+            updateTransferAvailable(true);
+            document.getElementById('transfer-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('transfer-amount').select(), 50);
+        }
+
+        function updateTransferAvailable(resetAmount) {
+            const bucket = document.getElementById('transfer-from').value;
+            const strainId = document.getElementById('transfer-strain').value;
+            const field = document.getElementById('transfer-field').value;
+            const available = transferAvailable(bucket, strainId, field);
+            document.getElementById('transfer-available').textContent = `${available.toLocaleString()} available`;
+            const amount = document.getElementById('transfer-amount');
+            amount.max = available;
+            if (resetAmount) amount.value = available;
+        }
+
+        function closeTransfer() {
+            document.getElementById('transfer-modal').classList.add('hidden');
+        }
+
+        function saveTransfer(event) {
+            event.preventDefault();
+            const from = document.getElementById('transfer-from').value;
+            const to = document.getElementById('transfer-to').value;
+            const strainId = document.getElementById('transfer-strain').value;
+            const field = strainId === 'coca' ? 'coca' : document.getElementById('transfer-field').value;
+            const amount = toCount(document.getElementById('transfer-amount').value);
+            const error = document.getElementById('transfer-error');
+            const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
+            if (!to) return showError('Add another location to move stock to.');
+            if (amount < 1) return showError('Enter an amount of at least 1.');
+
+            mutateStock(stock => {
+                const take = strainId === 'coca' ? null : stockCell(stock, from, strainId);
+                const give = strainId === 'coca' ? null : stockCell(stock, to, strainId);
+                if (strainId === 'coca') {
+                    if (!isPlainObject(stock[from]) || toCount(stock[from].coca) < amount) return false;
+                    if (!isPlainObject(stock[to])) stock[to] = {};
+                    stock[from].coca = toCount(stock[from].coca) - amount;
+                    stock[to].coca = toCount(stock[to].coca) + amount;
+                } else {
+                    if (take[field] < amount) return false;
+                    take[field] -= amount;
+                    give[field] += amount;
+                }
+                return { amount };
+            }).then(result => {
+                if (!result) return showError('Not enough stock to move. Someone may have just changed it.');
+                closeTransfer();
+                const what = strainId === 'coca' ? `${amount.toLocaleString()} coca leaves`
+                    : `${amount.toLocaleString()} ${field === 'bricks' ? (amount === 1 ? 'brick' : 'bricks') : field} ${strainName(strainId)}`;
+                logActivity({ strain: strainId === 'coca' ? null : strainId, pre: 'moved', hi: what, post: `${bucketLabel(from)} → ${bucketLabel(to)}` });
+                showAlert(`Moved ${what} to ${bucketLabel(to)}.`, 'success');
+            });
+        }
+
+        // ---- Harvest intake ----
+        const PLANTS_PER_POT = 4;
+        const AVG_BUD_PER_PLANT = 49.5;
+
+        function openHarvestModal(locId) {
+            const loc = appState.locations.find(l => l.id === locId);
+            if (!loc) return;
+            document.getElementById('harvest-loc').value = locId;
+            document.getElementById('harvest-title').textContent = `Harvest Postal ${locId}`;
+            const planned = DEFAULT_STRAINS.map(strain => ({ strain, pots: toCount((loc.strainPots || {})[strain.id]) }));
+            planned.sort((a, b) => (b.pots > 0) - (a.pots > 0)); // planned strains first
+            document.getElementById('harvest-rows').innerHTML = planned.map(({ strain, pots }) => `
+                <label class="flex items-center gap-3 py-1.5">
+                    <span class="w-8 h-8 shrink-0">${getStrainLogo(strain.id)}</span>
+                    <span class="flex-1 min-w-0">
+                        <span class="block text-sm font-bold ${strain.nameColor} truncate">${escapeHtml(strain.name)}</span>
+                        <span class="block text-[10px] text-slate-500">${pots ? `${pots} pots planned` : 'Not in pot plan'}</span>
+                    </span>
+                    <input type="number" min="0" step="1" data-harvest-strain="${strain.id}" value="${Math.round(pots * PLANTS_PER_POT * AVG_BUD_PER_PLANT)}" oninput="updateHarvestTotal()"
+                        class="w-28 bg-darkbg border border-weed-900 rounded-lg px-2 py-1.5 text-right font-mono text-sm text-white focus:outline-none focus:border-weed-400">
+                </label>`).join('');
+            updateHarvestTotal();
+            document.getElementById('harvest-modal').classList.remove('hidden');
+        }
+
+        function harvestAmounts() {
+            const amounts = {};
+            document.querySelectorAll('#harvest-rows [data-harvest-strain]').forEach(input => {
+                const value = toCount(input.value);
+                if (value > 0) amounts[input.dataset.harvestStrain] = value;
+            });
+            return amounts;
+        }
+
+        function updateHarvestTotal() {
+            const total = Object.values(harvestAmounts()).reduce((sum, v) => sum + v, 0);
+            document.getElementById('harvest-total').textContent = `${total.toLocaleString()} untrimmed total`;
+        }
+
+        function closeHarvestModal() {
+            document.getElementById('harvest-modal').classList.add('hidden');
+        }
+
+        function saveHarvest(event, skipStock) {
+            if (event) event.preventDefault();
+            const locId = document.getElementById('harvest-loc').value;
+            closeHarvestModal();
+            harvestAndRestart(locId, skipStock ? {} : harvestAmounts());
         }
 
         function renderGrowPlanner() {
@@ -2198,13 +2565,26 @@
             }
         }
 
-        function harvestAndRestart(locId) {
+        // Restart the location's timer and add what was collected (untrimmed, per strain) to its stock
+        function harvestAndRestart(locId, amounts = {}) {
             const loc = appState.locations.find(l => l.id === locId);
-            if (loc) {
-                writeShared(timerChanges([loc], true));
-                logActivity({ pre: 'harvested', hi: `Postal ${locId}`, post: 'and restarted the cycle' });
-                showAlert(`Postal ${locId} harvested. New ${formatDuration(loc.durationHours)} cycle started.`, 'success');
-            }
+            if (!loc) return;
+            const bucket = locKey(locId);
+            const total = Object.values(amounts).reduce((sum, v) => sum + v, 0);
+            writeShared(timerChanges([loc], true));
+            const logIt = () => {
+                logActivity(total > 0
+                    ? { pre: 'harvested', hi: `+${total.toLocaleString()} untrimmed`, post: `at Postal ${locId} and restarted the cycle` }
+                    : { pre: 'harvested', hi: `Postal ${locId}`, post: 'and restarted the cycle' });
+                showAlert(total > 0
+                    ? `Added ${total.toLocaleString()} untrimmed to Postal ${locId}. New ${formatDuration(loc.durationHours)} cycle started.`
+                    : `Postal ${locId} restarted. New ${formatDuration(loc.durationHours)} cycle started.`, 'success');
+            };
+            if (total === 0) return logIt();
+            mutateStock(stock => {
+                Object.entries(amounts).forEach(([strainId, amount]) => { stockCell(stock, bucket, strainId).untrimmed += amount; });
+                return { total };
+            }).then(result => { if (result) logIt(); });
         }
 
         function stopTimer(locId) {
@@ -2507,7 +2887,13 @@
             const record = buildSharedTree({ locations: [loc] }).locations[locKey(loc.id)];
             const updated = { ...record, id: newId, alias, durationHours };
             const changes = {};
-            if (newId !== originalId) changes[locPath(originalId)] = null;
+            if (newId !== originalId) {
+                changes[locPath(originalId)] = null;
+                // Its stock moves with it
+                changes[`stock/${locKey(originalId)}`] = null;
+                changes[`stock/${locKey(newId)}`] = JSON.parse(JSON.stringify(appState.stock[locKey(originalId)] || {}));
+                if (appState.selectedInvBucket === locKey(originalId)) appState.selectedInvBucket = locKey(newId);
+            }
             changes[locPath(newId)] = updated;
             if (appState.selectedPlannerLocId === originalId) {
                 appState.selectedPlannerLocId = newId; // keep the planner on the same location
@@ -2525,11 +2911,30 @@
         }
 
         function deleteLocation(locId) {
-            if (confirm(`Are you sure you want to delete grow location Postal ${locId}?`)) {
-                writeShared({ [locPath(locId)]: null });
-                logActivity({ pre: 'deleted location', hi: `Postal ${locId}` });
-                showAlert(`Location Postal ${locId} deleted.`, 'info');
-            }
+            const bucket = locKey(locId);
+            const hasStock = bucketHasStock(appState.stock[bucket]);
+            const question = hasStock
+                ? `Delete grow location Postal ${locId}? Its stock will be moved to the Main Stash.`
+                : `Are you sure you want to delete grow location Postal ${locId}?`;
+            if (!confirm(question)) return;
+
+            writeShared({ [locPath(locId)]: null });
+            // Nothing is lost: whatever this location held is added to the Main Stash
+            mutateStock(stock => {
+                const from = isPlainObject(stock[bucket]) ? stock[bucket] : {};
+                if (!isPlainObject(stock[STASH_KEY])) stock[STASH_KEY] = {};
+                stock[STASH_KEY].coca = toCount(stock[STASH_KEY].coca) + toCount(from.coca);
+                DEFAULT_STRAINS.forEach(strain => {
+                    const moved = stockCell(stock, bucket, strain.id);
+                    const into = stockCell(stock, STASH_KEY, strain.id);
+                    INV_FIELDS.forEach(field => { into[field] += moved[field]; });
+                });
+                delete stock[bucket];
+                return { moved: true };
+            });
+            if (appState.selectedInvBucket === bucket) appState.selectedInvBucket = 'all';
+            logActivity({ pre: 'deleted location', hi: `Postal ${locId}`, post: hasStock ? '(stock moved to Main Stash)' : '' });
+            showAlert(hasStock ? `Postal ${locId} deleted. Its stock is now in the Main Stash.` : `Location Postal ${locId} deleted.`, 'info');
         }
 
         // Read an image file and downscale it so it fits comfortably in localStorage
@@ -2655,11 +3060,12 @@
                     if (isPlainObject(imported)) {
                         if (Sync.mode === 'cloud' && !confirm('This replaces the shared inventory, locations and timers for EVERYONE. Continue?')) return;
                         appState = { ...appState, ...imported };
+                        if (!isPlainObject(imported.stock)) appState.stock = null; // older backup: its inventory goes to the Main Stash
                         normalizeState();
                         syncWebhookInput();
                         saveState();
                         renderAll();
-                        if (Sync.mode === 'cloud') Sync.root.update(buildSharedTree(appState)).catch(handleSyncWriteError);
+                        if (Sync.mode === 'cloud') Sync.root.update({ ...buildSharedTree(appState), inventory: null, coca: null }).catch(handleSyncWriteError);
                         logActivity({ pre: 'imported a', hi: 'backup' });
                         showAlert('NoelOps state successfully imported!', 'success');
                     } else {
@@ -2685,13 +3091,13 @@
             };
 
             if (shared) {
-                const defaults = { inventory: {}, coca: { quantity: 0 }, locations: null, webhookUrl: '', activity: [], history: {} };
+                const defaults = { stock: null, inventory: {}, coca: { quantity: 0 }, locations: null, webhookUrl: '', activity: [], history: {} };
                 const saved = appState;
                 appState = { ...appState, ...defaults };
                 normalizeState();
                 const tree = buildSharedTree(appState);
                 appState = saved;
-                Sync.root.update(tree).then(clearLocalAndReload).catch(handleSyncWriteError);
+                Sync.root.update({ ...tree, inventory: null, coca: null }).then(clearLocalAndReload).catch(handleSyncWriteError);
             } else {
                 clearLocalAndReload();
             }
