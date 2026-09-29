@@ -1,0 +1,305 @@
+{
+  "activity": {
+    "-P2fHTM9dPG6s6AVKv4Z": {
+      "client": "or3ht7w8",
+      "hi": "Postal 7093",
+      "post": "",
+      "pre": "started timer",
+      "ts": 1790653883921,
+      "who": "Jay"
+    },
+    "-P2fJ4FkCZNpbpB_qSVJ": {
+      "client": "3fkafoc6",
+      "hi": "Postal 7093 → 9043, alias \"Jay\"",
+      "post": "",
+      "pre": "edited location",
+      "ts": 1790654305400,
+      "who": "Leon"
+    },
+    "-P2fJ_PO8dtOw9Kmb5K1": {
+      "client": "ushnocaa",
+      "hi": "Postal 12345",
+      "post": "",
+      "pre": "added location",
+      "ts": 1790654437088,
+      "who": "Leon"
+    },
+    "-P2fJbCMxJnB82dQsCzQ": {
+      "client": "ushnocaa",
+      "hi": "Postal 12345",
+      "post": "",
+      "pre": "started timer",
+      "ts": 1790654444445,
+      "who": "Leon"
+    },
+    "-P2fJq0uhCKzWOEl66Gu": {
+      "client": "ushnocaa",
+      "hi": "Postal 12345 is ready",
+      "post": "to harvest",
+      "pre": "",
+      "ts": 1790654505153,
+      "who": "NoelOps"
+    },
+    "-P2fJzW5zXPhLJPILBln": {
+      "client": "ushnocaa",
+      "hi": "Postal 12345",
+      "post": "",
+      "pre": "stopped timer",
+      "ts": 1790654544013,
+      "who": "Leon"
+    },
+    "-P2fK3PrEYp9lFY_5ZN2": {
+      "client": "ushnocaa",
+      "hi": "Postal 12345",
+      "post": "",
+      "pre": "deleted location",
+      "ts": 1790654564093,
+      "who": "Leon"
+    },
+    "-P2fUspJYZJKj4jGYkgr": {
+      "client": "d6qr1bc9",
+      "hi": "Leon",
+      "post": "",
+      "pre": "added crew member",
+      "ts": 1790657400208,
+      "who": "Leon"
+    },
+    "-P2fVHbie7MAmrlpn7Lx": {
+      "client": "d6qr1bc9",
+      "hi": "Jay",
+      "post": "",
+      "pre": "added crew member",
+      "ts": 1790657505835,
+      "who": "Leon"
+    },
+    "-P2fcI5ByjeAud7IroOb": {
+      "client": "ba5gid5v",
+      "hi": "Discord harvest message",
+      "post": "",
+      "pre": "updated the",
+      "ts": 1790659604945,
+      "who": "Leon"
+    }
+  },
+  "coca": {
+    "quantity": 0
+  },
+  "crew": {
+    "-P2fUspBeeOEO2FCjA5H": {
+      "locations": "all",
+      "name": "Leon",
+      "perms": {
+        "admin": true,
+        "inventory": true,
+        "planner": true,
+        "timers": true
+      },
+      "role": "admin"
+    },
+    "-P2fVHbaX0M88ynoz1fU": {
+      "locations": "all",
+      "name": "Jay",
+      "perms": {
+        "admin": false,
+        "inventory": true,
+        "planner": true,
+        "timers": true
+      },
+      "role": "manager"
+    }
+  },
+  "history": {
+    "2026-09-29": {
+      "bricks": 5,
+      "coca": 0,
+      "potential": 38,
+      "trimmed": 30000,
+      "untrimmed": 77597
+    }
+  },
+  "inventory": {
+    "acapulco": {
+      "bricks": 0,
+      "trimmed": 0,
+      "untrimmed": 19837
+    },
+    "afghani": {
+      "bricks": 0,
+      "trimmed": 5000,
+      "untrimmed": 303
+    },
+    "columbian": {
+      "bricks": 4,
+      "trimmed": 1000,
+      "untrimmed": 416
+    },
+    "dosidos": {
+      "bricks": 0,
+      "trimmed": 4500,
+      "untrimmed": 18900
+    },
+    "gelato41": {
+      "bricks": 0,
+      "trimmed": 1500,
+      "untrimmed": 15725
+    },
+    "lemonskunk": {
+      "bricks": 1,
+      "trimmed": 4000,
+      "untrimmed": 255
+    },
+    "nl": {
+      "bricks": 0,
+      "trimmed": 1500,
+      "untrimmed": 16630
+    },
+    "ogkush": {
+      "bricks": 0,
+      "trimmed": 3000,
+      "untrimmed": 5358
+    },
+    "rainbow": {
+      "bricks": 0,
+      "trimmed": 7000,
+      "untrimmed": 11
+    },
+    "skunk1": {
+      "bricks": 0,
+      "trimmed": 2500,
+      "untrimmed": 162
+    }
+  },
+  "locations": {
+    "10060": {
+      "alias": "Benny Docks",
+      "durationHours": 36,
+      "harvestAlertSent": false,
+      "id": "10060",
+      "order": 2,
+      "pots": 30,
+      "strainPots": {
+        "acapulco": 6,
+        "afghani": 2,
+        "columbian": 1,
+        "dosidos": 1,
+        "lemonskunk": 4,
+        "ogkush": 6
+      }
+    },
+    "7078": {
+      "alias": "Leon VW",
+      "durationHours": 36,
+      "harvestAlertSent": false,
+      "id": "7078",
+      "order": 0,
+      "pots": 50,
+      "strainPots": {
+        "acapulco": 5,
+        "afghani": 5,
+        "columbian": 5,
+        "dosidos": 5,
+        "gelato41": 5,
+        "lemonskunk": 5,
+        "nl": 5,
+        "ogkush": 5,
+        "rainbow": 5,
+        "skunk1": 5
+      }
+    },
+    "9043": {
+      "alias": "Jay",
+      "durationHours": 36,
+      "harvestAlertSent": false,
+      "id": "9043",
+      "order": 3,
+      "pots": 10,
+      "startTime": 1790653883914
+    },
+    "9182": {
+      "alias": "Leon JT",
+      "durationHours": 36,
+      "harvestAlertSent": false,
+      "id": "9182",
+      "order": 1,
+      "pots": 61,
+      "strainPots": {
+        "acapulco": 7,
+        "afghani": 6,
+        "columbian": 6,
+        "dosidos": 6,
+        "gelato41": 6,
+        "lemonskunk": 6,
+        "nl": 6,
+        "ogkush": 6,
+        "rainbow": 6,
+        "skunk1": 6
+      }
+    }
+  },
+  "settings": {
+    "discordTemplate": {
+      "avatarUrl": "",
+      "color": "#09b711",
+      "description": "{alias} has finished its {duration} cycle and is ready to harvest {pots} pots.",
+      "footer": "NoelOps Operations",
+      "showFields": false,
+      "title": "🌿 Harvest Ready: Location {alias}",
+      "username": "NoelOps Harvest System"
+    }
+  },
+  "stock": {
+    "%stash": {
+      "acapulco": {
+        "bricks": 0,
+        "trimmed": 0,
+        "untrimmed": 19837
+      },
+      "afghani": {
+        "bricks": 0,
+        "trimmed": 5000,
+        "untrimmed": 303
+      },
+      "coca": 0,
+      "columbian": {
+        "bricks": 4,
+        "trimmed": 1000,
+        "untrimmed": 416
+      },
+      "dosidos": {
+        "bricks": 0,
+        "trimmed": 4500,
+        "untrimmed": 18900
+      },
+      "gelato41": {
+        "bricks": 0,
+        "trimmed": 1500,
+        "untrimmed": 15725
+      },
+      "lemonskunk": {
+        "bricks": 1,
+        "trimmed": 4000,
+        "untrimmed": 255
+      },
+      "nl": {
+        "bricks": 0,
+        "trimmed": 1500,
+        "untrimmed": 16630
+      },
+      "ogkush": {
+        "bricks": 0,
+        "trimmed": 3000,
+        "untrimmed": 5358
+      },
+      "rainbow": {
+        "bricks": 0,
+        "trimmed": 7000,
+        "untrimmed": 11
+      },
+      "skunk1": {
+        "bricks": 0,
+        "trimmed": 2500,
+        "untrimmed": 162
+      }
+    }
+  }
+}
