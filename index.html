@@ -8,7 +8,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
+        if (window.tailwind) tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
@@ -697,6 +697,21 @@
         </div>
     </footer>
 
+    <!-- Firebase config: kept in its own block so a pasting mistake here can't break the rest of the page.
+         Paste only the { ... } object from the Firebase console, not its "const firebaseConfig =" line. -->
+    <script>
+        window.NOELOPS_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyBBINuk-Vve1ZCIzfM9atn6wcmkiLSb2UA",
+            authDomain: "noelops.firebaseapp.com",
+            databaseURL: "https://noelops-default-rtdb.firebaseio.com",
+            projectId: "noelops",
+            storageBucket: "noelops.firebasestorage.app",
+            messagingSenderId: "890001351597",
+            appId: "1:890001351597:web:1b4dcfa187b362771f3724",
+            measurementId: "G-BKBQ4RF17Y"
+        };
+    </script>
+
     <script>
         // 10 Strains with custom strain title colors. Each strain logo loads from logos/<id>.png
         const DEFAULT_STRAINS = [
@@ -830,21 +845,12 @@
         // ---------------------------------------------------------------------
         // Live shared data (Firebase Realtime Database)
         //
-        // Paste your Firebase web app config below to share inventory, timers,
-        // locations and the webhook URL live between everyone. With null, data
-        // stays in this browser only. Setup steps are in README.md.
+        // Live sync turns on when window.NOELOPS_FIREBASE_CONFIG is set (see the
+        // "Firebase config" block below). Without it, data stays in this
+        // browser only. Setup steps are in README.md.
         // ---------------------------------------------------------------------
-        const FIREBASE_CONFIG = // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBBINuk-Vve1ZCIzfM9atn6wcmkiLSb2UA",
-  authDomain: "noelops.firebaseapp.com",
-  databaseURL: "https://noelops-default-rtdb.firebaseio.com",
-  projectId: "noelops",
-  storageBucket: "noelops.firebasestorage.app",
-  messagingSenderId: "890001351597",
-  appId: "1:890001351597:web:1b4dcfa187b362771f3724",
-  measurementId: "G-BKBQ4RF17Y"
-};;
+        // Set in the "Firebase config" script block near the end of <body>
+        const FIREBASE_CONFIG = isPlainObject(window.NOELOPS_FIREBASE_CONFIG) ? window.NOELOPS_FIREBASE_CONFIG : null;
         const FIREBASE_SDK_VERSION = '10.12.2';
         const SHARED_DB_ROOT = 'noelops';
 

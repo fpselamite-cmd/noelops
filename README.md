@@ -22,10 +22,10 @@ Out of the box, data is saved in each person's browser only (the header shows **
    ```
 
 4. Go to **Project settings** (the gear icon) → **General** → **Your apps**, click the **</>** (Web) icon, give it any nickname and click **Register app**. Firebase shows a `firebaseConfig` block. Copy it.
-5. In `index.html`, find `const FIREBASE_CONFIG = null;` and replace `null` with the copied object, e.g.
+5. In `index.html`, find `window.NOELOPS_FIREBASE_CONFIG = {` (in its own block near the bottom of the file) and replace the `{ ... }` object with the one you copied. Paste **only the object**, not Firebase's `const firebaseConfig =` line:
 
    ```js
-   const FIREBASE_CONFIG = {
+   window.NOELOPS_FIREBASE_CONFIG = {
        apiKey: "…",
        authDomain: "your-project.firebaseapp.com",
        databaseURL: "https://your-project-default-rtdb.firebaseio.com",
@@ -36,7 +36,7 @@ Out of the box, data is saved in each person's browser only (the header shows **
    };
    ```
 
-   Make sure the object includes `databaseURL`. If it's missing, copy the URL shown at the top of the Realtime Database page.
+   Make sure the object includes `databaseURL`. If it's missing, copy the URL shown at the top of the Realtime Database page. If this block is ever pasted wrong, the rest of the site keeps working and the header pill just shows **Local Only**.
 
 6. Commit the change. The header pill turns green and reads **Live Sync**.
 
