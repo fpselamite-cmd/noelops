@@ -205,8 +205,15 @@
 
         .dx-modal { position: fixed; inset: 0; z-index: 200; background: rgba(2, 5, 3, 0.75); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px; }
         .dx-modal.hidden { display: none; }
+        .dx-modal-solid { background: rgba(2, 5, 3, 0.96); }
+        .dx-check { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; border-radius: 10px; background: rgba(6, 10, 7, 0.7); border: 1px solid rgba(74, 222, 128, 0.12); cursor: pointer; }
+        .dx-check input { width: auto !important; margin-top: 2px; accent-color: #22c55e; }
+        .dx-member { padding: 14px; display: flex; gap: 12px; align-items: flex-start; }
+        .dx-pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 99px; margin: 2px 4px 0 0; background: rgba(34, 197, 94, 0.12); color: #86efac; border: 1px solid rgba(74, 222, 128, 0.2); }
+        .dx-pill.off { background: transparent; color: #64748b; border-color: rgba(100, 116, 139, 0.3); text-decoration: line-through; }
         .dx-modal-card { width: 100%; max-width: 380px; max-height: 100%; overflow-y: auto; padding: 28px; text-align: center; }
         .dx-modal-card img { width: 160px; height: 96px; object-fit: cover; }
+        .dx-modal-card input[type="radio"], .dx-modal-card input[type="checkbox"] { width: auto; padding: 0; accent-color: #22c55e; }
         .dx-modal-card input { width: 100%; background: #060a07; border: 1px solid rgba(74, 222, 128, 0.28); border-radius: 12px; padding: 11px 14px; font-size: 15px; color: #e6efe8; text-align: center; outline: none; }
         .dx-modal-card input:focus { border-color: #4ade80; box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15); }
 
@@ -280,15 +287,15 @@
                             <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
                         </button>
-                        <button onclick="switchTab('inventory')" id="nav-inventory" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('inventory')" id="nav-inventory" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-cannabis"></i>
                             <span>Inventory Vault</span>
                         </button>
-                        <button onclick="switchTab('planner')" id="nav-planner" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('planner')" id="nav-planner" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-calculator"></i>
                             <span>Grow Planner</span>
                         </button>
-                        <button onclick="switchTab('timers')" id="nav-timers" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('timers')" id="nav-timers" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-clock"></i>
                             <span>Grow Timers</span>
                             <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
@@ -301,7 +308,7 @@
 
                     <!-- Who's online, sync status & live time -->
                     <div class="hidden lg:flex items-center space-x-4 whitespace-nowrap">
-                        <div class="flex items-center space-x-2" onclick="openNameModal()" title="Who's online. Click to change your name.">
+                        <div id="presence-box" class="flex items-center space-x-2" onclick="onPresenceClick()" title="Who's online. Click to change your name or sign out.">
                             <div id="presence-stack" class="dx-stack"></div>
                             <span id="presence-count" class="text-xs text-slate-400 cursor-pointer"></span>
                         </div>
@@ -325,9 +332,9 @@
             <!-- Mobile Menu Dropdown -->
             <div id="mobile-menu" class="hidden md:hidden border-t border-weed-900/60 bg-darkbg px-4 pt-2 pb-4 space-y-2">
                 <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Dashboard</button>
-                <button onclick="switchTab('inventory'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Inventory Vault</button>
-                <button onclick="switchTab('planner'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Planner</button>
-                <button onclick="switchTab('timers'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Timers</button>
+                <button onclick="switchTab('inventory'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Inventory Vault</button>
+                <button onclick="switchTab('planner'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Planner</button>
+                <button onclick="switchTab('timers'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Timers</button>
                 <button onclick="switchTab('admin'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
             </div>
         </header>
@@ -339,15 +346,17 @@
                     <div class="min-w-0">
                         <div id="dx-stats" class="dx-stats"></div>
 
-                        <div class="dx-sec"><h2>Grow Operations</h2><button onclick="switchTab('timers')">Manage timers →</button></div>
-                        <div id="dx-timers" class="dx-timers"></div>
+                        <div data-detail-only>
+                            <div class="dx-sec"><h2>Grow Operations</h2><button onclick="switchTab('timers')">Manage timers →</button></div>
+                            <div id="dx-timers" class="dx-timers"></div>
+                        </div>
 
-                        <div class="dx-sec"><h2>Strain Vault</h2><button onclick="switchTab('inventory')">Open vault →</button></div>
+                        <div class="dx-sec"><h2>Strain Vault</h2><button data-detail-only onclick="switchTab('inventory')">Open vault →</button></div>
                         <div id="dx-strains" class="dx-strains"></div>
                     </div>
 
                     <aside class="min-w-0">
-                        <div class="dx-glass dx-panel">
+                        <div class="dx-glass dx-panel" data-detail-only>
                             <div class="dx-sec"><h2>Live Activity</h2><span class="dx-chip"><span class="dx-dot"></span>LIVE</span></div>
                             <ul id="dx-feed" class="dx-feed"></ul>
                         </div>
@@ -648,6 +657,24 @@
 
                 </div>
 
+                <!-- Crew & Permissions -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-weed-900 pb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-users-gear text-lg"></i></div>
+                            <div>
+                                <h2 class="font-bold text-white text-base">Crew &amp; Permissions</h2>
+                                <p class="text-xs text-slate-400">Give each person a PIN and choose what they can see and do.</p>
+                            </div>
+                        </div>
+                        <button onclick="openCrewEditor()" class="px-4 py-2 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all shadow-md whitespace-nowrap">
+                            <i class="fa-solid fa-user-plus mr-1"></i> Add Crew Member
+                        </button>
+                    </div>
+                    <div id="crew-mode-note" class="text-xs"></div>
+                    <div id="crew-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </div>
+
                 <!-- Existing Locations Management Table -->
                 <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-900">
                     <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center justify-between">
@@ -759,6 +786,62 @@
         </form>
     </div>
 
+    <!-- Crew sign-in (only once crew members exist) -->
+    <div id="signin-modal" class="dx-modal dx-modal-solid hidden">
+        <form class="dx-glass dx-modal-card space-y-4" onsubmit="submitSignIn(event)">
+            <img src="NoelOpsLogo.png" alt="NoelOps" width="160" height="96" class="rounded-xl mx-auto border border-weed-800">
+            <h2 class="text-xl font-black text-white">Sign in</h2>
+            <div id="signin-crew" class="space-y-3">
+                <select id="signin-member" class="dx-input w-full text-center" aria-label="Your name"></select>
+                <input id="signin-pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN" aria-label="PIN">
+                <button type="button" onclick="toggleSignInMaster(true)" class="text-[11px] text-slate-500 hover:text-slate-300">Use the admin password instead</button>
+            </div>
+            <div id="signin-master" class="hidden space-y-3">
+                <input id="signin-password" type="password" autocomplete="current-password" placeholder="Admin password" aria-label="Admin password">
+                <button type="button" onclick="toggleSignInMaster(false)" class="text-[11px] text-slate-500 hover:text-slate-300">Back to crew sign-in</button>
+            </div>
+            <p id="signin-error" class="hidden text-xs text-red-400 font-semibold"></p>
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-right-to-bracket mr-1"></i> Sign In</button>
+        </form>
+    </div>
+
+    <!-- Add / edit crew member -->
+    <div id="crew-modal" class="dx-modal hidden">
+        <form class="dx-glass dx-modal-card dx-modal-wide space-y-4 text-left" onsubmit="saveCrewMember(event)">
+            <h2 id="crew-modal-title" class="text-xl font-black text-white text-center">Add Crew Member</h2>
+            <input type="hidden" id="crew-id">
+            <div class="grid grid-cols-2 gap-3">
+                <label class="block text-xs font-semibold text-slate-300">Name
+                    <input type="text" id="crew-name" maxlength="20" required class="mt-1">
+                </label>
+                <label class="block text-xs font-semibold text-slate-300">PIN <span id="crew-pin-hint" class="font-normal text-slate-500">(4-8 digits)</span>
+                    <input type="password" id="crew-pin" inputmode="numeric" autocomplete="new-password" class="mt-1 font-mono">
+                </label>
+            </div>
+            <label class="block text-xs font-semibold text-slate-300">Role
+                <select id="crew-role" onchange="applyRolePreset()" class="dx-input mt-1 w-full">
+                    <option value="admin">Admin: everything</option>
+                    <option value="manager">Manager: inventory, timers, planner</option>
+                    <option value="grower">Grower: inventory and timers</option>
+                    <option value="viewer">Viewer: dashboard stats only</option>
+                </select>
+            </label>
+            <div>
+                <div class="text-xs font-semibold text-slate-300 mb-1">Can do <span class="font-normal text-slate-500">(changing these makes the role custom)</span></div>
+                <div id="crew-perms" class="grid grid-cols-1 gap-1.5"></div>
+            </div>
+            <div>
+                <div class="text-xs font-semibold text-slate-300 mb-1">Can see</div>
+                <label class="flex items-center gap-2 text-sm text-slate-200"><input type="radio" name="crew-loc-mode" value="all" onchange="toggleCrewLocations()" class="accent-green-500"> All locations</label>
+                <label class="flex items-center gap-2 text-sm text-slate-200 mt-1"><input type="radio" name="crew-loc-mode" value="some" onchange="toggleCrewLocations()" class="accent-green-500"> Only these:</label>
+                <div id="crew-locations" class="grid grid-cols-2 gap-1.5 mt-2 pl-6"></div>
+            </div>
+            <p id="crew-error" class="hidden text-xs text-red-400 font-semibold text-center"></p>
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px">Save</button>
+            <button type="button" onclick="closeCrewEditor()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
+        </form>
+    </div>
+
     <!-- Move stock between locations -->
     <div id="transfer-modal" class="dx-modal hidden">
         <form class="dx-glass dx-modal-card dx-modal-wide space-y-4 text-left" onsubmit="saveTransfer(event)">
@@ -860,6 +943,8 @@
             selectedPlannerLocId: '7078', // Selected planner location tab
             masterLogo: null, // Per-browser header logo override; null = repo default
             crewName: '', // This device's crew member name
+            crew: {}, // Shared crew list: { [member id]: { name, pinHash, role, perms: {...}, locations: 'all' | { [bucket key]: true } } }
+            session: null, // This device's sign-in: { memberId, pinHash }
             activity: [], // Shared activity feed, newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
             presence: [] // Who's online right now (live mode only, never saved)
@@ -873,7 +958,6 @@
             startMainClock();
             setInterval(tickTimers, 1000);
             initSync();
-            if (!appState.crewName) openNameModal();
         }
 
         // Escape a value for safe insertion into innerHTML
@@ -953,11 +1037,26 @@
                 appState.stock[key] = clean;
             });
 
-            // Totals across every location, used by the dashboard
+            if (!isPlainObject(appState.crew)) appState.crew = {};
+            Object.keys(appState.crew).forEach(id => {
+                const m = appState.crew[id];
+                if (!isPlainObject(m) || typeof m.name !== 'string' || !m.name || typeof m.pinHash !== 'string') { delete appState.crew[id]; return; }
+                const perms = isPlainObject(m.perms) ? m.perms : {};
+                appState.crew[id] = {
+                    name: m.name,
+                    pinHash: m.pinHash,
+                    role: ROLE_PRESETS[m.role] ? m.role : 'viewer',
+                    perms: Object.fromEntries(PERMISSIONS.map(p => [p.key, Boolean(perms[p.key])])),
+                    locations: isPlainObject(m.locations) ? m.locations : 'all'
+                };
+            });
+            if (!isPlainObject(appState.session)) appState.session = null;
+
+            // Totals across the locations this person can see, used by the dashboard
             appState.inventory = {};
             DEFAULT_STRAINS.forEach(strain => { appState.inventory[strain.id] = { untrimmed: 0, trimmed: 0, bricks: 0 }; });
             let cocaTotal = 0;
-            Object.values(appState.stock).forEach(bucket => {
+            Object.entries(appState.stock).filter(([key]) => canSeeBucket(key)).map(([, bucket]) => bucket).forEach(bucket => {
                 cocaTotal += bucket.coca;
                 DEFAULT_STRAINS.forEach(strain => {
                     INV_FIELDS.forEach(field => { appState.inventory[strain.id][field] += bucket[strain.id][field]; });
@@ -1045,7 +1144,8 @@
                 locations,
                 settings: { webhookUrl: state.webhookUrl || '' },
                 activity,
-                history: JSON.parse(JSON.stringify(state.history || {}))
+                history: JSON.parse(JSON.stringify(state.history || {})),
+                crew: JSON.parse(JSON.stringify(state.crew || {}))
             };
         }
 
@@ -1064,6 +1164,7 @@
                 .map(([id, record]) => ({ ...record, id }));
             appState.history = isPlainObject(tree.history) ? tree.history : {};
             appState.presence = Object.values(isPlainObject(tree.presence) ? tree.presence : {}).filter(isPlainObject);
+            appState.crew = isPlainObject(tree.crew) ? tree.crew : {};
             normalizeState();
         }
 
@@ -1139,7 +1240,12 @@
         }
 
         // Main Stash, each grow location, then any stock left under a key that no longer has a location
-        function inventoryBuckets() {
+        // Buckets this person can see (pass true for every bucket, e.g. for labels)
+        function inventoryBuckets(includeHidden) {
+            return allInventoryBuckets().filter(b => includeHidden || canSeeBucket(b.key));
+        }
+
+        function allInventoryBuckets() {
             const buckets = [{ key: STASH_KEY, label: 'Main Stash', short: 'Main Stash' }];
             appState.locations.forEach(loc => buckets.push({ key: locKey(loc.id), label: `Postal ${loc.id}`, short: loc.id, alias: loc.alias, locId: loc.id }));
             Object.keys(appState.stock || {}).forEach(key => {
@@ -1153,7 +1259,7 @@
         }
 
         function bucketLabel(key) {
-            const bucket = inventoryBuckets().find(b => b.key === key);
+            const bucket = allInventoryBuckets().find(b => b.key === key);
             return bucket ? bucket.label : key;
         }
 
@@ -1176,6 +1282,322 @@
             loc.harvestAlertSent = true;
             saveState();
             return Promise.resolve(true);
+        }
+
+        // ---------------------------------------------------------------------
+        // Crew accounts & permissions (PIN sign-in)
+        //
+        // With no crew members added, everyone can use everything (as before).
+        // Once the admin adds crew, everyone signs in with name + PIN and the
+        // site hides what they aren't allowed to do. The admin password always
+        // works as a master key. This is a convenience lock, not real security:
+        // someone technical could get around it.
+        // ---------------------------------------------------------------------
+        const PERMISSIONS = [
+            { key: 'inventory', label: 'Edit inventory', hint: 'Add/remove, trim, press, move stock' },
+            { key: 'timers', label: 'Timers & harvests', hint: 'Start, stop, restart, harvest' },
+            { key: 'planner', label: 'Grow planner', hint: 'Change pots and pot plans' },
+            { key: 'admin', label: 'Admin page', hint: 'Locations, crew, webhook, logos, backups' }
+        ];
+        const ROLE_PRESETS = {
+            admin: { label: 'Admin', perms: { inventory: true, timers: true, planner: true, admin: true } },
+            manager: { label: 'Manager', perms: { inventory: true, timers: true, planner: true, admin: false } },
+            grower: { label: 'Grower', perms: { inventory: true, timers: true, planner: false, admin: false } },
+            viewer: { label: 'Viewer (stats only)', perms: { inventory: false, timers: false, planner: false, admin: false } }
+        };
+
+        function crewMode() {
+            return Object.keys(appState.crew || {}).length > 0;
+        }
+
+        // The signed-in crew member on this device, if their sign-in is still valid (PIN unchanged, not removed)
+        function currentMember() {
+            if (!crewMode() || !appState.session) return null;
+            const member = appState.crew[appState.session.memberId];
+            return member && member.pinHash === appState.session.pinHash ? member : null;
+        }
+
+        // Signed in with the admin password (master key)
+        function isMasterSession() {
+            return crewMode() && isAdminUnlocked();
+        }
+
+        function can(perm) {
+            if (!crewMode() || isAdminUnlocked()) return true;
+            const member = currentMember();
+            return Boolean(member && member.perms[perm]);
+        }
+
+        // Crew members with no permissions at all only get the dashboard stats: no locations, timers or activity
+        function isStatsOnly() {
+            if (!crewMode() || isAdminUnlocked()) return false;
+            const member = currentMember();
+            return Boolean(member) && !PERMISSIONS.some(p => member.perms[p.key]);
+        }
+
+        function hasAdminAccess() {
+            return isAdminUnlocked() || (crewMode() && can('admin'));
+        }
+
+        function seesAllLocations() {
+            if (!crewMode() || isAdminUnlocked()) return true;
+            const member = currentMember();
+            return Boolean(member && member.locations === 'all');
+        }
+
+        function canSeeBucket(key) {
+            if (seesAllLocations()) return true;
+            const member = currentMember();
+            return Boolean(member && isPlainObject(member.locations) && member.locations[key]);
+        }
+
+        function canSeeLoc(locId) {
+            return canSeeBucket(locKey(locId));
+        }
+
+        function visibleLocations() {
+            return appState.locations.filter(loc => canSeeLoc(loc.id));
+        }
+
+        // Stop an action this person isn't allowed to do (e.g. from a page that hasn't refreshed yet)
+        function allowed(perm, bucketKey) {
+            if (can(perm) && (!bucketKey || canSeeBucket(bucketKey))) return true;
+            showAlert("You don't have permission to do that. Ask an admin.", 'warning');
+            return false;
+        }
+
+        // Sign-in screen whenever crew accounts exist and this device isn't signed in
+        function checkAccessGate() {
+            if (crewMode()) {
+                const nameModal = document.getElementById('name-modal');
+                if (nameModal) nameModal.classList.add('hidden');
+                if (!currentMember() && !isAdminUnlocked()) openSignIn();
+                else closeSignIn();
+            } else {
+                closeSignIn();
+                if (!appState.crewName) openNameModal();
+            }
+        }
+
+        function openSignIn() {
+            const modal = document.getElementById('signin-modal');
+            if (!modal || !modal.classList.contains('hidden')) return;
+            const select = document.getElementById('signin-member');
+            const members = Object.entries(appState.crew).sort((a, b) => a[1].name.localeCompare(b[1].name));
+            select.innerHTML = `<option value="">Choose your name…</option>` +
+                members.map(([id, m]) => `<option value="${escapeHtml(id)}">${escapeHtml(m.name)}</option>`).join('');
+            const guess = members.find(([, m]) => m.name === appState.crewName);
+            if (guess) select.value = guess[0];
+            document.getElementById('signin-pin').value = '';
+            document.getElementById('signin-error').classList.add('hidden');
+            document.getElementById('signin-master').classList.add('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => (select.value ? document.getElementById('signin-pin') : select).focus(), 50);
+        }
+
+        function closeSignIn() {
+            const modal = document.getElementById('signin-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function pinHash(memberId, pin) {
+            return sha256Hex(`${memberId}:${pin}`);
+        }
+
+        async function submitSignIn(event) {
+            event.preventDefault();
+            const error = document.getElementById('signin-error');
+            const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
+            error.classList.add('hidden');
+            if (!window.crypto || !crypto.subtle) return showError('Sign-in needs the page to be served over HTTPS.');
+
+            const master = !document.getElementById('signin-master').classList.contains('hidden');
+            if (master) {
+                const hash = await sha256Hex(document.getElementById('signin-password').value);
+                document.getElementById('signin-password').value = '';
+                if (hash !== ADMIN_PASSWORD_SHA256) return setTimeout(() => showError('Incorrect admin password.'), 600);
+                setAdminUnlocked(true);
+                if (!appState.crewName) appState.crewName = 'Admin';
+                saveState();
+                closeSignIn();
+                registerPresence();
+                renderAll();
+                return showAlert('Signed in with the admin password.', 'success');
+            }
+
+            const memberId = document.getElementById('signin-member').value;
+            const pin = document.getElementById('signin-pin').value.trim();
+            const member = appState.crew[memberId];
+            if (!member) return showError('Choose your name.');
+            const hash = await pinHash(memberId, pin);
+            document.getElementById('signin-pin').value = '';
+            if (hash !== member.pinHash) return setTimeout(() => showError('Wrong PIN.'), 600); // slows down guessing
+
+            appState.session = { memberId, pinHash: member.pinHash };
+            appState.crewName = member.name;
+            saveState();
+            closeSignIn();
+            registerPresence();
+            renderAll();
+            showAlert(`Signed in as ${member.name}.`, 'success');
+        }
+
+        function toggleSignInMaster(show) {
+            document.getElementById('signin-master').classList.toggle('hidden', !show);
+            document.getElementById('signin-crew').classList.toggle('hidden', show);
+            setTimeout(() => document.getElementById(show ? 'signin-password' : 'signin-pin').focus(), 50);
+        }
+
+        // Header avatars: change name (open mode) or sign out (crew mode)
+        function onPresenceClick() {
+            if (!crewMode()) return openNameModal();
+            const who = currentMember() ? currentMember().name : 'admin';
+            if (!confirm(`Signed in as ${who}. Sign out of this device?`)) return;
+            signOut();
+        }
+
+        // ---- Admin: crew panel ----
+        function roleLabel(member) {
+            const preset = ROLE_PRESETS[member.role] || ROLE_PRESETS.viewer;
+            const custom = PERMISSIONS.some(p => Boolean(preset.perms[p.key]) !== Boolean(member.perms[p.key]));
+            return preset.label + (custom ? ' (custom)' : '');
+        }
+
+        function renderCrewPanel() {
+            const list = document.getElementById('crew-list');
+            const note = document.getElementById('crew-mode-note');
+            if (!list || !note) return;
+            const members = Object.entries(appState.crew).sort((a, b) => a[1].name.localeCompare(b[1].name));
+            note.innerHTML = members.length === 0
+                ? `<p class="text-slate-400"><i class="fa-solid fa-lock-open text-amber-400 mr-1"></i>No crew yet, so the site is open to anyone with the link. <b class="text-slate-200">Once you add the first person, everyone has to sign in with their name and PIN.</b> The admin password always works as a master key.</p>`
+                : `<p class="text-slate-400"><i class="fa-solid fa-lock text-weed-400 mr-1"></i>Sign-in is on. The admin password always works as a master key. This is a simple lock: it stops casual misuse, but someone technical could get around it.</p>`;
+            list.innerHTML = members.map(([id, m]) => {
+                const where = m.locations === 'all'
+                    ? '<span class="dx-pill">All locations</span>'
+                    : Object.keys(m.locations).filter(k => m.locations[k]).map(k => `<span class="dx-pill">${escapeHtml(bucketLabel(k))}</span>`).join('') || '<span class="dx-pill off">No locations</span>';
+                return `
+                    <div class="dx-glass dx-member">
+                        ${avatarHtml(m.name)}
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2"><b class="text-white">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span></div>
+                            <div>${PERMISSIONS.map(p => `<span class="dx-pill ${m.perms[p.key] ? '' : 'off'}">${p.label}</span>`).join('')}</div>
+                            <div class="mt-1">${where}</div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid fa-pen mr-1"></i>Edit</button>
+                            <button onclick="removeCrewMember(${jsArg(id)})" class="px-2.5 py-1 rounded bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold border border-red-800"><i class="fa-solid fa-trash-can mr-1"></i>Remove</button>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        function openCrewEditor(memberId) {
+            const member = memberId ? appState.crew[memberId] : null;
+            document.getElementById('crew-id').value = memberId || '';
+            document.getElementById('crew-modal-title').textContent = member ? `Edit ${member.name}` : 'Add Crew Member';
+            document.getElementById('crew-name').value = member ? member.name : '';
+            document.getElementById('crew-pin').value = '';
+            document.getElementById('crew-pin').placeholder = member ? 'Leave blank to keep' : '';
+            document.getElementById('crew-pin-hint').textContent = member ? '(blank = keep current)' : '(4-8 digits)';
+            document.getElementById('crew-role').value = member ? member.role : 'grower';
+            const perms = member ? member.perms : ROLE_PRESETS.grower.perms;
+            document.getElementById('crew-perms').innerHTML = PERMISSIONS.map(p => `
+                <label class="dx-check"><input type="checkbox" data-perm="${p.key}" ${perms[p.key] ? 'checked' : ''}>
+                    <span><span class="block text-sm text-slate-100 font-semibold">${p.label}</span><span class="block text-[11px] text-slate-500">${p.hint}</span></span></label>`).join('');
+            const locs = member ? member.locations : 'all';
+            document.querySelectorAll('input[name="crew-loc-mode"]').forEach(r => { r.checked = r.value === (locs === 'all' ? 'all' : 'some'); });
+            document.getElementById('crew-locations').innerHTML = allInventoryBuckets().filter(b => !b.orphan).map(b => `
+                <label class="dx-check py-1.5"><input type="checkbox" data-bucket="${escapeHtml(b.key)}" ${locs !== 'all' && locs[b.key] ? 'checked' : ''}>
+                    <span class="text-sm text-slate-200">${escapeHtml(b.key === STASH_KEY ? 'Main Stash' : b.short)}${b.alias ? ` <span class="text-slate-500 text-xs">${escapeHtml(b.alias)}</span>` : ''}</span></label>`).join('');
+            toggleCrewLocations();
+            document.getElementById('crew-error').classList.add('hidden');
+            document.getElementById('crew-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('crew-name').focus(), 50);
+        }
+
+        function applyRolePreset() {
+            const preset = ROLE_PRESETS[document.getElementById('crew-role').value];
+            document.querySelectorAll('#crew-perms [data-perm]').forEach(box => { box.checked = Boolean(preset.perms[box.dataset.perm]); });
+        }
+
+        function toggleCrewLocations() {
+            const some = document.querySelector('input[name="crew-loc-mode"][value="some"]').checked;
+            document.getElementById('crew-locations').style.opacity = some ? '1' : '0.4';
+            document.querySelectorAll('#crew-locations input').forEach(box => { box.disabled = !some; });
+        }
+
+        function closeCrewEditor() {
+            document.getElementById('crew-modal').classList.add('hidden');
+        }
+
+        async function saveCrewMember(event) {
+            event.preventDefault();
+            if (!allowed('admin')) return;
+            const error = document.getElementById('crew-error');
+            const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
+            const existingId = document.getElementById('crew-id').value;
+            const name = document.getElementById('crew-name').value.trim().replace(/\s+/g, ' ').slice(0, 20);
+            const pin = document.getElementById('crew-pin').value.trim();
+            if (!name) return showError('Enter a name.');
+            if (Object.entries(appState.crew).some(([id, m]) => id !== existingId && m.name.toLowerCase() === name.toLowerCase())) return showError(`${name} is already on the crew.`);
+            if ((!existingId || pin) && !/^\d{4,8}$/.test(pin)) return showError('PIN must be 4 to 8 digits.');
+            if (!window.crypto || !crypto.subtle) return showError('Needs the page to be served over HTTPS.');
+
+            const perms = {};
+            document.querySelectorAll('#crew-perms [data-perm]').forEach(box => { perms[box.dataset.perm] = box.checked; });
+            let locations = 'all';
+            if (document.querySelector('input[name="crew-loc-mode"][value="some"]').checked) {
+                locations = {};
+                document.querySelectorAll('#crew-locations [data-bucket]').forEach(box => { if (box.checked) locations[box.dataset.bucket] = true; });
+                if (Object.keys(locations).length === 0) return showError('Pick at least one location, or choose All locations.');
+            }
+
+            const id = existingId || newActivityId();
+            const record = {
+                name,
+                pinHash: pin ? await pinHash(id, pin) : appState.crew[existingId].pinHash,
+                role: document.getElementById('crew-role').value,
+                perms,
+                locations
+            };
+            const firstMember = !crewMode();
+            // Whoever sets up the first crew member stays signed in (as admin) instead of being locked out mid-edit
+            if (firstMember) setAdminUnlocked(true);
+            writeShared({ [`crew/${id}`]: record });
+            // Editing yourself: keep this device signed in with the new PIN
+            if (appState.session && appState.session.memberId === id) {
+                appState.session = { memberId: id, pinHash: record.pinHash };
+                appState.crewName = name;
+                saveState();
+            }
+            closeCrewEditor();
+            logActivity({ pre: existingId ? 'updated crew member' : 'added crew member', hi: name });
+            showAlert(firstMember
+                ? `${name} added. Sign-in is now on: everyone will be asked for their name and PIN.`
+                : `${name} ${existingId ? 'updated' : 'added'}.`, 'success');
+        }
+
+        function removeCrewMember(memberId) {
+            if (!allowed('admin')) return;
+            const member = appState.crew[memberId];
+            if (!member) return;
+            const last = Object.keys(appState.crew).length === 1;
+            if (!confirm(last
+                ? `Remove ${member.name}? They're the last crew member, so sign-in turns off and the site is open to anyone with the link again.`
+                : `Remove ${member.name}? They'll be signed out and won't be able to sign in again.`)) return;
+            writeShared({ [`crew/${memberId}`]: null });
+            logActivity({ pre: 'removed crew member', hi: member.name });
+            showAlert(`${member.name} removed.`, 'info');
+        }
+
+        function signOut() {
+            appState.session = null;
+            setAdminUnlocked(false);
+            saveState();
+            if (presenceRef) presenceRef.remove().catch(() => {});
+            presenceRef = null;
+            switchTab('dashboard');
+            renderAll();
         }
 
         // ---------------------------------------------------------------------
@@ -1219,7 +1641,7 @@
             const modal = document.getElementById('name-modal');
             const input = document.getElementById('crew-name-input');
             const cancel = document.getElementById('name-modal-cancel');
-            if (!modal || !input) return;
+            if (!modal || !input || !modal.classList.contains('hidden')) return; // already open: keep what's typed
             input.value = appState.crewName || '';
             if (cancel) cancel.classList.toggle('hidden', !appState.crewName);
             modal.classList.remove('hidden');
@@ -1267,6 +1689,13 @@
             count.textContent = names.length === 0 ? 'Set your name' : `${names.length} online`;
         }
 
+        // Entries tied to locations only show to people who can see one of them
+        function activityVisible(entry) {
+            if (isStatsOnly()) return false;
+            if (!entry.loc && !entry.loc2) return true;
+            return (entry.loc && canSeeBucket(entry.loc)) || (entry.loc2 && canSeeBucket(entry.loc2));
+        }
+
         function newActivityId() {
             return Sync.mode === 'cloud'
                 ? Sync.root.child('activity').push().key
@@ -1301,6 +1730,8 @@
                     hi: text.hi || '',
                     post: text.post || '',
                     strain: entry.strain || null,
+                    loc: entry.loc || null,
+                    loc2: entry.loc2 || null,
                     ts: timestampValue()
                 };
                 lastActivity = merge ? { key: merge.key, id, amount, ts: now } : null;
@@ -1330,7 +1761,7 @@
             }
             const recentCutoff = syncNow() - 60000;
             appState.activity.forEach(entry => {
-                if (entry.client === CLIENT_ID || entry.ts < recentCutoff) return;
+                if (entry.client === CLIENT_ID || entry.ts < recentCutoff || !activityVisible(entry)) return;
                 if (previous.has(entry.id) && previous.get(entry.id) === entry.hi) return;
                 showActivityToast(entry);
                 if (entry.strain) {
@@ -1342,7 +1773,7 @@
         // Save today's totals (for trend lines and "today" deltas) whenever they change
         function recordDailySnapshot() {
             const key = dayKey();
-            const totals = currentTotals();
+            const totals = globalTotals();
             const saved = appState.history[key] || {};
             const changed = Object.keys(totals).some(field => saved[field] !== totals[field]);
             const cutoff = dayKey(HISTORY_KEEP_DAYS);
@@ -1575,7 +2006,8 @@
         // Navigation Tab Switching Logic
         function switchTab(tabId) {
             const navTabId = tabId;
-            if (tabId === 'admin' && !isAdminUnlocked()) tabId = 'login';
+            if (tabId === 'admin' && !hasAdminAccess()) tabId = 'login';
+            if (isStatsOnly() && ['inventory', 'planner', 'timers'].includes(tabId)) tabId = 'dashboard';
 
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             const target = document.getElementById(`tab-${tabId}`);
@@ -1611,10 +2043,20 @@
             renderAdminStrainLogos();
             renderPresence();
             updateWebhookPill();
+            renderCrewPanel();
             const badge = document.getElementById('active-timers-badge');
-            if (badge) badge.innerText = appState.locations.length;
+            if (badge) badge.innerText = visibleLocations().length;
             const postalList = document.getElementById('timers-postal-list');
-            if (postalList) postalList.innerText = appState.locations.map(l => l.id).join(', ') || '—';
+            if (postalList) postalList.innerText = visibleLocations().map(l => l.id).join(', ') || '—';
+            // An admin tab left open after losing admin access goes back to the dashboard
+            const adminTab = document.getElementById('tab-admin');
+            if (adminTab && !adminTab.classList.contains('hidden') && !hasAdminAccess()) switchTab('dashboard');
+            // Stats-only crew: hide everything location-specific and leave any page they can't use
+            const statsOnly = isStatsOnly();
+            document.querySelectorAll('[data-detail-only]').forEach(el => el.classList.toggle('hidden', statsOnly));
+            const openTab = document.querySelector('.tab-content:not(.hidden)');
+            if (statsOnly && openTab && ['tab-inventory', 'tab-planner', 'tab-timers'].includes(openTab.id)) switchTab('dashboard');
+            checkAccessGate();
         }
 
         // Image sources that failed to load, so re-renders show the fallback without re-requesting them
@@ -1707,6 +2149,23 @@
         const dashFlashes = {};
         let dashTimerSignature = '';
 
+        // Totals across every bucket, whoever is looking (for the shared daily history)
+        function globalTotals() {
+            const totals = { bricks: 0, potential: 0, trimmed: 0, untrimmed: 0, coca: 0 };
+            Object.values(appState.stock || {}).forEach(bucket => {
+                totals.coca += toCount(bucket.coca);
+                DEFAULT_STRAINS.forEach(strain => {
+                    const c = bucket[strain.id] || {};
+                    totals.bricks += toCount(c.bricks);
+                    totals.trimmed += toCount(c.trimmed);
+                    totals.untrimmed += toCount(c.untrimmed);
+                    totals.potential += Math.floor(toCount(c.trimmed) / BRICK_SIZE);
+                });
+            });
+            return totals;
+        }
+
+        // Totals across the locations this person can see
         function currentTotals() {
             const totals = { bricks: 0, potential: 0, trimmed: 0, untrimmed: 0, coca: toCount(appState.coca.quantity) };
             DEFAULT_STRAINS.forEach(strain => {
@@ -1771,8 +2230,9 @@
                 { key: 'untrimmed', label: 'Untrimmed reserve', value: t.untrimmed, color: '#fbbf24', sub: 'Awaiting trimming' },
                 { key: 'coca', label: 'Coca leaves', value: t.coca, color: '#38bdf8', sub: 'Secondary op stock', labelColor: '#38bdf8', numColor: '#bae6fd', deltaColor: '#38bdf8' }
             ];
+            const showTrends = seesAllLocations();
             box.innerHTML = tiles.map(tile => {
-                const series = dailySeries(tile.key, tile.value);
+                const series = showTrends ? dailySeries(tile.key, tile.value) : [tile.value];
                 const delta = tile.fixedSub ? '' : deltaHtml(series, '', tile.deltaColor);
                 const sub = tile.fixedSub || !delta ? `<div class="delta" style="color:${tile.hot ? '#4ade80' : '#8a9a8e'}">${escapeHtml(tile.sub)}</div>` : delta;
                 return `
@@ -1812,13 +2272,15 @@
         function renderDashTimers() {
             const box = document.getElementById('dx-timers');
             if (!box) return;
-            if (appState.locations.length === 0) {
-                box.innerHTML = `<div class="dx-glass dx-tm" style="grid-column:1/-1"><p class="dx-muted text-sm py-6">No grow locations yet. Add one in Admin.</p></div>`;
+            const locations = visibleLocations();
+            if (locations.length === 0) {
+                box.innerHTML = `<div class="dx-glass dx-tm" style="grid-column:1/-1"><p class="dx-muted text-sm py-6">${appState.locations.length ? 'No grow locations assigned to you.' : 'No grow locations yet. Add one in Admin.'}</p></div>`;
                 dashTimerSignature = '';
                 return;
             }
+            const canTime = can('timers');
 
-            const states = appState.locations.map(loc => [loc, timerState(loc)]);
+            const states = locations.map(loc => [loc, timerState(loc)]);
             dashTimerSignature = states.map(([loc, st]) => `${loc.id}:${st.status}:${loc.startTime}`).join('|');
 
             box.innerHTML = states.map(([loc, st]) => {
@@ -1836,7 +2298,9 @@
                     : idle
                         ? `<div class="t dx-mono dx-muted">${formatTime(Math.round(st.totalSecs))}</div><div class="s">Not started</div>`
                         : `<div class="t dx-mono dx-ring-t">${formatTime(st.remainingSecs)}</div><div class="s dx-ring-s">${Math.floor(st.pct)}% grown</div>`;
-                const foot = ready
+                const foot = !canTime
+                    ? (ready ? 'Ready to harvest' : idle ? 'Not running' : escapeHtml(readyAtLabel(loc)))
+                    : ready
                     ? `<button onclick="openHarvestModal(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-seedling mr-1"></i> Harvest &amp; Restart</button>`
                     : idle
                         ? `<button onclick="startTimer(${jsArg(loc.id)})" class="dx-btn dx-btn-o"><i class="fa-solid fa-play mr-1"></i> Start ${formatDuration(loc.durationHours)} cycle</button>`
@@ -1860,7 +2324,7 @@
 
         // Every second: update the running countdowns in place, or re-render when a timer changes state
         function tickDashTimers() {
-            const signature = appState.locations.map(loc => `${loc.id}:${timerState(loc).status}:${loc.startTime}`).join('|');
+            const signature = visibleLocations().map(loc => `${loc.id}:${timerState(loc).status}:${loc.startTime}`).join('|');
             if (signature !== dashTimerSignature) {
                 renderDashTimers();
                 return;
@@ -1915,7 +2379,7 @@
         function renderActivityFeed() {
             const list = document.getElementById('dx-feed');
             if (!list) return;
-            const entries = appState.activity.slice(0, 8);
+            const entries = appState.activity.filter(activityVisible).slice(0, 8);
             list.innerHTML = entries.length === 0
                 ? `<li class="dx-muted">No activity yet. Changes the crew makes show up here live.</li>`
                 : entries.map(entry => `
@@ -1926,6 +2390,8 @@
             const chart = document.getElementById('dx-chart');
             const totalEl = document.getElementById('dx-week-total');
             if (!chart) return;
+            // Crew-wide numbers: hidden from people limited to some locations
+            chart.closest('.dx-panel').classList.toggle('hidden', !seesAllLocations());
             const letters = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
             const days = [];
             for (let back = 6; back >= 0; back--) {
@@ -2002,6 +2468,10 @@
                     : `<p class="text-xs text-slate-400"><i class="fa-solid ${view === STASH_KEY ? 'fa-warehouse' : 'fa-location-dot'} text-weed-500 mr-1"></i>Editing <b class="text-white">${escapeHtml(current ? current.label : '')}</b>${current && current.alias ? ` · ${escapeHtml(current.alias)}` : ''}. The − / + and Trim buttons use the step amount (${step.toLocaleString()}).</p>`;
 
             grid.innerHTML = (isAll ? renderInvAllCards(buckets) : renderInvBucketCards(view, bucket, step)).join('');
+            if (!isAll && !can('inventory')) {
+                grid.querySelectorAll('button, input').forEach(el => { el.disabled = true; });
+                document.getElementById('inv-note').innerHTML += `<p class="text-xs text-amber-300 mt-1"><i class="fa-solid fa-eye mr-1"></i>View only: you don't have permission to change inventory.</p>`;
+            }
         }
 
         // Where each strain is, across every bucket (read-only)
@@ -2106,12 +2576,13 @@
         }
 
         function adjustQuantity(strainId, field, delta, bucket = activeInvBucket()) {
+            if (!allowed('inventory', bucket)) return;
             const current = appState.stock[bucket] ? appState.stock[bucket][strainId][field] : 0;
             const applied = Math.max(-current, delta); // what actually changes once clamped at zero
             adjustShared(`stock/${bucket}/${strainId}/${field}`, delta);
             if (applied === 0) return;
             if (field === 'bricks') recordBricksMade(applied);
-            logActivity({ strain: strainId }, {
+            logActivity({ strain: strainId, loc: bucket }, {
                 key: `inv:${bucket}:${strainId}:${field}`,
                 amount: applied,
                 format: amount => ({
@@ -2123,19 +2594,21 @@
         }
 
         function updateQuantityFromInput(strainId, field, inputEl, bucket = activeInvBucket()) {
+            if (!allowed('inventory', bucket)) return renderInventory();
             const value = toCount(parseInt(inputEl.value, 10));
             const current = appState.stock[bucket] ? appState.stock[bucket][strainId][field] : 0;
             writeShared({ [`stock/${bucket}/${strainId}/${field}`]: value });
             if (value === current) return;
             if (field === 'bricks') recordBricksMade(value - current);
-            logActivity({ strain: strainId, pre: 'set', hi: `${FIELD_LABELS[field]} to ${value.toLocaleString()}`, post: `for ${strainName(strainId)} · ${bucketLabel(bucket)}` });
+            logActivity({ strain: strainId, loc: bucket, pre: 'set', hi: `${FIELD_LABELS[field]} to ${value.toLocaleString()}`, post: `for ${strainName(strainId)} · ${bucketLabel(bucket)}` });
         }
 
         function adjustCoca(delta, bucket = activeInvBucket()) {
+            if (!allowed('inventory', bucket)) return;
             const applied = Math.max(-(appState.stock[bucket] ? appState.stock[bucket].coca : 0), delta);
             adjustShared(`stock/${bucket}/coca`, delta);
             if (applied === 0) return;
-            logActivity({}, {
+            logActivity({ loc: bucket }, {
                 key: `coca:${bucket}`,
                 amount: applied,
                 format: amount => ({ pre: amount > 0 ? 'added' : 'removed', hi: `${signedAmount(amount)} coca leaves`, post: `· ${bucketLabel(bucket)}` })
@@ -2143,14 +2616,16 @@
         }
 
         function updateCocaFromInput(inputEl, bucket = activeInvBucket()) {
+            if (!allowed('inventory', bucket)) return renderInventory();
             const value = toCount(parseInt(inputEl.value, 10));
             if (value === (appState.stock[bucket] ? appState.stock[bucket].coca : 0)) return;
             writeShared({ [`stock/${bucket}/coca`]: value });
-            logActivity({ pre: 'set', hi: `coca leaves to ${value.toLocaleString()}`, post: `· ${bucketLabel(bucket)}` });
+            logActivity({ loc: bucket, pre: 'set', hi: `coca leaves to ${value.toLocaleString()}`, post: `· ${bucketLabel(bucket)}` });
         }
 
         // Move up to `step` untrimmed bud into trimmed (1:1)
         function trimBud(bucket, strainId) {
+            if (!allowed('inventory', bucket)) return;
             const step = invStep();
             mutateStock(stock => {
                 const cell = stockCell(stock, bucket, strainId);
@@ -2161,12 +2636,13 @@
                 return { amount };
             }).then(result => {
                 if (!result) return showAlert(`No untrimmed ${strainName(strainId)} to trim here.`, 'warning');
-                logActivity({ strain: strainId, pre: 'trimmed', hi: `${result.amount.toLocaleString()} ${strainName(strainId)}`, post: `· ${bucketLabel(bucket)}` });
+                logActivity({ strain: strainId, loc: bucket, pre: 'trimmed', hi: `${result.amount.toLocaleString()} ${strainName(strainId)}`, post: `· ${bucketLabel(bucket)}` });
             });
         }
 
         // Turn 750 trimmed into 1 brick (or as many as possible with `all`)
         function pressBricks(bucket, strainId, all) {
+            if (!allowed('inventory', bucket)) return;
             mutateStock(stock => {
                 const cell = stockCell(stock, bucket, strainId);
                 const bricks = all ? Math.floor(cell.trimmed / BRICK_SIZE) : (cell.trimmed >= BRICK_SIZE ? 1 : 0);
@@ -2177,7 +2653,7 @@
             }).then(result => {
                 if (!result) return showAlert(`Not enough trimmed ${strainName(strainId)} here (${BRICK_SIZE} per brick).`, 'warning');
                 recordBricksMade(result.bricks);
-                logActivity({ strain: strainId, pre: 'pressed', hi: `${result.bricks} ${result.bricks === 1 ? 'brick' : 'bricks'}`, post: `of ${strainName(strainId)} · ${bucketLabel(bucket)}` });
+                logActivity({ strain: strainId, loc: bucket, pre: 'pressed', hi: `${result.bricks} ${result.bricks === 1 ? 'brick' : 'bricks'}`, post: `of ${strainName(strainId)} · ${bucketLabel(bucket)}` });
                 showAlert(`Pressed ${result.bricks} ${strainName(strainId)} ${result.bricks === 1 ? 'brick' : 'bricks'}.`, 'success');
             });
         }
@@ -2192,6 +2668,7 @@
         }
 
         function openTransfer(bucket, strainId) {
+            if (!allowed('inventory', bucket)) return;
             document.getElementById('transfer-from').value = bucket;
             document.getElementById('transfer-strain').value = strainId;
             document.getElementById('transfer-title').textContent =
@@ -2234,6 +2711,7 @@
             const error = document.getElementById('transfer-error');
             const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
             if (!to) return showError('Add another location to move stock to.');
+            if (!allowed('inventory', from) || !canSeeBucket(to)) return;
             if (amount < 1) return showError('Enter an amount of at least 1.');
 
             mutateStock(stock => {
@@ -2255,7 +2733,7 @@
                 closeTransfer();
                 const what = strainId === 'coca' ? `${amount.toLocaleString()} coca leaves`
                     : `${amount.toLocaleString()} ${field === 'bricks' ? (amount === 1 ? 'brick' : 'bricks') : field} ${strainName(strainId)}`;
-                logActivity({ strain: strainId === 'coca' ? null : strainId, pre: 'moved', hi: what, post: `${bucketLabel(from)} → ${bucketLabel(to)}` });
+                logActivity({ strain: strainId === 'coca' ? null : strainId, loc: from, loc2: to, pre: 'moved', hi: what, post: `${bucketLabel(from)} → ${bucketLabel(to)}` });
                 showAlert(`Moved ${what} to ${bucketLabel(to)}.`, 'success');
             });
         }
@@ -2265,6 +2743,7 @@
         const AVG_BUD_PER_PLANT = 49.5;
 
         function openHarvestModal(locId) {
+            if (!allowed('timers', locKey(locId))) return;
             const loc = appState.locations.find(l => l.id === locId);
             if (!loc) return;
             document.getElementById('harvest-loc').value = locId;
@@ -2311,8 +2790,10 @@
         }
 
         function renderGrowPlanner() {
+            const locations = visibleLocations();
+            const canPlan = can('planner');
             let totalGlobalPots = 0;
-            appState.locations.forEach(loc => {
+            locations.forEach(loc => {
                 totalGlobalPots += Number(loc.pots || 0);
             });
 
@@ -2328,12 +2809,12 @@
             document.getElementById('planner-min-yield').innerText = Math.round(minYield).toLocaleString();
             document.getElementById('planner-max-yield').innerText = Math.round(maxYield).toLocaleString();
             document.getElementById('planner-total-bricks').innerText = totalBricksPotential;
-            document.getElementById('planner-active-locations-count').innerText = appState.locations.length;
+            document.getElementById('planner-active-locations-count').innerText = locations.length;
 
             // Render Location Selector Tabs
             const tabsContainer = document.getElementById('planner-location-tabs');
             if (tabsContainer) {
-                tabsContainer.innerHTML = appState.locations.map(loc => {
+                tabsContainer.innerHTML = locations.map(loc => {
                     const isActive = appState.selectedPlannerLocId === loc.id;
                     const btnClass = isActive
                         ? 'bg-weed-600 text-white font-bold border-weed-500 shadow-md'
@@ -2352,7 +2833,7 @@
             const locPlanContainer = document.getElementById('planner-selected-location-plan');
             if (!locPlanContainer) return;
 
-            const loc = appState.locations.find(l => l.id === appState.selectedPlannerLocId) || appState.locations[0];
+            const loc = locations.find(l => l.id === appState.selectedPlannerLocId) || locations[0];
             if (!loc) {
                 locPlanContainer.innerHTML = `<div class="p-8 text-center text-slate-500">No grow locations available. Add locations in Admin.</div>`;
                 return;
@@ -2378,9 +2859,9 @@
                         <div class="flex items-center space-x-4">
                             <div class="text-right">
                                 <label class="block text-[10px] uppercase font-bold text-slate-400">Location Pots</label>
-                                <input type="number" min="1" data-focus-key="pots-${escapeHtml(loc.id)}" value="${locPots}" onchange="updateLocationTotalPots(${jsArg(loc.id)}, this.value)" class="w-20 bg-darkbg border border-weed-800 rounded-xl px-3 py-1 text-center font-bold font-mono text-weed-300 focus:outline-none focus:border-weed-400">
+                                <input type="number" min="1" data-focus-key="pots-${escapeHtml(loc.id)}" value="${locPots}" ${canPlan ? '' : 'disabled'} onchange="updateLocationTotalPots(${jsArg(loc.id)}, this.value)" class="w-20 bg-darkbg border border-weed-800 rounded-xl px-3 py-1 text-center font-bold font-mono text-weed-300 focus:outline-none focus:border-weed-400">
                             </div>
-                            <button onclick="autoBalanceLocationPots(${jsArg(loc.id)})" class="px-3 py-2 rounded-xl bg-weed-950 border border-weed-800 hover:bg-weed-900 text-weed-300 text-xs font-semibold transition-all">
+                            <button onclick="autoBalanceLocationPots(${jsArg(loc.id)})" class="${canPlan ? '' : 'hidden'} px-3 py-2 rounded-xl bg-weed-950 border border-weed-800 hover:bg-weed-900 text-weed-300 text-xs font-semibold transition-all">
                                 <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Auto-Balance 10 Strains
                             </button>
                         </div>
@@ -2417,7 +2898,7 @@
                                         </div>
                                         <div>
                                             <label class="block text-[10px] text-slate-500 uppercase">Pots</label>
-                                            <input type="number" min="0" data-focus-key="sp-${escapeHtml(loc.id)}-${strain.id}" value="${potsAllocated}" onchange="updateLocationStrainPots(${jsArg(loc.id)}, ${jsArg(strain.id)}, this.value)" class="w-full bg-darkcard border border-weed-900 rounded-lg px-2 py-1 text-xs font-mono font-bold text-center text-white focus:outline-none focus:border-weed-500">
+                                            <input type="number" min="0" data-focus-key="sp-${escapeHtml(loc.id)}-${strain.id}" value="${potsAllocated}" ${canPlan ? '' : 'disabled'} onchange="updateLocationStrainPots(${jsArg(loc.id)}, ${jsArg(strain.id)}, this.value)" class="w-full bg-darkcard border border-weed-900 rounded-lg px-2 py-1 text-xs font-mono font-bold text-center text-white focus:outline-none focus:border-weed-500">
                                         </div>
                                         <div class="text-[10px] text-slate-400 font-mono flex justify-between">
                                             <span>~${Math.round(strainBuds)} Bud</span>
@@ -2440,20 +2921,23 @@
         }
 
         function updateLocationTotalPots(locId, newPots) {
+            if (!allowed('planner', locKey(locId))) return renderGrowPlanner();
             if (!appState.locations.some(l => l.id === locId)) return;
             const pots = Math.max(1, parseInt(newPots, 10) || 10);
             writeShared({ [locPath(locId, 'pots')]: pots });
-            logActivity({ pre: 'set', hi: `${pots} pots`, post: `at Postal ${locId}` });
+            logActivity({ loc: locKey(locId), pre: 'set', hi: `${pots} pots`, post: `at Postal ${locId}` });
         }
 
         function updateLocationStrainPots(locId, strainId, pots) {
+            if (!allowed('planner', locKey(locId))) return renderGrowPlanner();
             if (!appState.locations.some(l => l.id === locId)) return;
             const count = toCount(parseInt(pots, 10));
             writeShared({ [locPath(locId, `strainPots/${strainId}`)]: count });
-            logActivity({ strain: strainId, pre: 'planned', hi: `${count} ${strainName(strainId)} pots`, post: `at Postal ${locId}` });
+            logActivity({ strain: strainId, loc: locKey(locId), pre: 'planned', hi: `${count} ${strainName(strainId)} pots`, post: `at Postal ${locId}` });
         }
 
         function autoBalanceLocationPots(locId) {
+            if (!allowed('planner', locKey(locId))) return;
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
                 const totalPots = loc.pots || 10;
@@ -2466,7 +2950,7 @@
                 });
 
                 writeShared({ [locPath(locId, 'strainPots')]: strainPots });
-                logActivity({ pre: 'auto-balanced pots at', hi: `Postal ${locId}` });
+                logActivity({ loc: locKey(locId), pre: 'auto-balanced pots at', hi: `Postal ${locId}` });
                 showAlert(`Auto-balanced ${totalPots} pots across 10 strains for Postal ${locId}`, 'success');
             }
         }
@@ -2474,12 +2958,15 @@
         function renderTimersPage() {
             const grid = document.getElementById('timers-grid');
             if (!grid) return;
-            if (appState.locations.length === 0) {
-                grid.innerHTML = `<div class="dx-glass p-8 text-center text-slate-400 text-sm" style="grid-column:1/-1">No grow locations yet. Add one in Admin to start a timer.</div>`;
+            const canTime = can('timers');
+            document.querySelectorAll('[onclick="startAllTimers()"], [onclick="resetAllTimersPrompt()"]').forEach(btn => btn.classList.toggle('hidden', !canTime));
+            const locations = visibleLocations();
+            if (locations.length === 0) {
+                grid.innerHTML = `<div class="dx-glass p-8 text-center text-slate-400 text-sm" style="grid-column:1/-1">${appState.locations.length ? 'No grow locations assigned to you.' : 'No grow locations yet. Add one in Admin to start a timer.'}</div>`;
                 return;
             }
 
-            grid.innerHTML = appState.locations.map(loc => {
+            grid.innerHTML = locations.map(loc => {
                 const elapsedSecs = loc.startTime ? Math.max(0, Math.floor((syncNow() - loc.startTime) / 1000)) : 0;
                 const totalSecs = durationSecs(loc);
                 const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
@@ -2521,7 +3008,7 @@
                         </div>
 
                         <!-- Action Buttons: Start/Restart & Stop -->
-                        <div class="space-y-2">
+                        <div class="space-y-2 ${canTime ? '' : 'hidden'}">
                             <div class="grid grid-cols-2 gap-2">
                                 <button onclick="startTimer(${jsArg(loc.id)})" class="py-2.5 px-3 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center space-x-1">
                                     <i class="fa-solid fa-play text-[10px]"></i>
@@ -2550,17 +3037,19 @@
         }
 
         function startTimer(locId) {
+            if (!allowed('timers', locKey(locId))) return;
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
                 const restarting = Boolean(loc.startTime);
                 writeShared(timerChanges([loc], true));
-                logActivity({ pre: restarting ? 'restarted timer' : 'started timer', hi: `Postal ${locId}` });
+                logActivity({ loc: locKey(locId), pre: restarting ? 'restarted timer' : 'started timer', hi: `Postal ${locId}` });
                 showAlert(`Timer started for Postal ${locId} (${formatDuration(loc.durationHours)})`, 'success');
             }
         }
 
         // Restart the location's timer and add what was collected (untrimmed, per strain) to its stock
         function harvestAndRestart(locId, amounts = {}) {
+            if (!allowed('timers', locKey(locId))) return;
             const loc = appState.locations.find(l => l.id === locId);
             if (!loc) return;
             const bucket = locKey(locId);
@@ -2568,8 +3057,8 @@
             writeShared(timerChanges([loc], true));
             const logIt = () => {
                 logActivity(total > 0
-                    ? { pre: 'harvested', hi: `+${total.toLocaleString()} untrimmed`, post: `at Postal ${locId} and restarted the cycle` }
-                    : { pre: 'harvested', hi: `Postal ${locId}`, post: 'and restarted the cycle' });
+                    ? { loc: bucket, pre: 'harvested', hi: `+${total.toLocaleString()} untrimmed`, post: `at Postal ${locId} and restarted the cycle` }
+                    : { loc: bucket, pre: 'harvested', hi: `Postal ${locId}`, post: 'and restarted the cycle' });
                 showAlert(total > 0
                     ? `Added ${total.toLocaleString()} untrimmed to Postal ${locId}. New ${formatDuration(loc.durationHours)} cycle started.`
                     : `Postal ${locId} restarted. New ${formatDuration(loc.durationHours)} cycle started.`, 'success');
@@ -2582,23 +3071,26 @@
         }
 
         function stopTimer(locId) {
+            if (!allowed('timers', locKey(locId))) return;
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
                 writeShared(timerChanges([loc], false));
-                logActivity({ pre: 'stopped timer', hi: `Postal ${locId}` });
+                logActivity({ loc: locKey(locId), pre: 'stopped timer', hi: `Postal ${locId}` });
                 showAlert(`Timer stopped for Postal ${locId}`, 'info');
             }
         }
 
         function startAllTimers() {
-            writeShared(timerChanges(appState.locations, true));
+            if (!allowed('timers')) return;
+            writeShared(timerChanges(visibleLocations(), true));
             logActivity({ pre: 'started', hi: 'all timers' });
             showAlert('All location timers started simultaneously!', 'success');
         }
 
         function resetAllTimersPrompt() {
+            if (!allowed('timers')) return;
             if (confirm('Are you sure you want to stop and reset all location grow timers?')) {
-                writeShared(timerChanges(appState.locations, false));
+                writeShared(timerChanges(visibleLocations(), false));
                 logActivity({ pre: 'reset', hi: 'all timers' });
                 showAlert('All grow timers reset to zero.', 'info');
             }
@@ -2644,7 +3136,7 @@
                 claimHarvestAlert(loc).then(won => {
                     if (won) {
                         sendHarvestWebhook(loc);
-                        logActivity({ who: SYSTEM_NAME, pre: '', hi: `Postal ${loc.id} is ready`, post: 'to harvest' });
+                        logActivity({ who: SYSTEM_NAME, loc: locKey(loc.id), pre: '', hi: `Postal ${loc.id} is ready`, post: 'to harvest' });
                     }
                     renderAdminTable();
                 });
@@ -2836,7 +3328,7 @@
                     order: syncNow() // sorts after existing locations
                 }
             });
-            logActivity({ pre: 'added location', hi: `Postal ${id}` });
+            logActivity({ loc: locKey(id), pre: 'added location', hi: `Postal ${id}` });
 
             idInput.value = '';
             aliasInput.value = '';
@@ -2887,6 +3379,13 @@
                 changes[`stock/${locKey(originalId)}`] = null;
                 changes[`stock/${locKey(newId)}`] = JSON.parse(JSON.stringify(appState.stock[locKey(originalId)] || {}));
                 if (appState.selectedInvBucket === locKey(originalId)) appState.selectedInvBucket = locKey(newId);
+                // Crew limited to the old postal keep access under the new one
+                Object.entries(appState.crew).forEach(([memberId, member]) => {
+                    if (isPlainObject(member.locations) && member.locations[locKey(originalId)]) {
+                        changes[`crew/${memberId}/locations/${locKey(originalId)}`] = null;
+                        changes[`crew/${memberId}/locations/${locKey(newId)}`] = true;
+                    }
+                });
             }
             changes[locPath(newId)] = updated;
             if (appState.selectedPlannerLocId === originalId) {
@@ -2899,7 +3398,7 @@
             if (newId !== originalId) what.push(`Postal ${originalId} → ${newId}`);
             if (alias !== (loc.alias || '')) what.push(`alias "${alias || '—'}"`);
             if (minutesTotal !== durationMinutes(loc)) what.push(`${formatDuration(durationHours)} timer`);
-            if (what.length) logActivity({ pre: 'edited location', hi: what.join(', ') });
+            if (what.length) logActivity({ loc: locKey(newId), loc2: locKey(originalId), pre: 'edited location', hi: what.join(', ') });
             closeEditLocation();
             showAlert(newId !== originalId ? `Postal ${originalId} is now Postal ${newId}.` : `Postal ${newId} updated.`, 'success');
         }
@@ -2927,7 +3426,7 @@
                 return { moved: true };
             });
             if (appState.selectedInvBucket === bucket) appState.selectedInvBucket = 'all';
-            logActivity({ pre: 'deleted location', hi: `Postal ${locId}`, post: hasStock ? '(stock moved to Main Stash)' : '' });
+            logActivity({ loc: bucket, pre: 'deleted location', hi: `Postal ${locId}`, post: hasStock ? '(stock moved to Main Stash)' : '' });
             showAlert(hasStock ? `Postal ${locId} deleted. Its stock is now in the Main Stash.` : `Location Postal ${locId} deleted.`, 'info');
         }
 

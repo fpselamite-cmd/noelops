@@ -59,6 +59,19 @@ The first browser to connect uploads its current data to the empty database, so 
 
 The rules above let anyone who has the site's link read and change the data, and the Firebase config in `index.html` is public. That's fine for a private crew tool, but anyone who finds the link could edit or wipe the numbers, so use **Admin → Export State** now and then to keep a backup.
 
+## Crew & permissions
+
+In **Admin → Crew & Permissions** you can add crew members, each with a name and a 4-8 digit PIN.
+
+- Until the first crew member is added, anyone with the link can use everything.
+- Once there's at least one, everyone signs in with their name and PIN, and stays signed in on that device until they sign out (click the avatars in the header).
+- Pick a role (Admin, Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, grow planner, Admin page. You can also limit which locations (and the Main Stash) they see.
+- People with no permissions (Viewer) only see the dashboard stats: no locations, timers or activity.
+- Changing someone's PIN or removing them signs them out everywhere.
+- The admin password always works on the sign-in screen as a master key.
+
+This is a simple lock that stops casual misuse. Someone technical could still get around it, because the site has no server of its own.
+
 ## Hosting on GitHub Pages
 
 1. In the GitHub repo, open **Settings → Pages**.
