@@ -34,7 +34,7 @@ trap 'rm -rf "$WORK"' EXIT
 echo "Downloading $DB_URL/noelops.json"
 curl -fsS --retry 3 --retry-delay 5 "$DB_URL/noelops.json" -o "$WORK/raw.json"
 
-# Refuse to save an empty or broken download; drop who-was-online (it's not data)
+# Refuse to save an empty or broken download; drop who-was-online (it's not data) and secrets
 python3 - "$WORK/raw.json" "$WORK/backup.json" <<'PY'
 import json, sys
 src, dst = sys.argv[1], sys.argv[2]
@@ -47,6 +47,13 @@ if not isinstance(data, dict) or not data:
     print("::error::The database is empty. Not saving a backup, so older backups stay untouched.")
     sys.exit(1)
 data.pop("presence", None)
+# This repo is public: never store secrets in it. Restoring keeps the site's current webhook and PINs.
+settings = data.get("settings")
+if isinstance(settings, dict):
+    settings.pop("webhookUrl", None)
+for member in (data.get("crew") or {}).values():
+    if isinstance(member, dict):
+        member.pop("pinHash", None)
 missing = [key for key in ("stock", "locations") if key not in data]
 if missing:
     print("::warning::This backup has no " + " or ".join(missing) + ". Check the site if that's unexpected.")
@@ -72,6 +79,8 @@ Backups older than 90 days are removed automatically.
 2. On the site, go to **Admin → Import State (JSON)** and pick that file.
 
 Importing replaces the shared inventory, locations, timers, crew and settings for everyone.
+Backups never contain the Discord webhook address or crew PINs (this repo is public);
+restoring keeps the ones the site already has.
 MD
 fi
 

@@ -1548,7 +1548,7 @@
                     <div class="dx-glass dx-member">
                         ${avatarHtml(m.name)}
                         <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2"><b class="text-white">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span></div>
+                            <div class="flex items-center gap-2"><b class="text-white">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
                             <div>${PERMISSIONS.map(p => `<span class="dx-pill ${m.perms[p.key] ? '' : 'off'}">${p.label}</span>`).join('')}</div>
                             <div class="mt-1">${where}</div>
                         </div>
@@ -1609,7 +1609,8 @@
             const pin = document.getElementById('crew-pin').value.trim();
             if (!name) return showError('Enter a name.');
             if (Object.entries(appState.crew).some(([id, m]) => id !== existingId && m.name.toLowerCase() === name.toLowerCase())) return showError(`${name} is already on the crew.`);
-            if ((!existingId || pin) && !/^\d{4,8}$/.test(pin)) return showError('PIN must be 4 to 8 digits.');
+            const needsPin = !existingId || !appState.crew[existingId].pinHash;
+            if ((needsPin || pin) && !/^\d{4,8}$/.test(pin)) return showError(needsPin && existingId ? `Set a PIN for ${name} (4 to 8 digits).` : 'PIN must be 4 to 8 digits.');
             if (!window.crypto || !crypto.subtle) return showError('Needs the page to be served over HTTPS.');
 
             const perms = {};
@@ -3781,8 +3782,19 @@
                     if (isPlainObject(imported)) {
                         if (Sync.mode === 'cloud' && !confirm('This replaces the shared inventory, locations and timers for EVERYONE. Continue?')) return;
                         if (isDatabaseBackup(imported)) {
-                            // Nightly backup file: a copy of the database itself
+                            // Nightly backup file: a copy of the database itself. Backups leave out the
+                            // webhook address and PINs (the repo is public), so keep the ones we have.
+                            const keepWebhook = appState.webhookUrl;
+                            const keepPins = Object.fromEntries(Object.entries(appState.crew).map(([id, m]) => [id, m.pinHash]));
+                            // Copy first: loading the backup drops PIN-less members from the object it's given
+                            const backupCrew = JSON.parse(JSON.stringify(isPlainObject(imported.crew) ? imported.crew : {}));
                             applySharedTree(imported);
+                            if (!appState.webhookUrl) appState.webhookUrl = keepWebhook;
+                            Object.entries(backupCrew).forEach(([id, m]) => {
+                                if (!isPlainObject(m)) return;
+                                const pin = typeof m.pinHash === 'string' && m.pinHash ? m.pinHash : (keepPins[id] || '');
+                                appState.crew[id] = { ...m, pinHash: pin };
+                            });
                         } else {
                             // Export State file from this page
                             appState = { ...appState, ...imported };
