@@ -1640,7 +1640,7 @@
                 saveState();
             }
             closeCrewEditor();
-            logActivity({ pre: existingId ? 'updated crew member' : 'added crew member', hi: name });
+            logActivity({ kind: 'crew' });
             showAlert(firstMember
                 ? `${name} added. Sign-in is now on: everyone will be asked for their name and PIN.`
                 : `${name} ${existingId ? 'updated' : 'added'}.`, 'success');
@@ -1655,7 +1655,7 @@
                 ? `Remove ${member.name}? They're the last crew member, so sign-in turns off and the site is open to anyone with the link again.`
                 : `Remove ${member.name}? They'll be signed out and won't be able to sign in again.`)) return;
             writeShared({ [`crew/${memberId}`]: null });
-            logActivity({ pre: 'removed crew member', hi: member.name });
+            logActivity({ kind: 'crew' });
             showAlert(`${member.name} removed.`, 'info');
         }
 
@@ -1761,6 +1761,7 @@
         // Entries tied to locations only show to people who can see one of them
         function activityVisible(entry) {
             if (isStatsOnly()) return false;
+            if (entry.v !== 1) return false; // older detailed entries from before the feed went vague
             if (!entry.loc && !entry.loc2) return true;
             return (entry.loc && canSeeBucket(entry.loc)) || (entry.loc2 && canSeeBucket(entry.loc2));
         }
@@ -1773,56 +1774,58 @@
 
         // Add a line to the shared activity feed: "<who> <pre> <hi> <post>", with <hi> highlighted.
         // With `merge`, repeat actions on the same thing within a minute update one line (+100, +100 → +200).
-        function logActivity(entry, merge) {
-            const now = syncNow();
-            let id, amount = null;
-            const canMerge = merge && lastActivity && lastActivity.key === merge.key && now - lastActivity.ts < 60000 &&
-                appState.activity.some(a => a.id === lastActivity.id);
-            if (canMerge) {
-                id = lastActivity.id;
-                amount = lastActivity.amount + merge.amount;
-            } else {
-                id = newActivityId();
-                if (merge) amount = merge.amount;
-            }
+        // The feed is vague on purpose: who did what kind of thing, never amounts, strains or postals.
+        // `loc`/`loc2` are kept (not shown) so location-limited crew only see entries for their locations.
+        const ACTIVITY_KINDS = {
+            buds: { pre: 'updated', hi: 'bud counts', post: 'in a location' },
+            coca: { pre: 'updated', hi: 'coca counts', post: 'in a location' },
+            move: { pre: 'moved', hi: 'stock', post: 'between locations' },
+            harvest: { pre: 'harvested', hi: 'a location', post: '' },
+            ready: { pre: '', hi: 'A grow', post: 'is ready to harvest' },
+            timer: { pre: 'updated', hi: 'a grow timer', post: '' },
+            plan: { pre: 'updated', hi: 'a grow plan', post: '' },
+            locations: { pre: 'updated', hi: 'the grow locations', post: '' },
+            crew: { pre: 'updated', hi: 'the crew list', post: '' },
+            discord: { pre: 'updated', hi: 'the Discord settings', post: '' },
+            backup: { pre: 'restored', hi: 'a backup', post: '' }
+        };
+        const ACTIVITY_MERGE_MS = 5 * 60 * 1000;
 
-            const changes = {};
-            if (merge && amount === 0) {
-                changes[`activity/${id}`] = null; // e.g. +100 then -100: nothing to report
-                lastActivity = null;
-            } else {
-                const text = merge ? merge.format(amount) : entry;
-                changes[`activity/${id}`] = {
-                    who: entry.who || appState.crewName || 'Someone',
+        function logActivity(entry) {
+            const kind = ACTIVITY_KINDS[entry.kind] ? entry.kind : 'buds';
+            const text = ACTIVITY_KINDS[kind];
+            const who = entry.who || appState.crewName || 'Someone';
+            const key = `${who}|${kind}|${entry.loc || ''}|${entry.loc2 || ''}`;
+            const now = syncNow();
+            // Same person, same kind of thing, same place, within a few minutes: refresh one line instead of adding many
+            const canMerge = lastActivity && lastActivity.key === key && now - lastActivity.ts < ACTIVITY_MERGE_MS &&
+                appState.activity.some(a => a.id === lastActivity.id);
+            const id = canMerge ? lastActivity.id : newActivityId();
+            lastActivity = { key, id, ts: now };
+
+            const changes = {
+                [`activity/${id}`]: {
+                    v: 1,
+                    kind,
+                    who,
                     client: CLIENT_ID,
-                    pre: text.pre || '',
-                    hi: text.hi || '',
-                    post: text.post || '',
-                    strain: entry.strain || null,
+                    pre: text.pre,
+                    hi: text.hi,
+                    post: text.post,
                     loc: entry.loc || null,
                     loc2: entry.loc2 || null,
                     ts: timestampValue()
-                };
-                lastActivity = merge ? { key: merge.key, id, amount, ts: now } : null;
-            }
+                }
+            };
 
-            // Keep the feed from growing forever
-            const kept = appState.activity.filter(a => a.id !== id);
+            // Keep the feed from growing forever, and clear out older detailed entries
+            const kept = appState.activity.filter(a => a.id !== id && a.v === 1);
             kept.slice(ACTIVITY_KEEP - 1).forEach(old => { changes[`activity/${old.id}`] = null; });
+            appState.activity.filter(a => a.v !== 1).forEach(old => { changes[`activity/${old.id}`] = null; });
             return writeShared(changes);
         }
 
-        function signedAmount(amount) {
-            return `${amount > 0 ? '+' : '−'}${Math.abs(amount).toLocaleString()}`;
-        }
-
-        const FIELD_LABELS = { untrimmed: 'untrimmed', trimmed: 'trimmed', bricks: 'bricks' };
-
-        function fieldLabel(field, amount) {
-            return field === 'bricks' && Math.abs(amount) === 1 ? 'brick' : FIELD_LABELS[field];
-        }
-
-        // Toast + card highlight for feed entries that arrived from someone else's device
+        // Pop-up for feed entries that arrived from someone else's device
         function announceRemoteActivity(previous) {
             if (!activityFeedPrimed) {
                 activityFeedPrimed = true; // the first snapshot is history, not news
@@ -1831,11 +1834,8 @@
             const recentCutoff = syncNow() - 60000;
             appState.activity.forEach(entry => {
                 if (entry.client === CLIENT_ID || entry.ts < recentCutoff || !activityVisible(entry)) return;
-                if (previous.has(entry.id) && previous.get(entry.id) === entry.hi) return;
+                if (previous.has(entry.id)) return; // a refreshed line, already announced
                 showActivityToast(entry);
-                if (entry.strain) {
-                    dashFlashes[entry.strain] = { label: `${entry.hi} · ${entry.who.split(' ')[0]}`, until: Date.now() + 6000 };
-                }
             });
         }
 
@@ -2652,15 +2652,7 @@
             adjustShared(`stock/${bucket}/${strainId}/${field}`, delta);
             if (applied === 0) return;
             if (field === 'bricks') recordBricksMade(applied);
-            logActivity({ strain: strainId, loc: bucket }, {
-                key: `inv:${bucket}:${strainId}:${field}`,
-                amount: applied,
-                format: amount => ({
-                    pre: amount > 0 ? 'added' : 'removed',
-                    hi: `${signedAmount(amount)} ${fieldLabel(field, amount)}`,
-                    post: `${amount > 0 ? 'to' : 'from'} ${strainName(strainId)} · ${bucketLabel(bucket)}`
-                })
-            });
+            logActivity({ kind: 'buds', loc: bucket });
         }
 
         function updateQuantityFromInput(strainId, field, inputEl, bucket = activeInvBucket()) {
@@ -2670,7 +2662,7 @@
             writeShared({ [`stock/${bucket}/${strainId}/${field}`]: value });
             if (value === current) return;
             if (field === 'bricks') recordBricksMade(value - current);
-            logActivity({ strain: strainId, loc: bucket, pre: 'set', hi: `${FIELD_LABELS[field]} to ${value.toLocaleString()}`, post: `for ${strainName(strainId)} · ${bucketLabel(bucket)}` });
+            logActivity({ kind: 'buds', loc: bucket });
         }
 
         function adjustCoca(delta, bucket = activeInvBucket()) {
@@ -2678,11 +2670,7 @@
             const applied = Math.max(-(appState.stock[bucket] ? appState.stock[bucket].coca : 0), delta);
             adjustShared(`stock/${bucket}/coca`, delta);
             if (applied === 0) return;
-            logActivity({ loc: bucket }, {
-                key: `coca:${bucket}`,
-                amount: applied,
-                format: amount => ({ pre: amount > 0 ? 'added' : 'removed', hi: `${signedAmount(amount)} coca leaves`, post: `· ${bucketLabel(bucket)}` })
-            });
+            logActivity({ kind: 'coca', loc: bucket });
         }
 
         function updateCocaFromInput(inputEl, bucket = activeInvBucket()) {
@@ -2690,7 +2678,7 @@
             const value = toCount(parseInt(inputEl.value, 10));
             if (value === (appState.stock[bucket] ? appState.stock[bucket].coca : 0)) return;
             writeShared({ [`stock/${bucket}/coca`]: value });
-            logActivity({ loc: bucket, pre: 'set', hi: `coca leaves to ${value.toLocaleString()}`, post: `· ${bucketLabel(bucket)}` });
+            logActivity({ kind: 'coca', loc: bucket });
         }
 
         // Move up to `step` untrimmed bud into trimmed (1:1)
@@ -2706,7 +2694,7 @@
                 return { amount };
             }).then(result => {
                 if (!result) return showAlert(`No untrimmed ${strainName(strainId)} to trim here.`, 'warning');
-                logActivity({ strain: strainId, loc: bucket, pre: 'trimmed', hi: `${result.amount.toLocaleString()} ${strainName(strainId)}`, post: `· ${bucketLabel(bucket)}` });
+                logActivity({ kind: 'buds', loc: bucket });
             });
         }
 
@@ -2723,7 +2711,7 @@
             }).then(result => {
                 if (!result) return showAlert(`Not enough trimmed ${strainName(strainId)} here (${BRICK_SIZE} per brick).`, 'warning');
                 recordBricksMade(result.bricks);
-                logActivity({ strain: strainId, loc: bucket, pre: 'pressed', hi: `${result.bricks} ${result.bricks === 1 ? 'brick' : 'bricks'}`, post: `of ${strainName(strainId)} · ${bucketLabel(bucket)}` });
+                logActivity({ kind: 'buds', loc: bucket });
                 showAlert(`Pressed ${result.bricks} ${strainName(strainId)} ${result.bricks === 1 ? 'brick' : 'bricks'}.`, 'success');
             });
         }
@@ -2803,7 +2791,7 @@
                 closeTransfer();
                 const what = strainId === 'coca' ? `${amount.toLocaleString()} coca leaves`
                     : `${amount.toLocaleString()} ${field === 'bricks' ? (amount === 1 ? 'brick' : 'bricks') : field} ${strainName(strainId)}`;
-                logActivity({ strain: strainId === 'coca' ? null : strainId, loc: from, loc2: to, pre: 'moved', hi: what, post: `${bucketLabel(from)} → ${bucketLabel(to)}` });
+                logActivity({ kind: 'move', loc: from, loc2: to });
                 showAlert(`Moved ${what} to ${bucketLabel(to)}.`, 'success');
             });
         }
@@ -2995,7 +2983,7 @@
             if (!appState.locations.some(l => l.id === locId)) return;
             const pots = Math.max(1, parseInt(newPots, 10) || 10);
             writeShared({ [locPath(locId, 'pots')]: pots });
-            logActivity({ loc: locKey(locId), pre: 'set', hi: `${pots} pots`, post: `at Postal ${locId}` });
+            logActivity({ kind: 'plan', loc: locKey(locId) });
         }
 
         function updateLocationStrainPots(locId, strainId, pots) {
@@ -3003,7 +2991,7 @@
             if (!appState.locations.some(l => l.id === locId)) return;
             const count = toCount(parseInt(pots, 10));
             writeShared({ [locPath(locId, `strainPots/${strainId}`)]: count });
-            logActivity({ strain: strainId, loc: locKey(locId), pre: 'planned', hi: `${count} ${strainName(strainId)} pots`, post: `at Postal ${locId}` });
+            logActivity({ kind: 'plan', loc: locKey(locId) });
         }
 
         function autoBalanceLocationPots(locId) {
@@ -3020,7 +3008,7 @@
                 });
 
                 writeShared({ [locPath(locId, 'strainPots')]: strainPots });
-                logActivity({ loc: locKey(locId), pre: 'auto-balanced pots at', hi: `Postal ${locId}` });
+                logActivity({ kind: 'plan', loc: locKey(locId) });
                 showAlert(`Auto-balanced ${totalPots} pots across 10 strains for Postal ${locId}`, 'success');
             }
         }
@@ -3112,7 +3100,7 @@
             if (loc) {
                 const restarting = Boolean(loc.startTime);
                 writeShared(timerChanges([loc], true));
-                logActivity({ loc: locKey(locId), pre: restarting ? 'restarted timer' : 'started timer', hi: `Postal ${locId}` });
+                logActivity({ kind: 'timer', loc: locKey(locId) });
                 showAlert(`Timer started for Postal ${locId} (${formatDuration(loc.durationHours)})`, 'success');
             }
         }
@@ -3126,9 +3114,7 @@
             const total = Object.values(amounts).reduce((sum, v) => sum + v, 0);
             writeShared(timerChanges([loc], true));
             const logIt = () => {
-                logActivity(total > 0
-                    ? { loc: bucket, pre: 'harvested', hi: `+${total.toLocaleString()} untrimmed`, post: `at Postal ${locId} and restarted the cycle` }
-                    : { loc: bucket, pre: 'harvested', hi: `Postal ${locId}`, post: 'and restarted the cycle' });
+                logActivity({ kind: 'harvest', loc: bucket });
                 showAlert(total > 0
                     ? `Added ${total.toLocaleString()} untrimmed to Postal ${locId}. New ${formatDuration(loc.durationHours)} cycle started.`
                     : `Postal ${locId} restarted. New ${formatDuration(loc.durationHours)} cycle started.`, 'success');
@@ -3145,7 +3131,7 @@
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
                 writeShared(timerChanges([loc], false));
-                logActivity({ loc: locKey(locId), pre: 'stopped timer', hi: `Postal ${locId}` });
+                logActivity({ kind: 'timer', loc: locKey(locId) });
                 showAlert(`Timer stopped for Postal ${locId}`, 'info');
             }
         }
@@ -3153,7 +3139,7 @@
         function startAllTimers() {
             if (!allowed('timers')) return;
             writeShared(timerChanges(visibleLocations(), true));
-            logActivity({ pre: 'started', hi: 'all timers' });
+            logActivity({ kind: 'timer' });
             showAlert('All location timers started simultaneously!', 'success');
         }
 
@@ -3161,7 +3147,7 @@
             if (!allowed('timers')) return;
             if (confirm('Are you sure you want to stop and reset all location grow timers?')) {
                 writeShared(timerChanges(visibleLocations(), false));
-                logActivity({ pre: 'reset', hi: 'all timers' });
+                logActivity({ kind: 'timer' });
                 showAlert('All grow timers reset to zero.', 'info');
             }
         }
@@ -3206,7 +3192,7 @@
                 claimHarvestAlert(loc).then(won => {
                     if (won) {
                         sendHarvestWebhook(loc);
-                        logActivity({ who: SYSTEM_NAME, loc: locKey(loc.id), pre: '', hi: `Postal ${loc.id} is ready`, post: 'to harvest' });
+                        logActivity({ who: SYSTEM_NAME, kind: 'ready', loc: locKey(loc.id) });
                     }
                     renderAdminTable();
                 });
@@ -3376,7 +3362,7 @@
             if (!template.title.trim() && !template.description.trim()) return showAlert('Add a title or a message.', 'warning');
             writeShared({ 'settings/discordTemplate': template });
             document.activeElement && document.activeElement.blur();
-            logActivity({ pre: 'updated the', hi: 'Discord harvest message' });
+            logActivity({ kind: 'discord' });
             showAlert('Discord harvest message saved.', 'success');
         }
 
@@ -3448,7 +3434,7 @@
             const input = document.getElementById('admin-webhook-url');
             if (input) {
                 writeShared({ 'settings/webhookUrl': input.value.trim() });
-                logActivity({ pre: 'updated the', hi: 'Discord webhook' });
+                logActivity({ kind: 'discord' });
                 showAlert('Discord Webhook URL saved successfully!', 'success');
             }
         }
@@ -3563,7 +3549,7 @@
                     order: syncNow() // sorts after existing locations
                 }
             });
-            logActivity({ loc: locKey(id), pre: 'added location', hi: `Postal ${id}` });
+            logActivity({ kind: 'locations', loc: locKey(id) });
 
             idInput.value = '';
             aliasInput.value = '';
@@ -3633,7 +3619,7 @@
             if (newId !== originalId) what.push(`Postal ${originalId} → ${newId}`);
             if (alias !== (loc.alias || '')) what.push(`alias "${alias || '—'}"`);
             if (minutesTotal !== durationMinutes(loc)) what.push(`${formatDuration(durationHours)} timer`);
-            if (what.length) logActivity({ loc: locKey(newId), loc2: locKey(originalId), pre: 'edited location', hi: what.join(', ') });
+            if (what.length) logActivity({ kind: 'locations', loc: locKey(newId), loc2: locKey(originalId) });
             closeEditLocation();
             showAlert(newId !== originalId ? `Postal ${originalId} is now Postal ${newId}.` : `Postal ${newId} updated.`, 'success');
         }
@@ -3661,7 +3647,7 @@
                 return { moved: true };
             });
             if (appState.selectedInvBucket === bucket) appState.selectedInvBucket = 'all';
-            logActivity({ loc: bucket, pre: 'deleted location', hi: `Postal ${locId}`, post: hasStock ? '(stock moved to Main Stash)' : '' });
+            logActivity({ kind: 'locations', loc: bucket });
             showAlert(hasStock ? `Postal ${locId} deleted. Its stock is now in the Main Stash.` : `Location Postal ${locId} deleted.`, 'info');
         }
 
@@ -3805,7 +3791,7 @@
                         saveState();
                         renderAll();
                         if (Sync.mode === 'cloud') Sync.root.update({ ...buildSharedTree(appState), inventory: null, coca: null }).catch(handleSyncWriteError);
-                        logActivity({ pre: 'imported a', hi: 'backup' });
+                        logActivity({ kind: 'backup' });
                         showAlert('NoelOps state successfully imported!', 'success');
                     } else {
                         showAlert('Invalid JSON state backup file.', 'warning');
