@@ -287,6 +287,75 @@
         .dx-act:hover:not(:disabled) { background: rgba(34, 197, 94, 0.24); }
         .dx-act.solid { background: linear-gradient(180deg, #22c55e, #16a34a); color: #fff; border-color: transparent; }
         .dx-act:disabled, .dx-step:disabled { opacity: 0.35; cursor: not-allowed; }
+        /* Inventory: bricks & potential first, trimmed second, untrimmed last */
+        .dx-inv-hero { display: grid; grid-template-columns: 1.3fr 1.3fr 1fr; gap: 16px; margin-bottom: 18px; }
+        .dx-hero { padding: 22px 24px 20px; position: relative; overflow: hidden; min-height: 168px; }
+        .dx-hero .lbl, .dx-mid .lbl, .dx-minor .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #8a9a8e; font-weight: 800; }
+        .dx-hero .num { font-size: 64px; font-weight: 900; line-height: 1; margin: 14px 0 10px; letter-spacing: -0.02em; }
+        .dx-hero .sub { font-size: 13px; color: #a3b3a7; font-weight: 600; }
+        .dx-hero .sub b { color: #e6efe8; font-family: 'JetBrains Mono', monospace; }
+        .dx-hero .ico { position: absolute; right: -8px; bottom: -22px; font-size: 130px; opacity: 0.07; pointer-events: none; }
+        .dx-hero.gold { border-color: rgba(251, 191, 36, 0.32); }
+        .dx-hero.gold .num { color: #fde68a; text-shadow: 0 0 26px rgba(251, 191, 36, 0.35); }
+        .dx-hero.gold .ico { color: #fbbf24; }
+        .dx-hero.green { border-color: rgba(74, 222, 128, 0.45); box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.2), 0 0 40px rgba(34, 197, 94, 0.16); }
+        .dx-hero.green .num { color: #4ade80; text-shadow: 0 0 22px rgba(74, 222, 128, 0.5); }
+        .dx-hero.green .ico { color: #4ade80; }
+        .dx-side { display: flex; flex-direction: column; gap: 12px; }
+        .dx-mid { padding: 16px 18px; flex: 1; }
+        .dx-mid .num { font-size: 32px; font-weight: 800; line-height: 1.1; margin: 6px 0 2px; color: #bbf7d0; }
+        .dx-minors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .dx-minor { padding: 10px 14px; }
+        .dx-minor .lbl { font-size: 10px; }
+        .dx-minor .num { font-size: 17px; font-weight: 700; color: #94a3b8; margin-top: 2px; }
+        @media (max-width: 1024px) {
+            .dx-inv-hero { grid-template-columns: 1fr 1fr; }
+            .dx-side { grid-column: 1 / -1; }
+        }
+        @media (max-width: 560px) {
+            .dx-inv-hero { gap: 10px; }
+            .dx-side { gap: 10px; }
+            .dx-minors { gap: 10px; }
+            .dx-hero { min-height: 0; padding: 14px 16px; }
+            .dx-hero .lbl { font-size: 10px; }
+            .dx-hero .num { font-size: 44px; margin: 8px 0 6px; }
+            .dx-hero .sub { font-size: 11px; }
+            .dx-hero .ico { font-size: 80px; bottom: -14px; }
+            .dx-mid { padding: 12px 16px; }
+            .dx-mid .num { font-size: 26px; }
+        }
+
+        /* Strain cards */
+        .dx-inv-top { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .dx-inv-top .cell { border-radius: 12px; padding: 10px 12px; background: rgba(6, 10, 7, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; }
+        .dx-inv-top .cell.gold { border-color: rgba(251, 191, 36, 0.25); }
+        .dx-inv-top .cell.green { border-color: rgba(74, 222, 128, 0.3); }
+        .dx-inv-top .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #8a9a8e; font-weight: 800; }
+        .dx-inv-top .big { font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 800; line-height: 1.1; margin: 2px 0 6px; }
+        .dx-inv-top .gold .big { color: #fde68a; }
+        .dx-inv-top .green .big { color: #4ade80; text-shadow: 0 0 16px rgba(74, 222, 128, 0.4); }
+        .dx-inv-top .big.zero { color: #475569 !important; text-shadow: none; }
+        .dx-inv-top input.big { width: 100%; background: transparent; border: 1px solid transparent; border-radius: 8px; padding: 0 4px; margin-left: -5px; outline: none; -moz-appearance: textfield; }
+        .dx-inv-top input.big::-webkit-outer-spin-button, .dx-inv-top input.big::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .dx-inv-top input.big:hover:not(:disabled) { border-color: rgba(251, 191, 36, 0.3); }
+        .dx-inv-top input.big:focus { border-color: #fbbf24; background: rgba(0, 0, 0, 0.3); }
+        .dx-inv-top .btns { display: flex; gap: 6px; margin-top: auto; }
+        .dx-inv-top .btns .dx-step { flex: 1; height: 28px; }
+        .dx-inv-top .btns .dx-act { padding: 5px 6px; }
+        .dx-inv-trim { display: flex; flex-direction: column; gap: 4px; }
+        .dx-inv-trim .meta { display: flex; justify-content: space-between; font-size: 11px; color: #8a9a8e; }
+        .dx-inv-minor { border-top: 1px dashed rgba(148, 163, 184, 0.15); padding-top: 8px; opacity: 0.8; }
+        .dx-inv-minor:hover, .dx-inv-minor:focus-within { opacity: 1; }
+        .dx-inv .qrow.sm { grid-template-columns: 86px 28px 1fr 28px; }
+        .dx-inv .qrow.sm .dx-step { height: 28px; font-size: 12px; }
+        .dx-inv .qrow.sm input { font-size: 12px; font-weight: 600; padding: 4px 6px; color: #cbd5e1; }
+        .dx-inv .qrow.sm .lbl { font-size: 10px; color: #64748b; }
+        .dx-act.sm { flex: none; padding: 4px 10px; font-size: 10px; }
+        .dx-inv .totline { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; }
+        .dx-inv .totline b { font-family: 'JetBrains Mono', monospace; }
+        .dx-inv .totline.mid b { font-size: 18px; color: #bbf7d0; }
+        .dx-inv .totline.minor { color: #64748b; font-size: 11px; }
+        .dx-inv .totline.minor b { color: #94a3b8; font-weight: 600; }
         .dx-where { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; padding: 5px 0; border-top: 1px solid rgba(74, 222, 128, 0.08); }
         .dx-where b { font-family: 'JetBrains Mono', monospace; color: #e6efe8; }
 
@@ -433,7 +502,7 @@
                     </label>
                 </div>
                 <div id="inv-tabs" class="dx-tabs mb-5"></div>
-                <div id="inv-stats" class="dx-stats"></div>
+                <div id="inv-stats" class="dx-inv-hero"></div>
                 <div id="inv-note" class="mb-4"></div>
                 <div id="inv-grid" class="dx-inv-grid"></div>
             </section>
@@ -3059,18 +3128,31 @@
 
             // Summary tiles for this view
             const t = isAll ? allTotals : bucketTotals(bucket);
-            const tiles = [
-                ['Bricks', t.bricks, '#e6efe8', ''],
-                ['Potential bricks', t.potential, '#4ade80', `from ${t.trimmed.toLocaleString()} trimmed`],
-                ['Untrimmed', t.untrimmed, '#e6efe8', 'waiting to be trimmed'],
-                ['Coca leaves', t.coca, '#bae6fd', '']
-            ];
-            document.getElementById('inv-stats').innerHTML = tiles.map(([label, value, color, sub]) => `
-                <div class="dx-glass dx-stat" style="min-height:96px">
-                    <div class="lbl">${label}</div>
-                    <div class="num dx-mono" style="color:${color}">${value.toLocaleString()}</div>
-                    ${sub ? `<div class="delta dx-muted">${sub}</div>` : ''}
-                </div>`).join('');
+            const leftover = t.trimmed - t.potential * BRICK_SIZE;
+            document.getElementById('inv-stats').innerHTML = `
+                <div class="dx-glass dx-hero gold">
+                    <i class="fa-solid fa-cube ico"></i>
+                    <div class="lbl">Bricks on hand</div>
+                    <div class="num dx-mono">${t.bricks.toLocaleString()}</div>
+                    <div class="sub">${t.potential ? `<b>${(t.bricks + t.potential).toLocaleString()}</b> once the potential is pressed` : 'Packaged and ready'}</div>
+                </div>
+                <div class="dx-glass dx-hero green">
+                    <i class="fa-solid fa-cubes ico"></i>
+                    <div class="lbl">Potential bricks</div>
+                    <div class="num dx-mono">${t.potential.toLocaleString()}</div>
+                    <div class="sub">Ready to press from <b>${t.trimmed.toLocaleString()}</b> trimmed</div>
+                </div>
+                <div class="dx-side">
+                    <div class="dx-glass dx-mid">
+                        <div class="lbl">Trimmed bud</div>
+                        <div class="num dx-mono">${t.trimmed.toLocaleString()}</div>
+                        <div class="text-xs dx-muted">${t.potential ? `${leftover.toLocaleString()} left over after pressing` : `${(BRICK_SIZE - leftover).toLocaleString()} more to a brick`}</div>
+                    </div>
+                    <div class="dx-minors">
+                        <div class="dx-glass dx-minor"><div class="lbl">Untrimmed</div><div class="num dx-mono">${t.untrimmed.toLocaleString()}</div></div>
+                        <div class="dx-glass dx-minor"><div class="lbl">Coca leaves</div><div class="num dx-mono" style="color:#7dd3fc">${t.coca.toLocaleString()}</div></div>
+                    </div>
+                </div>`;
 
             const current = buckets.find(b => b.key === view);
             document.getElementById('inv-note').innerHTML = isAll
@@ -3101,27 +3183,33 @@
                     <div>${whereList(b => b.coca ? `${b.coca.toLocaleString()} leaves` : '')}</div>
                 </div>`;
 
-            return [coca, ...DEFAULT_STRAINS.map(strain => {
+            return [...DEFAULT_STRAINS.map(strain => {
                 const inv = appState.inventory[strain.id];
+                const potential = Math.floor(inv.trimmed / BRICK_SIZE);
                 return `
                     <div class="dx-glass dx-inv dx-tint" style="--tint:${strain.tint}">
                         <div class="head"><div class="logo">${getStrainLogo(strain.id)}</div>
-                            <div class="min-w-0"><div class="font-extrabold text-base ${strain.nameColor}">${escapeHtml(strain.name)}</div>
-                            <div class="text-xs dx-muted"><b class="text-white dx-mono">${inv.bricks.toLocaleString()}</b> bricks · <b class="text-weed-300 dx-mono">${inv.trimmed.toLocaleString()}</b> trimmed · <b class="text-slate-200 dx-mono">${inv.untrimmed.toLocaleString()}</b> untrimmed</div></div></div>
+                            <div class="min-w-0"><div class="font-extrabold text-base ${strain.nameColor} truncate">${escapeHtml(strain.name)}</div></div></div>
+                        <div class="dx-inv-top">
+                            <div class="cell gold"><span class="lbl">On hand</span><span class="big ${inv.bricks ? '' : 'zero'}">${inv.bricks.toLocaleString()}</span></div>
+                            <div class="cell green"><span class="lbl">Potential</span><span class="big ${potential ? '' : 'zero'}">${potential.toLocaleString()}</span></div>
+                        </div>
+                        <div class="totline mid"><span class="dx-muted">Trimmed</span><b>${inv.trimmed.toLocaleString()}</b></div>
+                        <div class="totline minor"><span>Untrimmed</span><b>${inv.untrimmed.toLocaleString()}</b></div>
                         <div>${whereList(b => {
                             const c = b[strain.id];
                             if (!c.bricks && !c.trimmed && !c.untrimmed) return '';
                             return [c.bricks ? `${c.bricks} bricks` : '', c.trimmed ? `${c.trimmed.toLocaleString()} trim` : '', c.untrimmed ? `${c.untrimmed.toLocaleString()} untrim` : ''].filter(Boolean).join(' · ');
                         })}</div>
                     </div>`;
-            })];
+            }), coca];
         }
 
         // Editable cards for one bucket
         function renderInvBucketCards(key, bucket, step) {
             const k = jsArg(key);
-            const qrow = (label, strainId, field, value, delta) => `
-                <div class="qrow">
+            const qrow = (label, strainId, field, value, delta, extraClass = '') => `
+                <div class="qrow ${extraClass}">
                     <span class="lbl">${label}</span>
                     <button class="dx-step" onclick="adjustQuantity(${jsArg(strainId)}, '${field}', -${delta}, ${k})" ${value === 0 ? 'disabled' : ''} title="−${delta.toLocaleString()}">−</button>
                     <input type="number" min="0" class="dx-input" data-focus-key="inv-${escapeHtml(key)}-${strainId}-${field}" value="${value}" onchange="updateQuantityFromInput(${jsArg(strainId)}, '${field}', this, ${k})">
@@ -3141,7 +3229,7 @@
                     </div>
                 </div>`;
 
-            return [coca, ...DEFAULT_STRAINS.map(strain => {
+            return [...DEFAULT_STRAINS.map(strain => {
                 const c = bucket[strain.id];
                 const toNext = BRICK_SIZE - (c.trimmed % BRICK_SIZE);
                 const pct = ((c.trimmed % BRICK_SIZE) / BRICK_SIZE) * 100;
@@ -3155,21 +3243,38 @@
                             <div class="logo">${getStrainLogo(strain.id)}</div>
                             <div class="flex-1 min-w-0">
                                 <div class="font-extrabold text-base ${strain.nameColor} truncate">${escapeHtml(strain.name)}</div>
-                                <div class="text-[11px] dx-muted">${pressable ? `${pressable} ${pressable === 1 ? 'brick' : 'bricks'} ready to press` : `${toNext.toLocaleString()} trimmed to next brick`}</div>
-                                <div class="dx-bar"><i style="width:${pct.toFixed(1)}%"></i></div>
                             </div>
                             <button class="dx-step px-3" onclick="openTransfer(${k}, ${s})" ${empty ? 'disabled' : ''} title="Move to another location"><i class="fa-solid fa-right-left"></i></button>
                         </div>
-                        ${qrow('Untrimmed', strain.id, 'untrimmed', c.untrimmed, step)}
-                        <div class="flex gap-2"><button class="dx-act" onclick="trimBud(${k}, ${s})" ${trimAmount === 0 ? 'disabled' : ''}><i class="fa-solid fa-scissors mr-1"></i>Trim ${trimAmount.toLocaleString()}</button></div>
-                        ${qrow('Trimmed', strain.id, 'trimmed', c.trimmed, step)}
-                        <div class="flex gap-2">
-                            <button class="dx-act" onclick="pressBricks(${k}, ${s}, false)" ${pressable ? '' : 'disabled'}><i class="fa-solid fa-cube mr-1"></i>Press 1 brick</button>
-                            <button class="dx-act solid" onclick="pressBricks(${k}, ${s}, true)" ${pressable > 1 ? '' : 'disabled'}>Press all${pressable > 1 ? ` (${pressable})` : ''}</button>
+                        <div class="dx-inv-top">
+                            <div class="cell gold">
+                                <span class="lbl">On hand</span>
+                                <input type="number" min="0" class="big ${c.bricks ? '' : 'zero'}" aria-label="Bricks on hand" title="Bricks on hand (click to type a number)" data-focus-key="inv-${escapeHtml(key)}-${strain.id}-bricks" value="${c.bricks}" onchange="updateQuantityFromInput(${s}, 'bricks', this, ${k})">
+                                <div class="btns">
+                                    <button class="dx-step" onclick="adjustQuantity(${s}, 'bricks', -1, ${k})" ${c.bricks === 0 ? 'disabled' : ''} title="−1 brick">−</button>
+                                    <button class="dx-step" onclick="adjustQuantity(${s}, 'bricks', 1, ${k})" title="+1 brick">+</button>
+                                </div>
+                            </div>
+                            <div class="cell green">
+                                <span class="lbl">Potential</span>
+                                <span class="big ${pressable ? '' : 'zero'}" title="Bricks you can press from the trimmed bud">${pressable.toLocaleString()}</span>
+                                <div class="btns">
+                                    <button class="dx-act" onclick="pressBricks(${k}, ${s}, false)" ${pressable ? '' : 'disabled'} title="Press 1 brick"><i class="fa-solid fa-cube mr-1"></i>Press 1</button>
+                                    <button class="dx-act solid" onclick="pressBricks(${k}, ${s}, true)" ${pressable > 1 ? '' : 'disabled'} title="Press all">All${pressable > 1 ? ` (${pressable})` : ''}</button>
+                                </div>
+                            </div>
                         </div>
-                        ${qrow('Bricks', strain.id, 'bricks', c.bricks, 1)}
+                        <div class="dx-inv-trim">
+                            ${qrow('Trimmed', strain.id, 'trimmed', c.trimmed, step)}
+                            <div class="dx-bar" style="margin-top:2px"><i style="width:${pct.toFixed(1)}%"></i></div>
+                            <div class="meta"><span>${toNext.toLocaleString()} to next brick</span><span>${BRICK_SIZE} = 1 brick</span></div>
+                        </div>
+                        <div class="dx-inv-minor space-y-1.5">
+                            ${qrow('Untrimmed', strain.id, 'untrimmed', c.untrimmed, step, 'sm')}
+                            <div class="flex justify-end"><button class="dx-act sm" onclick="trimBud(${k}, ${s})" ${trimAmount === 0 ? 'disabled' : ''} title="Move untrimmed to trimmed (1 to 1)"><i class="fa-solid fa-scissors mr-1"></i>Trim ${trimAmount.toLocaleString()} <i class="fa-solid fa-arrow-up ml-1"></i></button></div>
+                        </div>
                     </div>`;
-            })];
+            }), coca];
         }
 
         function strainName(strainId) {
