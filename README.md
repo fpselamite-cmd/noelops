@@ -93,7 +93,7 @@ In **Admin → Crew** you can add crew members, each with a name and a 4-8 digit
 
 - Until the first crew member is added, anyone with the link can use everything.
 - Once there's at least one, everyone signs in with their name and PIN, and stays signed in on that device until they sign out (from **My Profile**).
-- Pick a role (Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, grow planner. You can also limit which locations (and the Main Stash) they see.
+- Pick a role (Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, grow planner, sales / bricks out. You can also set their sales cut %. You can also limit which locations (and the Main Stash) they see.
 - **The Admin page isn't a crew permission.** It only opens with the admin password, through the small **Admin** link at the bottom right of every page. The Admin tab appears in the menu only while it's unlocked; click **Lock admin** in the same spot (or Logout on the Admin page) to hide it again. Unlocking lasts until that browser tab is closed. Anyone who had the old Admin role is now a Manager.
 - People with no permissions (Viewer) only see the dashboard stats: no locations, timers or activity.
 - **New people can sign themselves up:** on the sign-in screen they type a new name and PIN (twice) and get a profile as a **Viewer**, marked **New · needs review**. Admins see a badge on the Admin page; click **Review**, pick a role and save. Turn this off with **Let new people create their own profile** on the Crew tab.
@@ -108,8 +108,25 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 - **Undo:** most changes show a pop-up with an **Undo** button for about 8 seconds: stock changes, trimming, pressing, moving stock, logging bricks out, harvests, timer starts/stops and plan changes. Repeated presses on the same thing (+100, +100) merge into one Undo. Undo reverses just your change, so anything someone else changed in the meantime is kept.
 - **Grow Timers page:** a card per location with a growing plant, countdown, progress bar, ready time, pot plan and estimated bricks. Tick the boxes to **Start**, **Stop** or **Harvest** several grows at once (harvesting opens the harvest form for each in turn). **Start all idle** only starts grows that aren't running.
 - **Upcoming harvests:** a timeline at the top of the Grow Timers page shows when each grow is due and roughly how many bricks it should give, plus what's ready now. The dashboard's grow bar shows the next 24 hours' total.
-- **Bricks out:** the truck button on a strain (Inventory, by location) logs bricks leaving: sold, delivered, whatever. It removes them from stock and adds them to the **Bricks Out** log at the bottom of the Inventory page, with today / 7-day / 30-day totals, an optional price and note, and the last 15 entries. Admins can take an entry back out (the bricks return).
+- **Bricks out:** the truck button on a strain (Inventory, by location) or **Log Bricks Out** on the Sales page records bricks leaving. It removes them from stock and adds them to the sales log (see **Sales & budget** below).
 - **Dashboard charts:** headline tiles for bricks on hand, potential bricks, bricks out this week and bricks coming in over the next 24 hours; a **Bricks In & Out** chart (pressed vs out per day, last 14 days) and **Stock by Strain** (on hand + potential). Hover a bar for details, or click **Table** to see the numbers.
+
+## Sales & budget
+
+The **Sales** page (in the main menu) is the log of bricks going out:
+
+- **Totals:** today, last 7 days, last 30 days and all time, in bricks (and dollars when prices are entered).
+- **Filters** by period, strain, person and location, with **By Strain** and **By Person** charts and the full log underneath. **Export CSV** downloads it as a spreadsheet.
+- **Logging bricks out:** pick the strain, where they come from, who sold them, how many, and optionally the total price and a note. If an admin has set a default price per brick, the price fills in by itself.
+
+**Budget** (top of the Sales page):
+
+- Every sale is credited to the person who sold it, and they earn their **cut** of the price (a %). The default cut is set in **Admin → Sales**; give someone a different cut when editing them in **Admin → Crew**. Each sale keeps the cut it had at the time.
+- **Crew bank** = all sales income, minus payouts and expenses. **Owed to crew** = what sellers have earned but haven't been paid yet.
+- **Payouts by person** ranks sellers by what they earned, with sold / earned / paid / owed. Admins click **Pay** to record paying someone (it fills in what they're owed), or **Record Expense** for crew spending. Both can be undone or removed.
+- Everyone sees their own earned / paid / owed in **My Profile**, and admins see each person's cut and what they're owed in the crew list.
+
+**Who can use it:** the **Sales / bricks out** permission on each person (Admin → Crew) controls the Sales page and logging. Managers have it by default; Growers and Viewers don't. In **Admin → Sales** you can also set default prices, turn on **Only admins see prices** (crew then only see their own earnings), export the log, or clear it.
 
 ## Grow Planner
 
