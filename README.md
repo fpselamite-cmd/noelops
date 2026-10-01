@@ -47,7 +47,7 @@ The first browser to connect uploads its current data to the empty database, so 
 | Shared with everyone | Stays in each browser |
 |---|---|
 | Strain inventory and coca count | Uploaded logo overrides |
-| Grow locations, pot plans and timers, meth cooks | Selected planner tab |
+| Grow locations, pot plans and timers, meth cooks | Selected Stash tab and Timers tab |
 | Discord webhook URL | Admin login |
 
 - Timers use the database server's clock, so every device counts down the same.
@@ -93,7 +93,7 @@ In **Admin → Crew** you can add crew members, each with a name and a 4-8 digit
 
 - Until the first crew member is added, anyone with the link can use everything.
 - Once there's at least one, everyone signs in with their name and PIN, and stays signed in on that device until they sign out (from **My Profile**).
-- Pick a role (Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, grow planner, sales / bricks out. You can also set their sales cut %. You can also limit which grow locations and stash houses they see.
+- Pick a role (Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, pot plans, sales / bricks out and **Meth** (the Meth page and meth cook timers). Managers and Growers start with Meth on; untick it to hide meth from someone. You can also set their sales cut %. You can also limit which grow locations and stash houses they see.
 - **The Admin page isn't a crew permission.** It only opens with the admin password, through the small **Admin** link at the bottom right of every page. The Admin tab appears in the menu only while it's unlocked; click **Lock admin** in the same spot (or Logout on the Admin page) to hide it again. Unlocking lasts until that browser tab is closed. Anyone who had the old Admin role is now a Manager.
 - People with no permissions (Viewer) only see the dashboard stats: no locations, timers or activity.
 - **New people can sign themselves up:** on the sign-in screen they type a new name and PIN (twice) and get a profile as a **Viewer**, marked **New · needs review**. Admins see a badge on the Admin page; click **Review**, pick a role and save. Turn this off with **Let new people create their own profile** on the Crew tab.
@@ -106,15 +106,15 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 
 - **Who's online:** click the avatars in the header (or **Who's Online** in the phone menu) to see everyone online now, with their role and how long they've been on, plus the rest of the crew who are offline.
 - **Undo:** most changes show a pop-up with an **Undo** button for about 8 seconds: stock changes, trimming, pressing, moving stock, logging bricks out, harvests, timer starts/stops and plan changes. Repeated presses on the same thing (+100, +100) merge into one Undo. Undo reverses just your change, so anything someone else changed in the meantime is kept.
-- **Grows page** (Timers tab): a card per location with a growing plant, countdown, progress bar, ready time, pot plan and estimated bricks. Tick the boxes to **Start**, **Stop** or **Harvest** several grows at once (harvesting opens the harvest form for each in turn). **Start all idle** only starts grows that aren't running.
-- **Upcoming harvests:** a timeline at the top of the Grows page shows when each grow is due and roughly how many bricks it should give, plus what's ready now. The dashboard's grow bar shows the next 24 hours' total.
+- **Timers page → Grows:** a card per location with a growing plant, countdown, progress bar, ready time, pot plan and estimated bricks. Tick the boxes to **Start**, **Stop** or **Harvest** several grows at once (harvesting opens the harvest form for each in turn). **Start all idle** only starts grows that aren't running.
+- **Upcoming harvests:** a timeline at the top of Timers → Grows shows when each grow is due and roughly how many bricks it should give, plus what's ready now. The dashboard's grow bar shows the next 24 hours' total.
 - **Going out:** the truck button on anything in the **Stash**, or **Log Something Going Out** on the **Log** page, records it leaving. It takes it out of the stash and adds it to the log (see **Log & budget** below).
 - **Dashboard charts:** headline tiles for bricks on hand, bricks ready to press, everything that went out this week (split into weed, coke and meth) and bricks coming in over the next 24 hours; a **Made & Out** chart (made vs out per day, last 14 days, filterable to All, Weed, Coke or Meth) and **What's in Stock** (on hand + what can still be made, for every strain plus small/large coke bricks and meth bins). Hover a bar for details, or click **Table** to see the numbers.
 
 ## Stash houses and storage
 
 - **Stash houses** hold bud, bricks, coke, meth and supplies. Add, rename or delete them in **Admin → Locations**. The built-in **Main Stash** can be renamed but not deleted. Deleting a stash house moves its stock to the Main Stash.
-- **Grow ops don't store stock by default.** Each grow location has a **Stash house** its harvests go to, plus an **On-site storage** switch for the few that do keep stock. The harvest form has a **Send to** picker that starts on the grow op's stash house, or on site if it has storage. Each card on the Grows page shows where its harvest goes.
+- **Grow ops don't store stock by default.** Each grow location has a **Stash house** its harvests go to, plus an **On-site storage** switch for the few that do keep stock. The harvest form has a **Send to** picker that starts on the grow op's stash house, or on site if it has storage. Each grow timer card shows where its harvest goes.
 - A grow op without storage that still holds old stock keeps its Stash tab, with a warning and a **Move everything to…** button (Undo works).
 - **Leave out of totals:** any stash house or grow op can be left out of the totals. Its stock still shows on its own tab, but it doesn't count toward the dashboard, the All tab, the charts, the daily history or Smart Balance. Switch it on the place's Stash tab (anyone who can edit inventory), in the stash table, or in the grow location's Edit form. The All tab lists what isn't counted.
 - In **Admin → Crew**, stash houses can be given or kept from each person like grow locations.
@@ -150,15 +150,16 @@ The **Sales** page (in the main menu) is the log of bricks going out:
 
 **Who can use it:** the **Log things going out** permission on each person (Admin → Crew) controls the Log page and logging. Managers have it by default; Growers and Viewers don't. In **Admin → Sales** you can also set default prices, turn on **Only admins see prices**, export the log, or clear it.
 
-## Pot Plan (Grows page)
+## Pot Plan (Stash page)
 
-Plan which strains go in each location's pots.
+Plan which strains go in each location's pots. Every grow has a tab on the **Stash** page (even grows with no on-site storage), and its pot plan sits under its stock.
 
-- **Location tabs** show how many pots are planned (amber = some unassigned, red = more planned than the location has) and whether it's growing.
+- **Grow tabs** show how many pots are planned (amber = some unassigned, red = more planned than the location has).
+- Anyone with the **Pot plans** or **Edit inventory** permission sees the Stash page. People with only Pot plans just see the grow tabs and their plans.
 - **The meter** shows the plan as a bar in each strain's color. **+N** on a strain card gives it all the unassigned pots; − / + change one pot at a time.
 - **Smart Balance** fills the location's pots, giving the most to the strains you're lowest on. It counts bricks and bud in stock everywhere plus what the other locations are already planned to grow. **Even Split** spreads them evenly; **Clear** empties the plan.
-- **All Locations** shows every location's plan side by side, with total pots and expected bricks per strain.
-- **Estimates learn from real harvests.** They start at about 198 bud per pot. Whenever someone changes a number in the harvest form, that real amount per pot is saved for the strain, and estimates (and the next harvest form) use the average of its last 10 harvests. Each strain card shows where its number comes from. Admins can reset the learned yields from the link at the top of the page.
+- The **All** tab on Stash shows every location's plan side by side, with total pots and expected bricks per strain.
+- **Estimates learn from real harvests.** They start at about 198 bud per pot. Whenever someone changes a number in the harvest form, that real amount per pot is saved for the strain, and estimates (and the next harvest form) use the average of its last 10 harvests. Each strain card shows where its number comes from. Admins can reset the learned yields from the link above the plan.
 
 ## My Profile
 
@@ -188,7 +189,7 @@ For crew members, everything is saved to their profile and follows them to any d
 
 Little touches that make the site feel alive:
 
-- **Living plants:** the leaf on a growing timer sways; a ready grow pulses with a purple grow-light halo and the **Grows** badge pings.
+- **Living plants:** the leaf on a growing timer sways; a ready grow pulses with a purple grow-light halo and the **Timers** badge pings. The beaker on the Timers button and on each meth cook bubbles, and fills up as the cook goes.
 - **Celebrations:** leaves float up when you harvest, a brick stamps down when you press one, and a stamp (SENT by default) lands when you log something going out.
 - **Smoke in the header**, **rolling numbers** (counts roll to their new number and flash when they change), **holo sticker cards** on the dashboard and **strain glow** when you hover a card.
 - **Harvest ranks:** a badge next to names in Who's online, the crew list and My Profile. By default Seedling at 10 harvests, Grower at 50 and Kingpin at 100.
@@ -208,26 +209,27 @@ The **Crew** page shows everyone in the crew as cards or a list (switch with **C
 
 **History (admins only):** **Admin → History** keeps the full story the Live Activity feed leaves out on purpose: who changed what, how much, where and when (the newest 500 actions). Search for a strain, postal or amount, or filter by person or kind of action. Undone actions stay in the list, crossed out. Note that this is hidden in the site only: like everything else, it's stored in the shared database.
 
-**Menu and permissions:** each menu button only shows once someone has the permission for it: **Grows** needs timers or the grow planner, **Stash** needs inventory, **Log** needs the log-things-out permission, **Crew** and **Meth** show for every crew member, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
+**Menu and permissions:** each menu button only shows once someone has the permission for it: **Timers** needs timers, pot plans or Meth (each tab inside only shows if you have it), **Stash** needs inventory or pot plans, **Meth** needs Meth, **Log** needs the log-things-out permission, **Crew** shows for every crew member, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
 
 ## Meth page
 
-The **Meth** page is the crew's meth guide, built from Karna's Meth Guide (accurate as of 9/27/2026):
+The **Meth** page is the crew's meth guide, built from Karma's Meth Guide (accurate as of 9/27/2026):
 
-- **In the stash:** how many meth bins the crew has, with a link to the Stash.
+- **In the stash:** how many meth bins the crew has and where, with a link to the Stash. **Bins made** adds finished bins straight into the stash house you pick (with Undo).
 - **What to grab:** pick a number of bins or bags and it works out the sodium, ammonia, hammers, baking soda, water and plastic bags, plus which yields to put down (high = 5, medium = 3, low = 1; 2 high yields make a bin).
-- **Cooks down:** when you put a yield down, add it here. Everyone sees it count down to the 18 to 24 hour window; it turns **Ready** after 24 hours and the Meth menu button shows how many are ready. Press **Collected** to take it off. Admins see these in History.
+- **Cooks down:** when you put a yield down, add it here or on **Timers → Meth cooks**. Each cook gets a countdown card with a beaker that fills up: **Cooking**, then **Might be ready** after 18 hours, then **Ready** after 24 hours. The Meth button shows how many are ready, and Live Activity says when one is. Press **Collected** to take it off. Admins see these in History.
+- Meth shows up around the site too: a **Meth guide** link on the meth cards (Dashboard and Stash), cooks on profiles, a **Most meth cooks** leaderboard and four cook titles.
 - **How it's made** (the 5 steps, including the 1 · 3 · 3 mix), **Rules in the lab**, and **Places** (the Lab at 10102, the Blue Container at 9359 and Sodium at 10101).
 
 To update the guide text, edit the `tab-meth` section in `index.html`.
 
 ## Titles
 
-120 titles to earn by doing things on the site: 92 you can see and work toward (harvests, bud, trimming, pressing, coke, coca leaves, meth, things going out, moving stock, starting grows and pot plans, streaks and odd hours, crew and profile) and 28 secret ones that nobody sees until someone in the crew finds one. Each title is a calling card in the style of old MW2 multiplayer titles, and its glow color is its rarity: Common, Uncommon, Rare, Epic, Legendary and Mythic (Legendary, Mythic and secret cards move).
+124 titles to earn by doing things on the site: 96 you can see and work toward (harvests, bud, trimming, pressing, coke, coca leaves, meth bins and cooks, things going out, moving stock, starting grows and pot plans, streaks and odd hours, crew and profile) and 28 secret ones that nobody sees until someone in the crew finds one. Each title is a calling card in the style of old MW2 multiplayer titles, and its glow color is its rarity: Common, Uncommon, Rare, Epic, Legendary and Mythic (Legendary, Mythic and secret cards move).
 
 - **Unlocking:** you get a "Title unlocked" pop-up, and Live Activity tells the crew. Harvest counts that were already tracked count, so people start with what they've earned. Time-based titles use each person's own local time. Click secrets need at least 50 clicks in a row with no other clicks in between.
-- **My Profile → Titles:** wear one title (its card shows behind your name in Who's online and on the Crew page, and its tag shows next to your name in Live Activity), and pick up to 10 to show on your profile, or let it pick your 10 rarest. Locked titles show how to earn them.
-- **Click anyone's name** anywhere on the site to see their profile: the card they're wearing, their stats and their titles shown like Discord roles. Click a title to see how it was earned.
+- **My Profile → Titles:** wear one title (its card shows behind your name in Who's online and on the Crew page, and a small tag shows next to your name in Live Activity), and pick up to 10 to show on your profile, or let it pick your 10 rarest. Locked titles show how to earn them.
+- **Click anyone's name** anywhere on the site to see their profile: the card they're wearing, their stats and their titles as Discord-style badges (rarity dot, icon and name). Click a title to see how it was earned.
 - **Admin → Titles:** give anyone a title (secret ones too) for a big RP moment, take one back, or turn titles off for everyone. The Seedling / Grower / Kingpin ranks are now harvest titles.
 
 The secret titles live in the site's code, which is public on GitHub, so someone who reads the code could find them.
@@ -246,6 +248,16 @@ The secret titles live in the site's code, which is public on GitHub, so someone
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### ⚗️ Oct 2, 2026: Timers, meth cooks and pot plans on Stash
+- **Grows** is now **Timers**, with a bubbling beaker icon. It has two tabs: **Grows** and **Meth cooks**
+- Meth cooks get countdown cards like grows: the beaker fills up, turns **Might be ready** at 18h and **Ready** at 24h. Live Activity says when one is ready
+- **Pot Plan** moved to the **Stash** page: every grow has a tab there, and its plan sits under its stock. The All tab shows every plan side by side
+- **Bins made:** add finished meth bins straight into a stash house from the Meth page or Timers
+- Meth cards on the Dashboard and Stash link to the **Meth** page. Cooks count on profiles, there's a **Most meth cooks** leaderboard and 4 new cook titles
+- New **Meth** permission in each person's crew settings (on for Managers and Growers)
+- Titles next to names are now small chips, and profiles show titles as Discord-style badges
+- The meth guide credit now reads Karma
 
 ### 🧪 Oct 1, 2026: Meth page
 - New **Meth** page in the menu with the whole Meth Guide: the 5 steps, the 1 · 3 · 3 mix, the rules in the lab and the postals
