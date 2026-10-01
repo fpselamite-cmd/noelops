@@ -109,12 +109,40 @@
             background: #22c55e;
         }
         /* ---------- Dashboard redesign ---------- */
+        /* Background tint follows --bg-h (hue 0-359, set per person in My Profile; 142 = the original green) */
+        :root { --bg-h: 142; }
         body {
+            background-color: hsl(var(--bg-h) 23% 3%);
             background-image:
-                radial-gradient(900px 500px at 12% -10%, rgba(34, 197, 94, 0.16), transparent 60%),
-                radial-gradient(700px 500px at 100% 110%, rgba(16, 185, 129, 0.10), transparent 60%),
-                radial-gradient(rgba(74, 222, 128, 0.06) 1px, transparent 1px);
+                radial-gradient(900px 500px at 12% -10%, hsl(var(--bg-h) 71% 45% / 0.16), transparent 60%),
+                radial-gradient(700px 500px at 100% 110%, hsl(calc(var(--bg-h) + 18) 84% 39% / 0.10), transparent 60%),
+                radial-gradient(hsl(var(--bg-h) 69% 58% / 0.06) 1px, transparent 1px);
             background-size: auto, auto, 22px 22px;
+        }
+        img.dx-av { object-fit: cover; background: #0b140e; }
+        .dx-profile-btn { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; border-radius: 999px; background: rgba(6, 10, 7, 0.7); border: 1px solid rgba(74, 222, 128, 0.22); color: #e6efe8; font-size: 12px; font-weight: 700; max-width: 180px; }
+        .dx-profile-btn:hover { border-color: #4ade80; }
+        .dx-profile-btn.hidden, #profile-pin-box.hidden, #profile-signout.hidden { display: none; }
+        .dx-profile-btn .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-pf-sec { padding: 14px; border-radius: 14px; background: rgba(6, 10, 7, 0.55); border: 1px solid rgba(74, 222, 128, 0.12); }
+        .dx-pf-sec h3 { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #8a9a8e; margin-bottom: 10px; }
+        .dx-modal-card .dx-pf-row input { text-align: left; padding: 8px 12px; font-size: 14px; }
+        .dx-modal-card img.dx-pf-av, .dx-pf-av { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; font-size: 28px; border-width: 3px; }
+        .dx-wheel { position: relative; width: 150px; height: 150px; border-radius: 50%; flex-shrink: 0; cursor: crosshair; touch-action: none;
+            background: conic-gradient(from 90deg, hsl(0 85% 50%), hsl(60 85% 50%), hsl(120 85% 50%), hsl(180 85% 50%), hsl(240 85% 50%), hsl(300 85% 50%), hsl(360 85% 50%)); }
+        .dx-wheel::after { content: ''; position: absolute; inset: 26px; border-radius: 50%; background: hsl(var(--bg-h) 23% 6%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
+        .dx-wheel .knob { position: absolute; z-index: 1; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.6); pointer-events: none; }
+        .dx-modal-card input.dx-hue-range { -webkit-appearance: none; appearance: none; height: 12px; padding: 0; border-radius: 99px; border: none;
+            background: linear-gradient(90deg, hsl(0 85% 50%), hsl(60 85% 50%), hsl(120 85% 50%), hsl(180 85% 50%), hsl(240 85% 50%), hsl(300 85% 50%), hsl(360 85% 50%)); }
+        .dx-hue-range::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid #0b140e; cursor: pointer; }
+        .dx-hue-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid #0b140e; cursor: pointer; }
+        .dx-swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.15); }
+        .dx-swatch.on { border-color: #fff; }
+        #profile-av { flex-shrink: 0; }
+        .dx-pf-hue { display: flex; align-items: center; gap: 20px; }
+        @media (max-width: 480px) {
+            .dx-pf-hue { flex-direction: column; align-items: stretch; }
+            .dx-pf-hue .dx-wheel { align-self: center; }
         }
         .dx-glass { background: rgba(16, 26, 19, 0.72); border: 1px solid rgba(74, 222, 128, 0.14); border-radius: 18px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04); }
         .dx-muted { color: #8a9a8e; }
@@ -324,7 +352,7 @@
 
                     <!-- Who's online, sync status & live time -->
                     <div class="hidden lg:flex items-center space-x-4 whitespace-nowrap">
-                        <div id="presence-box" class="flex items-center space-x-2" onclick="onPresenceClick()" title="Who's online. Click to change your name or sign out.">
+                        <div id="presence-box" class="flex items-center space-x-2" onclick="onPresenceClick()" title="Who's online">
                             <div id="presence-stack" class="dx-stack"></div>
                             <span id="presence-count" class="text-xs text-slate-400 cursor-pointer"></span>
                         </div>
@@ -334,6 +362,12 @@
                         </div>
                         <div id="live-clock" class="text-xs font-mono font-bold text-weed-400">--:--:--</div>
                     </div>
+
+                    <!-- My Profile -->
+                    <button id="profile-btn" onclick="openProfile()" class="dx-profile-btn hidden shrink-0" title="My profile: picture, name, PIN and background color">
+                        <span id="profile-btn-av"></span>
+                        <span id="profile-btn-name" class="nm hidden sm:inline"></span>
+                    </button>
 
                     <!-- Mobile Navigation Hamburger -->
                     <div class="md:hidden flex items-center">
@@ -352,6 +386,7 @@
                 <button onclick="switchTab('planner'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Planner</button>
                 <button onclick="switchTab('timers'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Timers</button>
                 <button onclick="switchTab('admin'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
+                <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
             </div>
         </header>
 
@@ -848,6 +883,73 @@
         </form>
     </div>
 
+    <!-- My Profile: picture, name, PIN, background color -->
+    <div id="profile-modal" class="dx-modal hidden" onclick="if (event.target === this) closeProfile()">
+        <div class="dx-glass dx-modal-card dx-modal-wide space-y-3 text-left">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-black text-white">My Profile</h2>
+                <button type="button" onclick="closeProfile()" class="text-slate-400 hover:text-white text-lg" title="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="dx-pf-sec flex items-center gap-4">
+                <div id="profile-av"></div>
+                <div class="min-w-0 space-y-2">
+                    <div>
+                        <div id="profile-title" class="text-lg font-black text-white truncate"></div>
+                        <div id="profile-role" class="text-xs text-slate-400"></div>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="document.getElementById('profile-file-input').click()" class="dx-btn dx-btn-g" style="width:auto;padding:6px 12px;font-size:12px"><i class="fa-solid fa-camera mr-1"></i> Upload Picture</button>
+                        <button type="button" id="profile-av-remove" onclick="removeProfilePicture()" class="dx-btn dx-btn-o" style="width:auto;padding:6px 12px;font-size:12px">Remove</button>
+                    </div>
+                    <input type="file" id="profile-file-input" accept="image/*" class="hidden" onchange="handleProfilePicture(event)">
+                </div>
+            </div>
+
+            <form class="dx-pf-sec" onsubmit="saveProfileName(event)">
+                <h3>Name</h3>
+                <div class="dx-pf-row flex gap-2">
+                    <input id="profile-name" type="text" maxlength="20" required autocomplete="nickname" placeholder="Your name">
+                    <button type="submit" class="dx-btn dx-btn-g" style="width:auto;padding:8px 14px;font-size:13px">Save</button>
+                </div>
+                <p id="profile-name-error" class="hidden mt-2 text-xs text-red-400 font-semibold"></p>
+            </form>
+
+            <form id="profile-pin-box" class="dx-pf-sec space-y-2" onsubmit="saveProfilePin(event)">
+                <h3>Change PIN</h3>
+                <div class="dx-pf-row space-y-2">
+                    <input id="profile-pin-current" type="password" inputmode="numeric" maxlength="8" autocomplete="current-password" placeholder="Current PIN">
+                    <div class="flex gap-2">
+                        <input id="profile-pin-new" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password" placeholder="New PIN">
+                        <input id="profile-pin-new2" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password" placeholder="New PIN again">
+                    </div>
+                </div>
+                <p id="profile-pin-error" class="hidden text-xs text-red-400 font-semibold"></p>
+                <button type="submit" class="dx-btn dx-btn-g" style="padding:8px 14px;font-size:13px">Change PIN</button>
+                <p class="text-[11px] text-slate-500">4 to 8 digits. You stay signed in here; your other devices will ask for the new PIN.</p>
+            </form>
+
+            <div class="dx-pf-sec">
+                <h3>Background Color</h3>
+                <div class="dx-pf-hue">
+                    <div id="profile-wheel" class="dx-wheel" title="Drag around the ring to pick a color"><span class="knob" id="profile-wheel-knob"></span></div>
+                    <div class="flex-1 min-w-0 space-y-3">
+                        <input id="profile-hue" type="range" min="0" max="359" step="1" class="dx-hue-range" aria-label="Background hue"
+                               oninput="previewHue(this.value)" onchange="commitHue(this.value)">
+                        <div id="profile-swatches" class="flex flex-wrap gap-2"></div>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-slate-400">Hue <b id="profile-hue-value" class="font-mono text-white"></b></span>
+                            <button type="button" onclick="commitHue(DEFAULT_BG_HUE)" class="text-weed-400 hover:text-weed-300 font-semibold">Reset to green</button>
+                        </div>
+                    </div>
+                </div>
+                <p id="profile-hue-note" class="mt-2 text-[11px] text-slate-500"></p>
+            </div>
+
+            <button type="button" id="profile-signout" onclick="closeProfile(); signOut()" class="w-full text-sm font-semibold text-red-400 hover:text-red-300 py-1"><i class="fa-solid fa-right-from-bracket mr-1"></i> Sign out of this device</button>
+        </div>
+    </div>
+
     <!-- Edit grow location -->
     <div id="edit-location-modal" class="dx-modal hidden">
         <form class="dx-glass dx-modal-card space-y-4 text-left" onsubmit="saveEditLocation(event)">
@@ -1037,6 +1139,7 @@
             selectedPlannerLocId: '7078', // Selected planner location tab
             masterLogo: null, // Per-browser header logo override; null = repo default
             crewName: '', // This device's crew member name
+            profileLocal: { avatar: null, hue: null }, // Picture & background hue for this device when not signed in as a crew member
             crew: {}, // Shared crew list: { [member id]: { name, pinHash, role, perms: {...}, locations: 'all' | { [bucket key]: true } } }
             session: null, // This device's sign-in: { memberId, pinHash }
             signupSettings: { allowSignup: true }, // Shared: can new people create their own (Viewer) profile
@@ -1046,6 +1149,7 @@
         };
 
         function initApp() {
+            initHueWheel();
             loadState();
             recordDailySnapshot();
             setAdminUnlocked(isAdminUnlocked());
@@ -1088,6 +1192,8 @@
             if (typeof appState.webhookUrl !== 'string') appState.webhookUrl = '';
             appState.discordTemplate = normalizeDiscordTemplate(appState.discordTemplate);
             if (typeof appState.crewName !== 'string') appState.crewName = '';
+            const local = isPlainObject(appState.profileLocal) ? appState.profileLocal : {};
+            appState.profileLocal = { avatar: safeAvatar(local.avatar), hue: safeHue(local.hue) };
             if (!Array.isArray(appState.activity)) appState.activity = [];
             appState.activity = appState.activity
                 .filter(a => isPlainObject(a) && a.id && typeof a.who === 'string' && Number(a.ts) > 0)
@@ -1144,7 +1250,9 @@
                     role: ROLE_PRESETS[m.role] ? m.role : 'viewer',
                     perms: Object.fromEntries(PERMISSIONS.map(p => [p.key, Boolean(perms[p.key])])),
                     locations: isPlainObject(m.locations) ? m.locations : 'all',
-                    pending: Boolean(m.pending)
+                    pending: Boolean(m.pending),
+                    avatar: safeAvatar(m.avatar),
+                    hue: safeHue(m.hue)
                 };
             });
             if (!isPlainObject(appState.session)) appState.session = null;
@@ -1609,12 +1717,9 @@
             setTimeout(() => document.getElementById(show ? 'signin-password' : 'signin-pin').focus(), 50);
         }
 
-        // Header avatars: change name (open mode) or sign out (crew mode)
+        // Header avatars open My Profile
         function onPresenceClick() {
-            if (!crewMode()) return openNameModal();
-            const who = currentMember() ? currentMember().name : 'admin';
-            if (!confirm(`Signed in as ${who}. Sign out of this device?`)) return;
-            signOut();
+            openProfile();
         }
 
         // ---- Admin: crew panel ----
@@ -1725,6 +1830,10 @@
                 locations,
                 pending: false // saving in the editor counts as reviewed
             };
+            // Keep the member's own picture and background color
+            const previous = existingId ? appState.crew[existingId] : null;
+            if (previous && previous.avatar) record.avatar = previous.avatar;
+            if (previous && previous.hue !== null && previous.hue !== undefined) record.hue = previous.hue;
             const firstMember = !crewMode();
             // Whoever sets up the first crew member stays signed in (as admin) instead of being locked out mid-edit
             if (firstMember) setAdminUnlocked(true);
@@ -1794,6 +1903,256 @@
             showAlert(`${member.name} removed.`, 'info');
         }
 
+        // ---- My Profile: picture, name, PIN and background color ----
+        const DEFAULT_BG_HUE = 142; // the original green
+        const AVATAR_PX = 128;
+        const HUE_SWATCHES = [142, 172, 200, 225, 265, 300, 335, 0, 25, 48];
+        let huePreview = null; // hue shown while dragging, before it is saved
+
+        function safeAvatar(value) {
+            return typeof value === 'string' && value.length < 200000 && /^data:image\/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(value) ? value : null;
+        }
+
+        function safeHue(value) {
+            if (value === null || value === undefined || value === '') return null;
+            const hue = Math.round(Number(value));
+            return Number.isFinite(hue) ? ((hue % 360) + 360) % 360 : null;
+        }
+
+        // Whose profile this device edits: the signed-in crew member, or this device (open mode / admin password)
+        function myMemberId() {
+            return currentMember() ? appState.session.memberId : null;
+        }
+
+        function myProfile() {
+            const member = currentMember();
+            return member ? { avatar: member.avatar, hue: member.hue } : appState.profileLocal;
+        }
+
+        function myHue() {
+            const hue = myProfile().hue;
+            return hue === null || hue === undefined ? DEFAULT_BG_HUE : hue;
+        }
+
+        function applyTheme() {
+            document.documentElement.style.setProperty('--bg-h', huePreview !== null ? huePreview : myHue());
+        }
+
+        // Save part of my profile: to the crew list when signed in as a member, otherwise to this device
+        function saveMyProfile(fields) {
+            const memberId = myMemberId();
+            if (memberId) {
+                const changes = {};
+                Object.entries(fields).forEach(([key, value]) => {
+                    appState.crew[memberId][key] = value; // show it right away, before the live update arrives
+                    changes[`crew/${memberId}/${key}`] = value;
+                });
+                saveState();
+                return writeShared(changes);
+            }
+            Object.assign(appState.profileLocal, fields);
+            saveState();
+            registerPresence();
+            renderAll();
+            return Promise.resolve();
+        }
+
+        function renderProfileButton() {
+            const btn = document.getElementById('profile-btn');
+            if (!btn) return;
+            const name = appState.crewName;
+            const show = Boolean(name) && (!crewMode() || currentMember() || isAdminUnlocked());
+            btn.classList.toggle('hidden', !show);
+            if (!show) return;
+            document.getElementById('profile-btn-av').innerHTML = avatarHtml(name);
+            document.getElementById('profile-btn-name').textContent = name;
+        }
+
+        function openProfile() {
+            if (crewMode() && !currentMember() && !isAdminUnlocked()) return;
+            if (!appState.crewName) return openNameModal();
+            const modal = document.getElementById('profile-modal');
+            document.getElementById('profile-name').value = appState.crewName;
+            ['profile-name-error', 'profile-pin-error'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            ['profile-pin-current', 'profile-pin-new', 'profile-pin-new2'].forEach(id => { document.getElementById(id).value = ''; });
+            modal.classList.remove('hidden');
+            renderProfileModal();
+        }
+
+        function closeProfile() {
+            if (huePreview !== null) commitHue(huePreview);
+            document.getElementById('profile-modal').classList.add('hidden');
+        }
+
+        // Live parts of the open profile (typed fields are left alone)
+        function renderProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            if (!modal || modal.classList.contains('hidden')) return;
+            if (crewMode() && !currentMember() && !isAdminUnlocked()) return modal.classList.add('hidden'); // signed out elsewhere
+            const member = currentMember();
+            const name = appState.crewName;
+            document.getElementById('profile-av').innerHTML = avatarHtml(name, 'dx-pf-av');
+            document.getElementById('profile-title').textContent = name;
+            document.getElementById('profile-role').textContent = member
+                ? roleLabel(member) + (member.pending ? ' · waiting for admin review' : '')
+                : (isMasterSession() ? 'Signed in with the admin password' : 'Saved on this device');
+            document.getElementById('profile-av-remove').classList.toggle('hidden', !myProfile().avatar);
+            document.getElementById('profile-pin-box').classList.toggle('hidden', !member);
+            document.getElementById('profile-signout').classList.toggle('hidden', !crewMode());
+            document.getElementById('profile-hue-note').textContent = member
+                ? 'Only changes the background, and only for you. Saved to your profile, so it follows you to any device.'
+                : 'Only changes the background, and only for you. Saved on this device.';
+            renderHuePicker(huePreview !== null ? huePreview : myHue());
+        }
+
+        function renderHuePicker(hue) {
+            const knob = document.getElementById('profile-wheel-knob');
+            const wheel = document.getElementById('profile-wheel');
+            if (!knob || !wheel) return;
+            const size = wheel.offsetWidth || 150;
+            const radius = size / 2 - 13; // middle of the color ring
+            const rad = hue * Math.PI / 180;
+            knob.style.left = `${size / 2 + radius * Math.cos(rad)}px`;
+            knob.style.top = `${size / 2 + radius * Math.sin(rad)}px`;
+            knob.style.background = `hsl(${hue} 85% 50%)`;
+            const range = document.getElementById('profile-hue');
+            if (range !== document.activeElement) range.value = hue;
+            document.getElementById('profile-hue-value').textContent = `${hue}°`;
+            document.getElementById('profile-swatches').innerHTML = HUE_SWATCHES.map(h =>
+                `<button type="button" class="dx-swatch${h === hue ? ' on' : ''}" style="background:hsl(${h} 70% 40%)" title="Hue ${h}°" onclick="commitHue(${h})"></button>`).join('');
+        }
+
+        function previewHue(value) {
+            huePreview = safeHue(value);
+            applyTheme();
+            renderHuePicker(huePreview);
+        }
+
+        function commitHue(value) {
+            const hue = safeHue(value);
+            huePreview = null;
+            if (hue === null || hue === myHue()) return renderAll();
+            saveMyProfile({ hue: hue === DEFAULT_BG_HUE ? null : hue });
+        }
+
+        // Color wheel: the angle around the ring picks the hue
+        function hueFromPointer(event) {
+            const box = document.getElementById('profile-wheel').getBoundingClientRect();
+            const deg = Math.atan2(event.clientY - (box.top + box.height / 2), event.clientX - (box.left + box.width / 2)) * 180 / Math.PI;
+            return (Math.round(deg) + 360) % 360;
+        }
+
+        function initHueWheel() {
+            const wheel = document.getElementById('profile-wheel');
+            if (!wheel) return;
+            let dragging = false;
+            wheel.addEventListener('pointerdown', event => {
+                dragging = true;
+                wheel.setPointerCapture(event.pointerId);
+                previewHue(hueFromPointer(event));
+            });
+            wheel.addEventListener('pointermove', event => { if (dragging) previewHue(hueFromPointer(event)); });
+            const finish = () => {
+                if (!dragging) return;
+                dragging = false;
+                if (huePreview !== null) commitHue(huePreview);
+            };
+            wheel.addEventListener('pointerup', finish);
+            wheel.addEventListener('pointercancel', finish);
+        }
+
+        // Square-crop the middle of an image and shrink it to a small profile picture
+        function readSquareImage(file, px, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const side = Math.min(img.width, img.height);
+                    const canvas = document.createElement('canvas');
+                    canvas.width = canvas.height = px;
+                    const ctx = canvas.getContext('2d');
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, px, px);
+                    let url = canvas.toDataURL('image/webp', 0.85);
+                    if (!url.startsWith('data:image/webp')) url = canvas.toDataURL('image/jpeg', 0.85); // browsers without WebP export
+                    callback(url);
+                };
+                img.onerror = () => showAlert('That file could not be read as an image.', 'warning');
+                img.src = e.target.result;
+            };
+            reader.onerror = () => showAlert('That file could not be read.', 'warning');
+            reader.readAsDataURL(file);
+        }
+
+        function handleProfilePicture(event) {
+            const file = event.target.files[0];
+            event.target.value = ''; // allow picking the same file again
+            if (!file) return;
+            readSquareImage(file, AVATAR_PX, dataUrl => {
+                if (!safeAvatar(dataUrl)) return showAlert('That picture could not be used. Try a different one.', 'warning');
+                saveMyProfile({ avatar: dataUrl });
+                showAlert('Profile picture updated.', 'success');
+            });
+        }
+
+        function removeProfilePicture() {
+            saveMyProfile({ avatar: null });
+            showAlert('Profile picture removed.', 'info');
+        }
+
+        function saveProfileName(event) {
+            event.preventDefault();
+            const error = document.getElementById('profile-name-error');
+            const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
+            error.classList.add('hidden');
+            const name = document.getElementById('profile-name').value.trim().replace(/\s+/g, ' ').slice(0, 20);
+            if (name.length < 2) return showError('Use at least 2 characters.');
+            if (name === appState.crewName) return showError("That's already your name.");
+            if (name.toLowerCase() === SYSTEM_NAME.toLowerCase() || (crewMode() && name.toLowerCase() === 'admin')) return showError('Pick a different name.');
+            const memberId = myMemberId();
+            const taken = Object.entries(appState.crew).some(([id, m]) => id !== memberId && m.name.toLowerCase() === name.toLowerCase());
+            if (taken) return showError(`${name} is already on the crew.`);
+            const old = appState.crewName;
+            appState.crewName = name;
+            if (memberId) {
+                saveMyProfile({ name });
+                registerPresence();
+            } else {
+                saveState();
+                registerPresence();
+                renderAll();
+            }
+            document.getElementById('profile-name').value = name;
+            showAlert(`${old} is now ${name}.`, 'success');
+        }
+
+        async function saveProfilePin(event) {
+            event.preventDefault();
+            const error = document.getElementById('profile-pin-error');
+            const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
+            error.classList.add('hidden');
+            const memberId = myMemberId();
+            if (!memberId) return;
+            if (!window.crypto || !crypto.subtle) return showError('Needs the page to be served over HTTPS.');
+            const current = document.getElementById('profile-pin-current').value.trim();
+            const next = document.getElementById('profile-pin-new').value.trim();
+            const again = document.getElementById('profile-pin-new2').value.trim();
+            if ((await pinHash(memberId, current)) !== appState.crew[memberId].pinHash) {
+                document.getElementById('profile-pin-current').value = '';
+                return setTimeout(() => showError('Your current PIN is wrong.'), 600);
+            }
+            if (!/^\d{4,8}$/.test(next)) return showError('New PIN must be 4 to 8 digits.');
+            if (next !== again) return showError("The new PINs don't match.");
+            const hash = await pinHash(memberId, next);
+            // Update the member and this device's sign-in together, so this device stays signed in
+            appState.crew[memberId].pinHash = hash;
+            appState.session = { memberId, pinHash: hash };
+            saveState();
+            writeShared({ [`crew/${memberId}/pinHash`]: hash });
+            ['profile-pin-current', 'profile-pin-new', 'profile-pin-new2'].forEach(id => { document.getElementById(id).value = ''; });
+            showAlert('PIN changed. Use the new one next time you sign in.', 'success');
+        }
+
         function signOut() {
             appState.session = null;
             setAdminUnlocked(false);
@@ -1833,14 +2192,25 @@
             ['#f9a8d4', '#db2777', '#ffffff'], ['#67e8f9', '#0891b2', '#04121a'], ['#fdba74', '#ea580c', '#1a0c03']
         ];
 
-        function avatarHtml(name) {
+        // Profile picture for a name: a crew member's, someone online's, or this device's own
+        function avatarFor(name) {
+            const member = Object.values(appState.crew || {}).find(m => m.name === name);
+            if (member) return member.avatar;
+            const online = appState.presence.find(p => p.client !== CLIENT_ID && p.name === name && safeAvatar(p.avatar));
+            if (online) return safeAvatar(online.avatar);
+            return name === appState.crewName && !currentMember() ? appState.profileLocal.avatar : null;
+        }
+
+        function avatarHtml(name, extraClass = '') {
             if (name === SYSTEM_NAME) {
-                return `<span class="dx-av" style="background:#052e16;color:#4ade80;border-color:#166534" title="NoelOps"><i class="fa-solid fa-cannabis"></i></span>`;
+                return `<span class="dx-av ${extraClass}" style="background:#052e16;color:#4ade80;border-color:#166534" title="NoelOps"><i class="fa-solid fa-cannabis"></i></span>`;
             }
+            const picture = avatarFor(name);
+            if (picture) return `<img class="dx-av ${extraClass}" src="${escapeHtml(picture)}" alt="${escapeHtml(name)}" title="${escapeHtml(name)}">`;
             let hash = 0;
             for (const ch of String(name)) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
             const [from, to, text] = AVATAR_COLORS[hash % AVATAR_COLORS.length];
-            return `<span class="dx-av" style="background:linear-gradient(135deg,${from},${to});color:${text}" title="${escapeHtml(name)}">${escapeHtml(initials(name))}</span>`;
+            return `<span class="dx-av ${extraClass}" style="background:linear-gradient(135deg,${from},${to});color:${text}" title="${escapeHtml(name)}">${escapeHtml(initials(name))}</span>`;
         }
 
         function openNameModal() {
@@ -1869,6 +2239,7 @@
             document.getElementById('name-modal').classList.add('hidden');
             registerPresence();
             renderPresence();
+            renderProfileButton();
             showAlert(isNew ? `Welcome to the crew, ${name}!` : `You're now showing as ${name}.`, 'success');
         }
 
@@ -1877,7 +2248,10 @@
             if (Sync.mode !== 'cloud' || !appState.crewName) return;
             if (!presenceRef) presenceRef = Sync.root.child('presence').push();
             presenceRef.onDisconnect().remove();
-            presenceRef.set({ name: appState.crewName, client: CLIENT_ID, since: timestampValue() })
+            const record = { name: appState.crewName, client: CLIENT_ID, since: timestampValue() };
+            // Crew members' pictures come from the crew list; anyone else shares theirs while online
+            if (!currentMember() && appState.profileLocal.avatar) record.avatar = appState.profileLocal.avatar;
+            presenceRef.set(record)
                 .catch(err => console.error('Presence update failed:', err));
         }
 
@@ -2242,6 +2616,9 @@
         }
 
         function renderAll() {
+            applyTheme();
+            renderProfileButton();
+            renderProfileModal();
             renderMasterLogo();
             renderDashboard();
             renderInventory();
