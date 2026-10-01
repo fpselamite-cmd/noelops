@@ -102,6 +102,15 @@ In **Admin → Crew** you can add crew members, each with a name and a 4-8 digit
 
 This is a simple lock that stops casual misuse. Someone technical could still get around it, because the site has no server of its own.
 
+## Day-to-day features
+
+- **Who's online:** click the avatars in the header (or **Who's Online** in the phone menu) to see everyone online now, with their role and how long they've been on, plus the rest of the crew who are offline.
+- **Undo:** most changes show a pop-up with an **Undo** button for about 8 seconds: stock changes, trimming, pressing, moving stock, logging bricks out, harvests, timer starts/stops and plan changes. Repeated presses on the same thing (+100, +100) merge into one Undo. Undo reverses just your change, so anything someone else changed in the meantime is kept.
+- **Grow Timers page:** a card per location with a growing plant, countdown, progress bar, ready time, pot plan and estimated bricks. Tick the boxes to **Start**, **Stop** or **Harvest** several grows at once (harvesting opens the harvest form for each in turn). **Start all idle** only starts grows that aren't running.
+- **Upcoming harvests:** a timeline at the top of the Grow Timers page shows when each grow is due and roughly how many bricks it should give, plus what's ready now. The dashboard's grow bar shows the next 24 hours' total.
+- **Bricks out:** the truck button on a strain (Inventory, by location) logs bricks leaving: sold, delivered, whatever. It removes them from stock and adds them to the **Bricks Out** log at the bottom of the Inventory page, with today / 7-day / 30-day totals, an optional price and note, and the last 15 entries. Admins can take an entry back out (the bricks return).
+- **Dashboard charts:** headline tiles for bricks on hand, potential bricks, bricks out this week and bricks coming in over the next 24 hours; a **Bricks In & Out** chart (pressed vs out per day, last 14 days) and **Stock by Strain** (on hand + potential). Hover a bar for details, or click **Table** to see the numbers.
+
 ## Grow Planner
 
 Plan which strains go in each location's pots.
@@ -143,5 +152,5 @@ For crew members, everything is saved to their profile and follows them to any d
 
 ## Logos
 
-- Header logo: `NoelOpsLogo.png`
+- Header logo: `NoelOpsLogo.png` (the full-size original). The site shows `NoelOpsLogo-web.jpg`, a 480×320 copy that loads much faster; if you change the logo, replace both (or re-export the small one).
 - Strain logos: `logos/<strain id>.png` (see `logos/README.md`)

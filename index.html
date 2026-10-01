@@ -75,23 +75,6 @@
             border-color: hsl(var(--acc-h) 71% 45% / 0.38);
         }
 
-        /* Neon Text & Border Glows */
-        .neon-text-green {
-            text-shadow: 0 0 10px hsl(var(--acc-h) 71% 45% / 0.6), 0 0 20px hsl(var(--acc-h) 71% 45% / 0.3);
-        }
-        
-        .neon-border-green {
-            box-shadow: 0 0 15px hsl(var(--acc-h) 71% 45% / 0.3);
-        }
-
-        .pulse-glow {
-            animation: pulseGlow 2.5s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 5px hsl(var(--acc-h) 71% 45% / 0.2); }
-            100% { box-shadow: 0 0 22px hsl(var(--acc-h) 71% 45% / 0.65); }
-        }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
@@ -231,6 +214,61 @@
         @keyframes dxReadyPulse { 0%, 100% { box-shadow: 0 0 0 1px hsl(var(--acc-h) 69% 58% / 0.25), 0 0 14px hsl(var(--acc-h) 71% 45% / 0.2); } 50% { box-shadow: 0 0 0 1px hsl(var(--acc-h) 69% 58% / 0.6), 0 0 28px hsl(var(--acc-h) 71% 45% / 0.5); } }
         @keyframes dxBudBounce { 0%, 100% { transform: scale(1.15) translateY(0); } 50% { transform: scale(1.25) translateY(-3px); } }
         @keyframes dxSparkle { 0%, 100% { opacity: 0.2; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1.2); } }
+        /* Grow Timers page */
+        .dx-tc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
+        .dx-tc { position: relative; padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+        .dx-tc .top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+        .dx-tc h2 { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 900; color: #f1f5f2; line-height: 1; }
+        .dx-tc .alias { font-size: 12px; color: #8a9a8e; margin-top: 3px; }
+        .dx-tc .sel { display: flex; align-items: center; gap: 8px; }
+        .dx-tc .sel input { width: 17px; height: 17px; accent-color: hsl(var(--acc-h) 71% 45%); cursor: pointer; }
+        .dx-tc .mid { display: flex; align-items: center; gap: 14px; }
+        .dx-tc .bigpot { width: 70px; height: 70px; border-radius: 18px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative;
+            background: radial-gradient(circle at 50% 125%, rgba(120, 72, 32, 0.6), rgba(20, 30, 22, 0.95) 70%); border: 1px solid rgba(255, 255, 255, 0.06); }
+        .dx-tc .bigpot::after { content: ''; position: absolute; left: 15px; right: 15px; bottom: 8px; height: 5px; border-radius: 3px; background: #7c4a1e; opacity: 0.85; }
+        .dx-tc .bigpot i { font-size: 34px; color: hsl(var(--acc-h) 69% 58%); transform: scale(var(--grow, 0.7)); transform-origin: 50% 90%; transition: transform 0.8s ease; filter: drop-shadow(0 0 8px hsl(var(--acc-h) 69% 58% / 0.5)); }
+        .dx-tc .clock .t { font-family: 'JetBrains Mono', monospace; font-size: 30px; font-weight: 900; line-height: 1; color: #fde68a; }
+        .dx-tc .clock .s { font-size: 11px; color: #8a9a8e; font-weight: 700; letter-spacing: 0.05em; margin-top: 4px; }
+        .dx-tc .track { position: relative; height: 10px; border-radius: 99px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+        .dx-tc .fill { position: absolute; inset: 0 auto 0 0; border-radius: 99px; transition: width 0.9s linear;
+            background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.16) 0 6px, transparent 6px 12px), linear-gradient(90deg, hsl(var(--acc-h) 72% 29%), hsl(var(--acc-h) 69% 58%));
+            background-size: 17px 17px, 100% 100%; animation: dxGrowStripes 1.2s linear infinite; box-shadow: 0 0 10px hsl(var(--acc-h) 69% 58% / 0.45); }
+        .dx-tc .eta { font-size: 11px; color: #8a9a8e; display: flex; justify-content: space-between; gap: 8px; }
+        .dx-tc .plan { display: flex; flex-wrap: wrap; gap: 4px; min-height: 20px; }
+        .dx-tc .plan .p { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 99px; background: rgba(var(--t), 0.14); color: rgb(var(--t)); border: 1px solid rgba(var(--t), 0.3); }
+        .dx-tc .acts { display: flex; gap: 6px; margin-top: auto; }
+        .dx-tc .acts .dx-btn { padding: 8px 10px; }
+        .dx-tc .acts .dx-stop { flex: 0 0 auto; width: auto; background: rgba(127, 29, 29, 0.35); color: #fecaca; border: 1px solid rgba(248, 113, 113, 0.35); }
+        .dx-tc .acts .dx-stop:hover { background: rgba(153, 27, 27, 0.6); }
+        .dx-tc.idle { border-style: dashed; }
+        .dx-tc.idle .bigpot i { color: #64748b; filter: none; }
+        .dx-tc.idle .clock .t { color: #64748b; }
+        .dx-tc.ready { border-color: hsl(var(--acc-h) 69% 58% / 0.7); animation: dxReadyPulse 1.8s ease-in-out infinite; }
+        .dx-tc.ready .bigpot i { animation: dxBudBounce 1.1s ease-in-out infinite; color: hsl(var(--acc-h) 79% 73%); }
+        .dx-tc.ready .bigpot::before { content: '✦'; position: absolute; top: 4px; right: 8px; font-size: 13px; color: #fde68a; animation: dxSparkle 1.4s ease-in-out infinite; }
+        .dx-tc.ready .clock .t { color: hsl(var(--acc-h) 69% 58%); text-shadow: 0 0 14px hsl(var(--acc-h) 69% 58% / 0.8); }
+        .dx-tc.picked { box-shadow: 0 0 0 2px hsl(var(--acc-h) 69% 58% / 0.8); }
+        .dx-bulk { position: sticky; top: 92px; z-index: 30; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 14px; margin-bottom: 14px; border-radius: 14px;
+            background: rgba(10, 17, 12, 0.96); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.35); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+        .dx-bulk.hidden { display: none; }
+        .dx-bulk b { font-size: 13px; color: #f1f5f2; margin-right: 6px; }
+        .dx-bulk .dx-act { flex: none; padding: 6px 12px; }
+        /* Upcoming harvests timeline */
+        .dx-upc { padding: 16px 18px 12px; margin-bottom: 16px; }
+        .dx-upc .now-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; font-size: 12px; }
+        .dx-upc .chip { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: hsl(var(--acc-h) 71% 45% / 0.16); color: hsl(var(--acc-h) 69% 58%); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.35); }
+        .dx-upc .line { position: relative; height: 92px; margin: 0 8px; }
+        .dx-upc .axis { position: absolute; left: 0; right: 0; bottom: 22px; height: 2px; background: rgba(255, 255, 255, 0.1); }
+        .dx-upc .tick { position: absolute; bottom: 0; transform: translateX(-50%); font-size: 10px; color: #64748b; white-space: nowrap; }
+        .dx-upc .tick::before { content: ''; position: absolute; left: 50%; bottom: 16px; width: 1px; height: 8px; background: rgba(255, 255, 255, 0.15); }
+        .dx-upc .tick.day { color: #94a3b8; font-weight: 700; }
+        .dx-upc .mk { position: absolute; bottom: 17px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; }
+        .dx-upc .mk .lbl { font-size: 10px; line-height: 1.25; text-align: center; white-space: nowrap; padding: 3px 7px; border-radius: 8px; background: rgba(6, 10, 7, 0.9); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.3); color: #e6efe8; }
+        .dx-upc .mk .lbl b { font-family: 'JetBrains Mono', monospace; }
+        .dx-upc .mk .lbl span { color: hsl(var(--acc-h) 69% 58%); font-weight: 700; }
+        .dx-upc .mk .stem { width: 1px; background: hsl(var(--acc-h) 69% 58% / 0.5); }
+        .dx-upc .mk .dot { width: 12px; height: 12px; border-radius: 50%; background: hsl(var(--acc-h) 69% 58%); border: 2px solid #0a110c; box-shadow: 0 0 8px hsl(var(--acc-h) 69% 58% / 0.8); }
+        .dx-upc .nowmark { position: absolute; left: 0; bottom: 15px; width: 3px; height: 16px; border-radius: 2px; background: #fbbf24; }
         .dx-gb-empty { font-size: 12px; color: #8a9a8e; padding: 10px 0; }
         @media (prefers-reduced-motion: reduce) { .dx-gb .fill, .dx-gb.ready, .dx-gb.ready .pot i, .dx-gb.ready .pot::before { animation: none; } }
         .dx-sec { display: flex; align-items: center; justify-content: space-between; margin: 0 0 12px; }
@@ -242,9 +280,37 @@
         .dx-av { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; border: 2px solid #0b140e; flex-shrink: 0; }
         .dx-stack { display: flex; cursor: pointer; }
         .dx-stack .dx-av { margin-left: -8px; }
+        #presence-box:hover .dx-stack .dx-av { margin-left: -4px; }
+        #presence-box:hover .dx-stack .dx-av:first-child { margin-left: 0; }
+        .dx-stack .dx-av { transition: margin 0.2s; }
+        .dx-online { position: fixed; z-index: 120; top: 88px; right: max(16px, calc((100vw - 1440px) / 2 + 32px)); width: 320px; max-height: calc(100vh - 110px); display: flex; flex-direction: column;
+            background: rgba(10, 17, 12, 0.97); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.25); border-radius: 18px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); backdrop-filter: blur(14px); animation: dxPop 0.18s ease-out; }
+        .dx-online.hidden { display: none; }
+        @keyframes dxPop { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: none; } }
+        .dx-online-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 10px; }
+        .dx-online-head b { font-size: 15px; color: #f1f5f2; margin-right: 6px; }
+        .dx-online-list { overflow-y: auto; padding: 0 8px 8px; scrollbar-width: thin; }
+        .dx-online-list h4 { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; font-weight: 800; padding: 10px 8px 4px; }
+        .dx-person { display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 12px; }
+        .dx-person:hover { background: rgba(255, 255, 255, 0.03); }
+        .dx-person .dx-av { width: 34px; height: 34px; }
+        .dx-person .av { position: relative; flex-shrink: 0; }
+        .dx-person .av .on { position: absolute; right: -1px; bottom: -1px; width: 11px; height: 11px; border-radius: 50%; background: #4ade80; border: 2px solid #0a110c; box-shadow: 0 0 6px #4ade80; }
+        .dx-person .who { min-width: 0; flex: 1; line-height: 1.2; }
+        .dx-person .who b { font-size: 13px; color: #f1f5f2; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-person .who span { font-size: 11px; color: #8a9a8e; }
+        .dx-person .tag { font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 99px; background: rgba(255, 255, 255, 0.06); color: #94a3b8; white-space: nowrap; }
+        .dx-person .tag.you { background: hsl(var(--acc-h) 71% 45% / 0.18); color: hsl(var(--acc-h) 69% 58%); }
+        .dx-person .tag.new { background: #fbbf24; color: #000; }
+        .dx-person.off { opacity: 0.55; }
+        .dx-person.off .dx-av { filter: grayscale(0.7); }
+        .dx-online-foot { margin: 0 12px 12px; padding: 9px; border-radius: 12px; font-size: 12px; font-weight: 700; color: hsl(var(--acc-h) 69% 58%); background: hsl(var(--acc-h) 71% 45% / 0.1); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.2); }
+        .dx-online-foot:hover { background: hsl(var(--acc-h) 71% 45% / 0.2); }
+        @media (max-width: 640px) { .dx-online { top: 76px; right: 12px; left: 12px; width: auto; } }
         .dx-stack .dx-av:first-child { margin-left: 0; }
 
         .dx-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+        .dx-stats.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         .dx-stat { padding: 18px 18px 14px; position: relative; overflow: hidden; min-height: 116px; }
         .dx-stat .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.09em; color: #8a9a8e; font-weight: 700; }
         .dx-stat .num { font-size: 34px; font-weight: 800; margin: 6px 0 2px; line-height: 1.15; }
@@ -300,16 +366,61 @@
         .dx-feed .when { font-size: 11px; color: #8a9a8e; }
         .dx-feed b { color: #f1f5f2; }
         .dx-feed b.g, .dx-toast b.g { color: hsl(var(--acc-h) 69% 58%); }
-        .dx-chart { display: flex; align-items: flex-end; gap: 10px; height: 130px; padding-top: 8px; }
-        .dx-chart > div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; font-size: 10px; color: #8a9a8e; height: 100%; }
-        .dx-chart span { width: 100%; border-radius: 6px 6px 2px 2px; background: linear-gradient(180deg, hsl(var(--acc-h) 69% 58%), hsl(var(--acc-h) 64% 24%)); min-height: 3px; }
-        .dx-chart .today span { box-shadow: 0 0 16px hsl(var(--acc-h) 69% 58% / 0.6); }
-        .dx-chart .today { color: hsl(var(--acc-h) 69% 58%); font-weight: 700; }
+        /* Dashboard charts. Series colors are fixed (validated on the dark card surface), not the accent */
+        :root { --viz-onhand: #c98500; --viz-made: #199e70; --viz-out: #3987e5; --viz-grid: rgba(255, 255, 255, 0.07); }
+        .dx-stats-extra { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: #8a9a8e; margin: -10px 2px 18px; }
+        .dx-stats-extra b { color: #e6efe8; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+        .dx-charts { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 16px; }
+        .dx-charts .dx-panel { margin-bottom: 0; }
+        .dx-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 11px; color: #a3b3a7; margin: -4px 0 10px; }
+        .dx-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+        .dx-legend b { color: #e6efe8; font-family: 'JetBrains Mono', monospace; }
+        .dx-tbl-btn { font-size: 11px !important; color: #8a9a8e !important; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 2px 8px; }
+        .dx-tbl-btn:hover, .dx-tbl-btn.on { color: #e6efe8 !important; border-color: rgba(255, 255, 255, 0.25); }
+        .dx-panel.show-table .dx-io, .dx-panel.show-table .dx-sbs, .dx-panel.show-table .dx-legend { display: none; }
+        .dx-panel:not(.show-table) .dx-viz-table { display: none; }
+        .dx-viz-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+        .dx-viz-table th { text-align: left; color: #8a9a8e; font-weight: 700; font-size: 11px; padding: 4px 6px; border-bottom: 1px solid var(--viz-grid); }
+        .dx-viz-table td { padding: 4px 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); font-variant-numeric: tabular-nums; color: #e6efe8; }
+        .dx-viz-table td.r, .dx-viz-table th.r { text-align: right; }
+        .dx-io { position: relative; height: 200px; display: flex; padding: 0 0 22px 28px; }
+        .dx-io .grid { position: absolute; left: 28px; right: 0; top: 0; bottom: 22px; pointer-events: none; }
+        .dx-io .grid div { position: absolute; left: 0; right: 0; border-top: 1px solid var(--viz-grid); }
+        .dx-io .grid span { position: absolute; left: -28px; width: 22px; text-align: right; top: -7px; font-size: 10px; color: #64748b; font-variant-numeric: tabular-nums; }
+        .dx-io .day { flex: 1; position: relative; display: flex; align-items: flex-end; justify-content: center; gap: 2px; cursor: default; }
+        .dx-io .day:hover { background: rgba(255, 255, 255, 0.03); }
+        .dx-io .day i { display: block; width: min(12px, 34%); border-radius: 4px 4px 0 0; min-height: 0; }
+        .dx-io .day i.in { background: var(--viz-made); }
+        .dx-io .day i.out { background: var(--viz-out); }
+        .dx-io .day .x { position: absolute; bottom: -20px; left: 0; right: 0; text-align: center; font-size: 10px; color: #64748b; }
+        .dx-io .day.today .x { color: #e6efe8; font-weight: 800; }
+        .dx-sbs { display: flex; flex-direction: column; gap: 6px; }
+        .dx-sbs .row { display: grid; grid-template-columns: 112px minmax(0, 1fr); align-items: center; gap: 8px; cursor: default; border-radius: 6px; }
+        .dx-sbs .row:hover { background: rgba(255, 255, 255, 0.03); }
+        .dx-sbs .nm { font-size: 11.5px; color: #cbd5e1; display: flex; align-items: center; gap: 6px; min-width: 0; }
+        .dx-sbs .nm span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-sbs .nm .lg { width: 18px; height: 18px; flex-shrink: 0; display: inline-flex; }
+        .dx-sbs .nm .lg img { width: 100%; height: 100%; object-fit: contain; }
+        .dx-sbs .bar { display: flex; align-items: center; gap: 2px; height: 14px; }
+        .dx-sbs .bar i { display: block; height: 100%; }
+        .dx-sbs .bar i.oh { background: var(--viz-onhand); border-radius: 0; }
+        .dx-sbs .bar i.pt { background: var(--viz-made); }
+        .dx-sbs .bar i:last-of-type { border-radius: 0 4px 4px 0; }
+        .dx-sbs .bar em { font-style: normal; font-size: 11px; color: #a3b3a7; margin-left: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .dx-sbs .bar em.zero { color: #475569; }
+        #dx-tip { position: fixed; z-index: 300; pointer-events: none; padding: 8px 10px; border-radius: 10px; font-size: 12px; line-height: 1.45; color: #e6efe8;
+            background: rgba(6, 10, 7, 0.97); border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); max-width: 240px; }
+        #dx-tip.hidden { display: none; }
+        #dx-tip i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; }
+        #dx-tip b { font-variant-numeric: tabular-nums; }
+        @media (max-width: 960px) { .dx-charts { grid-template-columns: minmax(0, 1fr); } }
 
         .dx-toasts { position: fixed; right: 24px; bottom: 24px; z-index: 100; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; pointer-events: none; max-width: calc(100vw - 32px); }
         .dx-toast { pointer-events: auto; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 14px; background: rgba(10, 20, 13, 0.94); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.45); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px hsl(var(--acc-h) 71% 45% / 0.2); font-size: 13px; color: #e6efe8; max-width: 420px; animation: dxToastIn 0.25s ease-out; transition: opacity 0.3s, transform 0.3s; }
         .dx-toast.warning { border-color: rgba(251, 191, 36, 0.55); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.15); }
         .dx-toast.info { border-color: rgba(129, 140, 248, 0.5); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); }
+        .dx-toast .dx-undo { flex-shrink: 0; margin-left: 4px; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 800; color: #0a110c; background: #fde68a; }
+        .dx-toast .dx-undo:hover { background: #fcd34d; }
         .dx-toast.out { opacity: 0; transform: translateY(8px); }
         @keyframes dxToastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
@@ -508,6 +619,32 @@
         }
         body.dx-compact .dx-ps .logo { width: 30px; height: 30px; }
         body.dx-compact .dx-ps .est b { font-size: 18px; }
+        /* Bricks out (sales log) */
+        .dx-sales { padding: 16px 18px; }
+        .dx-sales-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+        .dx-sales-stats > div { border-radius: 12px; padding: 10px 12px; background: rgba(6, 10, 7, 0.6); border: 1px solid rgba(251, 191, 36, 0.18); }
+        .dx-sales-stats .l { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #8a9a8e; font-weight: 800; }
+        .dx-sales-stats .v { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 800; color: #fbbf24; }
+        .dx-sales-stats .s { font-size: 11px; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+        .dx-sales-strains { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .dx-sales-strains .p { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: rgba(var(--t), 0.14); color: rgb(var(--t)); border: 1px solid rgba(var(--t), 0.3); }
+        .dx-sales-list li { display: flex; align-items: center; gap: 10px; padding: 8px 2px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 12.5px; }
+        .dx-sales-list .n { font-family: 'JetBrains Mono', monospace; font-weight: 800; color: #fbbf24; min-width: 46px; }
+        .dx-sales-list .meta { font-size: 11px; color: #8a9a8e; }
+        .dx-sales-list .price { margin-left: auto; font-family: 'JetBrains Mono', monospace; color: #e6efe8; font-weight: 700; white-space: nowrap; }
+        .dx-inv-top .btns .dx-out { flex: 0 0 auto; padding: 0 8px; color: #fbbf24; background: rgba(251, 191, 36, 0.08); border-color: rgba(251, 191, 36, 0.3); }
+        @media (max-width: 640px) { .dx-sales-stats .v { font-size: 18px; } }
+        /* Admin page: same cards, inputs and tables as the rest of the site */
+        .dx-admin-card { padding: 22px; }
+        #tab-admin .bg-darkbg { background: rgba(6, 10, 7, 0.6); }
+        #tab-admin input[type="text"], #tab-admin input[type="url"], #tab-admin input[type="number"], #tab-admin input[type="password"], #tab-admin select, #tab-admin textarea {
+            background: #060a07; border: 1px solid hsl(var(--acc-h) 69% 58% / 0.22); border-radius: 10px; color: #e6efe8; outline: none; }
+        #tab-admin input:focus, #tab-admin select:focus, #tab-admin textarea:focus { border-color: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 0 3px hsl(var(--acc-h) 69% 58% / 0.12); }
+        #tab-admin table thead { background: transparent; }
+        #tab-admin table thead th { font-size: 10px; letter-spacing: 0.08em; color: #8a9a8e; border-bottom: 1px solid hsl(var(--acc-h) 69% 58% / 0.15); }
+        #tab-admin table tbody tr { border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+        #tab-admin table tbody tr:hover { background: rgba(255, 255, 255, 0.025); }
+        #tab-admin .border-b.border-weed-900 { border-color: hsl(var(--acc-h) 69% 58% / 0.12); }
         .dx-where { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; padding: 5px 0; border-top: 1px solid hsl(var(--acc-h) 69% 58% / 0.08); }
         .dx-where b { font-family: 'JetBrains Mono', monospace; color: #e6efe8; }
 
@@ -518,7 +655,7 @@
             .dx-strains { grid-template-columns: repeat(4, minmax(0, 1fr)); }
         }
         @media (max-width: 960px) {
-            .dx-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .dx-stats, .dx-stats.n3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .dx-strains { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
         @media (max-width: 640px) {
@@ -580,7 +717,7 @@
 
                     <!-- Who's online, sync status & live time -->
                     <div class="hidden lg:flex items-center space-x-4 whitespace-nowrap">
-                        <div id="presence-box" class="flex items-center space-x-2" onclick="onPresenceClick()" title="Who's online">
+                        <div id="presence-box" class="flex items-center space-x-2 cursor-pointer" onclick="onPresenceClick(event)" title="See who's online" role="button" aria-haspopup="true" aria-expanded="false">
                             <div id="presence-stack" class="dx-stack"></div>
                             <span id="presence-count" class="text-xs text-slate-400 cursor-pointer"></span>
                         </div>
@@ -614,13 +751,14 @@
                 <button onclick="switchTab('planner'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Planner</button>
                 <button onclick="switchTab('timers'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Timers</button>
                 <button onclick="switchTab('admin'); toggleMobileMenu()" data-admin-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
+                <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
                 <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
             </div>
 
             <!-- Grow timers sub-bar (dashboard only) -->
             <div id="dx-growbar" class="dx-growbar hidden">
                 <div class="dx-growbar-in">
-                    <div class="gb-label"><b><i class="fa-solid fa-seedling mr-1 text-weed-500"></i>Grows</b><button onclick="switchTab('timers')">Manage →</button></div>
+                    <div class="gb-label"><b><i class="fa-solid fa-seedling mr-1 text-weed-500"></i>Grows</b><span id="gb-next" class="text-[10px] dx-muted"></span><button onclick="switchTab('timers')">Manage →</button></div>
                     <div id="dx-timers"></div>
                 </div>
             </div>
@@ -636,9 +774,18 @@
 
                         <div class="dx-sec"><h2>Totals &amp; Trends</h2></div>
                         <div id="dx-stats" class="dx-stats"></div>
-                        <div class="dx-glass dx-panel">
-                            <div class="dx-sec"><h2>Bricks this week</h2><span id="dx-week-total" class="dx-mono dx-muted text-xs"></span></div>
-                            <div id="dx-chart" class="dx-chart"></div>
+                        <div id="dx-stats-extra" class="dx-stats-extra"></div>
+                        <div class="dx-charts">
+                            <div class="dx-glass dx-panel">
+                                <div class="dx-sec"><h2>Bricks In &amp; Out <span class="dx-muted text-xs font-semibold">· last 14 days</span></h2><button type="button" class="dx-tbl-btn" onclick="toggleChartTable(this)">Table</button></div>
+                                <div id="dx-io-legend" class="dx-legend"></div>
+                                <div id="dx-chart" class="dx-io"></div>
+                            </div>
+                            <div class="dx-glass dx-panel">
+                                <div class="dx-sec"><h2>Stock by Strain</h2><button type="button" class="dx-tbl-btn" onclick="toggleChartTable(this)">Table</button></div>
+                                <div class="dx-legend"><span><i style="background:var(--viz-onhand)"></i>On hand</span><span><i style="background:var(--viz-made)"></i>Potential</span></div>
+                                <div id="dx-strain-chart" class="dx-sbs"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -666,6 +813,7 @@
                 <div id="inv-stats" class="dx-inv-hero"></div>
                 <div id="inv-note" class="mb-4"></div>
                 <div id="inv-grid" class="dx-inv-grid"></div>
+                <div id="inv-sales" class="mt-6"></div>
             </section>
 
             <section id="tab-planner" class="tab-content hidden">
@@ -681,41 +829,21 @@
                 <div id="planner-selected-location-plan"></div>
             </section>
 
-            <section id="tab-timers" class="tab-content hidden space-y-8">
-                
-                <!-- Grow Timers Header -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6 rounded-2xl border-weed-900">
+            <section id="tab-timers" class="tab-content hidden">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-weed-950 text-weed-400 text-xs border border-weed-800 font-mono">36-Hour Cycles</span>
-                            <h1 class="text-2xl font-black text-white">Active Grow Operations</h1>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-1">
-                            Postals: <span id="timers-postal-list" class="text-weed-300 font-bold font-mono">&mdash;</span>. Automatic webhooks alert crew upon maturity.
-                        </p>
+                        <h1 class="text-2xl font-black text-white">Grow Timers</h1>
+                        <p class="text-xs text-slate-400 mt-1">Postals: <span id="timers-postal-list" class="text-weed-300 font-bold font-mono">&mdash;</span>. Discord gets an alert when a grow is ready.</p>
                     </div>
-
-                    <div class="flex items-center space-x-3">
-                        <button onclick="startAllTimers()" class="px-4 py-2 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all shadow-md flex items-center space-x-2">
-                            <i class="fa-solid fa-play"></i>
-                            <span>Start All Timers</span>
-                        </button>
-                        <button onclick="resetAllTimersPrompt()" class="px-3 py-2 rounded-xl bg-darkbg border border-weed-900 text-slate-400 hover:text-white hover:bg-weed-950 text-xs transition-all">
-                            <i class="fa-solid fa-rotate"></i>
-                            <span>Reset All</span>
-                        </button>
-                    </div>
+                    <div id="timers-actions" class="dx-plan-actions"></div>
                 </div>
-
-                <!-- Active Location Timers Grid -->
-                <div id="timers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Location Timers populated via JS -->
-                </div>
-
+                <div id="timers-upcoming" class="dx-glass dx-upc"></div>
+                <div id="timers-bulk" class="dx-bulk hidden"></div>
+                <div id="timers-grid" class="dx-tc-grid"></div>
             </section>
 
             <section id="tab-login" class="tab-content hidden">
-                <div class="max-w-sm mx-auto glass-card p-8 rounded-2xl border-weed-800/60 space-y-5 mt-8">
+                <div class="max-w-sm mx-auto dx-glass p-8 space-y-5 mt-8">
                     <div class="text-center space-y-2">
                         <div class="w-12 h-12 mx-auto rounded-2xl bg-weed-950 border border-weed-700 text-weed-400 flex items-center justify-center">
                             <i class="fa-solid fa-lock text-xl"></i>
@@ -735,18 +863,12 @@
 
             <section id="tab-admin" class="tab-content hidden space-y-6">
 
-                <!-- Admin Header -->
-                <div class="glass-card p-6 rounded-2xl border-weed-900 flex justify-between items-center">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-1">
                     <div>
-                        <h1 class="text-2xl font-black text-white flex items-center space-x-2">
-                            <i class="fa-solid fa-user-shield text-weed-400"></i>
-                            <span>Operations & Admin Management</span>
-                        </h1>
-                        <p class="text-xs text-slate-400 mt-1">Configure grow locations, strain logos, Discord webhooks, data exports, and operational parameters.</p>
+                        <h1 class="text-2xl font-black text-white"><i class="fa-solid fa-user-shield text-weed-400 mr-2"></i>Admin</h1>
+                        <p class="text-xs text-slate-400 mt-1">Crew, grow locations, Discord alerts, logos and backups.</p>
                     </div>
-                    <button onclick="adminLogout()" class="px-3 py-2 rounded-xl bg-darkbg border border-weed-900 text-slate-300 hover:text-white hover:bg-weed-950 text-xs font-semibold transition-all shrink-0 ml-4">
-                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Log Out
-                    </button>
+                    <button onclick="adminLogout()" class="dx-act self-start md:self-auto" style="flex:none;padding:8px 14px"><i class="fa-solid fa-lock mr-1"></i> Lock Admin</button>
                 </div>
 
                 <!-- Admin sections -->
@@ -760,7 +882,7 @@
 
                 <div data-admin-panel="crew" class="space-y-6">
                 <!-- Crew & Permissions -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                <div class="dx-glass dx-admin-card space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-weed-900 pb-3">
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-users-gear text-lg"></i></div>
@@ -785,7 +907,7 @@
 
                 <div data-admin-panel="locations" class="space-y-6">
                     <!-- Add / Edit Grow Locations Form -->
-                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                    <div class="dx-glass dx-admin-card space-y-4">
                         <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                             <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center">
                                 <i class="fa-solid fa-plus text-lg"></i>
@@ -823,7 +945,7 @@
                     </div>
 
                 <!-- Existing Locations Management Table -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-900">
+                <div class="dx-glass dx-admin-card space-y-4">
                     <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center justify-between">
                         <span>Manage Existing Grow Locations</span>
                         <span id="admin-loc-count-badge" class="text-xs px-2 py-0.5 rounded bg-weed-950 text-weed-400 border border-weed-800">4 Active</span>
@@ -850,7 +972,7 @@
 
                 <div data-admin-panel="discord" class="space-y-6">
                     <!-- Discord Webhook Configuration -->
-                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                    <div class="dx-glass dx-admin-card space-y-4">
                         <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                             <div class="w-8 h-8 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center">
                                 <i class="fa-brands fa-discord text-lg"></i>
@@ -877,7 +999,7 @@
                     </div>
 
                 <!-- Discord harvest message editor -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                <div class="dx-glass dx-admin-card space-y-4">
                     <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                         <div class="w-8 h-8 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center"><i class="fa-brands fa-discord text-lg"></i></div>
                         <div>
@@ -930,14 +1052,14 @@
                 <div data-admin-panel="logos" class="space-y-6">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Master Logo Settings -->
-                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                    <div class="dx-glass dx-admin-card space-y-4">
                         <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                             <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center">
                                 <i class="fa-solid fa-shield-halved text-lg"></i>
                             </div>
                             <div>
                                 <h2 class="font-bold text-white text-base">Master Syndicate Branding Logo</h2>
-                                <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">NoelOpsLogo.png</span> from the repo. Uploads or URLs here override it in this browser only.</p>
+                                <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">NoelOpsLogo.png</span> (shown from its small copy, <span class="font-mono text-weed-300">NoelOpsLogo-web.jpg</span>) from the repo. Uploads or URLs here override it in this browser only.</p>
                             </div>
                         </div>
 
@@ -964,7 +1086,7 @@
                 </div>
 
                 <!-- Per-Strain Logo Manager -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60 bg-gradient-to-r from-weed-950/40 via-darkcard to-weed-950/40">
+                <div class="dx-glass dx-admin-card space-y-4">
                     <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                         <div class="w-8 h-8 rounded-lg bg-purple-950 text-purple-400 flex items-center justify-center">
                             <i class="fa-solid fa-images text-lg"></i>
@@ -987,30 +1109,30 @@
 
                 <div data-admin-panel="data" class="space-y-6">
                 <!-- Data Backup & Reset Tools -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-red-950/40">
+                <div class="dx-glass dx-admin-card space-y-4">
                     <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center space-x-2">
                         <i class="fa-solid fa-database text-amber-400"></i>
-                        <span>Syndicate State Data Tools</span>
+                        <span>Backups &amp; Reset</span>
                     </h2>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <button onclick="exportDataJSON()" class="p-4 rounded-xl bg-darkbg border border-weed-900 hover:border-weed-600 text-left space-y-1 transition-all group">
                             <i class="fa-solid fa-download text-weed-400 group-hover:scale-110 transition-transform"></i>
-                            <div class="font-bold text-white text-xs">Export State (JSON)</div>
-                            <div class="text-[10px] text-slate-500">Download quantities, badges & timer states</div>
+                            <div class="font-bold text-white text-xs">Download a Backup</div>
+                            <div class="text-[10px] text-slate-500">Everything right now, saved to your computer as a .json file</div>
                         </button>
 
                         <button onclick="triggerImportJSON()" class="p-4 rounded-xl bg-darkbg border border-weed-900 hover:border-weed-600 text-left space-y-1 transition-all group">
                             <i class="fa-solid fa-upload text-indigo-400 group-hover:scale-110 transition-transform"></i>
-                            <div class="font-bold text-white text-xs">Import State (JSON)</div>
-                            <div class="text-[10px] text-slate-500">Load shared data backup file</div>
+                            <div class="font-bold text-white text-xs">Restore a Backup</div>
+                            <div class="text-[10px] text-slate-500">From a download or a nightly backup file (replaces the shared data)</div>
                             <input type="file" id="import-file-input" onchange="handleImportJSON(event)" class="hidden" accept=".json">
                         </button>
 
                         <button onclick="factoryResetData()" class="p-4 rounded-xl bg-red-950/30 border border-red-900/50 hover:bg-red-950/60 text-left space-y-1 transition-all group">
                             <i class="fa-solid fa-trash-can text-red-400 group-hover:scale-110 transition-transform"></i>
-                            <div class="font-bold text-red-300 text-xs">Reset Operational Data</div>
-                            <div class="text-[10px] text-red-400/70">Wipe localStorage and return to defaults</div>
+                            <div class="font-bold text-red-300 text-xs">Reset Everything</div>
+                            <div class="text-[10px] text-red-400/70">Clears stock, locations, timers, sales log and history for everyone. The crew list stays.</div>
                         </button>
                     </div>
                 </div>
@@ -1037,13 +1159,25 @@
         </div>
     </footer>
 
+    <!-- Who's online (opens from the avatars in the header) -->
+    <div id="online-panel" class="dx-online hidden" role="dialog" aria-label="Who's online">
+        <div class="dx-online-head">
+            <div><b>Crew</b> <span id="online-count" class="dx-chip"><span class="dx-dot"></span><span></span></span></div>
+            <button type="button" onclick="closeOnlinePanel()" class="text-slate-400 hover:text-white" title="Close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="online-list" class="dx-online-list"></div>
+        <button type="button" onclick="closeOnlinePanel(); openProfile()" class="dx-online-foot"><i class="fa-solid fa-user-gear mr-1"></i>My Profile</button>
+    </div>
+
+    <div id="dx-tip" class="hidden" role="tooltip"></div>
+
     <!-- Corner notifications -->
     <div id="toast-stack" class="dx-toasts" aria-live="polite"></div>
 
     <!-- Crew name prompt (once per device) -->
     <div id="name-modal" class="dx-modal hidden">
         <form class="dx-glass dx-modal-card space-y-4" onsubmit="saveCrewName(event)">
-            <img src="NoelOpsLogo.png" alt="NoelOps" width="160" height="96" class="rounded-xl mx-auto border border-weed-800">
+            <img src="NoelOpsLogo-web.jpg" alt="NoelOps" width="160" height="96" class="rounded-xl mx-auto border border-weed-800">
             <h2 class="text-xl font-black text-white">Who's on shift?</h2>
             <p class="text-xs text-slate-400">Your name shows in the live activity feed and in who's online. It's saved on this device.</p>
             <input id="crew-name-input" type="text" maxlength="20" required autocomplete="nickname" placeholder="Your name">
@@ -1203,7 +1337,7 @@
     <!-- Crew sign-in (only once crew members exist) -->
     <div id="signin-modal" class="dx-modal dx-modal-solid hidden">
         <form class="dx-glass dx-modal-card space-y-4" onsubmit="submitSignIn(event)">
-            <img src="NoelOpsLogo.png" alt="NoelOps" width="160" height="96" class="rounded-xl mx-auto border border-weed-800">
+            <img src="NoelOpsLogo-web.jpg" alt="NoelOps" width="160" height="96" class="rounded-xl mx-auto border border-weed-800">
             <h2 id="signin-title" class="text-xl font-black text-white">Sign in</h2>
             <div id="signin-crew" class="space-y-3">
                 <input id="signin-name" type="text" maxlength="20" autocomplete="username" placeholder="Your name" aria-label="Your name" oninput="setSignInCreateMode(false)">
@@ -1257,6 +1391,36 @@
             <p id="crew-error" class="hidden text-xs text-red-400 font-semibold text-center"></p>
             <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px">Save</button>
             <button type="button" onclick="closeCrewEditor()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Bricks going out (sales log) -->
+    <div id="sale-modal" class="dx-modal hidden">
+        <form class="dx-glass dx-modal-card dx-modal-wide space-y-3 text-left" onsubmit="saveSale(event)">
+            <h2 class="text-xl font-black text-white text-center"><i class="fa-solid fa-truck-fast text-amber-400 mr-1"></i>Bricks Going Out</h2>
+            <p class="text-xs text-slate-400 text-center">Removes the bricks from stock and adds them to the outgoing log.</p>
+            <div class="grid grid-cols-2 gap-3">
+                <label class="block text-xs font-semibold text-slate-300">Strain
+                    <select id="sale-strain" class="dx-input mt-1 w-full" onchange="updateSaleAvailable()"></select>
+                </label>
+                <label class="block text-xs font-semibold text-slate-300">From
+                    <select id="sale-from" class="dx-input mt-1 w-full" onchange="updateSaleAvailable()"></select>
+                </label>
+            </div>
+            <label class="block text-xs font-semibold text-slate-300">Bricks <span id="sale-available" class="font-normal text-slate-500"></span>
+                <input type="number" id="sale-amount" min="1" step="1" required class="mt-1 font-mono">
+            </label>
+            <div class="grid grid-cols-2 gap-3">
+                <label class="block text-xs font-semibold text-slate-300">Total price <span class="font-normal text-slate-500">(optional)</span>
+                    <input type="number" id="sale-price" min="0" step="1" placeholder="$" class="mt-1 font-mono">
+                </label>
+                <label class="block text-xs font-semibold text-slate-300">Note <span class="font-normal text-slate-500">(optional)</span>
+                    <input type="text" id="sale-note" maxlength="60" placeholder="Buyer, drop spot…" class="mt-1">
+                </label>
+            </div>
+            <p id="sale-error" class="hidden text-xs text-red-400 font-semibold text-center"></p>
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-truck-fast mr-1"></i> Log &amp; Remove Bricks</button>
+            <button type="button" onclick="closeSale()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
         </form>
     </div>
 
@@ -1336,7 +1500,7 @@
         ];
 
         // Logo files served from the repo. Strain logos live at logos/<strain id>.png
-        const DEFAULT_MASTER_LOGO = 'NoelOpsLogo.png';
+        const DEFAULT_MASTER_LOGO = 'NoelOpsLogo-web.jpg'; // small copy of NoelOpsLogo.png for fast loading
         const STRAIN_LOGO_DIR = 'logos';
         const UPLOADED_LOGO_MAX_PX = 256; // Uploads are downscaled so localStorage doesn't overflow
 
@@ -1368,6 +1532,7 @@
             signupSettings: { allowSignup: true }, // Shared: can new people create their own (Viewer) profile
             activity: [], // Shared activity feed, newest first
             yields: {}, // Shared: real harvest yields per strain, used for estimates
+            sales: [], // Shared: bricks going out, newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
             presence: [] // Who's online right now (live mode only, never saved)
         };
@@ -1438,6 +1603,13 @@
                 });
             });
             appState.yields = yields;
+            // Bricks out: [{ id, strain, bricks, bucket, who, ts, price, note }], newest first
+            appState.sales = (Array.isArray(appState.sales) ? appState.sales : [])
+                .filter(x => isPlainObject(x) && x.id && DEFAULT_STRAINS.some(st => st.id === x.strain) && toCount(x.bricks) > 0)
+                .map(x => ({ id: x.id, strain: x.strain, bricks: toCount(x.bricks), bucket: typeof x.bucket === 'string' ? x.bucket : STASH_KEY,
+                    who: typeof x.who === 'string' ? x.who : '', ts: Number(x.ts) || 0, price: x.price === null || x.price === undefined ? null : toCount(x.price),
+                    note: typeof x.note === 'string' ? x.note.slice(0, 60) : '' }))
+                .sort((a, b) => b.ts - a.ts);
 
             if (!Array.isArray(appState.locations)) {
                 appState.locations = JSON.parse(JSON.stringify(DEFAULT_LOCATIONS));
@@ -1592,7 +1764,8 @@
                 activity,
                 history: JSON.parse(JSON.stringify(state.history || {})),
                 crew: JSON.parse(JSON.stringify(state.crew || {})),
-                yields: JSON.parse(JSON.stringify(state.yields || {}))
+                yields: JSON.parse(JSON.stringify(state.yields || {})),
+                sales: Object.fromEntries((state.sales || []).map(({ id, ...record }) => [id, record]))
             };
         }
 
@@ -1615,6 +1788,7 @@
             appState.presence = Object.values(isPlainObject(tree.presence) ? tree.presence : {}).filter(isPlainObject);
             appState.crew = isPlainObject(tree.crew) ? tree.crew : {};
             appState.yields = isPlainObject(tree.yields) ? tree.yields : {};
+            appState.sales = Object.entries(isPlainObject(tree.sales) ? tree.sales : {}).map(([id, record]) => ({ ...record, id }));
             normalizeState();
         }
 
@@ -1954,9 +2128,76 @@
             setTimeout(() => document.getElementById(show ? 'signin-password' : 'signin-pin').focus(), 50);
         }
 
-        // Header avatars open My Profile
-        function onPresenceClick() {
-            openProfile();
+        // Header avatars open the who's online panel
+        function onPresenceClick(event) {
+            if (event) event.stopPropagation();
+            const panel = document.getElementById('online-panel');
+            if (panel && !panel.classList.contains('hidden')) closeOnlinePanel();
+            else openOnlinePanel();
+        }
+
+        function openOnlinePanel() {
+            if (crewMode() && !currentMember() && !isAdminUnlocked()) return;
+            const panel = document.getElementById('online-panel');
+            if (!panel) return;
+            panel.classList.remove('hidden');
+            document.getElementById('presence-box').setAttribute('aria-expanded', 'true');
+            renderOnlinePanel();
+        }
+
+        function closeOnlinePanel() {
+            const panel = document.getElementById('online-panel');
+            if (panel) panel.classList.add('hidden');
+            const box = document.getElementById('presence-box');
+            if (box) box.setAttribute('aria-expanded', 'false');
+        }
+
+        // Click outside or Esc closes it
+        document.addEventListener('click', event => {
+            const panel = document.getElementById('online-panel');
+            if (panel && !panel.classList.contains('hidden') && !panel.contains(event.target) && !event.target.closest('#presence-box, #mobile-menu')) closeOnlinePanel();
+        });
+        document.addEventListener('keydown', event => { if (event.key === 'Escape') closeOnlinePanel(); });
+
+        // Everyone online now (one row per person, however many devices), then the rest of the crew
+        function renderOnlinePanel() {
+            const panel = document.getElementById('online-panel');
+            if (!panel || panel.classList.contains('hidden')) return;
+            const online = new Map();
+            const me = appState.crewName;
+            if (me) online.set(me, { name: me, devices: 1, since: null, you: true });
+            appState.presence.forEach(p => {
+                if (typeof p.name !== 'string' || !p.name || p.client === CLIENT_ID) return;
+                const row = online.get(p.name) || { name: p.name, devices: 0, since: null, you: false };
+                row.devices += 1;
+                const since = Number(p.since) || null;
+                if (since && (!row.since || since < row.since)) row.since = since;
+                online.set(p.name, row);
+            });
+            const memberByName = name => Object.values(appState.crew).find(m => m.name === name);
+            const roleText = name => {
+                const m = memberByName(name);
+                if (m) return roleLabel(m).replace(' (stats only)', '');
+                return crewMode() && name === me && isAdminUnlocked() ? 'Admin password' : crewMode() ? 'Guest' : 'Crew';
+            };
+            const onlineRows = [...online.values()].sort((a, b) => (b.you - a.you) || a.name.localeCompare(b.name)).map(r => `
+                <div class="dx-person">
+                    <span class="av">${avatarHtml(r.name)}<i class="on"></i></span>
+                    <div class="who"><b>${nameHtml(r.name)}</b><span>${escapeHtml(roleText(r.name))}${r.since ? ` · joined ${relativeTime(r.since)}` : ''}${r.devices > 1 ? ` · ${r.devices} devices` : ''}</span></div>
+                    ${r.you ? '<span class="tag you">You</span>' : ''}
+                </div>`).join('');
+            const offline = crewMode() ? Object.values(appState.crew).filter(m => !online.has(m.name)).sort((a, b) => (b.pending - a.pending) || a.name.localeCompare(b.name)) : [];
+            const offlineRows = offline.map(m => `
+                <div class="dx-person off">
+                    <span class="av">${avatarHtml(m.name)}</span>
+                    <div class="who"><b>${nameHtml(m.name)}</b><span>${escapeHtml(roleLabel(m).replace(' (stats only)', ''))}</span></div>
+                    ${m.pending && hasAdminAccess() ? '<span class="tag new">New</span>' : '<span class="tag">Offline</span>'}
+                </div>`).join('');
+            document.querySelector('#online-count span:last-child').textContent = `${online.size} online`;
+            document.getElementById('online-list').innerHTML =
+                `<h4>Online now</h4>${onlineRows || '<p class="text-xs dx-muted px-2 py-2">Nobody else is here right now.</p>'}` +
+                (offlineRows ? `<h4>Offline</h4>${offlineRows}` : '') +
+                (Sync.mode !== 'cloud' ? '<p class="text-[11px] dx-muted px-2 pt-2">Live sync is off, so only this device shows.</p>' : '');
         }
 
         // ---- Admin: crew panel ----
@@ -2389,7 +2630,7 @@
         function showDeviceNotification(title, body, tag) {
             if (!('Notification' in window) || Notification.permission !== 'granted') return false;
             try {
-                new Notification(title, { body, tag, icon: 'NoelOpsLogo.png' });
+                new Notification(title, { body, tag, icon: 'NoelOpsLogo-web.jpg' });
                 return true;
             } catch (e) {
                 return false;
@@ -2695,9 +2936,10 @@
             appState.presence.forEach(p => {
                 if (p.client !== CLIENT_ID && typeof p.name === 'string' && p.name && !names.includes(p.name)) names.push(p.name);
             });
-            stack.innerHTML = names.slice(0, 4).map(avatarHtml).join('') +
+            stack.innerHTML = names.slice(0, 4).map(n => avatarHtml(n)).join('') +
                 (names.length > 4 ? `<span class="dx-av" style="background:#1b2a1e;color:#8a9a8e">+${names.length - 4}</span>` : '');
             count.textContent = names.length === 0 ? 'Set your name' : `${names.length} online`;
+            renderOnlinePanel();
         }
 
         // Entries tied to locations only show to people who can see one of them
@@ -2730,7 +2972,8 @@
             crew: { pre: 'updated', hi: 'the crew list', post: '' },
             discord: { pre: 'updated', hi: 'the Discord settings', post: '' },
             backup: { pre: 'restored', hi: 'a backup', post: '' },
-            joined: { pre: 'created', hi: 'a profile', post: '(needs review)' }
+            joined: { pre: 'created', hi: 'a profile', post: '(needs review)' },
+            sale: { pre: 'logged', hi: 'bricks going out', post: '' }
         };
         const ACTIVITY_MERGE_MS = 5 * 60 * 1000;
 
@@ -3224,6 +3467,7 @@
             renderDashStrains();
             renderActivityFeed();
             renderBricksChart();
+            renderStrainStockChart();
         }
 
         // Last 7 daily values of a total (oldest first), carrying the last known value over quiet days
@@ -3260,25 +3504,47 @@
             return `<div class="delta" style="color:${tone}">${up ? '▲' : '▼'} ${Math.abs(diff).toLocaleString()}${unit ? ' ' + unit : ''} today</div>`;
         }
 
+        // Bricks going out per local day, last `days` days (oldest first)
+        function dailyOut(days) {
+            const out = [];
+            for (let back = days - 1; back >= 0; back--) out.push({ key: dayKey(back), n: 0 });
+            visibleSales().forEach(x => {
+                const d = new Date(x.ts - Sync.serverOffset);
+                const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                const slot = out.find(o => o.key === key);
+                if (slot) slot.n += x.bricks;
+            });
+            return out;
+        }
+
         function renderDashStats() {
             const box = document.getElementById('dx-stats');
             if (!box) return;
             const t = currentTotals();
+            const statsOnly = isStatsOnly();
+            const week = salesSince(7 * 86400e3);
+            const lastWeek = salesSince(14 * 86400e3).bricks - week.bricks;
+            const next = nextDaySummary();
+            const outDelta = week.bricks === lastWeek ? 'Same as the week before'
+                : `${week.bricks > lastWeek ? '▲' : '▼'} ${Math.abs(week.bricks - lastWeek)} vs the week before`;
             const tiles = [
-                { key: 'bricks', label: 'Bricks on hand', value: t.bricks, color: 'hsl(var(--acc-h) 69% 58%)', sub: 'Packaged & ready' },
-                { key: 'potential', label: 'Potential bricks', value: t.potential, color: 'hsl(var(--acc-h) 69% 58%)', hot: true, sub: `from ${t.trimmed.toLocaleString()} trimmed`, fixedSub: true },
-                { key: 'untrimmed', label: 'Untrimmed reserve', value: t.untrimmed, color: '#fbbf24', sub: 'Awaiting trimming' },
-                { key: 'coca', label: 'Coca leaves', value: t.coca, color: '#38bdf8', sub: 'Secondary op stock', labelColor: '#38bdf8', numColor: '#bae6fd', deltaColor: '#38bdf8' }
-            ];
+                { key: 'bricks', label: 'Bricks on hand', value: t.bricks, color: 'var(--viz-onhand)', sub: 'Packaged & ready' },
+                { key: 'potential', label: 'Potential bricks', value: t.potential, color: 'var(--viz-made)', hot: true, sub: `from ${t.trimmed.toLocaleString()} trimmed`, fixedSub: true },
+                { key: 'out', label: 'Bricks out · 7 days', value: week.bricks, color: 'var(--viz-out)', sub: week.priced ? `$${week.cash.toLocaleString()} · ${outDelta}` : outDelta, fixedSub: true, series: dailyOut(7).map(d => d.n) },
+                statsOnly ? null : { key: 'next', label: 'Coming in · next 24h', value: next.bricks, display: `~${fmtBricks(next.bricks)}`, sub: next.count ? `est. bricks from ${next.count} ${next.count === 1 ? 'harvest' : 'harvests'}` : 'No harvests due', fixedSub: true, series: [] }
+            ].filter(Boolean);
+            box.classList.toggle('n3', tiles.length === 3);
+            const extra = document.getElementById('dx-stats-extra');
+            if (extra) extra.innerHTML = `<span>Untrimmed <b>${t.untrimmed.toLocaleString()}</b></span><span>Coca leaves <b>${t.coca.toLocaleString()}</b></span>`;
             const showTrends = seesAllLocations();
             box.innerHTML = tiles.map(tile => {
-                const series = showTrends ? dailySeries(tile.key, tile.value) : [tile.value];
+                const series = tile.series || (showTrends ? dailySeries(tile.key, tile.value) : [tile.value]);
                 const delta = tile.fixedSub ? '' : deltaHtml(series, '', tile.deltaColor);
                 const sub = tile.fixedSub || !delta ? `<div class="delta" style="color:${tile.hot ? 'hsl(var(--acc-h) 69% 58%)' : '#8a9a8e'}">${escapeHtml(tile.sub)}</div>` : delta;
                 return `
                     <div class="dx-glass dx-stat ${tile.hot ? 'hot' : ''}">
                         <div class="lbl" style="${tile.labelColor ? `color:${tile.labelColor}` : tile.hot ? 'color:hsl(var(--acc-h) 69% 58%)' : ''}">${tile.label}</div>
-                        <div class="num dx-mono" style="${tile.numColor ? `color:${tile.numColor}` : ''}">${tile.value.toLocaleString()}</div>
+                        <div class="num dx-mono" style="${tile.numColor ? `color:${tile.numColor}` : ''}">${tile.display || tile.value.toLocaleString()}</div>
                         ${sub}
                         ${sparklineSvg(series, tile.color)}
                     </div>`;
@@ -3435,27 +3701,101 @@
                     <li>${avatarHtml(entry.who)}<div class="min-w-0">${activityTextHtml(entry)}<div class="when">${relativeTime(entry.ts)}</div></div></li>`).join('');
         }
 
+        // Clean axis steps: 0 / 1 / 2…, 0 / 5 / 10…, 0 / 10 / 20…
+        function niceMax(value) {
+            if (value <= 4) return 4;
+            const steps = [5, 10, 20, 25, 50, 100, 200, 250, 500, 1000];
+            const step = steps.find(s => value <= s * 4) || Math.ceil(value / 4);
+            return step * 4;
+        }
+
+        // Bricks pressed vs bricks out, per local day (crew-wide, so hidden from location-limited crew)
         function renderBricksChart() {
             const chart = document.getElementById('dx-chart');
-            const totalEl = document.getElementById('dx-week-total');
             if (!chart) return;
-            // Crew-wide numbers: hidden from people limited to some locations
-            chart.closest('.dx-panel').classList.toggle('hidden', !seesAllLocations());
+            const panel = chart.closest('.dx-panel');
+            panel.classList.toggle('hidden', !seesAllLocations());
             const letters = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-            const days = [];
-            for (let back = 6; back >= 0; back--) {
-                const key = dayKey(back);
-                const made = toCount(appState.history[key] && appState.history[key].bricksMade);
-                days.push({ key, made, letter: letters[new Date(key + 'T00:00:00').getDay()], today: back === 0 });
-            }
-            const max = Math.max(1, ...days.map(d => d.made));
-            const total = days.reduce((sum, d) => sum + d.made, 0);
-            if (totalEl) totalEl.textContent = `${total} total`;
-            chart.innerHTML = days.map(d => `
-                <div class="${d.today ? 'today' : ''}" title="${d.key}: ${d.made} bricks">
-                    <span style="height:${Math.max(3, (d.made / max) * 100)}px"></span>${d.letter}
-                </div>`).join('');
+            const outs = dailyOut(14);
+            const days = outs.map((o, i) => {
+                const made = toCount(appState.history[o.key] && appState.history[o.key].bricksMade);
+                const date = new Date(o.key + 'T00:00:00');
+                return { key: o.key, made, out: o.n, date, letter: letters[date.getDay()], today: i === outs.length - 1 };
+            });
+            const totalIn = days.reduce((sum, d) => sum + d.made, 0);
+            const totalOut = days.reduce((sum, d) => sum + d.out, 0);
+            document.getElementById('dx-io-legend').innerHTML =
+                `<span><i style="background:var(--viz-made)"></i>Pressed <b>${totalIn}</b></span><span><i style="background:var(--viz-out)"></i>Out <b>${totalOut}</b></span>`;
+            const max = niceMax(Math.max(1, ...days.map(d => Math.max(d.made, d.out))));
+            const grid = [0, 0.25, 0.5, 0.75, 1].map(f => `<div style="bottom:${f * 100}%"><span>${Math.round(max * f)}</span></div>`).join('');
+            const h = v => v ? `${Math.max(2, v / max * 100).toFixed(1)}%` : '0';
+            const fmtDay = d => d.date.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+            chart.innerHTML = `<div class="grid">${grid}</div>` + days.map(d => {
+                const tip = `<b>${escapeHtml(fmtDay(d))}${d.today ? ' (today)' : ''}</b><br><i style="background:var(--viz-made)"></i>Pressed <b>${d.made}</b><br><i style="background:var(--viz-out)"></i>Out <b>${d.out}</b><br>Net <b>${d.made - d.out > 0 ? '+' : ''}${d.made - d.out}</b>`;
+                return `<div class="day ${d.today ? 'today' : ''}" data-tip="${escapeHtml(tip)}"><i class="in" style="height:${h(d.made)}"></i><i class="out" style="height:${h(d.out)}"></i><span class="x">${d.letter}</span></div>`;
+            }).join('');
+            let table = panel.querySelector('.dx-viz-table');
+            if (!table) { table = document.createElement('table'); table.className = 'dx-viz-table'; panel.appendChild(table); }
+            table.innerHTML = `<thead><tr><th>Day</th><th class="r">Pressed</th><th class="r">Out</th><th class="r">Net</th></tr></thead><tbody>${days.slice().reverse().map(d =>
+                `<tr><td>${escapeHtml(fmtDay(d))}</td><td class="r">${d.made}</td><td class="r">${d.out}</td><td class="r">${d.made - d.out}</td></tr>`).join('')}</tbody>`;
         }
+
+        // On hand + potential bricks per strain (the locations this person can see)
+        function renderStrainStockChart() {
+            const box = document.getElementById('dx-strain-chart');
+            if (!box) return;
+            const panel = box.closest('.dx-panel');
+            const rows = DEFAULT_STRAINS.map(st => {
+                const inv = appState.inventory[st.id];
+                return { st, onHand: inv.bricks, potential: Math.floor(inv.trimmed / BRICK_SIZE), trimmed: inv.trimmed, untrimmed: inv.untrimmed };
+            }).sort((a, b) => (b.onHand + b.potential) - (a.onHand + a.potential) || a.st.name.localeCompare(b.st.name));
+            const max = Math.max(1, ...rows.map(r => r.onHand + r.potential));
+            box.innerHTML = rows.map(r => {
+                const total = r.onHand + r.potential;
+                const tip = `<b>${escapeHtml(r.st.name)}</b><br><i style="background:var(--viz-onhand)"></i>On hand <b>${r.onHand}</b><br><i style="background:var(--viz-made)"></i>Potential <b>${r.potential}</b><br>Trimmed <b>${r.trimmed.toLocaleString()}</b> · Untrimmed <b>${r.untrimmed.toLocaleString()}</b>`;
+                const seg = (cls, v) => v ? `<i class="${cls}" style="width:calc(${(v / max * 100).toFixed(2)}% * 0.82)"></i>` : '';
+                return `<div class="row" data-tip="${escapeHtml(tip)}">
+                    <div class="nm"><span class="lg">${getStrainLogo(r.st.id)}</span><span>${escapeHtml(r.st.name)}</span></div>
+                    <div class="bar">${seg('oh', r.onHand)}${seg('pt', r.potential)}<em class="${total ? '' : 'zero'}">${total ? `${r.onHand} + ${r.potential}` : '0'}</em></div>
+                </div>`;
+            }).join('');
+            let table = panel.querySelector('.dx-viz-table');
+            if (!table) { table = document.createElement('table'); table.className = 'dx-viz-table'; panel.appendChild(table); }
+            table.innerHTML = `<thead><tr><th>Strain</th><th class="r">On hand</th><th class="r">Potential</th><th class="r">Trimmed</th></tr></thead><tbody>${rows.map(r =>
+                `<tr><td>${escapeHtml(r.st.name)}</td><td class="r">${r.onHand}</td><td class="r">${r.potential}</td><td class="r">${r.trimmed.toLocaleString()}</td></tr>`).join('')}</tbody>`;
+        }
+
+        function toggleChartTable(btn) {
+            const panel = btn.closest('.dx-panel');
+            const on = panel.classList.toggle('show-table');
+            btn.classList.toggle('on', on);
+            btn.textContent = on ? 'Chart' : 'Table';
+        }
+
+        // Chart hover tooltips (anything with data-tip; tap on touch screens)
+        (function initChartTips() {
+            const tip = () => document.getElementById('dx-tip');
+            const place = (event, el) => {
+                const t = tip();
+                if (!t) return;
+                t.innerHTML = el.dataset.tip;
+                t.classList.remove('hidden');
+                const x = Math.min(window.innerWidth - t.offsetWidth - 8, event.clientX + 14);
+                const y = event.clientY - t.offsetHeight - 12 < 8 ? event.clientY + 16 : event.clientY - t.offsetHeight - 12;
+                t.style.left = `${Math.max(8, x)}px`;
+                t.style.top = `${y}px`;
+            };
+            document.addEventListener('mousemove', event => {
+                const el = event.target.closest && event.target.closest('[data-tip]');
+                if (el) place(event, el);
+                else if (tip()) tip().classList.add('hidden');
+            });
+            document.addEventListener('click', event => {
+                const el = event.target.closest && event.target.closest('[data-tip]');
+                if (el) place(event, el);
+            });
+            window.addEventListener('scroll', () => { if (tip()) tip().classList.add('hidden'); }, { passive: true });
+        })();
 
         function selectInvBucket(key) {
             appState.selectedInvBucket = key;
@@ -3530,6 +3870,7 @@
                     : `<p class="text-xs text-slate-400"><i class="fa-solid ${view === STASH_KEY ? 'fa-warehouse' : 'fa-location-dot'} text-weed-500 mr-1"></i>Editing <b class="text-white">${escapeHtml(current ? current.label : '')}</b>${current && current.alias ? ` · ${escapeHtml(current.alias)}` : ''}. The − / + and Trim buttons use the step amount (${step.toLocaleString()}).</p>`;
 
             grid.innerHTML = (isAll ? renderInvAllCards(buckets) : renderInvBucketCards(view, bucket, step)).join('');
+            renderSalesPanel();
             if (!isAll && !can('inventory')) {
                 grid.querySelectorAll('button, input').forEach(el => { el.disabled = true; });
                 document.getElementById('inv-note').innerHTML += `<p class="text-xs text-amber-300 mt-1"><i class="fa-solid fa-eye mr-1"></i>View only: you don't have permission to change inventory.</p>`;
@@ -3621,6 +3962,7 @@
                                 <div class="btns">
                                     <button class="dx-step" onclick="adjustQuantity(${s}, 'bricks', -1, ${k})" ${c.bricks === 0 ? 'disabled' : ''} title="−1 brick">−</button>
                                     <button class="dx-step" onclick="adjustQuantity(${s}, 'bricks', 1, ${k})" title="+1 brick">+</button>
+                                    <button class="dx-step dx-out" onclick="openSale(${k}, ${s})" ${c.bricks === 0 ? 'disabled' : ''} title="Bricks going out (sold / delivered)"><i class="fa-solid fa-truck-fast"></i></button>
                                 </div>
                             </div>
                             <div class="cell green">
@@ -3668,6 +4010,7 @@
             if (applied === 0) return;
             if (field === 'bricks') recordBricksMade(applied);
             logActivity({ kind: 'buds', loc: bucket });
+            offerUndo({ key: `q|${bucket}|${strainId}|${field}`, bucket, kind: 'buds', deltas: [{ bucket, strainId, field, delta: applied }], bricksMade: field === 'bricks' ? applied : 0 });
         }
 
         function updateQuantityFromInput(strainId, field, inputEl, bucket = activeInvBucket()) {
@@ -3678,6 +4021,7 @@
             if (value === current) return;
             if (field === 'bricks') recordBricksMade(value - current);
             logActivity({ kind: 'buds', loc: bucket });
+            offerUndo({ key: `q|${bucket}|${strainId}|${field}`, bucket, kind: 'buds', deltas: [{ bucket, strainId, field, delta: value - current }], bricksMade: field === 'bricks' ? value - current : 0 });
         }
 
         function adjustCoca(delta, bucket = activeInvBucket()) {
@@ -3686,14 +4030,17 @@
             adjustShared(`stock/${bucket}/coca`, delta);
             if (applied === 0) return;
             logActivity({ kind: 'coca', loc: bucket });
+            offerUndo({ key: `q|${bucket}|coca`, bucket, kind: 'coca', deltas: [{ bucket, strainId: 'coca', field: 'coca', delta: applied }] });
         }
 
         function updateCocaFromInput(inputEl, bucket = activeInvBucket()) {
             if (!allowed('inventory', bucket)) return renderInventory();
             const value = toCount(parseInt(inputEl.value, 10));
-            if (value === (appState.stock[bucket] ? appState.stock[bucket].coca : 0)) return;
+            const current = appState.stock[bucket] ? appState.stock[bucket].coca : 0;
+            if (value === current) return;
             writeShared({ [`stock/${bucket}/coca`]: value });
             logActivity({ kind: 'coca', loc: bucket });
+            offerUndo({ key: `q|${bucket}|coca`, bucket, kind: 'coca', deltas: [{ bucket, strainId: 'coca', field: 'coca', delta: value - current }] });
         }
 
         // Move up to `step` untrimmed bud into trimmed (1:1)
@@ -3710,6 +4057,9 @@
             }).then(result => {
                 if (!result) return showAlert(`No untrimmed ${strainName(strainId)} to trim here.`, 'warning');
                 logActivity({ kind: 'buds', loc: bucket });
+                offerUndo({ key: `trim|${bucket}|${strainId}`, bucket, kind: 'buds',
+                    deltas: [{ bucket, strainId, field: 'untrimmed', delta: -result.amount }, { bucket, strainId, field: 'trimmed', delta: result.amount }],
+                    text: e => `Trimmed ${Math.abs((e.deltas.find(d => d.field === 'trimmed') || { delta: 0 }).delta).toLocaleString()} ${strainName(strainId)}` });
             });
         }
 
@@ -3727,13 +4077,143 @@
                 if (!result) return showAlert(`Not enough trimmed ${strainName(strainId)} here (${BRICK_SIZE} per brick).`, 'warning');
                 recordBricksMade(result.bricks);
                 logActivity({ kind: 'buds', loc: bucket });
-                showAlert(`Pressed ${result.bricks} ${strainName(strainId)} ${result.bricks === 1 ? 'brick' : 'bricks'}.`, 'success');
+                offerUndo({ key: `press|${bucket}|${strainId}`, bucket, kind: 'buds', bricksMade: result.bricks,
+                    deltas: [{ bucket, strainId, field: 'trimmed', delta: -result.bricks * BRICK_SIZE }, { bucket, strainId, field: 'bricks', delta: result.bricks }],
+                    text: e => { const n = (e.deltas.find(d => d.field === 'bricks') || { delta: 0 }).delta; return `Pressed ${n} ${strainName(strainId)} ${n === 1 ? 'brick' : 'bricks'}`; } });
             });
         }
 
-        // ---- Transfers between locations ----
-        const TRANSFER_FIELDS = { untrimmed: 'Untrimmed bud', trimmed: 'Trimmed bud', bricks: 'Bricks' };
+        // ---- Bricks going out (sales log) ----
+        const SALES_KEEP = 500;
 
+        function openSale(bucket, strainId) {
+            if (!allowed('inventory', bucket || undefined)) return;
+            const strainSel = document.getElementById('sale-strain');
+            strainSel.innerHTML = DEFAULT_STRAINS.map(st => `<option value="${st.id}">${escapeHtml(st.name)}</option>`).join('');
+            const fromSel = document.getElementById('sale-from');
+            fromSel.innerHTML = inventoryBuckets().filter(b => !b.orphan || (appState.stock[b.key] && bucketTotals(appState.stock[b.key]).bricks))
+                .map(b => `<option value="${escapeHtml(b.key)}">${escapeHtml(b.label)}${b.alias ? ' · ' + escapeHtml(b.alias) : ''}</option>`).join('');
+            fromSel.value = bucket || activeInvBucket();
+            if (strainId) strainSel.value = strainId;
+            else { // the strain with the most bricks in that location
+                const b = appState.stock[fromSel.value];
+                const best = b ? DEFAULT_STRAINS.slice().sort((x, y) => b[y.id].bricks - b[x.id].bricks)[0] : null;
+                if (best) strainSel.value = best.id;
+            }
+            ['sale-price', 'sale-note'].forEach(id => { document.getElementById(id).value = ''; });
+            document.getElementById('sale-error').classList.add('hidden');
+            updateSaleAvailable(true);
+            document.getElementById('sale-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('sale-amount').select(), 50);
+        }
+
+        function updateSaleAvailable(reset) {
+            const bucket = document.getElementById('sale-from').value;
+            const strainId = document.getElementById('sale-strain').value;
+            const have = appState.stock[bucket] && appState.stock[bucket][strainId] ? appState.stock[bucket][strainId].bricks : 0;
+            document.getElementById('sale-available').textContent = `(${have.toLocaleString()} on hand)`;
+            const amount = document.getElementById('sale-amount');
+            if (reset !== false) amount.value = have ? 1 : 0;
+        }
+
+        function closeSale() {
+            document.getElementById('sale-modal').classList.add('hidden');
+        }
+
+        function saveSale(event) {
+            event.preventDefault();
+            const bucket = document.getElementById('sale-from').value;
+            const strainId = document.getElementById('sale-strain').value;
+            const bricks = toCount(document.getElementById('sale-amount').value);
+            const priceRaw = document.getElementById('sale-price').value.trim();
+            const note = document.getElementById('sale-note').value.trim().replace(/\s+/g, ' ').slice(0, 60);
+            const error = document.getElementById('sale-error');
+            const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
+            if (!allowed('inventory', bucket)) return;
+            if (bricks < 1) return showError('Enter at least 1 brick.');
+            mutateStock(stock => {
+                const cell = stockCell(stock, bucket, strainId);
+                if (cell.bricks < bricks) return false;
+                cell.bricks -= bricks;
+                return { bricks };
+            }).then(result => {
+                if (!result) return showError(`Not enough ${strainName(strainId)} bricks there. Someone may have just changed it.`);
+                closeSale();
+                const id = newActivityId();
+                const record = { strain: strainId, bricks, bucket, who: appState.crewName || 'Someone', ts: timestampValue(), note };
+                if (priceRaw !== '') record.price = toCount(priceRaw);
+                const changes = { [`sales/${id}`]: record };
+                appState.sales.slice(SALES_KEEP - 1).forEach(old => { changes[`sales/${old.id}`] = null; }); // keep the log a sensible size
+                writeShared(changes);
+                logActivity({ kind: 'sale', loc: bucket });
+                offerUndo({ bucket, kind: 'sale', restore: { [`sales/${id}`]: null },
+                    deltas: [{ bucket, strainId, field: 'bricks', delta: -bricks }],
+                    text: `Logged ${bricks} ${strainName(strainId)} ${bricks === 1 ? 'brick' : 'bricks'} going out${record.price !== undefined ? ` for $${record.price.toLocaleString()}` : ''}.` });
+            });
+        }
+
+        // Admins can take a log entry back out (the bricks return to where they came from)
+        function removeSale(id) {
+            if (!allowed('admin')) return;
+            const sale = appState.sales.find(x => x.id === id);
+            if (!sale) return;
+            if (!confirm(`Remove this entry and put ${sale.bricks} ${strainName(sale.strain)} ${sale.bricks === 1 ? 'brick' : 'bricks'} back in ${bucketLabel(sale.bucket)}?`)) return;
+            mutateStock(stock => { stockCell(stock, sale.bucket, sale.strain).bricks += sale.bricks; return { ok: true }; });
+            writeShared({ [`sales/${id}`]: null });
+            logActivity({ kind: 'sale', loc: sale.bucket });
+            showAlert('Entry removed and bricks returned.', 'info');
+        }
+
+        function visibleSales() {
+            return appState.sales.filter(x => canSeeBucket(x.bucket));
+        }
+
+        function salesSince(ms) {
+            const from = syncNow() - ms;
+            const list = visibleSales().filter(x => x.ts >= from);
+            return { bricks: list.reduce((sum, x) => sum + x.bricks, 0), cash: list.reduce((sum, x) => sum + (x.price || 0), 0), priced: list.some(x => x.price !== null), list };
+        }
+
+        function startOfToday() {
+            const d = new Date(syncNow());
+            d.setHours(0, 0, 0, 0);
+            return d.getTime();
+        }
+
+        function renderSalesPanel() {
+            const box = document.getElementById('inv-sales');
+            if (!box) return;
+            const today = salesSince(syncNow() - startOfToday());
+            const week = salesSince(7 * 86400e3);
+            const month = salesSince(30 * 86400e3);
+            const stat = (label, x) => `<div><div class="l">${label}</div><div class="v">${x.bricks.toLocaleString()}</div><div class="s">${x.priced ? `$${x.cash.toLocaleString()}` : '&nbsp;'}</div></div>`;
+            const byStrain = {};
+            week.list.forEach(x => { byStrain[x.strain] = (byStrain[x.strain] || 0) + x.bricks; });
+            const strains = Object.entries(byStrain).sort((a, b) => b[1] - a[1]).map(([id, n]) => {
+                const st = DEFAULT_STRAINS.find(x => x.id === id);
+                return `<span class="p" style="--t:${st.tint}">${escapeHtml(st.name)} ${n}</span>`;
+            }).join('');
+            const recent = visibleSales().slice(0, 15).map(x => `
+                <li>
+                    <span class="n">−${x.bricks}</span>
+                    <div class="min-w-0">
+                        <div><b class="text-white">${escapeHtml(strainName(x.strain))}</b> <span class="meta">from ${escapeHtml(bucketLabel(x.bucket))}</span></div>
+                        <div class="meta">${nameHtml(x.who)} · ${relativeTime(x.ts)}${x.note ? ` · ${escapeHtml(x.note)}` : ''}</div>
+                    </div>
+                    <span class="price">${x.price !== null ? `$${x.price.toLocaleString()}` : ''}</span>
+                    ${hasAdminAccess() ? `<button class="text-slate-500 hover:text-red-300 text-xs" onclick="removeSale(${jsArg(x.id)})" title="Remove entry and return the bricks"><i class="fa-solid fa-rotate-left"></i></button>` : ''}
+                </li>`).join('');
+            box.innerHTML = `
+                <div class="dx-glass dx-sales">
+                    <div class="dx-sec"><h2><i class="fa-solid fa-truck-fast text-amber-400 mr-1"></i>Bricks Out</h2>
+                        ${can('inventory') ? '<button onclick="openSale()" class="dx-act" style="flex:none;padding:6px 12px">+ Log bricks out</button>' : ''}</div>
+                    <div class="dx-sales-stats">${stat('Today', today)}${stat('Last 7 days', week)}${stat('Last 30 days', month)}</div>
+                    ${strains ? `<div class="text-[10px] uppercase tracking-wider font-bold dx-muted mb-1">This week by strain</div><div class="dx-sales-strains">${strains}</div>` : ''}
+                    ${recent ? `<ul class="dx-sales-list">${recent}</ul>` : '<p class="text-xs dx-muted">Nothing logged yet. Use the <i class="fa-solid fa-truck-fast text-amber-400"></i> button on a strain to log bricks going out.</p>'}
+                </div>`;
+        }
+
+        // ---- Transfers between locations ----
         function transferAvailable(bucket, strainId, field) {
             const b = appState.stock[bucket];
             if (!b) return 0;
@@ -3807,7 +4287,9 @@
                 const what = strainId === 'coca' ? `${amount.toLocaleString()} coca leaves`
                     : `${amount.toLocaleString()} ${field === 'bricks' ? (amount === 1 ? 'brick' : 'bricks') : field} ${strainName(strainId)}`;
                 logActivity({ kind: 'move', loc: from, loc2: to });
-                showAlert(`Moved ${what} to ${bucketLabel(to)}.`, 'success');
+                const cellField = strainId === 'coca' ? 'coca' : field;
+                offerUndo({ bucket: from, kind: 'move', loc: from, loc2: to, text: `Moved ${what} to ${bucketLabel(to)}.`,
+                    deltas: [{ bucket: from, strainId, field: cellField, delta: -amount }, { bucket: to, strainId, field: cellField, delta: amount }] });
             });
         }
 
@@ -3820,7 +4302,8 @@
             const loc = appState.locations.find(l => l.id === locId);
             if (!loc) return;
             document.getElementById('harvest-loc').value = locId;
-            document.getElementById('harvest-title').textContent = `Harvest Postal ${locId}`;
+            const position = harvestQueueTotal > 1 ? ` (${harvestQueueTotal - harvestQueue.length} of ${harvestQueueTotal})` : '';
+            document.getElementById('harvest-title').textContent = `Harvest Postal ${locId}${position}`;
             const planned = DEFAULT_STRAINS.map(strain => ({ strain, pots: toCount((loc.strainPots || {})[strain.id]) }));
             planned.sort((a, b) => (b.pots > 0) - (a.pots > 0)); // planned strains first
             document.getElementById('harvest-rows').innerHTML = planned.map(({ strain, pots }) => `
@@ -3851,8 +4334,10 @@
             document.getElementById('harvest-total').textContent = `${total.toLocaleString()} untrimmed total`;
         }
 
-        function closeHarvestModal() {
+        // Cancel: also drops any other harvests queued from "Harvest all ready"
+        function closeHarvestModal(keepQueue) {
             document.getElementById('harvest-modal').classList.add('hidden');
+            if (!keepQueue) { harvestQueue = []; harvestQueueTotal = 0; }
         }
 
         function saveHarvest(event, skipStock) {
@@ -3862,10 +4347,12 @@
             const prefilled = {};
             document.querySelectorAll('#harvest-rows [data-harvest-strain]').forEach(input => { prefilled[input.dataset.harvestStrain] = toCount(input.dataset.prefill); });
             const loc = appState.locations.find(l => l.id === locId);
-            closeHarvestModal();
+            closeHarvestModal(true);
             // Learn real yields from the numbers people typed in (before the restart changes anything)
-            if (loc && !skipStock && can('timers')) recordHarvestYields(loc, amounts, prefilled);
-            harvestAndRestart(locId, amounts);
+            const learned = loc && !skipStock && can('timers') ? recordHarvestYields(loc, amounts, prefilled) : [];
+            harvestAndRestart(locId, amounts, learned);
+            if (harvestQueue.length) openNextQueuedHarvest();
+            else harvestQueueTotal = 0;
         }
 
         // ---- Yields learned from real harvests ----
@@ -3903,6 +4390,7 @@
                     .forEach(([id]) => { changes[`yields/${strainId}/${id}`] = null; });
             });
             if (Object.keys(changes).length) writeShared(changes);
+            return Object.keys(changes).filter(path => changes[path] !== null); // new samples (so a harvest can be undone)
         }
 
         function resetLearnedYields() {
@@ -4125,12 +4613,23 @@
             if (loc) updateLocationTotalPots(locId, Math.max(1, (toCount(loc.pots) || 10) + delta));
         }
 
+        function planRestore(locId) {
+            const loc = appState.locations.find(l => l.id === locId);
+            return { [locPath(locId, 'strainPots')]: JSON.parse(JSON.stringify((loc && loc.strainPots) || {})) };
+        }
+
+        function offerPlanUndo(locId, restore, text) {
+            offerUndo({ key: `plan|${locId}`, perm: 'planner', bucket: locKey(locId), kind: 'plan', restore, text });
+        }
+
         function updateLocationStrainPots(locId, strainId, pots) {
             if (!allowed('planner', locKey(locId))) return renderGrowPlanner();
             if (!appState.locations.some(l => l.id === locId)) return;
             const count = toCount(parseInt(pots, 10));
+            const restore = planRestore(locId);
             writeShared({ [locPath(locId, `strainPots/${strainId}`)]: count });
             logActivity({ kind: 'plan', loc: locKey(locId) });
+            offerPlanUndo(locId, restore, `Plan for Postal ${locId} changed`);
         }
 
         function stepStrainPots(locId, strainId, delta) {
@@ -4149,7 +4648,8 @@
 
         function clearLocationPlan(locId) {
             if (!allowed('planner', locKey(locId))) return;
-            if (!confirm(`Set every strain at Postal ${locId} to 0 pots?`)) return;
+            const restore = planRestore(locId);
+            offerPlanUndo(locId, restore, `Cleared the plan for Postal ${locId}`);
             writeShared({ [locPath(locId, 'strainPots')]: Object.fromEntries(DEFAULT_STRAINS.map(s => [s.id, 0])) });
             logActivity({ kind: 'plan', loc: locKey(locId) });
         }
@@ -4167,9 +4667,10 @@
                     strainPots[strain.id] = base + (idx < rem ? 1 : 0);
                 });
 
+                const restore = planRestore(locId);
                 writeShared({ [locPath(locId, 'strainPots')]: strainPots });
                 logActivity({ kind: 'plan', loc: locKey(locId) });
-                showAlert(`Split ${totalPots} pots evenly across 10 strains for Postal ${locId}`, 'success');
+                offerPlanUndo(locId, restore, `Split ${totalPots} pots evenly across 10 strains for Postal ${locId}`);
             }
         }
 
@@ -4203,81 +4704,226 @@
             if (!loc) return;
             const totalPots = Math.max(1, toCount(loc.pots) || 10);
             const plan = smartBalancePlan(locId, totalPots);
+            const restore = planRestore(locId);
             writeShared({ [locPath(locId, 'strainPots')]: plan });
             logActivity({ kind: 'plan', loc: locKey(locId) });
             const top = Object.entries(plan).filter(([, n]) => n > 0).sort((x, y) => y[1] - x[1]).slice(0, 3).map(([id, n]) => `${strainName(id)} ${n}`);
-            showAlert(`Smart balance for Postal ${locId}: most pots to the strains you're lowest on (${top.join(', ')}).`, 'success');
+            offerPlanUndo(locId, restore, `Smart balance for Postal ${locId}: most pots to the strains you're lowest on (${top.join(', ')}).`);
+        }
+
+        // ---- Grow Timers page ----
+        const timerSelection = new Set();
+        let timersPageSignature = '';
+
+        function planPills(loc) {
+            const pills = DEFAULT_STRAINS.filter(st => toCount((loc.strainPots || {})[st.id]) > 0)
+                .map(st => `<span class="p" style="--t:${st.tint}">${escapeHtml(st.name)} ${toCount(loc.strainPots[st.id])}</span>`);
+            return pills.length ? pills.join('') : '<span class="text-[11px] dx-muted">No pot plan yet</span>';
         }
 
         function renderTimersPage() {
             const grid = document.getElementById('timers-grid');
             if (!grid) return;
             const canTime = can('timers');
-            document.querySelectorAll('[onclick="startAllTimers()"], [onclick="resetAllTimersPrompt()"]').forEach(btn => btn.classList.toggle('hidden', !canTime));
             const locations = visibleLocations();
+            const states = locations.map(loc => [loc, timerState(loc)]);
+            locations.length || timerSelection.clear();
+            [...timerSelection].forEach(id => { if (!locations.some(l => l.id === id)) timerSelection.delete(id); });
+            timersPageSignature = states.map(([loc, st]) => `${loc.id}:${st.status}:${loc.startTime}:${growStage(st).key}`).join('|') + `|${canTime}|${[...timerSelection].join(',')}`;
+
+            const idle = states.filter(([, st]) => st.status === 'idle').length;
+            const ready = states.filter(([, st]) => st.status === 'ready').length;
+            const active = states.length - idle;
+            document.getElementById('timers-actions').innerHTML = canTime && locations.length ? `
+                <button class="dx-act solid" onclick="startAllTimers()" ${idle ? '' : 'disabled'}><i class="fa-solid fa-play mr-1"></i>Start all idle${idle ? ` (${idle})` : ''}</button>
+                <button class="dx-act" onclick="harvestLocations(readyLocationIds())" ${ready ? '' : 'disabled'}><i class="fa-solid fa-seedling mr-1"></i>Harvest all ready${ready ? ` (${ready})` : ''}</button>
+                <button class="dx-act" onclick="resetAllTimersPrompt()" ${active ? '' : 'disabled'}><i class="fa-solid fa-stop mr-1"></i>Stop all</button>` : '';
+            renderUpcomingHarvests();
+
             if (locations.length === 0) {
-                grid.innerHTML = `<div class="dx-glass p-8 text-center text-slate-400 text-sm" style="grid-column:1/-1">${appState.locations.length ? 'No grow locations assigned to you.' : 'No grow locations yet. Add one in Admin to start a timer.'}</div>`;
+                grid.innerHTML = `<div class="dx-glass p-8 text-center text-slate-400 text-sm" style="grid-column:1/-1">${appState.locations.length ? 'No grow locations assigned to you.' : 'No grow locations yet. Add one in Admin.'}</div>`;
+                renderTimerBulkBar();
                 return;
             }
 
-            grid.innerHTML = locations.map(loc => {
-                const elapsedSecs = loc.startTime ? Math.max(0, Math.floor((syncNow() - loc.startTime) / 1000)) : 0;
-                const totalSecs = durationSecs(loc);
-                const remainingSecs = Math.max(0, totalSecs - elapsedSecs);
-                const pct = loc.startTime ? Math.min(100, (elapsedSecs / totalSecs) * 100) : 0;
-
-                let displayClock = formatTime(Math.round(totalSecs));
-                let isReady = false;
-
-                if (loc.startTime) {
-                    if (remainingSecs === 0) {
-                        displayClock = 'HARVEST READY!';
-                        isReady = true;
-                    } else {
-                        displayClock = formatTime(remainingSecs);
-                    }
-                }
-
+            grid.innerHTML = states.map(([loc, st]) => {
+                const id = jsArg(loc.id);
+                const isReady = st.status === 'ready', isIdle = st.status === 'idle';
+                const stage = growStage(st);
+                const picked = timerSelection.has(loc.id);
+                const chip = isReady ? '<span class="dx-status rdy">READY</span>' : isIdle ? '<span class="dx-status idle">IDLE</span>' : '<span class="dx-status run">RUNNING</span>';
+                const clock = isReady ? `<div class="t">READY</div><div class="s">Harvest now</div>`
+                    : isIdle ? `<div class="t">${formatTime(Math.round(st.totalSecs))}</div><div class="s">${formatDuration(loc.durationHours)} cycle · not started</div>`
+                    : `<div class="t tc-t">${formatTime(st.remainingSecs)}</div><div class="s tc-s">${Math.floor(st.pct)}% grown</div>`;
+                const est = planEstimate(loc).bricks;
+                const acts = !canTime ? '' : isReady
+                    ? `<button class="dx-btn dx-btn-g" onclick="openHarvestModal(${id})"><i class="fa-solid fa-seedling mr-1"></i>Harvest &amp; Restart</button>
+                       <button class="dx-btn dx-stop" onclick="stopTimer(${id})" title="Stop without harvesting"><i class="fa-solid fa-stop"></i></button>`
+                    : isIdle
+                        ? `<button class="dx-btn dx-btn-o" onclick="startTimer(${id})"><i class="fa-solid fa-play mr-1"></i>Start ${formatDuration(loc.durationHours)} cycle</button>`
+                        : `<button class="dx-btn dx-btn-o" onclick="restartTimer(${id})" title="Start the cycle over from now"><i class="fa-solid fa-rotate-right mr-1"></i>Restart</button>
+                           <button class="dx-btn dx-stop" onclick="stopTimer(${id})"><i class="fa-solid fa-stop mr-1"></i>Stop</button>`;
                 return `
-                    <div class="glass-card rounded-2xl p-6 border-weed-900/60 bg-gradient-to-b from-darkcard to-weed-950/30 flex flex-col justify-between space-y-6">
-                        
-                        <div class="flex items-center justify-between border-b border-weed-900/50 pb-3">
-                            <div>
-                                <h2 class="text-2xl font-black text-white font-mono tracking-wider">${escapeHtml(loc.id)}</h2>
-                                <p class="text-xs text-slate-400">${escapeHtml(loc.alias || 'Grow Operation')}</p>
-                            </div>
-                            <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-full ${isReady ? 'bg-weed-950 text-weed-400 border border-weed-500 animate-pulse' : 'bg-darkbg text-slate-400 border border-weed-900'}">
-                                ${isReady ? 'READY' : (loc.startTime ? 'RUNNING' : 'IDLE')}
-                            </span>
+                    <div class="dx-glass dx-tc ${st.status} ${picked ? 'picked' : ''}" data-tc-loc="${escapeHtml(loc.id)}">
+                        <div class="top">
+                            <div class="min-w-0"><h2>${escapeHtml(loc.id)}</h2><div class="alias">${escapeHtml(loc.alias || 'Grow Operation')}</div></div>
+                            <div class="sel">${chip}${canTime ? `<input type="checkbox" ${picked ? 'checked' : ''} onchange="toggleTimerSelect(${id}, this.checked)" title="Select for bulk actions" aria-label="Select ${escapeHtml(loc.id)}">` : ''}</div>
                         </div>
-
-                        <!-- Timer Countdown Display -->
-                        <div class="text-center py-4 bg-darkbg/90 rounded-2xl border border-weed-900">
-                            <div class="text-2xl sm:text-3xl font-black font-mono ${isReady ? 'text-weed-400 neon-text-green animate-bounce' : 'text-slate-100'}">
-                                ${displayClock}
-                            </div>
-                            <div class="w-full bg-weed-950 rounded-full h-2 border border-weed-900 overflow-hidden max-w-xs mx-auto mt-3">
-                                <div class="bg-gradient-to-r from-weed-600 to-weed-400 h-full transition-all duration-500" style="width: ${pct}%"></div>
-                            </div>
-                        </div>
-
-                        <!-- Action Buttons: Start/Restart & Stop -->
-                        <div class="space-y-2 ${canTime ? '' : 'hidden'}">
-                            <div class="grid grid-cols-2 gap-2">
-                                <button onclick="startTimer(${jsArg(loc.id)})" class="py-2.5 px-3 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center space-x-1">
-                                    <i class="fa-solid fa-play text-[10px]"></i>
-                                    <span>${loc.startTime ? 'Restart' : 'Start'}</span>
-                                </button>
-                                <button onclick="stopTimer(${jsArg(loc.id)})" class="py-2.5 px-3 rounded-xl bg-red-950/60 hover:bg-red-900 border border-red-800 text-red-200 font-bold text-xs transition-all flex items-center justify-center space-x-1">
-                                    <i class="fa-solid fa-stop text-[10px]"></i>
-                                    <span>Stop</span>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                `;
+                        <div class="mid"><div class="bigpot"><i class="fa-solid ${stage.icon}" style="--grow:${stage.scale.toFixed(2)}"></i></div><div class="clock">${clock}</div></div>
+                        ${isIdle || isReady ? '' : `<div class="track"><div class="fill" style="width:${st.pct.toFixed(2)}%"></div></div>`}
+                        <div class="eta"><span>${isReady ? 'Ready to harvest' : isIdle ? 'Not running' : escapeHtml(readyAtLabel(loc))}</span><span>${est ? `~${fmtBricks(est)} bricks` : ''}</span></div>
+                        <div class="plan">${planPills(loc)}</div>
+                        ${acts ? `<div class="acts">${acts}</div>` : ''}
+                    </div>`;
             }).join('');
+            renderTimerBulkBar();
+        }
+
+        // Every second: tick the countdowns in place; re-render only when something changes state
+        function tickTimersPage() {
+            const locations = visibleLocations();
+            const signature = locations.map(loc => { const st = timerState(loc); return `${loc.id}:${st.status}:${loc.startTime}:${growStage(st).key}`; }).join('|') + `|${can('timers')}|${[...timerSelection].join(',')}`;
+            if (signature !== timersPageSignature) return renderTimersPage();
+            document.querySelectorAll('#timers-grid [data-tc-loc]').forEach(card => {
+                const loc = appState.locations.find(l => l.id === card.dataset.tcLoc);
+                if (!loc) return;
+                const st = timerState(loc);
+                if (st.status !== 'running') return;
+                const t = card.querySelector('.tc-t'), sub = card.querySelector('.tc-s'), fill = card.querySelector('.fill'), plant = card.querySelector('.bigpot i');
+                if (t) t.textContent = formatTime(st.remainingSecs);
+                if (sub) sub.textContent = `${Math.floor(st.pct)}% grown`;
+                if (fill) fill.style.width = `${st.pct.toFixed(2)}%`;
+                if (plant) plant.style.setProperty('--grow', growStage(st).scale.toFixed(2));
+            });
+            if (new Date().getSeconds() === 0) renderUpcomingHarvests(); // markers creep along once a minute
+        }
+
+        function toggleTimerSelect(locId, on) {
+            if (on) timerSelection.add(locId); else timerSelection.delete(locId);
+            renderTimersPage();
+        }
+
+        function renderTimerBulkBar() {
+            const bar = document.getElementById('timers-bulk');
+            if (!bar) return;
+            const picked = visibleLocations().filter(l => timerSelection.has(l.id));
+            bar.classList.toggle('hidden', !picked.length || !can('timers'));
+            if (!picked.length) return (bar.innerHTML = '');
+            const status = picked.map(l => timerState(l).status);
+            const n = s => status.filter(x => x === s).length;
+            bar.innerHTML = `<b>${picked.length} selected</b>
+                <button class="dx-act solid" onclick="bulkTimers('start')" ${n('idle') ? '' : 'disabled'}><i class="fa-solid fa-play mr-1"></i>Start${n('idle') ? ` (${n('idle')})` : ''}</button>
+                <button class="dx-act" onclick="bulkTimers('harvest')" ${n('ready') ? '' : 'disabled'}><i class="fa-solid fa-seedling mr-1"></i>Harvest${n('ready') ? ` (${n('ready')})` : ''}</button>
+                <button class="dx-act" onclick="bulkTimers('stop')" ${n('idle') < picked.length ? '' : 'disabled'}><i class="fa-solid fa-stop mr-1"></i>Stop</button>
+                <button class="dx-act" onclick="selectAllTimers()">Select all</button>
+                <button class="dx-act" onclick="timerSelection.clear(); renderTimersPage()">Clear</button>`;
+        }
+
+        function selectAllTimers() {
+            visibleLocations().forEach(l => timerSelection.add(l.id));
+            renderTimersPage();
+        }
+
+        function bulkTimers(action) {
+            if (!allowed('timers')) return;
+            const picked = visibleLocations().filter(l => timerSelection.has(l.id) && canSeeLoc(l.id));
+            if (action === 'start') {
+                const idle = picked.filter(l => timerState(l).status === 'idle');
+                if (!idle.length) return;
+                const restore = timerRestore(idle);
+                writeShared(timerChanges(idle, true));
+                logActivity({ kind: 'timer' });
+                offerUndo({ perm: 'timers', kind: 'timer', restore, text: `Started ${idle.length} ${idle.length === 1 ? 'timer' : 'timers'}: ${idle.map(l => l.id).join(', ')}.` });
+            } else if (action === 'stop') {
+                const active = picked.filter(l => timerState(l).status !== 'idle');
+                if (!active.length || !confirm(`Stop ${active.length} ${active.length === 1 ? 'timer' : 'timers'} (${active.map(l => l.id).join(', ')})?`)) return;
+                const restore = timerRestore(active);
+                writeShared(timerChanges(active, false));
+                logActivity({ kind: 'timer' });
+                offerUndo({ perm: 'timers', kind: 'timer', restore, text: `Stopped ${active.map(l => l.id).join(', ')}.` });
+            } else if (action === 'harvest') {
+                harvestLocations(picked.filter(l => timerState(l).status === 'ready').map(l => l.id));
+            }
+            timerSelection.clear();
+            renderTimersPage();
+        }
+
+        function readyLocationIds() {
+            return visibleLocations().filter(l => timerState(l).status === 'ready').map(l => l.id);
+        }
+
+        // Harvest several locations: the harvest form opens for each one in turn
+        let harvestQueue = [];
+        let harvestQueueTotal = 0;
+
+        function harvestLocations(ids) {
+            if (!ids.length) return;
+            harvestQueue = ids.slice(1);
+            harvestQueueTotal = ids.length;
+            openHarvestModal(ids[0]);
+        }
+
+        function openNextQueuedHarvest() {
+            const next = harvestQueue.shift();
+            if (next) setTimeout(() => openHarvestModal(next), 250);
+        }
+
+        // ---- Upcoming harvests ----
+        function upcomingHarvests() {
+            return visibleLocations().map(loc => {
+                const st = timerState(loc);
+                if (st.status === 'idle') return null;
+                return { loc, status: st.status, readyAt: loc.startTime + durationSecs(loc) * 1000, bricks: planEstimate(loc).bricks };
+            }).filter(Boolean).sort((a, b) => a.readyAt - b.readyAt);
+        }
+
+        function nextDaySummary() {
+            const soon = upcomingHarvests().filter(h => h.readyAt - syncNow() <= 24 * 3600e3);
+            const bricks = soon.reduce((sum, h) => sum + h.bricks, 0);
+            return { count: soon.length, bricks };
+        }
+
+        function renderUpcomingHarvests() {
+            const box = document.getElementById('timers-upcoming');
+            const gbNext = document.getElementById('gb-next');
+            const next = nextDaySummary();
+            if (gbNext) gbNext.textContent = next.count ? `Next 24h ~${fmtBricks(next.bricks)} bricks` : '';
+            if (!box) return;
+            const items = upcomingHarvests();
+            const readyNow = items.filter(h => h.status === 'ready');
+            const coming = items.filter(h => h.status === 'running');
+            const head = `<div class="dx-sec"><h2>Upcoming Harvests</h2><span class="text-xs dx-muted">${next.count
+                ? `Next 24h: <b class="text-weed-400">~${fmtBricks(next.bricks)} bricks</b> from ${next.count} ${next.count === 1 ? 'grow' : 'grows'}`
+                : 'Nothing due in the next 24 hours'}</span></div>`;
+            const nowRow = readyNow.length ? `<div class="now-row"><span class="dx-muted font-semibold">Ready now:</span>${readyNow.map(h =>
+                `<span class="chip">${escapeHtml(h.loc.id)}${h.bricks ? ` · ~${fmtBricks(h.bricks)}` : ''}</span>`).join('')}</div>` : '';
+            if (!coming.length) {
+                box.innerHTML = head + nowRow + (readyNow.length ? '' : '<p class="text-xs dx-muted pb-2">No grows running. Start a timer to see when harvests are due.</p>');
+                return;
+            }
+            const now = syncNow();
+            const spanHours = Math.min(7 * 24, Math.max(36, Math.ceil((coming[coming.length - 1].readyAt - now) / 3600e3 / 6) * 6 + 2));
+            const span = spanHours * 3600e3;
+            const step = spanHours <= 48 ? 6 : spanHours <= 96 ? 12 : 24;
+            const ticks = [];
+            const first = new Date(now - Sync.serverOffset);
+            first.setMinutes(0, 0, 0);
+            first.setHours(Math.ceil((first.getHours() + 1) / step) * step);
+            for (let t = first.getTime(); t < now - Sync.serverOffset + span; t += step * 3600e3) {
+                const d = new Date(t);
+                const pos = (t + Sync.serverOffset - now) / span * 100;
+                if (pos < 4 || pos > 97) continue;
+                const midnight = d.getHours() === 0;
+                ticks.push(`<span class="tick ${midnight ? 'day' : ''}" style="left:${pos.toFixed(2)}%">${midnight ? d.toLocaleDateString([], { weekday: 'short' }) : d.toLocaleTimeString([], { hour: 'numeric' })}</span>`);
+            }
+            const markers = coming.map((h, i) => {
+                const pos = Math.max(1, Math.min(99, (h.readyAt - now) / span * 100));
+                const when = new Date(h.readyAt - Sync.serverOffset).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                return `<div class="mk" style="left:${pos.toFixed(2)}%" title="Postal ${escapeHtml(h.loc.id)} · ${escapeHtml(readyAtLabel(h.loc))}">
+                    <div class="lbl"><b>${escapeHtml(h.loc.id)}</b> ${h.bricks ? `<span>~${fmtBricks(h.bricks)}</span>` : ''}<br>${escapeHtml(when)}</div>
+                    <div class="stem" style="height:${i % 2 ? 6 : 34}px"></div><div class="dot"></div></div>`;
+            }).join('');
+            box.innerHTML = head + nowRow + `<div class="line"><div class="axis"></div><span class="nowmark" title="Now"></span>${ticks.join('')}${markers}</div>`;
         }
 
         // Changes that set (or clear) the timer on each of the given locations
@@ -4290,30 +4936,48 @@
             return changes;
         }
 
+        function restartTimer(locId) {
+            if (!confirm(`Restart Postal ${locId}'s timer from now? The current cycle's progress is lost.`)) return;
+            startTimer(locId);
+        }
+
         function startTimer(locId) {
             if (!allowed('timers', locKey(locId))) return;
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
-                const restarting = Boolean(loc.startTime);
+                const restore = timerRestore([loc]);
                 writeShared(timerChanges([loc], true));
                 logActivity({ kind: 'timer', loc: locKey(locId) });
-                showAlert(`Timer started for Postal ${locId} (${formatDuration(loc.durationHours)})`, 'success');
+                offerUndo({ perm: 'timers', bucket: locKey(locId), kind: 'timer', restore, text: `Timer ${restore[locPath(locId, 'startTime')] ? 'restarted' : 'started'} for Postal ${locId} (${formatDuration(loc.durationHours)})` });
             }
         }
 
         // Restart the location's timer and add what was collected (untrimmed, per strain) to its stock
-        function harvestAndRestart(locId, amounts = {}) {
+        function timerRestore(locations) {
+            const restore = {};
+            locations.forEach(l => {
+                restore[locPath(l.id, 'startTime')] = l.startTime || null;
+                restore[locPath(l.id, 'harvestAlertSent')] = Boolean(l.harvestAlertSent);
+            });
+            return restore;
+        }
+
+        function harvestAndRestart(locId, amounts = {}, learned = []) {
             if (!allowed('timers', locKey(locId))) return;
             const loc = appState.locations.find(l => l.id === locId);
             if (!loc) return;
             const bucket = locKey(locId);
             const total = Object.values(amounts).reduce((sum, v) => sum + v, 0);
+            const restore = timerRestore([loc]);
+            learned.forEach(path => { restore[path] = null; });
             writeShared(timerChanges([loc], true));
             const logIt = () => {
                 logActivity({ kind: 'harvest', loc: bucket });
-                showAlert(total > 0
-                    ? `Added ${total.toLocaleString()} untrimmed to Postal ${locId}. New ${formatDuration(loc.durationHours)} cycle started.`
-                    : `Postal ${locId} restarted. New ${formatDuration(loc.durationHours)} cycle started.`, 'success');
+                offerUndo({ perm: 'timers', bucket, kind: 'harvest', restore,
+                    deltas: Object.entries(amounts).map(([strainId, amount]) => ({ bucket, strainId, field: 'untrimmed', delta: amount })),
+                    text: total > 0
+                        ? `Added ${total.toLocaleString()} untrimmed to Postal ${locId}. New ${formatDuration(loc.durationHours)} cycle started.`
+                        : `Postal ${locId} restarted. New ${formatDuration(loc.durationHours)} cycle started.` });
             };
             if (total === 0) return logIt();
             mutateStock(stock => {
@@ -4326,25 +4990,31 @@
             if (!allowed('timers', locKey(locId))) return;
             const loc = appState.locations.find(l => l.id === locId);
             if (loc) {
+                const restore = timerRestore([loc]);
                 writeShared(timerChanges([loc], false));
                 logActivity({ kind: 'timer', loc: locKey(locId) });
-                showAlert(`Timer stopped for Postal ${locId}`, 'info');
+                offerUndo({ perm: 'timers', bucket: locKey(locId), kind: 'timer', restore, text: `Timer stopped for Postal ${locId}` });
             }
         }
 
+        // Starts every location that isn't running yet (running ones keep going)
         function startAllTimers() {
             if (!allowed('timers')) return;
-            writeShared(timerChanges(visibleLocations(), true));
+            const idle = visibleLocations().filter(l => timerState(l).status === 'idle');
+            if (!idle.length) return showAlert('Every grow is already running.', 'info');
+            const restore = timerRestore(idle);
+            writeShared(timerChanges(idle, true));
             logActivity({ kind: 'timer' });
-            showAlert('All location timers started simultaneously!', 'success');
+            offerUndo({ perm: 'timers', kind: 'timer', restore, text: `Started ${idle.length} ${idle.length === 1 ? 'timer' : 'timers'}: ${idle.map(l => l.id).join(', ')}.` });
         }
 
         function resetAllTimersPrompt() {
             if (!allowed('timers')) return;
-            if (confirm('Are you sure you want to stop and reset all location grow timers?')) {
+            if (confirm('Stop every grow timer you can see? Their progress is lost.')) {
+                const restore = timerRestore(visibleLocations());
                 writeShared(timerChanges(visibleLocations(), false));
                 logActivity({ kind: 'timer' });
-                showAlert('All grow timers reset to zero.', 'info');
+                offerUndo({ perm: 'timers', kind: 'timer', restore, text: 'All grow timers stopped.' });
             }
         }
 
@@ -4369,7 +5039,9 @@
 
             const timersTab = document.getElementById('tab-timers');
             if (timersTab && !timersTab.classList.contains('hidden')) {
-                renderTimersPage();
+                tickTimersPage();
+            } else if (new Date().getSeconds() === 0) {
+                renderUpcomingHarvests(); // keeps the dashboard's "next 24h" line fresh
             }
         }
 
@@ -5014,7 +5686,7 @@
         function factoryResetData() {
             const shared = Sync.mode === 'cloud';
             const message = shared
-                ? 'CRITICAL: This wipes the SHARED inventory, locations, timers and webhook for EVERYONE, plus this browser\'s settings. Proceed?'
+                ? 'This wipes the SHARED stock, locations, timers, plans, sales log, learned yields, history and webhook for EVERYONE, plus this browser\'s settings. The crew list stays. Download a backup first if unsure. Proceed?'
                 : 'CRITICAL: This will wipe all local inventory counts, locations, and settings! Proceed?';
             if (!confirm(message)) return;
 
@@ -5024,7 +5696,7 @@
             };
 
             if (shared) {
-                const defaults = { stock: null, inventory: {}, coca: { quantity: 0 }, locations: null, webhookUrl: '', activity: [], history: {} };
+                const defaults = { stock: null, inventory: {}, coca: { quantity: 0 }, locations: null, webhookUrl: '', activity: [], history: {}, sales: [], yields: {} };
                 const saved = appState;
                 appState = { ...appState, ...defaults };
                 normalizeState();
@@ -5050,18 +5722,97 @@
 
         const TOAST_ICONS = { success: 'fa-circle-check text-weed-400', warning: 'fa-triangle-exclamation text-amber-400', info: 'fa-circle-info text-indigo-300' };
 
-        function pushToast(innerHtml, type) {
+        function pushToast(innerHtml, type, ms) {
             const stack = document.getElementById('toast-stack');
-            if (!stack) return;
+            if (!stack) return null;
             const toast = document.createElement('div');
             toast.className = `dx-toast ${type}`;
             toast.innerHTML = innerHtml;
             stack.appendChild(toast);
             while (stack.children.length > 4) stack.firstElementChild.remove();
-            setTimeout(() => {
+            scheduleToastRemoval(toast, ms || (type === 'warning' ? 6500 : 4500));
+            return toast;
+        }
+
+        function scheduleToastRemoval(toast, ms) {
+            clearTimeout(toast._timer);
+            toast.classList.remove('out');
+            toast._timer = setTimeout(() => {
                 toast.classList.add('out');
                 setTimeout(() => toast.remove(), 300);
-            }, type === 'warning' ? 6500 : 4500);
+            }, ms);
+        }
+
+        // ---- Undo ----
+        // An undo knows how to put things back without overwriting other people's changes:
+        //   deltas:     stock changes [{ bucket, strainId ('coca' for coca), field, delta }], reversed relative to now
+        //   restore:    shared paths → their old values (plans, timers, records added)
+        //   bricksMade: bricks to take back off today's "bricks made" count
+        // Repeated actions on the same thing within the undo window (+100, +100, +100) merge into one.
+        const UNDO_MS = 8000;
+        let lastUndo = null;
+
+        function mergeDeltas(list) {
+            const byCell = new Map();
+            list.forEach(d => {
+                const k = `${d.bucket}|${d.strainId}|${d.field}`;
+                byCell.set(k, { ...d, delta: (byCell.has(k) ? byCell.get(k).delta : 0) + d.delta });
+            });
+            return [...byCell.values()].filter(d => d.delta !== 0);
+        }
+
+        const UNDO_FIELD_LABELS = { untrimmed: 'untrimmed', trimmed: 'trimmed', bricks: 'bricks', coca: 'coca leaves' };
+
+        function describeDeltas(deltas) {
+            if (!deltas.length) return 'No change';
+            return deltas.map(d => `${d.strainId === 'coca' ? 'Coca' : strainName(d.strainId)} ${UNDO_FIELD_LABELS[d.field] || d.field} ${d.delta > 0 ? '+' : '−'}${Math.abs(d.delta).toLocaleString()}`).join(', ') +
+                (deltas[0].bucket ? ` · ${bucketLabel(deltas[0].bucket)}` : '');
+        }
+
+        function offerUndo(opts) {
+            const live = lastUndo && lastUndo.key && lastUndo.key === opts.key && lastUndo.toast && lastUndo.toast.isConnected && !lastUndo.done;
+            let entry;
+            if (live) {
+                entry = lastUndo;
+                entry.deltas = mergeDeltas(entry.deltas.concat(opts.deltas || []));
+                entry.restore = { ...(opts.restore || {}), ...entry.restore }; // keep the oldest values
+                entry.bricksMade += opts.bricksMade || 0;
+            } else {
+                entry = { key: opts.key, perm: opts.perm || 'inventory', bucket: opts.bucket, kind: opts.kind, loc: opts.loc, loc2: opts.loc2, text: opts.text,
+                    deltas: mergeDeltas(opts.deltas || []), restore: { ...(opts.restore || {}) }, bricksMade: opts.bricksMade || 0, done: false };
+                entry.toast = pushToast('', 'success', UNDO_MS);
+                if (!entry.toast) return;
+                lastUndo = entry;
+            }
+            const text = typeof opts.text === 'function' ? opts.text(entry) : (opts.text || describeDeltas(entry.deltas));
+            entry.toast.innerHTML = `<i class="fa-solid ${TOAST_ICONS.success}"></i><span class="flex-1">${escapeHtml(text)}</span><button type="button" class="dx-undo">Undo</button>`;
+            entry.toast.querySelector('.dx-undo').onclick = () => runUndo(entry);
+            scheduleToastRemoval(entry.toast, UNDO_MS);
+        }
+
+        function runUndo(entry) {
+            if (entry.done) return;
+            if (!allowed(entry.perm, entry.bucket)) return;
+            entry.done = true;
+            if (entry.toast) entry.toast.remove();
+            if (entry.deltas.length) {
+                mutateStock(stock => {
+                    entry.deltas.forEach(d => {
+                        if (d.strainId === 'coca') {
+                            if (!isPlainObject(stock[d.bucket])) stock[d.bucket] = {};
+                            stock[d.bucket].coca = Math.max(0, toCount(stock[d.bucket].coca) - d.delta);
+                        } else {
+                            const cell = stockCell(stock, d.bucket, d.strainId);
+                            cell[d.field] = Math.max(0, cell[d.field] - d.delta);
+                        }
+                    });
+                    return { ok: true };
+                });
+            }
+            if (Object.keys(entry.restore).length) writeShared(entry.restore);
+            if (entry.bricksMade) recordBricksMade(-entry.bricksMade);
+            if (entry.kind) logActivity({ kind: entry.kind, loc: entry.loc || entry.bucket, loc2: entry.loc2 });
+            showAlert('Undone.', 'info');
         }
 
         function showAlert(message, type = 'info') {
