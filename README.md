@@ -165,7 +165,7 @@ Plan which strains go in each location's pots.
 The button with your picture and name in the top right (or **My Profile** in the phone menu) opens your profile. It has three tabs.
 
 **Account**
-- **My Stats:** how many grows you've harvested, how much bud you brought in, and about how many bricks that makes. Your harvest count also shows next to your name in **Who's online** (and on the crew list for admins). Undoing a harvest takes it back off.
+- **My Stats:** how many grows you've harvested (only harvests with bud entered count, not a bare **Just Restart the Timer**), how much bud you brought in, and about how many bricks that makes. Your harvest count also shows next to your name in **Who's online** (and on the crew list for admins). Undoing a harvest takes it back off.
 - **Picture:** upload any image. It's cropped to a square, shrunk, and shown everywhere your initials used to be (header, who's online, activity feed, crew list).
 - **Name:** change the name you show up as. It has to be different from everyone else's on the crew.
 - **PIN:** type your current PIN, then the new one twice. You stay signed in on that device; your other devices ask for the new PIN.
@@ -198,6 +198,9 @@ For crew members, everything is saved to their profile and follows them to any d
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 🌱 Oct 1, 2026: Harvest counts tweak
+- Harvests only count on your profile when bud is entered. **Just Restart the Timer** no longer counts
 
 ### 🌱 Oct 1, 2026: Harvest counts on profiles
 - **My Profile** now has **My Stats**: how many grows you've harvested, total bud and about how many bricks that makes

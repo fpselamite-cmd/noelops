@@ -5462,7 +5462,7 @@
                     <div><div class="l">Bud harvested</div><div class="v">${s.bud.toLocaleString()}</div></div>
                     <div><div class="l">≈ Bricks</div><div class="v">${Math.floor(s.bud / BRICK_SIZE).toLocaleString()}</div></div>
                 </div>
-                <p class="text-[11px] text-slate-500 mt-2">Counts every grow you harvest from the Grow Timers page.</p>`;
+                <p class="text-[11px] text-slate-500 mt-2">Counts every harvest you log with bud entered (a bare timer restart doesn't count).</p>`;
         }
 
         function openLedger(type, toKey) {
@@ -6318,12 +6318,12 @@
             const restore = timerRestore([loc]);
             learned.forEach(path => { restore[path] = null; });
             writeShared(timerChanges([loc], true));
-            // Count it on the harvester's profile
+            // Count it on the harvester's profile (only real harvests with bud entered, not a bare restart)
             const counters = {};
             const me = myPersonKey();
-            if (me) {
+            if (me && total > 0) {
                 counters[`stats/${statKey(me)}/harvests`] = 1;
-                if (total) counters[`stats/${statKey(me)}/bud`] = total;
+                counters[`stats/${statKey(me)}/bud`] = total;
                 Object.entries(counters).forEach(([path, n]) => adjustShared(path, n));
             }
             const logIt = () => {
