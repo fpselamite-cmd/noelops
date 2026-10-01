@@ -522,6 +522,24 @@
         .dx-person-link { cursor: pointer; }
         .dx-person-link:hover { text-decoration: underline; text-underline-offset: 2px; }
         /* ---------- Crew page ---------- */
+        .dx-boards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+        .dx-board { padding: 14px 16px; border-radius: 16px; background: linear-gradient(180deg, hsl(var(--gl) / 0.08), rgba(10, 18, 12, 0.9) 45%); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.16); }
+        .dx-board h3 { margin: 0 0 10px; font: 600 20px/1 'Teko', 'Arial Narrow', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; color: #f1f5f2; }
+        .dx-board h3 i { color: hsl(var(--acc-h) 69% 58%); font-size: 15px; }
+        .dx-board ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+        .dx-board li { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 10px; background: rgba(0, 0, 0, 0.25); font-size: 13px; min-width: 0; }
+        .dx-board li.first { background: linear-gradient(90deg, rgba(251, 191, 36, 0.16), rgba(0, 0, 0, 0.25)); box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.35); }
+        .dx-board li .pos { width: 18px; text-align: center; font: 800 13px 'JetBrains Mono', monospace; flex-shrink: 0; }
+        .dx-board li .dx-av { width: 26px; height: 26px; font-size: 10px; flex-shrink: 0; }
+        .dx-board li .who { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-board li .val { font-size: 12px; color: #94a3b8; white-space: nowrap; }
+        .dx-board li .val .tt-tag { font-size: 12px; }
+        .mate-roles { display: flex; flex-wrap: wrap; gap: 5px; }
+        .mate-roles .role { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 2px 8px 2px 6px; border-radius: 6px; background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.06); color: #e2e8f0; }
+        .mate-roles .role .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--tc); box-shadow: 0 0 6px var(--glow); }
+        .mate-roles .role.more { color: #8a9a8e; background: transparent; border-style: dashed; cursor: pointer; }
+        #admin-history-list tr.undone td { opacity: 0.5; }
+        #admin-history-list tr.undone td:nth-child(3) { text-decoration: line-through; }
         .dx-crew-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
         .dx-crew-tools .dx-input { width: auto; min-width: 0; font-size: 13px; padding: 8px 10px; }
         .dx-crew-table .dx-act { flex: none; padding: 5px 10px; }
@@ -1328,6 +1346,7 @@
                         <div class="dx-seg" role="group" aria-label="View">
                             <button type="button" id="crew-view-cards" onclick="setCrewView('cards')" title="Card view"><i class="fa-solid fa-grip"></i><span>Cards</span></button>
                             <button type="button" id="crew-view-list" onclick="setCrewView('list')" title="List view"><i class="fa-solid fa-list"></i><span>List</span></button>
+                            <button type="button" id="crew-view-boards" onclick="setCrewView('boards')" title="Leaderboards"><i class="fa-solid fa-ranking-star"></i><span>Leaderboards</span></button>
                         </div>
                         <button type="button" data-admin-only onclick="switchTab('admin'); showAdminTab('crew')" class="dx-act" style="flex:none;padding:8px 12px"><i class="fa-solid fa-user-gear mr-1"></i>Manage crew</button>
                     </div>
@@ -1375,6 +1394,7 @@
                     <button class="dx-tab" data-admin-tab="sales" onclick="showAdminTab('sales')"><i class="fa-solid fa-truck-fast"></i>Sales</button>
                     <button class="dx-tab" data-admin-tab="effects" onclick="showAdminTab('effects')"><i class="fa-solid fa-wand-magic-sparkles"></i>Effects</button>
                     <button class="dx-tab" data-admin-tab="titles" onclick="showAdminTab('titles')"><i class="fa-solid fa-medal"></i>Titles</button>
+                    <button class="dx-tab" data-admin-tab="history" onclick="showAdminTab('history')"><i class="fa-solid fa-clock-rotate-left"></i>History</button>
                     <button class="dx-tab" data-admin-tab="data" onclick="showAdminTab('data')"><i class="fa-solid fa-database"></i>Data &amp; Backups</button>
                 </div>
 
@@ -1725,6 +1745,23 @@
                                 <p class="text-xs text-slate-400">120 titles people unlock by doing things on the site (28 of them secret). Give one by hand for a big RP moment, or take one back.</p></div>
                         </div>
                         <div id="admin-titles" class="space-y-5"></div>
+                    </div>
+                </div>
+
+                <div data-admin-panel="history" class="space-y-6">
+                    <div class="dx-glass dx-admin-card space-y-4">
+                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                            <div><h2 class="font-bold text-white text-base">History</h2>
+                                <p class="text-xs text-slate-400">The full story behind Live Activity: who changed what, how much, where and when. Only admins see this page.</p></div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 items-end">
+                            <input id="history-search" type="search" placeholder="Search: a strain, postal, amount…" aria-label="Search history" oninput="auditShown = 100; renderAdminHistory()" class="dx-input" style="width:240px;font-size:13px">
+                            <select id="history-who" aria-label="Person" onchange="auditShown = 100; renderAdminHistory()" class="dx-input" style="width:auto;font-size:13px"></select>
+                            <select id="history-kind" aria-label="Kind" onchange="auditShown = 100; renderAdminHistory()" class="dx-input" style="width:auto;font-size:13px"></select>
+                            <span id="history-count" class="text-xs text-slate-500"></span>
+                        </div>
+                        <div id="admin-history-list" class="overflow-x-auto"></div>
                     </div>
                 </div>
 
@@ -2270,6 +2307,7 @@
             titles: {}, // Shared: unlocked titles { [statKey(person key)]: { [title id]: ts } }
             fxSettings: null, // Shared: which effects are on for everyone, the stamp word and harvest ranks (see FX_DEFAULTS)
             sales: [], // Shared: bricks going out, newest first
+            audit: [], // Shared: detailed history for admins [{ id, who, kind, text, loc, ts, undone }], newest first
             ledger: [], // Shared: budget entries (payouts to crew, expenses), newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
             presence: [] // Who's online right now (live mode only, never saved)
@@ -2354,6 +2392,12 @@
                     who: typeof x.who === 'string' ? x.who : '', sellerId: typeof x.sellerId === 'string' ? x.sellerId : null, by: typeof x.by === 'string' ? x.by : '',
                     cut: safeCut(x.cut), ts: Number(x.ts) || 0, price: x.price === null || x.price === undefined ? null : toCount(x.price),
                     note: typeof x.note === 'string' ? x.note.slice(0, 60) : '' }))
+                .sort((a, b) => b.ts - a.ts);
+            // Detailed history (admins only see it)
+            appState.audit = (Array.isArray(appState.audit) ? appState.audit : [])
+                .filter(x => isPlainObject(x) && x.id && typeof x.text === 'string')
+                .map(x => ({ id: x.id, who: typeof x.who === 'string' ? x.who : 'Someone', kind: typeof x.kind === 'string' ? x.kind : '', text: x.text.slice(0, 200),
+                    loc: typeof x.loc === 'string' ? x.loc : null, ts: Number(x.ts) || 0, undone: x.undone === true }))
                 .sort((a, b) => b.ts - a.ts);
             // Budget ledger: payouts to crew and crew expenses
             appState.ledger = (Array.isArray(appState.ledger) ? appState.ledger : [])
@@ -2564,6 +2608,7 @@
                 stats: JSON.parse(JSON.stringify(state.stats || {})),
                 titles: JSON.parse(JSON.stringify(state.titles || {})),
                 sales: Object.fromEntries((state.sales || []).map(({ id, ...record }) => [id, record])),
+                audit: Object.fromEntries((state.audit || []).map(({ id, ...record }) => [id, record])),
                 ledger: Object.fromEntries((state.ledger || []).map(({ id, ...record }) => [id, record]))
             };
         }
@@ -2604,6 +2649,7 @@
                 if (!appState.titles[sk][id]) appState.titles[sk][id] = at;
             });
             appState.sales = Object.entries(isPlainObject(tree.sales) ? tree.sales : {}).map(([id, record]) => ({ ...record, id }));
+            appState.audit = Object.entries(isPlainObject(tree.audit) ? tree.audit : {}).map(([id, record]) => ({ ...record, id }));
             normalizeState();
         }
 
@@ -3044,10 +3090,67 @@
             return (n ? ` · <i class="fa-solid fa-cannabis text-weed-500"></i> ${harvestsLabel(n)}` : '') + (wornTitleFor(name) ? ` ${wornTagFor(name)}` : '');
         }
 
+        // ---- Detailed history (Admin → History): who did exactly what, where and when ----
+        const AUDIT_KEEP = 500;
+        const AUDIT_KINDS = { buds: 'Bud & bricks', coca: 'Coke', meth: 'Meth', move: 'Moves', harvest: 'Harvests', timer: 'Timers', plan: 'Pot plans', sale: 'Going out', budget: 'Budget', titles: 'Titles', locations: 'Places' };
+        let auditShown = 100;
+
+        function auditLog({ kind, loc, text }) {
+            if (!text) return null;
+            const id = newActivityId();
+            const changes = { [`audit/${id}`]: { who: appState.crewName || 'Someone', kind: kind || '', text: String(text).slice(0, 200), loc: loc || null, ts: timestampValue() } };
+            appState.audit.slice(AUDIT_KEEP - 1).forEach(old => { changes[`audit/${old.id}`] = null; });
+            writeShared(changes);
+            return id;
+        }
+
+        function renderAdminHistory() {
+            const box = document.getElementById('admin-history-list');
+            if (!box || box.closest('.hidden')) return;
+            const who = document.getElementById('history-who');
+            const kind = document.getElementById('history-kind');
+            const q = (document.getElementById('history-search').value || '').trim().toLowerCase();
+            const names = [...new Set(appState.audit.map(a => a.who))].sort((a, b) => a.localeCompare(b));
+            if (who && document.activeElement !== who) { const v = who.value; who.innerHTML = '<option value="">Everyone</option>' + names.map(n => `<option>${escapeHtml(n)}</option>`).join(''); who.value = names.includes(v) ? v : ''; }
+            if (kind && !kind.options.length) kind.innerHTML = '<option value="">Everything</option>' + Object.entries(AUDIT_KINDS).map(([k, l]) => `<option value="${k}">${l}</option>`).join('');
+            const list = appState.audit.filter(a => (!who.value || a.who === who.value) && (!kind.value || a.kind === kind.value) &&
+                (!q || a.text.toLowerCase().includes(q) || a.who.toLowerCase().includes(q) || (a.loc && bucketLabel(a.loc).toLowerCase().includes(q))));
+            document.getElementById('history-count').textContent = `${list.length} of ${appState.audit.length} kept (the newest ${AUDIT_KEEP}).`;
+            box.innerHTML = list.length ? `<table class="dx-sales-table"><thead><tr><th>When</th><th>Who</th><th>What</th><th>Where</th></tr></thead><tbody>${list.slice(0, auditShown).map(a => {
+                const d = new Date(a.ts - Sync.serverOffset);
+                return `<tr class="${a.undone ? 'undone' : ''}"><td class="m whitespace-nowrap" title="${escapeHtml(d.toLocaleString())}">${escapeHtml(d.toLocaleDateString([], { month: 'short', day: 'numeric' }))} ${escapeHtml(d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }))}</td>
+                    <td class="whitespace-nowrap">${nameHtml(a.who)}</td><td>${escapeHtml(a.text)}${a.undone ? ' <span class="dx-pill off">Undone</span>' : ''}</td><td class="m">${a.loc ? escapeHtml(bucketLabel(a.loc)) : ''}</td></tr>`;
+            }).join('')}</tbody></table>${list.length > auditShown ? `<button class="dx-act mt-3" style="flex:none;padding:6px 14px" onclick="auditShown += 100; renderAdminHistory()">Show more (${list.length - auditShown} left)</button>` : ''}`
+                : emptyState('Nothing here yet', q || who.value || kind.value ? 'Nothing matches these filters.' : 'Every stock change, press, harvest, move and log-out shows here with the details.');
+        }
+
+        // ---- Crew leaderboards ----
+        function renderCrewBoards(people) {
+            const tierScore = key => Object.keys(titlesFor(key)).reduce((n, id) => n + (TITLE_BY_ID[id] ? Math.pow(10, TITLE_TIERS.indexOf(TITLE_BY_ID[id].tier)) : 0), 0);
+            const boards = [
+                ['Top growers', 'fa-cannabis', p => p.harvests, n => `${n.toLocaleString()} ${n === 1 ? 'harvest' : 'harvests'}`],
+                ['Most bud brought in', 'fa-sack-dollar', p => p.bud, n => `${n.toLocaleString()} bud`],
+                ['Most pressed', 'fa-cubes', p => statValue(p.key, 'bricks') + statValue(p.key, 'coke'), n => `${n.toLocaleString()} bricks`],
+                ['Most gone out', 'fa-truck-fast', p => p.outUnits, n => `${n.toLocaleString()} out`],
+                ['Most moves', 'fa-route', p => statValue(p.key, 'moves'), n => `${n.toLocaleString()} ${n === 1 ? 'move' : 'moves'}`],
+                ['Longest streak', 'fa-fire', p => statValue(p.key, 'best'), n => `${n} ${n === 1 ? 'day' : 'days'} in a row`]
+            ];
+            if (titlesOn()) {
+                boards.push(['Most titles', 'fa-medal', p => statValue(p.key, 'titles'), n => `${n} ${n === 1 ? 'title' : 'titles'}`]);
+                boards.push(['Rarest collection', 'fa-gem', p => tierScore(p.key), (n, p) => { const best = Object.keys(titlesFor(p.key)).map(id => TITLE_BY_ID[id]).filter(Boolean).sort((a, b) => TITLE_TIERS.indexOf(b.tier) - TITLE_TIERS.indexOf(a.tier))[0]; return best ? `best: ${titleTagHtml(best)}` : ''; }]);
+            }
+            const medal = i => ['#fbbf24', '#cbd5e1', '#d97706'][i] || '#475569';
+            return `<div class="dx-boards">${boards.map(([title, icon, score, label]) => {
+                const ranked = people.map(p => ({ p, n: score(p) })).filter(x => x.n > 0).sort((a, b) => b.n - a.n || a.p.name.localeCompare(b.p.name)).slice(0, 5);
+                return `<div class="dx-board"><h3><i class="fa-solid ${icon} mr-2"></i>${title}</h3>${ranked.length ? `<ol>${ranked.map((x, i) => `
+                    <li class="${i === 0 ? 'first' : ''}"><span class="pos" style="color:${medal(i)}">${i < 3 ? '<i class="fa-solid fa-crown"></i>' : i + 1}</span>${avatarHtml(x.p.name)}<span class="who">${nameHtml(x.p.name)}</span><span class="val">${label(x.n, x.p)}</span></li>`).join('')}</ol>` : '<p class="text-xs dx-muted">Nobody yet.</p>'}</div>`;
+            }).join('')}</div>`;
+        }
+
         // ---- Crew page: everyone, who's on and what they've been up to ----
         let crewFocus = null;
         function crewView() {
-            try { return localStorage.getItem('noelops_crew_view') === 'list' ? 'list' : 'cards'; } catch (e) { return 'cards'; }
+            try { const v = localStorage.getItem('noelops_crew_view'); return v === 'list' || v === 'boards' ? v : 'cards'; } catch (e) { return 'cards'; }
         }
 
         function setCrewView(view) {
@@ -3082,6 +3185,13 @@
             });
         }
 
+        // A person's top 3 titles as role chips on their Crew card
+        function crewRoles(name) {
+            const { all, shown } = showcaseFor(name);
+            if (!all.length) return '';
+            return `<div class="mate-roles">${shown.slice(0, 3).map(t => `<span class="role tt-${t.tier}" title="${escapeHtml(t.secret ? 'Secret title' : t.how.replace(/<[^>]+>/g, ''))}"><span class="dot"></span>${escapeHtml(t.name)}</span>`).join('')}${all.length > 3 ? `<button type="button" class="role more" data-person="${escapeHtml(name)}">+${all.length - 3}</button>` : ''}</div>`;
+        }
+
         function openCrewMember(name) {
             crewFocus = name;
             switchTab('crew');
@@ -3099,6 +3209,7 @@
             const view = crewView();
             document.getElementById('crew-view-cards').classList.toggle('on', view === 'cards');
             document.getElementById('crew-view-list').classList.toggle('on', view === 'list');
+            document.getElementById('crew-view-boards').classList.toggle('on', view === 'boards');
             const admin = hasAdminAccess();
             const q = (document.getElementById('crew-search').value || '').trim().toLowerCase();
             const sort = document.getElementById('crew-sort').value;
@@ -3125,6 +3236,7 @@
                 return;
             }
             if (!people.length) { body.innerHTML = emptyState('Nobody by that name', 'Try a different name or clear the search.'); return; }
+            if (view === 'boards') { body.innerHTML = renderCrewBoards(people); return; }
             const status = p => p.online ? 'Online now' : p.last ? `Last active ${relativeTime(p.last.ts)}` : 'Not seen lately';
             const lastLine = p => p.last ? `${escapeHtml(p.last.pre || '')} <b>${escapeHtml(p.last.hi || '')}</b> ${escapeHtml(p.last.post || '')} · ${relativeTime(p.last.ts)}` : 'Nothing logged yet';
             const where = m => !m ? '' : m.locations === 'all' ? '<span class="dx-pill">All stashes & grows</span>'
@@ -3155,6 +3267,7 @@
                     <div class="top"><span class="avw">${avatarHtml(p.name)}<i class="dot ${p.online ? 'on' : ''}"></i></span>
                         <div class="min-w-0"><div class="nm">${nameHtml(p.name)}</div><div class="rl">${escapeHtml(p.role)} ${wornTagFor(p.name)}</div><div class="status ${p.online ? 'on' : ''}">${escapeHtml(status(p))}</div></div></div>
                     <div class="nums"><div><b>${p.harvests.toLocaleString()}</b><span>Harvests</span></div><div><b>${p.bud >= 10000 ? `${Math.round(p.bud / 1000)}k` : p.bud.toLocaleString()}</b><span>Bud in</span></div><div><b>${p.outUnits.toLocaleString()}</b><span>Gone out</span></div></div>
+                    ${titlesOn() ? crewRoles(p.name) : ''}
                     <div class="last"><i class="fa-solid fa-clock-rotate-left mr-1 text-slate-500"></i>${lastLine(p)}</div>
                     ${admin ? `<div class="pills">${where(p.member)}</div>` : ''}
                     ${actions(p) ? `<div class="acts">${actions(p)}</div>` : ''}
@@ -3856,6 +3969,7 @@
             if (!key || !TITLE_BY_ID[id]) return;
             if (titlesFor(key)[id]) return showAlert('They already have that title.', 'info');
             writeShared({ [`titles/${statKey(key)}/${id}`]: timestampValue() });
+            auditLog({ kind: 'titles', text: `Gave the ${TITLE_BY_ID[id].name} title to ${nameForKey(key)}` });
             showAlert(`Gave ${TITLE_BY_ID[id].name} to ${nameForKey(key)}.`, 'success');
             setTimeout(renderAdminTitles, 50);
         }
@@ -3865,6 +3979,7 @@
             const key = document.getElementById('admin-title-person').value;
             if (!key) return;
             writeShared({ [`titles/${statKey(key)}/${id}`]: null });
+            auditLog({ kind: 'titles', text: `Took the ${TITLE_BY_ID[id].name} title back from ${nameForKey(key)}` });
             showAlert(`Took ${TITLE_BY_ID[id].name} back from ${nameForKey(key)}.`, 'info');
             setTimeout(renderAdminTitles, 50);
         }
@@ -4115,7 +4230,7 @@
         }
 
         // ---- Admin page tabs ----
-        const ADMIN_TABS = ['crew', 'locations', 'discord', 'logos', 'products', 'sales', 'effects', 'titles', 'data'];
+        const ADMIN_TABS = ['crew', 'locations', 'discord', 'logos', 'products', 'sales', 'effects', 'titles', 'history', 'data'];
 
         function showAdminTab(name) {
             if (!ADMIN_TABS.includes(name)) name = 'crew';
@@ -4123,6 +4238,7 @@
             document.querySelectorAll('[data-admin-tab]').forEach(t => t.classList.toggle('on', t.dataset.adminTab === name));
             try { localStorage.setItem('noelops_admin_tab', name); } catch (e) { /* remembering the tab is optional */ }
             if (name === 'titles') renderAdminTitles();
+            if (name === 'history') { auditShown = 100; renderAdminHistory(); }
         }
 
         function savedAdminTab() {
@@ -5168,6 +5284,7 @@
             announceMyTitles();
             renderProfileTitles();
             renderAdminTitles();
+            renderAdminHistory();
             document.querySelectorAll('[data-sales-only]').forEach(el => el.classList.toggle('hidden', !can('sales')));
             const salesTab = document.getElementById('tab-sales');
             if (salesTab && !salesTab.classList.contains('hidden') && !can('sales')) switchTab('dashboard');
@@ -8632,10 +8749,13 @@
                 entry = { key: opts.key, perm: opts.perm || 'inventory', bucket: opts.bucket, kind: opts.kind, loc: opts.loc, loc2: opts.loc2, text: opts.text,
                     deltas: mergeDeltas(opts.deltas || []), restore: { ...(opts.restore || {}) }, bricksMade: opts.bricksMade || 0, made: { ...(opts.made || {}) }, counters: { ...(opts.counters || {}) }, done: false };
                 entry.toast = pushToast('', 'success', UNDO_MS);
-                if (!entry.toast) return;
+                if (!entry.toast) { auditLog({ kind: opts.kind, loc: opts.bucket || opts.loc, text: typeof opts.text === 'function' ? opts.text(entry) : (opts.text || describeDeltas(entry.deltas)) }); return; }
                 lastUndo = entry;
             }
             const text = typeof opts.text === 'function' ? opts.text(entry) : (opts.text || describeDeltas(entry.deltas));
+            // The detailed history keeps one line per action (repeat presses update the same line)
+            if (entry.auditId) writeShared({ [`audit/${entry.auditId}/text`]: text.slice(0, 200), [`audit/${entry.auditId}/ts`]: timestampValue() });
+            else entry.auditId = auditLog({ kind: opts.kind, loc: opts.bucket || opts.loc, text });
             entry.toast.innerHTML = `<i class="fa-solid ${TOAST_ICONS.success}"></i><span class="flex-1">${escapeHtml(text)}</span><button type="button" class="dx-undo">Undo</button>`;
             entry.toast.querySelector('.dx-undo').onclick = () => runUndo(entry);
             scheduleToastRemoval(entry.toast, UNDO_MS);
@@ -8645,6 +8765,7 @@
             if (entry.done) return;
             if (!allowed(entry.perm, entry.bucket)) return;
             entry.done = true;
+            if (entry.auditId) writeShared({ [`audit/${entry.auditId}/undone`]: true });
             if (entry.toast) entry.toast.remove();
             if (entry.deltas.length) {
                 mutateStock(stock => {

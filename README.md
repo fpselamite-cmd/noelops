@@ -203,6 +203,10 @@ The **Crew** page shows everyone in the crew as cards or a list (switch with **C
 - Click anyone's name anywhere on the site (Who's online, Live Activity, the Log, pop-ups) to jump to them on the Crew page.
 - **Their log** opens the Log filtered to that person; **My Profile** is on your own card.
 - Admins also see what each person can access, who's waiting for review, and an **Edit** button.
+- **Leaderboards** (next to Cards and List): top 5 for harvests, bud brought in, bricks pressed, things gone out, moves, longest streak, most titles and rarest collection.
+- Each card shows that person's top 3 titles; the **+N** opens their full profile.
+
+**History (admins only):** **Admin → History** keeps the full story the Live Activity feed leaves out on purpose: who changed what, how much, where and when (the newest 500 actions). Search for a strain, postal or amount, or filter by person or kind of action. Undone actions stay in the list, crossed out. Note that this is hidden in the site only: like everything else, it's stored in the shared database.
 
 **Menu and permissions:** each menu button only shows once someone has the permission for it: **Grows** needs timers or the grow planner, **Stash** needs inventory, **Log** needs the log-things-out permission, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
 
@@ -231,6 +235,11 @@ The secret titles live in the site's code, which is public on GitHub, so someone
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 📊 Oct 1, 2026: Leaderboards and history
+- **Leaderboards** on the Crew page: top growers, most pressed, most gone out, longest streak, rarest titles and more
+- Crew cards now show everyone's top 3 titles
+- Admins get a full **History** of who did what, where and when
 
 ### 🏆 Oct 1, 2026: Titles
 - **120 titles** to unlock as calling cards, MW2 style: 92 to grind for and **28 secret ones** to find
