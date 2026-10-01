@@ -490,6 +490,8 @@
         .dx-input:focus { border-color: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 0 3px hsl(var(--acc-h) 69% 58% / 0.12); }
         select.dx-input option { background: #0b140e; }
         .dx-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+        .dx-chip-btn { display: inline-flex; align-items: center; margin-left: 6px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; color: hsl(var(--acc-h) 69% 70%); background: hsl(var(--acc-h) 80% 10% / 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.35); transition: all 0.2s; }
+        .dx-chip-btn:hover { color: #fff; border-color: hsl(var(--acc-h) 69% 58% / 0.7); }
         .dx-tab { white-space: nowrap; padding: 8px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; color: #8a9a8e; background: rgba(16, 26, 19, 0.72); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.14); transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
         .dx-tab:hover { color: #e6efe8; border-color: hsl(var(--acc-h) 69% 58% / 0.3); }
         .dx-tab.on { background: linear-gradient(180deg, hsl(var(--acc-h) 71% 45%), hsl(var(--acc-h) 76% 36%)); color: #fff; border-color: transparent; box-shadow: 0 4px 14px hsl(var(--acc-h) 71% 45% / 0.35); }
@@ -1099,6 +1101,43 @@
                 </div>
 
                 <div data-admin-panel="locations" class="space-y-6">
+                    <!-- Stash houses: storage only, no grows -->
+                    <div class="dx-glass dx-admin-card space-y-4">
+                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center">
+                                <i class="fa-solid fa-warehouse text-lg"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h2 class="font-bold text-white text-base">Stash Houses</h2>
+                                <p class="text-xs text-slate-400">Where bud, bricks, coke and meth are kept. Grow ops without on-site storage send their harvests here.</p>
+                            </div>
+                            <span id="admin-stash-count-badge" class="text-xs px-2 py-0.5 rounded bg-weed-950 text-weed-400 border border-weed-800"></span>
+                        </div>
+                        <form onsubmit="handleAddStash(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+                            <label class="block text-xs font-semibold text-slate-300">Name
+                                <input type="text" id="new-stash-name" required maxlength="40" placeholder="e.g. Grove St Garage" class="dx-input mt-1 w-full">
+                            </label>
+                            <label class="block text-xs font-semibold text-slate-300">Notes (optional)
+                                <input type="text" id="new-stash-note" maxlength="60" placeholder="e.g. Back room safe" class="dx-input mt-1 w-full">
+                            </label>
+                            <button type="submit" class="px-4 py-2.5 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-bold text-xs transition-all shadow-md whitespace-nowrap"><i class="fa-solid fa-circle-plus mr-1"></i> Add Stash House</button>
+                        </form>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-darkbg text-slate-400 font-mono uppercase">
+                                    <tr>
+                                        <th class="p-3 rounded-l-lg">Name</th>
+                                        <th class="p-3">Notes</th>
+                                        <th class="p-3">Bricks</th>
+                                        <th class="p-3">Totals</th>
+                                        <th class="p-3 text-right rounded-r-lg">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-stash-table-body" class="divide-y divide-weed-900/40"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <!-- Add / Edit Grow Locations Form -->
                     <div class="dx-glass dx-admin-card space-y-4">
                         <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
@@ -1131,6 +1170,13 @@
                                 <label class="block text-xs font-semibold text-slate-300 mb-1">Postal Alias / Notes (Optional)</label>
                                 <input type="text" id="new-loc-alias" placeholder="e.g. Sandy Shores Farm House" class="w-full bg-darkbg border border-weed-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-weed-500">
                             </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                                <label class="block text-xs font-semibold text-slate-300">Stash house <span class="font-normal text-slate-500">(where harvests go)</span>
+                                    <select id="new-loc-stash" class="dx-input mt-1 w-full"></select>
+                                </label>
+                                <label class="dx-check"><input type="checkbox" id="new-loc-storage">
+                                    <span><span class="block text-sm text-slate-100 font-semibold">On-site storage</span><span class="block text-[11px] text-slate-500">Bud and bricks can be kept here, and harvests stay on site</span></span></label>
+                            </div>
                             <button type="submit" class="w-full py-2.5 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-bold text-xs transition-all shadow-md">
                                 <i class="fa-solid fa-circle-plus mr-1"></i> Add Grow Operation Location
                             </button>
@@ -1151,6 +1197,7 @@
                                     <th class="p-3 rounded-l-lg">Postal ID</th>
                                     <th class="p-3">Alias / Notes</th>
                                     <th class="p-3">Timer Duration</th>
+                                    <th class="p-3">Storage</th>
                                     <th class="p-3">Current Status</th>
                                     <th class="p-3 text-right rounded-r-lg">Actions</th>
                                 </tr>
@@ -1585,9 +1632,34 @@
                     <span class="text-slate-400">m</span>
                 </div>
             </div>
+            <label class="block text-xs font-semibold text-slate-300">Stash house <span class="font-normal text-slate-500">(where harvests go, unless kept on site)</span>
+                <select id="edit-loc-stash" class="dx-input mt-1 w-full"></select>
+            </label>
+            <label class="dx-check"><input type="checkbox" id="edit-loc-storage">
+                <span><span class="block text-sm text-slate-100 font-semibold">On-site storage</span><span class="block text-[11px] text-slate-500">Bud and bricks can be kept here, and harvests stay on site</span></span></label>
+            <label class="dx-check"><input type="checkbox" id="edit-loc-exclude">
+                <span><span class="block text-sm text-slate-100 font-semibold">Leave out of totals</span><span class="block text-[11px] text-slate-500">Its stock still shows on its own tab</span></span></label>
             <p id="edit-loc-error" class="hidden text-xs text-red-400 font-semibold text-center"></p>
             <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px">Save Changes</button>
             <button type="button" onclick="closeEditLocation()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Edit stash house (or the Main Stash) -->
+    <div id="edit-stash-modal" class="dx-modal hidden">
+        <form class="dx-glass dx-modal-card space-y-4 text-left" onsubmit="saveEditStash(event)">
+            <h2 class="text-xl font-black text-white text-center">Edit Stash House</h2>
+            <input type="hidden" id="edit-stash-key">
+            <label class="block text-xs font-semibold text-slate-300">Name
+                <input type="text" id="edit-stash-name" required maxlength="40" class="mt-1">
+            </label>
+            <label id="edit-stash-note-box" class="block text-xs font-semibold text-slate-300">Notes
+                <input type="text" id="edit-stash-note" maxlength="60" class="mt-1">
+            </label>
+            <label class="dx-check"><input type="checkbox" id="edit-stash-exclude">
+                <span><span class="block text-sm text-slate-100 font-semibold">Leave out of totals</span><span class="block text-[11px] text-slate-500">Its stock still shows on its own tab</span></span></label>
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px">Save Changes</button>
+            <button type="button" onclick="document.getElementById('edit-stash-modal').classList.add('hidden')" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
         </form>
     </div>
 
@@ -1702,8 +1774,11 @@
     <div id="harvest-modal" class="dx-modal hidden">
         <form class="dx-glass dx-modal-card dx-modal-wide space-y-3 text-left" onsubmit="saveHarvest(event)">
             <h2 id="harvest-title" class="text-xl font-black text-white text-center">Harvest</h2>
-            <p class="text-xs text-slate-400 text-center">Enter the untrimmed bud collected for each strain. It's added to this location's stock and the timer restarts. Amounts start from the pot plan's estimate.</p>
+            <p class="text-xs text-slate-400 text-center">Enter the untrimmed bud collected for each strain. It goes to the stash house you pick and the timer restarts. Amounts start from the pot plan's estimate.</p>
             <input type="hidden" id="harvest-loc">
+            <label class="flex items-center gap-2 text-xs font-semibold text-slate-300"><i class="fa-solid fa-warehouse text-weed-500"></i><span class="shrink-0">Send to</span>
+                <select id="harvest-dest" class="dx-input flex-1 min-w-0"></select>
+            </label>
             <div id="harvest-rows" class="max-h-[46vh] overflow-y-auto pr-1 divide-y divide-weed-900/40"></div>
             <p id="harvest-total" class="text-right text-xs font-mono text-weed-300"></p>
             <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-seedling mr-1"></i> Add to Stock &amp; Restart</button>
@@ -1753,15 +1828,18 @@
         // Logo files served from the repo. Strain logos live at logos/<strain id>.png
         const DEFAULT_MASTER_LOGO = 'NoelOpsLogo-web.jpg'; // small copy of NoelOpsLogo.png for fast loading
         const STRAIN_LOGO_DIR = 'logos';
+        const LOGO_VERSION = '2'; // bump when a logo file in the repo is replaced, so browsers drop the cached copy
         const UPLOADED_LOGO_MAX_PX = 256; // Uploads are downscaled so localStorage doesn't overflow
 
         const LEAF_SVG = `<svg class="w-8 h-8 fill-current text-weed-400 drop-shadow-[0_0_8px_hsl(var(--acc-h) 71% 45% / 0.6)]" viewBox="0 0 24 24">
                         <path d="M12,2C11.5,4 10,7 8,9C6,11 3,11.5 2,12C4,12.5 7,14 9,16C10,17 11,19 12,22C13,19 14,17 15,16C17,14 20,12.5 22,12C21,11.5 18,11 16,9C14,7 12.5,4 12,2M12,7C12.5,8.5 13.5,10 15,11C13.5,12 12.5,13.5 12,15C11.5,13.5 10.5,12 9,11C10.5,10 11.5,8.5 12,7Z"/>
                     </svg>`;
 
-        // Stock buckets: the Main Stash plus one per grow location (keyed by locKey(id)).
-        // '%' can never come out of locKey (it encodes '%' as '%25'), so this key can't clash with a location.
+        // Stock buckets: the Main Stash, one per stash house (stashKey(id)) and one per grow location (locKey(id)).
+        // '%' can never come out of locKey (it encodes '%' as '%25'), so these keys can't clash with a location.
         const STASH_KEY = '%stash';
+        const STASH_PREFIX = '%h';
+        function stashKey(id) { return STASH_PREFIX + id; }
         const INV_FIELDS = ['untrimmed', 'trimmed', 'bricks'];
         // Other products, kept per location next to the strains: coca leaves (the raw stage, like untrimmed bud)
         // are pressed into small or large coke bricks; meth is stored as finished bins.
@@ -1829,6 +1907,8 @@
             coca: { quantity: 0, notes: '' }, // Total coca across every location (derived from stock)
             selectedInvBucket: 'all', // Inventory tab: 'all' or a bucket key
             locations: null, // null = never loaded, seeded with DEFAULT_LOCATIONS
+            stashes: [], // Shared stash houses (storage only, no grows): [{ id, name, note, excludeTotals, order }]
+            mainStash: { name: 'Main Stash', excludeTotals: false }, // Shared: the built-in stash's name, and whether it counts in totals
             webhookUrl: '',
             discordTemplate: null, // Harvest message wording (shared); null = defaults
             badgeImages: {}, // Per-browser strain logo overrides (data URLs), keyed by strain id
@@ -1943,15 +2023,32 @@
                     startTime: Number(loc.startTime) > 0 ? Number(loc.startTime) : null,
                     strainPots: isPlainObject(loc.strainPots) ? loc.strainPots : {},
                     harvestAlertSent: Boolean(loc.harvestAlertSent),
+                    storage: loc.storage === true, // keeps bud and bricks on site (most grow ops don't)
+                    stashTo: typeof loc.stashTo === 'string' && loc.stashTo ? loc.stashTo : STASH_KEY, // where harvests go
+                    excludeTotals: loc.excludeTotals === true,
                     order: Number.isFinite(Number(loc.order)) ? Number(loc.order) : idx
                 }));
+
+            // Stash houses: storage only, no grow timer
+            appState.stashes = (Array.isArray(appState.stashes) ? appState.stashes : [])
+                .filter(x => isPlainObject(x) && typeof x.id === 'string' && /^[A-Za-z0-9_-]+$/.test(x.id))
+                .map((x, idx) => ({ id: x.id, name: typeof x.name === 'string' && x.name.trim() ? x.name.trim().slice(0, 40) : 'Stash house',
+                    note: typeof x.note === 'string' ? x.note.slice(0, 60) : '', excludeTotals: x.excludeTotals === true,
+                    order: Number.isFinite(Number(x.order)) ? Number(x.order) : idx }))
+                .sort((a, b) => a.order - b.order);
+            const ms = isPlainObject(appState.mainStash) ? appState.mainStash : {};
+            appState.mainStash = { name: typeof ms.name === 'string' && ms.name.trim() ? ms.name.trim().slice(0, 40) : 'Main Stash', excludeTotals: ms.excludeTotals === true };
+            // A harvest destination that no longer exists falls back to the Main Stash
+            appState.locations.forEach(loc => {
+                if (loc.stashTo !== STASH_KEY && !appState.stashes.some(x => stashKey(x.id) === loc.stashTo)) loc.stashTo = STASH_KEY;
+            });
 
             if (appState.selectedPlannerLocId !== 'all' && !appState.locations.some(l => l.id === appState.selectedPlannerLocId)) {
                 appState.selectedPlannerLocId = appState.locations.length > 0 ? appState.locations[0].id : null;
             }
 
-            // Every bucket (Main Stash, each location, any leftover) gets every strain + coca
-            [STASH_KEY, ...appState.locations.map(l => locKey(l.id))].forEach(key => {
+            // Every bucket (Main Stash, stash houses, each location, any leftover) gets every strain + coca
+            [STASH_KEY, ...appState.stashes.map(x => stashKey(x.id)), ...appState.locations.map(l => locKey(l.id))].forEach(key => {
                 if (!isPlainObject(appState.stock[key])) appState.stock[key] = {};
             });
             Object.keys(appState.stock).forEach(key => {
@@ -2004,7 +2101,7 @@
             DEFAULT_STRAINS.forEach(strain => { appState.inventory[strain.id] = { untrimmed: 0, trimmed: 0, bricks: 0 }; });
             let cocaTotal = 0;
             appState.products = Object.fromEntries(Object.keys(ROOT_FIELDS).map(f => [f, 0]));
-            Object.entries(appState.stock).filter(([key]) => canSeeBucket(key)).map(([, bucket]) => bucket).forEach(bucket => {
+            Object.entries(appState.stock).filter(([key]) => canSeeBucket(key) && !bucketExcluded(key)).map(([, bucket]) => bucket).forEach(bucket => {
                 cocaTotal += bucket.coca;
                 Object.keys(ROOT_FIELDS).forEach(f => { appState.products[f] += bucket[f]; });
                 DEFAULT_STRAINS.forEach(strain => {
@@ -2013,7 +2110,7 @@
             });
             appState.coca = { quantity: cocaTotal, notes: '' };
 
-            const buckets = inventoryBuckets().map(b => b.key);
+            const buckets = storageBuckets().map(b => b.key);
             if (appState.selectedInvBucket !== 'all' && !buckets.includes(appState.selectedInvBucket)) appState.selectedInvBucket = 'all';
         }
 
@@ -2080,6 +2177,9 @@
                     startTime: loc.startTime || null,
                     harvestAlertSent: Boolean(loc.harvestAlertSent),
                     strainPots: { ...(loc.strainPots || {}) },
+                    storage: loc.storage === true,
+                    stashTo: loc.stashTo || STASH_KEY,
+                    excludeTotals: loc.excludeTotals === true,
                     order: Number.isFinite(loc.order) ? loc.order : idx
                 };
             });
@@ -2091,7 +2191,9 @@
             return {
                 stock: JSON.parse(JSON.stringify(state.stock || {})),
                 locations,
+                stashes: Object.fromEntries((state.stashes || []).map(({ id, ...record }) => [id, record])),
                 settings: {
+                    mainStash: { ...(state.mainStash || { name: 'Main Stash', excludeTotals: false }) },
                     webhookUrl: state.webhookUrl || '',
                     discordTemplate: normalizeDiscordTemplate(state.discordTemplate),
                     allowSignup: !(isPlainObject(state.signupSettings) && state.signupSettings.allowSignup === false),
@@ -2125,6 +2227,8 @@
                 defaultCut: isPlainObject(tree.settings) ? tree.settings.defaultCut : undefined };
             appState.ledger = Object.entries(isPlainObject(tree.ledger) ? tree.ledger : {}).map(([id, record]) => ({ ...record, id }));
             appState.productSettings = isPlainObject(tree.settings) && isPlainObject(tree.settings.cokeRecipe) ? tree.settings.cokeRecipe : null;
+            appState.stashes = Object.entries(isPlainObject(tree.stashes) ? tree.stashes : {}).filter(([, x]) => isPlainObject(x)).map(([id, x]) => ({ ...x, id }));
+            appState.mainStash = isPlainObject(tree.settings) && isPlainObject(tree.settings.mainStash) ? tree.settings.mainStash : null;
             appState.activity = Object.entries(isPlainObject(tree.activity) ? tree.activity : {})
                 .filter(([, record]) => isPlainObject(record))
                 .map(([id, record]) => ({ ...record, id }));
@@ -2207,23 +2311,46 @@
             return stock[bucket][strainId];
         }
 
-        // Main Stash, each grow location, then any stock left under a key that no longer has a location
+        // Main Stash, stash houses, each grow location, then any stock left under a key that no longer has a location
         // Buckets this person can see (pass true for every bucket, e.g. for labels)
         function inventoryBuckets(includeHidden) {
             return allInventoryBuckets().filter(b => includeHidden || canSeeBucket(b.key));
         }
 
+        // Places that hold stock: stash houses, grow ops with on-site storage, and anywhere that still has something in it
+        function storageBuckets() {
+            return inventoryBuckets().filter(b => (b.storage && !b.orphan) || bucketHasStock(appState.stock[b.key]));
+        }
+
+        function mainStashName() {
+            return (appState.mainStash && appState.mainStash.name) || 'Main Stash';
+        }
+
         function allInventoryBuckets() {
-            const buckets = [{ key: STASH_KEY, label: 'Main Stash', short: 'Main Stash' }];
-            appState.locations.forEach(loc => buckets.push({ key: locKey(loc.id), label: `Postal ${loc.id}`, short: loc.id, alias: loc.alias, locId: loc.id }));
+            const buckets = [{ key: STASH_KEY, kind: 'stash', label: mainStashName(), short: mainStashName(), storage: true, excluded: Boolean(appState.mainStash && appState.mainStash.excludeTotals) }];
+            (appState.stashes || []).forEach(x => buckets.push({ key: stashKey(x.id), kind: 'stash', label: x.name, short: x.name, alias: x.note, stashId: x.id, storage: true, excluded: x.excludeTotals }));
+            appState.locations.forEach(loc => buckets.push({ key: locKey(loc.id), kind: 'grow', label: `Postal ${loc.id}`, short: loc.id, alias: loc.alias, locId: loc.id, storage: loc.storage, excluded: loc.excludeTotals }));
             Object.keys(appState.stock || {}).forEach(key => {
                 if (!buckets.some(b => b.key === key)) {
                     let name = key;
                     try { name = decodeURIComponent(key); } catch (e) { /* keep raw key */ }
-                    buckets.push({ key, label: `Postal ${name} (removed)`, short: `${name} (removed)`, orphan: true });
+                    const wasStash = key.startsWith(STASH_PREFIX);
+                    buckets.push({ key, kind: 'orphan', label: wasStash ? 'Removed stash house' : `Postal ${name} (removed)`, short: wasStash ? 'Removed stash' : `${name} (removed)`, orphan: true });
                 }
             });
             return buckets;
+        }
+
+        // Withheld buckets keep their own numbers but are left out of every total
+        function bucketExcluded(key) {
+            if (key === STASH_KEY) return Boolean(appState.mainStash && appState.mainStash.excludeTotals);
+            if (key.startsWith(STASH_PREFIX)) { const x = (appState.stashes || []).find(y => stashKey(y.id) === key); return Boolean(x && x.excludeTotals); }
+            const loc = (appState.locations || []).find(l => locKey(l.id) === key);
+            return Boolean(loc && loc.excludeTotals);
+        }
+
+        function bucketIcon(b) {
+            return b.kind === 'stash' ? 'fa-warehouse' : b.orphan ? 'fa-triangle-exclamation' : 'fa-location-dot';
         }
 
         function bucketLabel(key) {
@@ -2602,7 +2729,7 @@
             document.querySelectorAll('input[name="crew-loc-mode"]').forEach(r => { r.checked = r.value === (locs === 'all' ? 'all' : 'some'); });
             document.getElementById('crew-locations').innerHTML = allInventoryBuckets().filter(b => !b.orphan).map(b => `
                 <label class="dx-check py-1.5"><input type="checkbox" data-bucket="${escapeHtml(b.key)}" ${locs !== 'all' && locs[b.key] ? 'checked' : ''}>
-                    <span class="text-sm text-slate-200">${escapeHtml(b.key === STASH_KEY ? 'Main Stash' : b.short)}${b.alias ? ` <span class="text-slate-500 text-xs">${escapeHtml(b.alias)}</span>` : ''}</span></label>`).join('');
+                    <span class="text-sm text-slate-200"><i class="fa-solid ${bucketIcon(b)} text-weed-500 text-xs mr-1"></i>${escapeHtml(b.kind === 'grow' ? `Postal ${b.short}` : b.short)}${b.alias ? ` <span class="text-slate-500 text-xs">${escapeHtml(b.alias)}</span>` : ''}</span></label>`).join('');
             toggleCrewLocations();
             document.getElementById('crew-error').classList.add('hidden');
             document.getElementById('crew-modal').classList.remove('hidden');
@@ -3744,7 +3871,7 @@
         }
 
         function getStrainLogoSrc(strainId) {
-            return appState.badgeImages[strainId] || `${STRAIN_LOGO_DIR}/${strainId}.png`;
+            return appState.badgeImages[strainId] || `${STRAIN_LOGO_DIR}/${strainId}.png?v=${LOGO_VERSION}`;
         }
 
         function getStrainLogo(strainId) {
@@ -3805,7 +3932,7 @@
         // Totals across every bucket, whoever is looking (for the shared daily history)
         function globalTotals() {
             const totals = { bricks: 0, potential: 0, trimmed: 0, untrimmed: 0, ...Object.fromEntries(Object.keys(ROOT_FIELDS).map(f => [f, 0])) };
-            Object.values(appState.stock || {}).forEach(bucket => {
+            Object.entries(appState.stock || {}).filter(([key]) => !bucketExcluded(key)).forEach(([, bucket]) => {
                 Object.keys(ROOT_FIELDS).forEach(f => { totals[f] += toCount(bucket[f]); });
                 DEFAULT_STRAINS.forEach(strain => {
                     const c = bucket[strain.id] || {};
@@ -4235,7 +4362,7 @@
         function renderInventory() {
             const grid = document.getElementById('inv-grid');
             if (!grid) return;
-            const buckets = inventoryBuckets();
+            const buckets = storageBuckets();
             const view = appState.selectedInvBucket;
             const isAll = view === 'all';
             const bucket = isAll ? null : appState.stock[view];
@@ -4247,8 +4374,9 @@
                 `<button class="dx-tab ${isAll ? 'on' : ''}" onclick="selectInvBucket('all')"><i class="fa-solid fa-layer-group"></i>All <span class="count">${allTotals.bricks.toLocaleString()}</span></button>` +
                 buckets.map(b => `
                     <button class="dx-tab ${view === b.key ? 'on' : ''}" onclick="selectInvBucket(${jsArg(b.key)})" title="${escapeHtml(b.label)}${b.alias ? ' · ' + escapeHtml(b.alias) : ''}">
-                        <i class="fa-solid ${b.key === STASH_KEY ? 'fa-warehouse' : b.orphan ? 'fa-triangle-exclamation' : 'fa-location-dot'}"></i>
-                        <span class="${b.key === STASH_KEY ? '' : 'font-mono'}">${escapeHtml(b.short)}</span>${b.alias ? `<span class="sub">${escapeHtml(b.alias)}</span>` : ''}
+                        <i class="fa-solid ${bucketIcon(b)}"></i>
+                        <span class="${b.kind === 'grow' ? 'font-mono' : ''}">${escapeHtml(b.short)}</span>${b.alias ? `<span class="sub">${escapeHtml(b.alias)}</span>` : ''}
+                        ${b.excluded ? '<i class="fa-solid fa-eye-slash text-slate-500" title="Left out of totals"></i>' : ''}
                         <span class="count" title="Bricks">${bucketTotals(appState.stock[b.key]).bricks.toLocaleString()}</span>
                     </button>`).join('');
 
@@ -4283,11 +4411,15 @@
                 </div>`;
 
             const current = buckets.find(b => b.key === view);
+            const withheld = buckets.filter(b => b.excluded && bucketHasStock(appState.stock[b.key]));
             document.getElementById('inv-note').innerHTML = isAll
-                ? `<p class="text-xs text-slate-400"><i class="fa-solid fa-circle-info text-weed-500 mr-1"></i>Totals across every location. Pick a location tab to add, trim, press or move stock.</p>`
+                ? `<p class="text-xs text-slate-400"><i class="fa-solid fa-circle-info text-weed-500 mr-1"></i>Totals across every stash and location. Pick a tab to add, trim, press or move stock.</p>` +
+                    (withheld.length ? `<p class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-eye-slash text-slate-500 mr-1"></i>Not counted in these totals: <b class="text-slate-200">${withheld.map(b => escapeHtml(b.label)).join(', ')}</b>.</p>` : '')
                 : current && current.orphan
-                    ? `<p class="text-xs text-amber-300"><i class="fa-solid fa-triangle-exclamation mr-1"></i>This location was removed. Move its stock somewhere else.</p>`
-                    : `<p class="text-xs text-slate-400"><i class="fa-solid ${view === STASH_KEY ? 'fa-warehouse' : 'fa-location-dot'} text-weed-500 mr-1"></i>Editing <b class="text-white">${escapeHtml(current ? current.label : '')}</b>${current && current.alias ? ` · ${escapeHtml(current.alias)}` : ''}. The − / + and Trim buttons use the step amount (${step.toLocaleString()}).</p>`;
+                    ? `<p class="text-xs text-amber-300"><i class="fa-solid fa-triangle-exclamation mr-1"></i>This ${current.key.startsWith(STASH_PREFIX) ? 'stash house' : 'location'} was removed. Move its stock somewhere else.</p>`
+                    : `<p class="text-xs text-slate-400"><i class="fa-solid ${current ? bucketIcon(current) : 'fa-location-dot'} text-weed-500 mr-1"></i>Editing <b class="text-white">${escapeHtml(current ? current.label : '')}</b>${current && current.alias ? ` · ${escapeHtml(current.alias)}` : ''}. The − / + and Trim buttons use the step amount (${step.toLocaleString()}).</p>` +
+                        (current && current.kind === 'grow' && !current.storage ? noStorageNote(current) : '') +
+                        (current ? withholdNote(current) : '');
 
             grid.innerHTML = (isAll ? renderInvAllCards(buckets) : renderInvBucketCards(view, bucket, step)).join('');
             if (!isAll && !can('inventory')) {
@@ -4296,8 +4428,82 @@
             }
         }
 
+        // A grow op without on-site storage that still holds stock: offer to move it all to its stash house
+        function noStorageNote(b) {
+            const loc = appState.locations.find(l => l.id === b.locId);
+            const dest = loc ? loc.stashTo : STASH_KEY;
+            const move = can('inventory') && canSeeBucket(dest) && bucketHasStock(appState.stock[b.key])
+                ? ` <button class="dx-chip-btn" onclick="moveAllStock(${jsArg(b.key)}, ${jsArg(dest)})"><i class="fa-solid fa-dolly mr-1"></i>Move everything to ${escapeHtml(bucketLabel(dest))}</button>` : '';
+            return `<p class="text-xs text-amber-300 mt-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Postal ${escapeHtml(b.short)} has no on-site storage, so its stock should go to a stash house.${move}</p>`;
+        }
+
+        function withholdNote(b) {
+            const toggle = can('inventory')
+                ? ` <button class="dx-chip-btn" onclick="toggleBucketExcluded(${jsArg(b.key)})">${b.excluded ? '<i class="fa-solid fa-eye mr-1"></i>Count in totals' : '<i class="fa-solid fa-eye-slash mr-1"></i>Leave out of totals'}</button>` : '';
+            return b.excluded
+                ? `<p class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-eye-slash text-slate-500 mr-1"></i>Left out of totals: this stock doesn't count toward the dashboard, the All tab or the charts.${toggle}</p>`
+                : toggle ? `<p class="text-xs text-slate-500 mt-1">Counted in totals.${toggle}</p>` : '';
+        }
+
+        // Where a bucket's settings live in the database (Main Stash, a stash house or a grow location)
+        function bucketSettingPath(key, field) {
+            if (key === STASH_KEY) return `settings/mainStash/${field}`;
+            if (key.startsWith(STASH_PREFIX)) return `stashes/${key.slice(STASH_PREFIX.length)}/${field}`;
+            const loc = appState.locations.find(l => locKey(l.id) === key);
+            return loc ? locPath(loc.id, field) : null;
+        }
+
+        function toggleBucketExcluded(key) {
+            if (!allowed('inventory', key)) return;
+            const path = bucketSettingPath(key, 'excludeTotals');
+            if (!path) return;
+            const was = bucketExcluded(key);
+            writeShared({ [path]: !was });
+            logActivity({ kind: 'locations', loc: key });
+            offerUndo({ perm: 'inventory', bucket: key, kind: 'locations', restore: { [path]: was },
+                text: was ? `${bucketLabel(key)} counts in totals again.` : `${bucketLabel(key)} is left out of totals.` });
+        }
+
+        // Move every bit of stock from one place to another (e.g. a grow op with no storage to its stash house)
+        function moveAllStock(from, to) {
+            if (!allowed('inventory', from) || !allowed('inventory', to)) return;
+            const deltas = [];
+            const fromCells = appState.stock[from] || {};
+            Object.keys(ROOT_FIELDS).forEach(field => {
+                const n = toCount(fromCells[field]);
+                if (n) deltas.push({ bucket: from, strainId: 'root', field, delta: -n }, { bucket: to, strainId: 'root', field, delta: n });
+            });
+            DEFAULT_STRAINS.forEach(strain => INV_FIELDS.forEach(field => {
+                const n = toCount((fromCells[strain.id] || {})[field]);
+                if (n) deltas.push({ bucket: from, strainId: strain.id, field, delta: -n }, { bucket: to, strainId: strain.id, field, delta: n });
+            }));
+            if (!deltas.length) return;
+            mutateStock(stock => {
+                mergeBucketInto(stock, from, to);
+                return { moved: true };
+            }).then(result => {
+                if (!result) return;
+                logActivity({ kind: 'move', loc: from, loc2: to });
+                offerUndo({ perm: 'inventory', bucket: from, kind: 'move', loc: from, loc2: to, deltas, text: `Moved everything from ${bucketLabel(from)} to ${bucketLabel(to)}.` });
+            });
+        }
+
+        // Adds everything in one bucket to another and empties the first (inside a mutateStock transaction)
+        function mergeBucketInto(stock, from, to) {
+            const src = isPlainObject(stock[from]) ? stock[from] : {};
+            if (!isPlainObject(stock[to])) stock[to] = {};
+            Object.keys(ROOT_FIELDS).forEach(field => { stock[to][field] = toCount(stock[to][field]) + toCount(src[field]); });
+            DEFAULT_STRAINS.forEach(strain => {
+                const moved = stockCell(stock, from, strain.id);
+                const into = stockCell(stock, to, strain.id);
+                INV_FIELDS.forEach(field => { into[field] += moved[field]; });
+            });
+            stock[from] = {};
+        }
+
         // Where each strain is, across every bucket (read-only)
         function renderInvAllCards(buckets) {
+            buckets = buckets.filter(b => !b.excluded);
             const whereList = pick => buckets
                 .map(b => ({ b, v: pick(appState.stock[b.key]) }))
                 .filter(x => x.v)
@@ -4637,7 +4843,7 @@
         const SALE_ITEMS = () => DEFAULT_STRAINS.concat(PRODUCTS);
 
         function saleBuckets() {
-            return inventoryBuckets().filter(b => !b.orphan || SALE_ITEMS().some(st => saleBricksAt(b.key, st.id)));
+            return inventoryBuckets().filter(b => (b.storage && !b.orphan) || SALE_ITEMS().some(st => saleBricksAt(b.key, st.id)));
         }
 
         // Where to take a strain from: the current choice if it has some, else the location with the most
@@ -5298,7 +5504,7 @@
                 : [['bricks', 'Bricks'], ['trimmed', 'Trimmed bud'], ['untrimmed', 'Untrimmed bud']];
             document.getElementById('transfer-field').innerHTML = options.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
             const to = document.getElementById('transfer-to');
-            to.innerHTML = inventoryBuckets().filter(b => b.key !== bucket && !b.orphan)
+            to.innerHTML = inventoryBuckets().filter(b => b.key !== bucket && !b.orphan && b.storage)
                 .map(b => `<option value="${escapeHtml(b.key)}">${escapeHtml(b.label)}${b.alias ? ' · ' + escapeHtml(b.alias) : ''}</option>`).join('');
             const field = document.getElementById('transfer-field');
             // Default to the first kind of stock that has something to move
@@ -5375,6 +5581,10 @@
             document.getElementById('harvest-loc').value = locId;
             const position = harvestQueueTotal > 1 ? ` (${harvestQueueTotal - harvestQueue.length} of ${harvestQueueTotal})` : '';
             document.getElementById('harvest-title').textContent = `Harvest Postal ${locId}${position}`;
+            const dests = harvestDestinations(loc);
+            const destSel = document.getElementById('harvest-dest');
+            destSel.innerHTML = dests.map(b => `<option value="${escapeHtml(b.key)}">${escapeHtml(b.kind === 'grow' ? `Postal ${b.short} (on site)` : b.label)}</option>`).join('');
+            destSel.value = defaultHarvestDest(loc, dests);
             const planned = DEFAULT_STRAINS.map(strain => ({ strain, pots: toCount((loc.strainPots || {})[strain.id]) }));
             planned.sort((a, b) => (b.pots > 0) - (a.pots > 0)); // planned strains first
             document.getElementById('harvest-rows').innerHTML = planned.map(({ strain, pots }) => `
@@ -5389,6 +5599,19 @@
                 </label>`).join('');
             updateHarvestTotal();
             document.getElementById('harvest-modal').classList.remove('hidden');
+        }
+
+        // Where a harvest can go: stash houses this person can see, the location's own storage, and its usual stash house
+        function harvestDestinations(loc) {
+            return allInventoryBuckets().filter(b => !b.orphan && (
+                (b.kind === 'stash' && (canSeeBucket(b.key) || b.key === loc.stashTo)) ||
+                (b.kind === 'grow' && b.locId === loc.id && loc.storage)));
+        }
+
+        // Grow ops with on-site storage keep their harvest there; the rest send it to their stash house
+        function defaultHarvestDest(loc, dests = harvestDestinations(loc)) {
+            const prefer = loc.storage ? locKey(loc.id) : loc.stashTo;
+            return (dests.find(b => b.key === prefer) || dests.find(b => b.key === loc.stashTo) || dests[0] || { key: STASH_KEY }).key;
         }
 
         function harvestAmounts() {
@@ -5414,6 +5637,7 @@
         function saveHarvest(event, skipStock) {
             if (event) event.preventDefault();
             const locId = document.getElementById('harvest-loc').value;
+            const dest = document.getElementById('harvest-dest').value;
             const amounts = skipStock ? {} : harvestAmounts();
             const prefilled = {};
             document.querySelectorAll('#harvest-rows [data-harvest-strain]').forEach(input => { prefilled[input.dataset.harvestStrain] = toCount(input.dataset.prefill); });
@@ -5421,7 +5645,7 @@
             closeHarvestModal(true);
             // Learn real yields from the numbers people typed in (before the restart changes anything)
             const learned = loc && !skipStock && can('timers') ? recordHarvestYields(loc, amounts, prefilled) : [];
-            harvestAndRestart(locId, amounts, learned);
+            harvestAndRestart(locId, amounts, learned, dest);
             if (harvestQueue.length) openNextQueuedHarvest();
             else harvestQueueTotal = 0;
         }
@@ -5751,7 +5975,7 @@
             const projected = {};
             DEFAULT_STRAINS.forEach(strain => {
                 let bud = 0;
-                Object.values(appState.stock).forEach(bucket => {
+                Object.entries(appState.stock).filter(([key]) => !bucketExcluded(key)).forEach(([, bucket]) => {
                     const c = bucket[strain.id];
                     if (c) bud += c.bricks * BRICK_SIZE + c.trimmed + c.untrimmed;
                 });
@@ -5844,6 +6068,7 @@
                         ${isIdle || isReady ? '' : `<div class="track"><div class="fill" style="width:${st.pct.toFixed(2)}%"></div></div>`}
                         <div class="eta"><span>${isReady ? 'Ready to harvest' : isIdle ? 'Not running' : escapeHtml(readyAtLabel(loc))}</span><span>${est ? `~${fmtBricks(est)} bricks` : ''}</span></div>
                         <div class="plan">${planPills(loc)}</div>
+                        <div class="text-[11px] text-slate-500 truncate" title="Where harvests go"><i class="fa-solid fa-warehouse mr-1"></i>Harvest → ${loc.storage ? 'on-site storage' : escapeHtml(bucketLabel(loc.stashTo))}</div>
                         ${acts ? `<div class="acts">${acts}</div>` : ''}
                     </div>`;
             }).join('');
@@ -6033,21 +6258,22 @@
             return restore;
         }
 
-        function harvestAndRestart(locId, amounts = {}, learned = []) {
+        function harvestAndRestart(locId, amounts = {}, learned = [], dest) {
             if (!allowed('timers', locKey(locId))) return;
             const loc = appState.locations.find(l => l.id === locId);
             if (!loc) return;
-            const bucket = locKey(locId);
+            const valid = harvestDestinations(loc);
+            const bucket = valid.some(b => b.key === dest) ? dest : defaultHarvestDest(loc, valid);
             const total = Object.values(amounts).reduce((sum, v) => sum + v, 0);
             const restore = timerRestore([loc]);
             learned.forEach(path => { restore[path] = null; });
             writeShared(timerChanges([loc], true));
             const logIt = () => {
-                logActivity({ kind: 'harvest', loc: bucket });
-                offerUndo({ perm: 'timers', bucket, kind: 'harvest', restore,
+                logActivity({ kind: 'harvest', loc: locKey(locId) });
+                offerUndo({ perm: 'timers', bucket: locKey(locId), kind: 'harvest', restore,
                     deltas: Object.entries(amounts).map(([strainId, amount]) => ({ bucket, strainId, field: 'untrimmed', delta: amount })),
                     text: total > 0
-                        ? `Added ${total.toLocaleString()} untrimmed to Postal ${locId}. New ${formatDuration(loc.durationHours)} cycle started.`
+                        ? `Added ${total.toLocaleString()} untrimmed from Postal ${locId} to ${bucket === locKey(locId) ? 'its on-site storage' : bucketLabel(bucket)}. New ${formatDuration(loc.durationHours)} cycle started.`
                         : `Postal ${locId} restarted. New ${formatDuration(loc.durationHours)} cycle started.` });
             };
             if (total === 0) return logIt();
@@ -6429,15 +6655,19 @@
             if (!tbody) return;
 
             if (badge) badge.innerText = `${appState.locations.length} Active`;
+            renderAdminStashes();
+            fillStashSelect('new-loc-stash', document.getElementById('new-loc-stash').value || STASH_KEY);
 
             tbody.innerHTML = appState.locations.map(loc => {
                 const isRunning = Boolean(loc.startTime);
+                const where = `${loc.storage ? '<span class="text-weed-300"><i class="fa-solid fa-box mr-1"></i>On site</span>' : `<span class="text-slate-400"><i class="fa-solid fa-warehouse mr-1"></i>${escapeHtml(bucketLabel(loc.stashTo))}</span>`}${loc.excludeTotals ? ' <i class="fa-solid fa-eye-slash text-slate-500" title="Left out of totals"></i>' : ''}`;
 
                 return `
                     <tr class="hover:bg-weed-950/30 transition-colors">
                         <td class="p-3 font-mono font-bold text-white">${escapeHtml(loc.id)}</td>
                         <td class="p-3 text-slate-300">${escapeHtml(loc.alias || 'N/A')}</td>
                         <td class="p-3 font-mono text-slate-300">${formatDuration(loc.durationHours)}</td>
+                        <td class="p-3 whitespace-nowrap">${where}</td>
                         <td class="p-3">
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${isRunning ? 'bg-weed-950 text-weed-400 border border-weed-700' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
                                 ${isRunning ? 'ACTIVE' : 'IDLE'}
@@ -6454,6 +6684,119 @@
                     </tr>
                 `;
             }).join('');
+        }
+
+        function stashChoices() {
+            return allInventoryBuckets().filter(b => b.kind === 'stash');
+        }
+
+        function fillStashSelect(id, value) {
+            const sel = document.getElementById(id);
+            if (!sel) return;
+            sel.innerHTML = stashChoices().map(b => `<option value="${escapeHtml(b.key)}">${escapeHtml(b.label)}</option>`).join('');
+            sel.value = stashChoices().some(b => b.key === value) ? value : STASH_KEY;
+        }
+
+        function renderAdminStashes() {
+            const tbody = document.getElementById('admin-stash-table-body');
+            if (!tbody) return;
+            const list = stashChoices();
+            document.getElementById('admin-stash-count-badge').innerText = `${list.length} ${list.length === 1 ? 'stash' : 'stashes'}`;
+            tbody.innerHTML = list.map(b => {
+                const bricks = bucketTotals(appState.stock[b.key]).bricks;
+                const feeding = appState.locations.filter(l => l.stashTo === b.key && !l.storage).map(l => l.id);
+                return `
+                    <tr class="hover:bg-weed-950/30 transition-colors">
+                        <td class="p-3 font-bold text-white"><i class="fa-solid fa-warehouse text-weed-500 mr-1"></i>${escapeHtml(b.label)}${b.key === STASH_KEY ? ' <span class="text-[10px] text-slate-500 font-normal">(built in)</span>' : ''}
+                            ${feeding.length ? `<span class="block text-[10px] text-slate-500 font-normal">Harvests from ${feeding.map(escapeHtml).join(', ')}</span>` : ''}</td>
+                        <td class="p-3 text-slate-300">${escapeHtml(b.alias || '—')}</td>
+                        <td class="p-3 font-mono text-slate-300">${bricks.toLocaleString()}</td>
+                        <td class="p-3"><button onclick="toggleBucketExcluded(${jsArg(b.key)})" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold border ${b.excluded ? 'bg-slate-900 text-slate-400 border-slate-700' : 'bg-weed-950 text-weed-400 border-weed-700'}" title="Click to switch">
+                            ${b.excluded ? '<i class="fa-solid fa-eye-slash mr-1"></i>LEFT OUT' : '<i class="fa-solid fa-eye mr-1"></i>COUNTED'}</button></td>
+                        <td class="p-3 text-right whitespace-nowrap">
+                            <button onclick="openEditStash(${jsArg(b.key)})" class="px-2.5 py-1 mr-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700 transition-all"><i class="fa-solid fa-pen mr-1"></i> Edit</button>
+                            ${b.key === STASH_KEY ? '' : `<button onclick="deleteStash(${jsArg(b.stashId)})" class="px-2.5 py-1 rounded bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold border border-red-800 transition-all"><i class="fa-solid fa-trash-can mr-1"></i> Delete</button>`}
+                        </td>
+                    </tr>`;
+            }).join('');
+        }
+
+        function newStashId() {
+            return `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+        }
+
+        function handleAddStash(e) {
+            e.preventDefault();
+            if (!allowed('admin')) return;
+            const nameInput = document.getElementById('new-stash-name');
+            const noteInput = document.getElementById('new-stash-note');
+            const name = nameInput.value.trim().replace(/\s+/g, ' ').slice(0, 40);
+            if (!name) return;
+            if (stashChoices().some(b => b.label.toLowerCase() === name.toLowerCase())) return showAlert(`There's already a stash called ${name}.`, 'warning');
+            const id = newStashId();
+            writeShared({ [`stashes/${id}`]: { name, note: noteInput.value.trim().slice(0, 60), excludeTotals: false, order: syncNow() } });
+            logActivity({ kind: 'locations', loc: stashKey(id) });
+            nameInput.value = '';
+            noteInput.value = '';
+            showAlert(`Stash house ${name} added.`, 'success');
+        }
+
+        function openEditStash(key) {
+            const b = stashChoices().find(x => x.key === key);
+            if (!b) return;
+            document.getElementById('edit-stash-key').value = key;
+            document.getElementById('edit-stash-name').value = b.label;
+            document.getElementById('edit-stash-note').value = b.alias || '';
+            document.getElementById('edit-stash-note-box').classList.toggle('hidden', key === STASH_KEY);
+            document.getElementById('edit-stash-exclude').checked = Boolean(b.excluded);
+            document.getElementById('edit-stash-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('edit-stash-name').select(), 50);
+        }
+
+        function saveEditStash(e) {
+            e.preventDefault();
+            if (!allowed('admin')) return;
+            const key = document.getElementById('edit-stash-key').value;
+            const name = document.getElementById('edit-stash-name').value.trim().replace(/\s+/g, ' ').slice(0, 40);
+            const note = document.getElementById('edit-stash-note').value.trim().slice(0, 60);
+            const excludeTotals = document.getElementById('edit-stash-exclude').checked;
+            if (!name) return;
+            if (stashChoices().some(b => b.key !== key && b.label.toLowerCase() === name.toLowerCase())) return showAlert(`There's already a stash called ${name}.`, 'warning');
+            if (key === STASH_KEY) {
+                writeShared({ 'settings/mainStash': { name, excludeTotals } });
+            } else {
+                const id = key.slice(STASH_PREFIX.length);
+                const x = appState.stashes.find(y => y.id === id);
+                if (!x) return showAlert('This stash house was deleted by someone else.', 'warning');
+                writeShared({ [`stashes/${id}/name`]: name, [`stashes/${id}/note`]: note, [`stashes/${id}/excludeTotals`]: excludeTotals });
+            }
+            logActivity({ kind: 'locations', loc: key });
+            document.getElementById('edit-stash-modal').classList.add('hidden');
+            showAlert(`${name} saved.`, 'success');
+        }
+
+        // Its stock moves to the Main Stash, and grow ops that sent harvests there now send them to the Main Stash
+        function deleteStash(id) {
+            if (!allowed('admin')) return;
+            const x = appState.stashes.find(y => y.id === id);
+            if (!x) return;
+            const key = stashKey(id);
+            const hasStock = bucketHasStock(appState.stock[key]);
+            if (!confirm(hasStock ? `Delete stash house ${x.name}? Its stock will be moved to ${mainStashName()}.` : `Delete stash house ${x.name}?`)) return;
+            const changes = { [`stashes/${id}`]: null };
+            appState.locations.filter(l => l.stashTo === key).forEach(l => { changes[locPath(l.id, 'stashTo')] = STASH_KEY; });
+            Object.entries(appState.crew).forEach(([memberId, member]) => {
+                if (isPlainObject(member.locations) && member.locations[key]) changes[`crew/${memberId}/locations/${key}`] = null;
+            });
+            writeShared(changes);
+            mutateStock(stock => {
+                mergeBucketInto(stock, key, STASH_KEY);
+                delete stock[key];
+                return { moved: true };
+            });
+            if (appState.selectedInvBucket === key) appState.selectedInvBucket = 'all';
+            logActivity({ kind: 'locations', loc: key });
+            showAlert(hasStock ? `${x.name} deleted. Its stock is now in ${mainStashName()}.` : `${x.name} deleted.`, 'info');
         }
 
         function handleAddNewLocation(e) {
@@ -6486,6 +6829,9 @@
                     startTime: null,
                     harvestAlertSent: false,
                     strainPots: {},
+                    storage: document.getElementById('new-loc-storage').checked,
+                    stashTo: document.getElementById('new-loc-stash').value || STASH_KEY,
+                    excludeTotals: false,
                     order: syncNow() // sorts after existing locations
                 }
             });
@@ -6493,6 +6839,7 @@
 
             idInput.value = '';
             aliasInput.value = '';
+            document.getElementById('new-loc-storage').checked = false;
             showAlert(`New grow location Postal ${id} added!`, 'success');
         }
 
@@ -6504,6 +6851,9 @@
             document.getElementById('edit-loc-alias').value = loc.alias || '';
             document.getElementById('edit-loc-hours').value = Math.floor(durationMinutes(loc) / 60);
             document.getElementById('edit-loc-minutes').value = durationMinutes(loc) % 60;
+            fillStashSelect('edit-loc-stash', loc.stashTo);
+            document.getElementById('edit-loc-storage').checked = loc.storage;
+            document.getElementById('edit-loc-exclude').checked = loc.excludeTotals;
             document.getElementById('edit-loc-error').classList.add('hidden');
             document.getElementById('edit-location-modal').classList.remove('hidden');
             setTimeout(() => document.getElementById('edit-loc-id').focus(), 50);
@@ -6532,7 +6882,10 @@
             if (newId !== originalId && appState.locations.some(l => l.id === newId)) return showError(`Postal ${newId} already exists.`);
 
             const record = buildSharedTree({ locations: [loc] }).locations[locKey(loc.id)];
-            const updated = { ...record, id: newId, alias, durationHours };
+            const storage = document.getElementById('edit-loc-storage').checked;
+            const stashTo = document.getElementById('edit-loc-stash').value || STASH_KEY;
+            const excludeTotals = document.getElementById('edit-loc-exclude').checked;
+            const updated = { ...record, id: newId, alias, durationHours, storage, stashTo, excludeTotals };
             const changes = {};
             if (newId !== originalId) {
                 changes[locPath(originalId)] = null;
@@ -6559,6 +6912,7 @@
             if (newId !== originalId) what.push(`Postal ${originalId} → ${newId}`);
             if (alias !== (loc.alias || '')) what.push(`alias "${alias || '—'}"`);
             if (minutesTotal !== durationMinutes(loc)) what.push(`${formatDuration(durationHours)} timer`);
+            if (storage !== loc.storage || stashTo !== loc.stashTo || excludeTotals !== loc.excludeTotals) what.push('storage');
             if (what.length) logActivity({ kind: 'locations', loc: locKey(newId), loc2: locKey(originalId) });
             closeEditLocation();
             showAlert(newId !== originalId ? `Postal ${originalId} is now Postal ${newId}.` : `Postal ${newId} updated.`, 'success');
@@ -6568,27 +6922,20 @@
             const bucket = locKey(locId);
             const hasStock = bucketHasStock(appState.stock[bucket]);
             const question = hasStock
-                ? `Delete grow location Postal ${locId}? Its stock will be moved to the Main Stash.`
+                ? `Delete grow location Postal ${locId}? Its stock will be moved to ${mainStashName()}.`
                 : `Are you sure you want to delete grow location Postal ${locId}?`;
             if (!confirm(question)) return;
 
             writeShared({ [locPath(locId)]: null });
-            // Nothing is lost: whatever this location held is added to the Main Stash
+            // Nothing is lost: whatever this location held (every product and supply) is added to the Main Stash
             mutateStock(stock => {
-                const from = isPlainObject(stock[bucket]) ? stock[bucket] : {};
-                if (!isPlainObject(stock[STASH_KEY])) stock[STASH_KEY] = {};
-                stock[STASH_KEY].coca = toCount(stock[STASH_KEY].coca) + toCount(from.coca);
-                DEFAULT_STRAINS.forEach(strain => {
-                    const moved = stockCell(stock, bucket, strain.id);
-                    const into = stockCell(stock, STASH_KEY, strain.id);
-                    INV_FIELDS.forEach(field => { into[field] += moved[field]; });
-                });
+                mergeBucketInto(stock, bucket, STASH_KEY);
                 delete stock[bucket];
                 return { moved: true };
             });
             if (appState.selectedInvBucket === bucket) appState.selectedInvBucket = 'all';
             logActivity({ kind: 'locations', loc: bucket });
-            showAlert(hasStock ? `Postal ${locId} deleted. Its stock is now in the Main Stash.` : `Location Postal ${locId} deleted.`, 'info');
+            showAlert(hasStock ? `Postal ${locId} deleted. Its stock is now in ${mainStashName()}.` : `Location Postal ${locId} deleted.`, 'info');
         }
 
         // Read an image file and downscale it so it fits comfortably in localStorage

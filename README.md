@@ -93,7 +93,7 @@ In **Admin → Crew** you can add crew members, each with a name and a 4-8 digit
 
 - Until the first crew member is added, anyone with the link can use everything.
 - Once there's at least one, everyone signs in with their name and PIN, and stays signed in on that device until they sign out (from **My Profile**).
-- Pick a role (Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, grow planner, sales / bricks out. You can also set their sales cut %. You can also limit which locations (and the Main Stash) they see.
+- Pick a role (Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, grow planner, sales / bricks out. You can also set their sales cut %. You can also limit which grow locations and stash houses they see.
 - **The Admin page isn't a crew permission.** It only opens with the admin password, through the small **Admin** link at the bottom right of every page. The Admin tab appears in the menu only while it's unlocked; click **Lock admin** in the same spot (or Logout on the Admin page) to hide it again. Unlocking lasts until that browser tab is closed. Anyone who had the old Admin role is now a Manager.
 - People with no permissions (Viewer) only see the dashboard stats: no locations, timers or activity.
 - **New people can sign themselves up:** on the sign-in screen they type a new name and PIN (twice) and get a profile as a **Viewer**, marked **New · needs review**. Admins see a badge on the Admin page; click **Review**, pick a role and save. Turn this off with **Let new people create their own profile** on the Crew tab.
@@ -111,9 +111,17 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 - **Bricks out:** the truck button on a strain (Inventory, by location) or **Log Bricks Out** on the Sales page records bricks leaving. It removes them from stock and adds them to the sales log (see **Sales & budget** below).
 - **Dashboard charts:** headline tiles for bricks on hand, potential bricks, everything out this week (split into weed, coke and meth) and bricks coming in over the next 24 hours; a **Made & Out** chart (made vs out per day, last 14 days, filterable to All, Weed, Coke or Meth) and **Stock by Product** (on hand + what can still be made, for every strain plus small/large coke bricks and meth bins). Hover a bar for details, or click **Table** to see the numbers.
 
+## Stash houses and storage
+
+- **Stash houses** hold bud, bricks, coke, meth and supplies. Add, rename or delete them in **Admin → Locations**. The built-in **Main Stash** can be renamed but not deleted. Deleting a stash house moves its stock to the Main Stash.
+- **Grow ops don't store stock by default.** Each grow location has a **Stash house** its harvests go to, plus an **On-site storage** switch for the few that do keep stock. The harvest form has a **Send to** picker that starts on the grow op's stash house, or on site if it has storage. Each Grow Timers card shows where its harvest goes.
+- A grow op without storage that still holds old stock keeps its Inventory tab, with a warning and a **Move everything to…** button (Undo works).
+- **Leave out of totals:** any stash house or grow op can be left out of the totals. Its stock still shows on its own tab, but it doesn't count toward the dashboard, the All tab, the charts, the daily history or Smart Balance. Switch it on the place's Inventory tab (anyone who can edit inventory), in the stash table, or in the grow location's Edit form. The All tab lists what isn't counted.
+- In **Admin → Crew**, stash houses can be given or kept from each person like grow locations.
+
 ## Coke and meth
 
-Each location also tracks:
+Each stash house (and grow op with storage) also tracks:
 
 - **Coke Bricks:** coca leaves are the raw stage (like untrimmed bud), plus three supplies: oil barrels, cement bags and battery acid. The card's **Supplies** section tracks all four. **Press small** or **Press large** uses up the recipe and makes one brick:
   - Small brick: 2000 coca leaves, 10 oil barrels, 40 cement bags, 25 battery acid.
