@@ -1753,6 +1753,7 @@
         // Logo files served from the repo. Strain logos live at logos/<strain id>.png
         const DEFAULT_MASTER_LOGO = 'NoelOpsLogo-web.jpg'; // small copy of NoelOpsLogo.png for fast loading
         const STRAIN_LOGO_DIR = 'logos';
+        const LOGO_VERSION = '2'; // bump when a logo file in the repo is replaced, so browsers drop the cached copy
         const UPLOADED_LOGO_MAX_PX = 256; // Uploads are downscaled so localStorage doesn't overflow
 
         const LEAF_SVG = `<svg class="w-8 h-8 fill-current text-weed-400 drop-shadow-[0_0_8px_hsl(var(--acc-h) 71% 45% / 0.6)]" viewBox="0 0 24 24">
@@ -3744,7 +3745,7 @@
         }
 
         function getStrainLogoSrc(strainId) {
-            return appState.badgeImages[strainId] || `${STRAIN_LOGO_DIR}/${strainId}.png`;
+            return appState.badgeImages[strainId] || `${STRAIN_LOGO_DIR}/${strainId}.png?v=${LOGO_VERSION}`;
         }
 
         function getStrainLogo(strainId) {
