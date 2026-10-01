@@ -47,7 +47,7 @@ The first browser to connect uploads its current data to the empty database, so 
 | Shared with everyone | Stays in each browser |
 |---|---|
 | Strain inventory and coca count | Uploaded logo overrides |
-| Grow locations, pot plans and timers | Selected planner tab |
+| Grow locations, pot plans and timers, meth cooks | Selected planner tab |
 | Discord webhook URL | Admin login |
 
 - Timers use the database server's clock, so every device counts down the same.
@@ -208,7 +208,18 @@ The **Crew** page shows everyone in the crew as cards or a list (switch with **C
 
 **History (admins only):** **Admin → History** keeps the full story the Live Activity feed leaves out on purpose: who changed what, how much, where and when (the newest 500 actions). Search for a strain, postal or amount, or filter by person or kind of action. Undone actions stay in the list, crossed out. Note that this is hidden in the site only: like everything else, it's stored in the shared database.
 
-**Menu and permissions:** each menu button only shows once someone has the permission for it: **Grows** needs timers or the grow planner, **Stash** needs inventory, **Log** needs the log-things-out permission, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
+**Menu and permissions:** each menu button only shows once someone has the permission for it: **Grows** needs timers or the grow planner, **Stash** needs inventory, **Log** needs the log-things-out permission, **Crew** and **Meth** show for every crew member, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
+
+## Meth page
+
+The **Meth** page is the crew's meth guide, built from Karna's Meth Guide (accurate as of 9/27/2026):
+
+- **In the stash:** how many meth bins the crew has, with a link to the Stash.
+- **What to grab:** pick a number of bins or bags and it works out the sodium, ammonia, hammers, baking soda, water and plastic bags, plus which yields to put down (high = 5, medium = 3, low = 1; 2 high yields make a bin).
+- **Cooks down:** when you put a yield down, add it here. Everyone sees it count down to the 18 to 24 hour window; it turns **Ready** after 24 hours and the Meth menu button shows how many are ready. Press **Collected** to take it off. Admins see these in History.
+- **How it's made** (the 5 steps, including the 1 · 3 · 3 mix), **Rules in the lab**, and **Places** (the Lab at 10102, the Blue Container at 9359 and Sodium at 10101).
+
+To update the guide text, edit the `tab-meth` section in `index.html`.
 
 ## Titles
 
@@ -235,6 +246,12 @@ The secret titles live in the site's code, which is public on GitHub, so someone
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 🧪 Oct 1, 2026: Meth page
+- New **Meth** page in the menu with the whole Meth Guide: the 5 steps, the 1 · 3 · 3 mix, the rules in the lab and the postals
+- **What to grab:** pick how many bins or bags and it tells you how much sodium, ammonia, baking soda, water, hammers and plastic bags you need
+- **Cooks down:** add a yield when you put it down so the crew can see when it's ready. The Meth button shows how many are ready to collect
+- Shows how many meth bins are in the stash
 
 ### 📊 Oct 1, 2026: Leaderboards and history
 - **Leaderboards** on the Crew page: top growers, most pressed, most gone out, longest streak, rarest titles and more

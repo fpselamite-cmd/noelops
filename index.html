@@ -540,6 +540,55 @@
         .mate-roles .role.more { color: #8a9a8e; background: transparent; border-style: dashed; cursor: pointer; }
         #admin-history-list tr.undone td { opacity: 0.5; }
         #admin-history-list tr.undone td:nth-child(3) { text-decoration: line-through; }
+        /* Meth page */
+        .mx-grid { display: grid; gap: 14px; }
+        @media (min-width: 900px) { .mx-top { grid-template-columns: 1fr 2fr; } }
+        .mx-card { padding: 18px; text-align: center; }
+        .mx-card h2 { font-family: 'Teko', sans-serif; font-size: 24px; line-height: 1; letter-spacing: .04em; color: #fff; text-transform: uppercase; margin-bottom: 4px; }
+        .mx-card h2 i { color: #67e8f9; margin-right: 6px; font-size: 18px; }
+        .mx-sub { font-size: 12px; color: #8a9a8e; margin-bottom: 12px; }
+        .mx-stock .logo { width: 84px; height: 84px; margin: 4px auto 6px; }
+        .mx-stock .big { font-family: 'JetBrains Mono', monospace; font-size: 46px; font-weight: 800; color: #67e8f9; line-height: 1; text-shadow: 0 0 22px rgba(34, 211, 238, .35); }
+        .mx-calc-in { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-bottom: 14px; }
+        .mx-calc-in .dx-input { width: 90px; text-align: center; font-size: 18px; font-weight: 800; padding: 6px 8px; }
+        .mx-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); gap: 8px; }
+        .mx-out > div { background: rgba(6, 10, 7, .6); border: 1px solid rgba(103, 232, 249, .16); border-radius: 12px; padding: 9px 6px; }
+        .mx-out .n { display: block; font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 800; color: #fff; line-height: 1.1; }
+        .mx-out .l { display: block; font-size: 11px; color: #8a9a8e; margin-top: 2px; }
+        .mx-out .l i { color: #67e8f9; margin-right: 3px; }
+        .mx-plan { margin-top: 10px; font-size: 13px; color: #cbd5d0; }
+        .mx-plan b { color: #67e8f9; }
+        .mx-cooks { display: grid; gap: 8px; margin-top: 12px; text-align: left; }
+        .mx-cook { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: rgba(6, 10, 7, .6); border: 1px solid rgba(103, 232, 249, .14); }
+        .mx-cook .what { flex: 1; min-width: 170px; font-size: 13px; color: #cbd5d0; }
+        .mx-cook .what small { display: block; color: #8a9a8e; font-size: 11px; }
+        .mx-pill { font-size: 11px; font-weight: 800; padding: 4px 9px; border-radius: 999px; white-space: nowrap; }
+        .mx-pill.cooking { color: #a5b4fc; background: rgba(99, 102, 241, .14); border: 1px solid rgba(129, 140, 248, .35); }
+        .mx-pill.maybe { color: #fde68a; background: rgba(245, 158, 11, .14); border: 1px solid rgba(251, 191, 36, .4); }
+        .mx-pill.ready { color: #67e8f9; background: rgba(34, 211, 238, .14); border: 1px solid rgba(103, 232, 249, .5); box-shadow: 0 0 14px rgba(34, 211, 238, .25); }
+        .mx-add { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; align-items: center; }
+        .mx-add .dx-input { width: auto; font-size: 13px; padding: 8px 10px; }
+        .mx-steps { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+        .mx-step { position: relative; padding: 18px 14px 14px; text-align: center; }
+        .mx-step .num { width: 34px; height: 34px; margin: 0 auto 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Teko', sans-serif; font-size: 22px; color: #04161a; background: linear-gradient(180deg, #a5f3fc, #22d3ee); box-shadow: 0 0 16px rgba(34, 211, 238, .35); }
+        .mx-step h3 { font-weight: 800; color: #fff; font-size: 14px; margin-bottom: 4px; }
+        .mx-step p { font-size: 12px; color: #a3b1a7; line-height: 1.5; }
+        .mx-step p b { color: #e2e8f0; }
+        .mx-133 { display: flex; justify-content: center; gap: 6px; margin: 8px 0 6px; }
+        .mx-133 span { min-width: 54px; padding: 6px 4px; border-radius: 10px; background: rgba(34, 211, 238, .1); border: 1px solid rgba(103, 232, 249, .35); font-size: 10px; color: #8a9a8e; }
+        .mx-133 span b { display: block; font-family: 'JetBrains Mono', monospace; font-size: 20px; color: #67e8f9; }
+        .mx-joke { font-size: 11px; color: #8a9a8e; font-style: italic; }
+        .mx-rules { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+        .mx-rule { padding: 16px 12px; text-align: center; }
+        .mx-rule > i { font-size: 22px; color: #67e8f9; margin-bottom: 8px; display: block; }
+        .mx-rule > b { display: block; color: #fff; font-size: 13px; margin-bottom: 4px; }
+        .mx-rule p { font-size: 12px; color: #a3b1a7; line-height: 1.45; }
+        .mx-rule p b { color: #e2e8f0; }
+        .mx-place .postal { font-family: 'JetBrains Mono', monospace; font-size: 30px; font-weight: 800; color: #67e8f9; line-height: 1.1; }
+        .mx-order { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+        .mx-order li { font-size: 11px; padding: 3px 8px; border-radius: 999px; background: rgba(6, 10, 7, .6); border: 1px solid rgba(103, 232, 249, .18); color: #cbd5d0; }
+        .mx-order li b { color: #67e8f9; margin-right: 3px; }
+        .mx-credit { text-align: center; font-size: 11px; color: #6b7a70; }
         .dx-crew-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
         .dx-crew-tools .dx-input { width: auto; min-width: 0; font-size: 13px; padding: 8px 10px; }
         .dx-crew-table .dx-act { flex: none; padding: 5px 10px; }
@@ -1123,6 +1172,11 @@
                             <i class="fa-solid fa-users"></i>
                             <span>Crew</span>
                         </button>
+                        <button onclick="switchTab('meth')" id="nav-meth" title="Meth: the cook, start to finish" data-page="meth" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <i class="fa-solid fa-flask"></i>
+                            <span>Meth</span>
+                            <span id="meth-ready-badge" class="hidden ml-1 px-1.5 py-0.5 text-xs rounded-full bg-cyan-950 text-cyan-300 border border-cyan-700" title="Cooks ready to collect">0</span>
+                        </button>
                         <button onclick="switchTab('sales')" id="nav-sales" title="Log: what went out" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-truck-fast"></i>
                             <span>Log</span>
@@ -1163,6 +1217,7 @@
                 <button onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grows</button>
                 <button onclick="switchTab('inventory'); toggleMobileMenu()" data-page="inventory" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
                 <button onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Crew</button>
+                <button onclick="switchTab('meth'); toggleMobileMenu()" data-page="meth" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Meth</button>
                 <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Log</button>
                 <button onclick="switchTab('admin'); toggleMobileMenu()" data-admin-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
                 <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
@@ -1353,6 +1408,102 @@
                 </div>
                 <div id="crew-stats" class="dx-crew-stats mb-5"></div>
                 <div id="crew-body"></div>
+            </section>
+
+            <section id="tab-meth" class="tab-content hidden space-y-5">
+                <div>
+                    <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-flask text-cyan-300 mr-2"></i>Meth</h1>
+                    <p class="text-xs text-slate-400 mt-1">The cook, start to finish: what to grab, what to do and the rules in the lab.</p>
+                </div>
+
+                <div class="mx-grid mx-top">
+                    <div class="dx-glass mx-card mx-stock">
+                        <h2><i class="fa-solid fa-box"></i>In the stash</h2>
+                        <div class="logo" id="meth-stock-logo"></div>
+                        <div class="big" id="meth-stock-num">0</div>
+                        <div class="mx-sub" id="meth-stock-sub">meth bins</div>
+                        <button class="dx-btn dx-btn-g" style="width:auto;padding:8px 14px" data-page="inventory" onclick="switchTab('inventory')"><i class="fa-solid fa-warehouse mr-1"></i>Open stash</button>
+                    </div>
+                    <div class="dx-glass mx-card">
+                        <h2><i class="fa-solid fa-calculator"></i>What to grab</h2>
+                        <p class="mx-sub">Everything is at the <b>Blue Container, 9359</b>. Pick how much you want to make.</p>
+                        <div class="mx-calc-in">
+                            <button class="dx-step px-3" onclick="methCalcStep(-1)" aria-label="Less"><i class="fa-solid fa-minus"></i></button>
+                            <input id="meth-calc-n" type="number" min="1" max="99" value="1" class="dx-input dx-mono" aria-label="How many" oninput="renderMethCalc()">
+                            <button class="dx-step px-3" onclick="methCalcStep(1)" aria-label="More"><i class="fa-solid fa-plus"></i></button>
+                            <div class="dx-seg"><button id="meth-unit-bins" class="on" onclick="setMethUnit('bins')">Bins</button><button id="meth-unit-bags" onclick="setMethUnit('bags')">Bags</button></div>
+                        </div>
+                        <div class="mx-out" id="meth-calc-out"></div>
+                        <p class="mx-plan" id="meth-calc-plan"></p>
+                    </div>
+                </div>
+
+                <div class="dx-glass mx-card">
+                    <h2><i class="fa-solid fa-fire-burner"></i>Cooks down</h2>
+                    <p class="mx-sub">Put a yield down? Add it here so the crew knows when it's ready. They take <b>18 to 24 hours</b>.</p>
+                    <div class="mx-add" id="meth-add">
+                        <select id="meth-cook-size" class="dx-input" aria-label="Yield">
+                            <option value="5">High yield (5)</option>
+                            <option value="3">Medium yield (3)</option>
+                            <option value="1">Low yield (1)</option>
+                        </select>
+                        <select id="meth-cook-count" class="dx-input" aria-label="How many">
+                            <option value="1">×1</option><option value="2">×2</option><option value="3">×3</option><option value="4">×4</option>
+                        </select>
+                        <button class="dx-btn dx-btn-g" style="width:auto;padding:8px 14px" onclick="addMethCook()"><i class="fa-solid fa-plus mr-1"></i>Put down</button>
+                    </div>
+                    <div class="mx-cooks" id="meth-cooks"></div>
+                </div>
+
+                <div>
+                    <div class="dx-sec"><h2>How it's made</h2></div>
+                    <div class="mx-steps">
+                        <div class="dx-glass mx-step"><div class="num">1</div><h3>Put it down</h3>
+                            <p>Put down <b>Sodium + Ammonia</b> at the first station. Low yield is 1 of each, medium is 3, high is <b>5</b>. Always go high when you can. Wait <b>18 to 24 hours</b>.</p></div>
+                        <div class="dx-glass mx-step"><div class="num">2</div><h3>Collect the trays</h3>
+                            <p>Come back to the <b>same station</b> and collect <b>1 to 5 trays</b> of meth.</p></div>
+                        <div class="dx-glass mx-step"><div class="num">3</div><h3>Smash</h3>
+                            <p>Second station, <b>other side of the shelves</b>. Use 1 to 5 hammers. About <b>1 minute</b> later you get the hammer back and a tray of smashed meth.</p></div>
+                        <div class="dx-glass mx-step"><div class="num">4</div><h3>Mix at the Laboratory</h3>
+                            <p>The <b>large cooker at the front</b>. Each time, exactly:</p>
+                            <div class="mx-133"><span><b>1</b>tray</span><span><b>3</b>water</span><span><b>3</b>baking soda</span></div>
+                            <p>Gives <b>3 refined meth</b>. Not more, not less.</p>
+                            <p class="mx-joke">*cough cough* Jay</p></div>
+                        <div class="dx-glass mx-step"><div class="num">5</div><h3>Bag &amp; bin</h3>
+                            <p>Back-left corner station. <b>3 refined + 1 plastic bag = 1 bag</b> (1kg), up to 10 at a time. <b>10 bags = 1 bin</b>. Can't make a bin yet? Leave the bags in the <b>last weapon box at 9359</b>.</p></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="dx-sec"><h2>Rules in the lab</h2></div>
+                    <div class="mx-rules">
+                        <div class="dx-glass mx-rule"><i class="fa-solid fa-user-group"></i><b>Never cook alone</b><p>Bring at least one other person, inside or outside. Don't both cook at the same time.</p></div>
+                        <div class="dx-glass mx-rule"><i class="fa-solid fa-link"></i><b>Wear your chain</b><p>Your Chosen chain stays visible the whole time you're in the lab.</p></div>
+                        <div class="dx-glass mx-rule"><i class="fa-solid fa-gun"></i><b>Carry a gun</b><p>Doesn't have to be a long gun. Meth is not a safe space.</p></div>
+                        <div class="dx-glass mx-rule"><i class="fa-solid fa-scale-balanced"></i><b>Pick your battles</b><p>Someone solo walks in? Ask them to wait. A group with long guns? Leave and tell High Table.</p></div>
+                        <div class="dx-glass mx-rule"><i class="fa-solid fa-walkie-talkie"></i><b>Radio callsign</b><p>Set it to <b>Meth</b> in white on associate radio, or <b>Sodium</b> when collecting sodium.</p></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="dx-sec"><h2>Places</h2></div>
+                    <div class="mx-rules">
+                        <div class="dx-glass mx-card mx-place"><h2><i class="fa-solid fa-flask-vial"></i>The Lab</h2><div class="postal">10102</div>
+                            <p class="mx-sub" style="margin:4px 0 0">Near LS Trucking Logistics. Go in through the shell door.</p></div>
+                        <div class="dx-glass mx-card mx-place"><h2><i class="fa-solid fa-box-archive"></i>Blue Container</h2><div class="postal">9359</div>
+                            <p class="mx-sub" style="margin:4px 0 0">Behind the buildings. Supplies and finished bins. Containers in order:</p>
+                            <ol class="mx-order"><li><b>1</b>Sodium</li><li><b>2</b>Empty containers</li><li><b>3</b>Ammonia</li><li><b>4</b>Baking soda &amp; plastic bags</li><li><b>5</b>Water</li><li><b>6</b>Hammers</li><li><b>7</b>Finished bags &amp; bins</li></ol></div>
+                        <div class="dx-glass mx-card mx-place"><h2><i class="fa-solid fa-droplet"></i>Sodium</h2><div class="postal">10101</div>
+                            <p class="mx-sub" style="margin:4px 0 0">Fill the plastic containers with sodium and get paid for it. Ask a Chosen member to show you the spot.</p></div>
+                    </div>
+                </div>
+
+                <div class="mx-rules">
+                    <div class="dx-glass mx-rule"><i class="fa-solid fa-warehouse"></i><b>Where bins go</b><p>Finished bins go to the <b>Blue Container at 9359</b> first. If Tempest's basement is low, move <b>3 or 4 bins at most</b> at a time. Keep as little as possible in the basement in case of raids.</p></div>
+                    <div class="dx-glass mx-rule"><i class="fa-solid fa-calendar-check"></i><b>The easy routine</b><p>Put down <b>4 high yields every 4 days</b>. That's 20 bags, so <b>2 bins</b>. Twice a week, about an hour at the lab.</p></div>
+                </div>
+
+                <p class="mx-credit">From the Meth Guide by Karna Karuso of The Chosen, accurate as of 9/27/2026.</p>
             </section>
 
             <section id="tab-login" class="tab-content hidden">
@@ -2307,6 +2458,7 @@
             titles: {}, // Shared: unlocked titles { [statKey(person key)]: { [title id]: ts } }
             fxSettings: null, // Shared: which effects are on for everyone, the stamp word and harvest ranks (see FX_DEFAULTS)
             sales: [], // Shared: bricks going out, newest first
+            cooks: [], // Shared: meth yields put down [{ id, who, size, ts }]
             audit: [], // Shared: detailed history for admins [{ id, who, kind, text, loc, ts, undone }], newest first
             ledger: [], // Shared: budget entries (payouts to crew, expenses), newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
@@ -2609,6 +2761,7 @@
                 titles: JSON.parse(JSON.stringify(state.titles || {})),
                 sales: Object.fromEntries((state.sales || []).map(({ id, ...record }) => [id, record])),
                 audit: Object.fromEntries((state.audit || []).map(({ id, ...record }) => [id, record])),
+                cooks: Object.fromEntries((state.cooks || []).map(({ id, ...record }) => [id, record])),
                 ledger: Object.fromEntries((state.ledger || []).map(({ id, ...record }) => [id, record]))
             };
         }
@@ -2650,6 +2803,7 @@
             });
             appState.sales = Object.entries(isPlainObject(tree.sales) ? tree.sales : {}).map(([id, record]) => ({ ...record, id }));
             appState.audit = Object.entries(isPlainObject(tree.audit) ? tree.audit : {}).map(([id, record]) => ({ ...record, id }));
+            appState.cooks = Object.entries(isPlainObject(tree.cooks) ? tree.cooks : {}).filter(([, x]) => isPlainObject(x)).map(([id, record]) => ({ ...record, id }));
             normalizeState();
         }
 
@@ -3201,6 +3355,108 @@
             }, 60);
             setTimeout(() => { if (crewFocus === name) { crewFocus = null; renderCrewPage(); } }, 4000);
         }
+
+        // Meth page: what to grab for a cook, yields that are down, and the guide
+        const METH_COOK_MIN_H = 18, METH_COOK_MAX_H = 24;
+        const METH_SIZES = { 5: 'High', 3: 'Medium', 1: 'Low' };
+        let methUnit = 'bins';
+
+        function setMethUnit(unit) {
+            methUnit = unit;
+            document.getElementById('meth-unit-bins').classList.toggle('on', unit === 'bins');
+            document.getElementById('meth-unit-bags').classList.toggle('on', unit === 'bags');
+            renderMethCalc();
+        }
+
+        function methCalcStep(d) {
+            const input = document.getElementById('meth-calc-n');
+            input.value = Math.max(1, Math.min(99, (parseInt(input.value, 10) || 0) + d));
+            renderMethCalc();
+        }
+
+        // 1 bag = 1 sodium + 1 ammonia → 1 tray → 3 water + 3 baking soda → 3 refined + 1 plastic bag
+        function methMaterials(bags) {
+            bags = Math.max(0, Math.floor(bags) || 0);
+            const high = Math.floor(bags / 5), rest = bags % 5;
+            const yields = { high, medium: Math.floor(rest / 3), low: rest % 3 };
+            return { bags, bins: bags / 10, sodium: bags, ammonia: bags, hammers: Math.min(bags, 5), soda: bags * 3, water: bags * 3, plastic: bags, yields };
+        }
+
+        function renderMethCalc() {
+            const out = document.getElementById('meth-calc-out');
+            if (!out) return;
+            const n = Math.max(0, Math.min(99, parseInt(document.getElementById('meth-calc-n').value, 10) || 0));
+            const m = methMaterials(methUnit === 'bins' ? n * 10 : n);
+            const cell = (num, label, icon) => `<div><span class="n">${num}</span><span class="l"><i class="fa-solid fa-${icon}"></i>${label}</span></div>`;
+            out.innerHTML = cell(m.sodium, 'Sodium', 'droplet') + cell(m.ammonia, 'Ammonia', 'flask') + cell(m.hammers, 'Hammers', 'hammer') +
+                cell(m.soda, 'Baking soda', 'cube') + cell(m.water, 'Water', 'bottle-water') + cell(m.plastic, 'Plastic bags', 'bag-shopping');
+            const y = m.yields;
+            const parts = [[y.high, 'high'], [y.medium, 'medium'], [y.low, 'low']].filter(([c]) => c).map(([c, s]) => `<b>${c}</b> ${s} yield${c === 1 ? '' : 's'}`);
+            const makes = methUnit === 'bins' ? `${m.bags} bags` : m.bags >= 10 ? `${Math.floor(m.bins)} bin${Math.floor(m.bins) === 1 ? '' : 's'}${m.bags % 10 ? ` + ${m.bags % 10} bags` : ''}` : `${m.bags} bag${m.bags === 1 ? '' : 's'}`;
+            document.getElementById('meth-calc-plan').innerHTML = m.bags
+                ? `Put down ${parts.join(' + ')} (${makes}). Hammers come back after each smash, so 5 is plenty.`
+                : 'Pick how many to make.';
+        }
+
+        function methCookState(c, now) {
+            const ts = Number(c.ts) || now;
+            const h = (now - ts) / 3600000;
+            if (h >= METH_COOK_MAX_H) return { cls: 'ready', text: 'Ready', ready: true };
+            if (h >= METH_COOK_MIN_H) return { cls: 'maybe', text: 'Might be ready', ready: false };
+            const left = METH_COOK_MIN_H - h;
+            return { cls: 'cooking', text: `Cooking · ${left >= 1 ? `${Math.ceil(left)}h` : `${Math.max(1, Math.ceil(left * 60))}m`} to go`, ready: false };
+        }
+
+        function renderMethPage() {
+            const now = Date.now();
+            const cooks = (appState.cooks || []).slice().sort((a, b) => (Number(a.ts) || 0) - (Number(b.ts) || 0));
+            const readyCount = cooks.filter(c => methCookState(c, now).ready).length;
+            const badge = document.getElementById('meth-ready-badge');
+            if (badge) { badge.textContent = readyCount; badge.classList.toggle('hidden', !readyCount); }
+            const page = document.getElementById('tab-meth');
+            if (!page || page.classList.contains('hidden')) return;
+            document.getElementById('meth-stock-logo').innerHTML = getStrainLogo('meth');
+            const bins = (appState.products && appState.products.meth) || 0;
+            document.getElementById('meth-stock-num').textContent = bins.toLocaleString();
+            document.getElementById('meth-stock-sub').textContent = bins === 1 ? 'meth bin' : 'meth bins';
+            renderMethCalc();
+            const box = document.getElementById('meth-cooks');
+            box.innerHTML = cooks.length ? cooks.map(c => {
+                const st = methCookState(c, now);
+                const size = [5, 3, 1].includes(Number(c.size)) ? Number(c.size) : 5;
+                const when = new Date(Number(c.ts) || now).toLocaleString([], { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+                return `<div class="mx-cook"><div class="what"><b>${METH_SIZES[size]} yield</b> (${size} bag${size === 1 ? '' : 's'}) · ${nameHtml(c.who || 'Someone')}<small>Put down ${escapeHtml(when)}</small></div>
+                    <span class="mx-pill ${st.cls}">${st.text}</span>
+                    <button class="dx-step px-3" onclick="collectMethCook('${escapeHtml(c.id)}')" title="Collected or gone: take it off the list"><i class="fa-solid fa-check mr-1"></i>Collected</button></div>`;
+            }).join('') : '<p class="mx-sub" style="text-align:center;margin:6px 0 0">Nothing down right now.</p>';
+        }
+
+        function addMethCook() {
+            const size = Number(document.getElementById('meth-cook-size').value) || 5;
+            const count = Math.max(1, Math.min(4, Number(document.getElementById('meth-cook-count').value) || 1));
+            const changes = {};
+            for (let i = 0; i < count; i++) {
+                const id = newActivityId();
+                const record = { who: appState.crewName || 'Someone', size, ts: timestampValue() };
+                changes[`cooks/${id}`] = record;
+                appState.cooks.push({ ...record, id, ts: Date.now() });
+            }
+            writeShared(changes);
+            auditLog({ kind: 'meth', text: `Put down ${count > 1 ? `${count} ` : 'a '}${METH_SIZES[size].toLowerCase()} yield${count > 1 ? 's' : ''}` });
+            showAlert(`${count > 1 ? `${count} ${METH_SIZES[size].toLowerCase()} yields` : `${METH_SIZES[size]} yield`} down. Ready in 18 to 24 hours.`, 'success');
+            renderMethPage();
+        }
+
+        function collectMethCook(id) {
+            const c = appState.cooks.find(x => x.id === id);
+            if (!c) return;
+            appState.cooks = appState.cooks.filter(x => x.id !== id);
+            writeShared({ [`cooks/${id}`]: null });
+            auditLog({ kind: 'meth', text: `Collected a ${(METH_SIZES[Number(c.size)] || 'High').toLowerCase()} yield` });
+            renderMethPage();
+        }
+
+        setInterval(renderMethPage, 60000);
 
         function renderCrewPage() {
             const body = document.getElementById('crew-body');
@@ -5214,6 +5470,7 @@
             if (tabId === 'admin' && !hasAdminAccess()) tabId = 'login';
             if (tabId !== 'admin' && tabId !== 'login' && !pageAllowed(tabId)) tabId = 'dashboard';
             if (tabId === 'crew') setTimeout(renderCrewPage);
+            if (tabId === 'meth') setTimeout(renderMethPage);
             notePageVisit(tabId);
             if (tabId === 'sales' && !can('sales')) tabId = 'dashboard';
             if (tabId === 'sales') salesShown = SALES_PAGE_SIZE;
@@ -5241,7 +5498,7 @@
             if (page === 'inventory') return can('inventory');
             if (page === 'timers' || page === 'planner') return can('timers') || can('planner');
             if (page === 'sales') return can('sales');
-            return true; // crew
+            return true; // crew, meth
         }
 
         function applyPageAccess() {
@@ -5279,6 +5536,7 @@
             renderProfileEarnings();
             renderAdminFx();
             renderCrewPage();
+            renderMethPage();
             if (Sync.mode !== 'cloud') titlesReady = true;
             checkMyTitles();
             announceMyTitles();
