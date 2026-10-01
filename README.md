@@ -184,6 +184,18 @@ The button with your picture and name in the top right (or **My Profile** in the
 
 For crew members, everything is saved to their profile and follows them to any device. Without crew sign-in (or when signed in with the admin password) it's saved on that device only, and there's no PIN to change. Admins editing someone in **Admin → Crew** keep that person's picture and settings. Everything except name color only changes what you see.
 
+## Effects
+
+Little touches that make the site feel alive:
+
+- **Living plants:** the leaf on a growing timer sways; a ready grow pulses with a purple grow-light halo and the **Grows** badge pings.
+- **Celebrations:** leaves float up when you harvest, a brick stamps down when you press one, and a stamp (SENT by default) lands when you log something going out.
+- **Smoke in the header**, **rolling numbers** (counts roll to their new number and flash when they change), **holo sticker cards** on the dashboard and **strain glow** when you hover a card.
+- **Harvest ranks:** a badge next to names in Who's online, the crew list and My Profile. By default Seedling at 10 harvests, Grower at 50 and Kingpin at 100.
+- **Friendly empty states** with a leaf drawing and a next step when there's nothing to show yet.
+
+Admins set what's on for everyone, the stamp word and the rank names and harvest counts in **Admin → Effects**. Each person can turn effects off for themselves in **My Profile → Look → Effects**, and **Reduce motion** turns them all off.
+
 ## Hosting on GitHub Pages
 
 1. In the GitHub repo, open **Settings → Pages**.
@@ -198,6 +210,13 @@ For crew members, everything is saved to their profile and follows them to any d
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### ✨ Oct 1, 2026: Effects
+- Grow timers come alive: leaves sway, ready grows pulse purple and the **Grows** badge pings
+- Leaves burst when you harvest, a brick stamps down when you press, and a **SENT** stamp lands when something goes out
+- Smoke drifts through the header, numbers roll when they change, and dashboard cards get a holo foil shine and glow in their strain color
+- **Harvest ranks** next to your name: Seedling, Grower, Kingpin
+- Admins can tweak all of it in **Admin → Effects**, and you can turn any of it off in **My Profile → Look**
 
 ### 💜 Oct 1, 2026: Grow Light look
 - New header: purple grow-light glow with a neon green underline on the page you're on

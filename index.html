@@ -154,6 +154,57 @@
         body.dx-compact .dx-inv-top .big { font-size: 26px; }
         body.dx-compact .dx-inv-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
 
+        /* ---------- Effects (each can be switched off by an admin for everyone, or by a person in My Profile) ---------- */
+        /* 1 Living plants: growing leaves sway; a ready grow gets a purple grow-light halo; the Grows badge pings */
+        @keyframes fxSway { 0%, 100% { rotate: -5deg; } 50% { rotate: 5deg; } }
+        @keyframes fxHalo { 0%, 100% { box-shadow: 0 0 0 0 hsl(var(--gl) / 0), 0 0 18px hsl(var(--acc-h) 71% 45% / 0.25); } 50% { box-shadow: 0 0 0 6px hsl(var(--gl) / 0.18), 0 0 36px hsl(var(--gl) / 0.55); } }
+        @keyframes fxPing { 0% { box-shadow: 0 0 0 0 hsl(var(--acc-h) 69% 58% / 0.75); } 100% { box-shadow: 0 0 0 10px hsl(var(--acc-h) 69% 58% / 0); } }
+        body:not(.fx-off-plants) .dx-tc.running .bigpot i, body:not(.fx-off-plants) .dx-gb.running .pot i { animation: fxSway 3.6s ease-in-out infinite; }
+        body:not(.fx-off-plants) .dx-tc.ready, body:not(.fx-off-plants) .dx-gb.ready { animation: fxHalo 2.4s ease-in-out infinite; }
+        body:not(.fx-off-plants) .gl-nav #active-timers-badge.fx-ping { background: hsl(var(--acc-h) 71% 45%); color: #04140a; border-color: transparent; animation: fxPing 1.6s ease-out infinite; }
+        /* 2 Celebrations: leaves float up, a brick stamps down, a stamp lands */
+        .fx-layer { position: fixed; inset: 0; pointer-events: none; z-index: 120; overflow: hidden; }
+        .fx-leaf { position: absolute; color: hsl(var(--acc-h) 69% 62%); filter: drop-shadow(0 0 6px hsl(var(--acc-h) 71% 45%)); animation: fxRise 1.4s ease-out forwards; }
+        @keyframes fxRise { 0% { opacity: 1; transform: translate(-50%, -50%) rotate(0) scale(0.6); } 100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--r)) scale(1.1); } }
+        .fx-brick { position: absolute; width: 58px; height: 36px; margin: -18px 0 0 -29px; border-radius: 6px; background: linear-gradient(180deg, hsl(var(--acc-h) 69% 62%), hsl(var(--acc-h) 76% 30%)); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35), 0 5px 0 rgba(0, 0, 0, 0.6), 0 0 18px hsl(var(--acc-h) 71% 45% / 0.6); display: grid; place-items: center; font: 800 11px 'JetBrains Mono', monospace; color: #04140a; animation: fxThud 1.3s cubic-bezier(.3, 1.6, .6, 1) forwards; }
+        @keyframes fxThud { 0% { transform: translateY(-80px) scale(1.1); opacity: 0; } 35% { transform: translateY(3px) scale(1.05, 0.9); opacity: 1; } 50% { transform: none; } 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-6px); } }
+        .fx-stamp { position: absolute; transform: translate(-50%, -50%) rotate(-12deg); font: 900 34px 'Inter', sans-serif; letter-spacing: 0.12em; color: #f87171; border: 4px solid #f87171; border-radius: 10px; padding: 2px 16px; background: rgba(5, 8, 6, 0.55); text-shadow: 0 0 12px rgba(248, 113, 113, 0.5); animation: fxStamp 1.5s cubic-bezier(.2, 1.6, .5, 1) forwards; white-space: nowrap; }
+        @keyframes fxStamp { 0% { opacity: 0; scale: 2.2; } 25% { opacity: 0.95; scale: 1; } 75% { opacity: 0.95; scale: 1; } 100% { opacity: 0; scale: 1; } }
+        /* 3 Smoke drifting through the header */
+        #fx-smoke { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .gl-header > div { position: relative; z-index: 1; }
+        /* 4 Rolling numbers */
+        .fx-odo { display: inline-flex; vertical-align: top; border-radius: 6px; animation: fxFlash 1.2s ease-out; }
+        .fx-odo .d { display: inline-block; height: 1.15em; overflow: hidden; }
+        .fx-odo .d > span { display: block; transition: transform 0.8s cubic-bezier(.2, .9, .2, 1); }
+        .fx-odo .d b { display: block; height: 1.15em; line-height: 1.15em; font-weight: inherit; }
+        @keyframes fxFlash { 0% { background: rgba(253, 230, 138, 0.22); box-shadow: 0 0 22px rgba(253, 230, 138, 0.4); } 100% { background: transparent; box-shadow: none; } }
+        /* 5 Holographic sticker cards (dashboard) */
+        .dx-sc.fx-holo { transform-style: preserve-3d; transition: transform 0.15s ease-out, border-color 0.4s, box-shadow 0.4s; }
+        .fx-holo .fx-foil, .fx-holo .fx-glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.3s; z-index: 2; }
+        .fx-holo .fx-foil { mix-blend-mode: color-dodge; background: linear-gradient(115deg, transparent 30%, rgba(255, 0, 170, 0.5) 40%, rgba(0, 255, 230, 0.5) 47%, rgba(255, 240, 0, 0.5) 54%, transparent 64%); background-size: 220% 220%; background-position: var(--px, 50%) var(--py, 50%); }
+        .fx-holo .fx-glare { background: radial-gradient(circle at var(--px, 50%) var(--py, 30%), rgba(255, 255, 255, 0.28), transparent 45%); }
+        body:not(.fx-off-holo) .fx-holo:hover .fx-foil { opacity: 0.45; }
+        body:not(.fx-off-holo) .fx-holo:hover .fx-glare { opacity: 1; }
+        /* 6 Strain-colored glow on hover */
+        body:not(.fx-off-glow) .dx-tint:hover { border-color: rgba(var(--tint), 0.9); box-shadow: 0 0 0 1px rgba(var(--tint), 0.5), 0 10px 36px -6px rgba(var(--tint), 0.7); }
+        body:not(.fx-off-glow) .dx-tint:hover .logo img, body:not(.fx-off-glow) .dx-tint:hover > img { filter: drop-shadow(0 0 12px rgba(var(--tint), 0.75)); }
+        /* 8 Harvest rank badges */
+        .fx-rank, .dx-person .who .fx-rank { display: inline-flex; align-items: center; gap: 4px; font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px 2px 6px; border-radius: 99px; border: 1px solid; white-space: nowrap; vertical-align: middle; line-height: 1.4; }
+        .fx-rank.t1, .dx-person .who .fx-rank.t1 { color: #86efac; border-color: #166534; background: rgba(5, 46, 22, 0.6); }
+        .fx-rank.t2, .dx-person .who .fx-rank.t2 { color: #e9d5ff; border-color: hsl(var(--gl) / 0.6); background: rgba(88, 28, 135, 0.35); }
+        .fx-rank.t3, .dx-person .who .fx-rank.t3 { color: #1c1402; border-color: #fde68a; background: linear-gradient(180deg, #fde047, #ca8a04); box-shadow: 0 0 12px rgba(250, 204, 21, 0.45); }
+        /* 9 Friendly empty states */
+        .fx-empty { display: grid; justify-items: center; gap: 6px; text-align: center; padding: 22px 16px; border: 1px dashed hsl(var(--acc-h) 69% 58% / 0.3); border-radius: 16px; }
+        .fx-empty .art { position: relative; width: 90px; height: 64px; color: hsl(var(--acc-h) 69% 58% / 0.8); }
+        .fx-empty .art i { position: absolute; }
+        .fx-empty .art i:nth-child(1) { left: 6px; top: 22px; font-size: 26px; rotate: -24deg; opacity: 0.45; }
+        .fx-empty .art i:nth-child(2) { left: 28px; top: 0; font-size: 38px; filter: drop-shadow(0 0 10px hsl(var(--acc-h) 71% 45% / 0.6)); }
+        .fx-empty .art i:nth-child(3) { left: 58px; top: 22px; font-size: 26px; rotate: 22deg; opacity: 0.45; }
+        .fx-empty b { font-size: 15px; color: #f1f5f2; }
+        .fx-empty p { margin: 0; font-size: 12.5px; color: #8a9a8e; line-height: 1.5; max-width: 42ch; }
+        .fx-empty .dx-btn { width: auto; margin-top: 6px; padding: 9px 16px; }
+
         /* Reduce motion */
         body.dx-calm *, body.dx-calm *::before, body.dx-calm *::after { animation: none !important; transition: none !important; }
         body.dx-calm .dx-gb.ready .pot::before { display: none; }
@@ -1083,6 +1134,7 @@
                     <button class="dx-tab" data-admin-tab="logos" onclick="showAdminTab('logos')"><i class="fa-solid fa-image"></i>Logos</button>
                     <button class="dx-tab" data-admin-tab="products" onclick="showAdminTab('products')"><i class="fa-solid fa-flask"></i>Products</button>
                     <button class="dx-tab" data-admin-tab="sales" onclick="showAdminTab('sales')"><i class="fa-solid fa-truck-fast"></i>Sales</button>
+                    <button class="dx-tab" data-admin-tab="effects" onclick="showAdminTab('effects')"><i class="fa-solid fa-wand-magic-sparkles"></i>Effects</button>
                     <button class="dx-tab" data-admin-tab="data" onclick="showAdminTab('data')"><i class="fa-solid fa-database"></i>Data &amp; Backups</button>
                 </div>
 
@@ -1413,6 +1465,18 @@
                 </div>
                 </div>
 
+                <div data-admin-panel="effects" class="space-y-6">
+                    <div class="dx-glass dx-admin-card space-y-4">
+                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                            <div><h2 class="font-bold text-white text-base">Effects</h2>
+                                <p class="text-xs text-slate-400">Turn effects on or off for everyone. Each person can also turn them off for themselves in My Profile → Look.</p></div>
+                        </div>
+                        <div id="admin-fx" class="space-y-5"></div>
+                        <button onclick="saveAdminFx()" class="dx-btn dx-btn-g" style="width:auto;padding:9px 18px"><i class="fa-solid fa-floppy-disk mr-1"></i> Save Effects</button>
+                    </div>
+                </div>
+
                 <div data-admin-panel="data" class="space-y-6">
                 <!-- Data Backup & Reset Tools -->
                 <div class="dx-glass dx-admin-card space-y-4">
@@ -1599,7 +1663,13 @@
                 <label class="dx-toggle"><input type="checkbox" id="profile-compact" onchange="saveMyProfile({ compact: this.checked })"><span class="sw"></span>
                     <span><b>Compact cards</b><small>Smaller strain cards and logos, so more fits on screen.</small></span></label>
                 <label class="dx-toggle"><input type="checkbox" id="profile-calm" onchange="saveMyProfile({ calm: this.checked })"><span class="sw"></span>
-                    <span><b>Reduce motion</b><small>Turns off the timer animations, pulsing and glows.</small></span></label>
+                    <span><b>Reduce motion</b><small>Turns off the timer animations, pulsing, glows and every effect below.</small></span></label>
+            </div>
+
+            <div class="dx-pf-sec space-y-3">
+                <h3>Effects</h3>
+                <p class="text-[11px] text-slate-500">Only changes what you see.</p>
+                <div id="profile-fx" class="space-y-3"></div>
             </div>
             </div>
 
@@ -1940,6 +2010,7 @@
             activity: [], // Shared activity feed, newest first
             yields: {}, // Shared: real harvest yields per strain, used for estimates
             stats: {}, // Shared per-person counters: { [statKey(person key)]: { harvests, bud } }
+            fxSettings: null, // Shared: which effects are on for everyone, the stamp word and harvest ranks (see FX_DEFAULTS)
             sales: [], // Shared: bricks going out, newest first
             ledger: [], // Shared: budget entries (payouts to crew, expenses), newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
@@ -2056,6 +2127,7 @@
                     note: typeof x.note === 'string' ? x.note.slice(0, 60) : '', excludeTotals: x.excludeTotals === true,
                     order: Number.isFinite(Number(x.order)) ? Number(x.order) : idx }))
                 .sort((a, b) => a.order - b.order);
+            appState.fxSettings = cleanFxSettings(appState.fxSettings);
             const ms = isPlainObject(appState.mainStash) ? appState.mainStash : {};
             appState.mainStash = { name: typeof ms.name === 'string' && ms.name.trim() ? ms.name.trim().slice(0, 40) : 'Main Stash', excludeTotals: ms.excludeTotals === true };
             // A harvest destination that no longer exists falls back to the Main Stash
@@ -2214,6 +2286,7 @@
                 stashes: Object.fromEntries((state.stashes || []).map(({ id, ...record }) => [id, record])),
                 settings: {
                     mainStash: { ...(state.mainStash || { name: 'Main Stash', excludeTotals: false }) },
+                    fx: JSON.parse(JSON.stringify(state.fxSettings || FX_DEFAULTS)),
                     webhookUrl: state.webhookUrl || '',
                     discordTemplate: normalizeDiscordTemplate(state.discordTemplate),
                     allowSignup: !(isPlainObject(state.signupSettings) && state.signupSettings.allowSignup === false),
@@ -2250,6 +2323,7 @@
             appState.productSettings = isPlainObject(tree.settings) && isPlainObject(tree.settings.cokeRecipe) ? tree.settings.cokeRecipe : null;
             appState.stashes = Object.entries(isPlainObject(tree.stashes) ? tree.stashes : {}).filter(([, x]) => isPlainObject(x)).map(([id, x]) => ({ ...x, id }));
             appState.mainStash = isPlainObject(tree.settings) && isPlainObject(tree.settings.mainStash) ? tree.settings.mainStash : null;
+            appState.fxSettings = isPlainObject(tree.settings) && isPlainObject(tree.settings.fx) ? tree.settings.fx : null;
             appState.activity = Object.entries(isPlainObject(tree.activity) ? tree.activity : {})
                 .filter(([, record]) => isPlainObject(record))
                 .map(([id, record]) => ({ ...record, id }));
@@ -2696,7 +2770,7 @@
 
         function harvestsTag(name) {
             const n = personStats(personKeyForName(name)).harvests;
-            return n ? ` · <i class="fa-solid fa-cannabis text-weed-500"></i> ${harvestsLabel(n)}` : '';
+            return n ? ` · <i class="fa-solid fa-cannabis text-weed-500"></i> ${harvestsLabel(n)} ${rankBadge(n)}` : '';
         }
 
         // ---- Admin: crew panel ----
@@ -2727,7 +2801,7 @@
                             <div class="flex items-center gap-2"><b class="text-white" style="${m.nameColor ? `color:${m.nameColor}` : ''}">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pending ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-black">New · needs review</span>' : ''}${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
                             <div>${PERMISSIONS.map(p => `<span class="dx-pill ${m.perms[p.key] ? '' : 'off'}">${p.label}</span>`).join('')}</div>
                             <div class="mt-1">${where}</div>
-                            <div class="mt-1 text-[11px] text-slate-400"><i class="fa-solid fa-cannabis text-weed-500"></i> <b class="text-slate-200">${harvestsLabel(personStats(personKey(id)).harvests)}</b> · Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
+                            <div class="mt-1 text-[11px] text-slate-400"><i class="fa-solid fa-cannabis text-weed-500"></i> <b class="text-slate-200">${harvestsLabel(personStats(personKey(id)).harvests)}</b> ${rankBadge(personStats(personKey(id)).harvests)} · Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid ${m.pending ? 'fa-user-check' : 'fa-pen'} mr-1"></i>${m.pending ? 'Review' : 'Edit'}</button>
@@ -2838,8 +2912,264 @@
             showAlert(on ? 'New people can now create their own profile.' : 'Sign-ups are off. Only admins can add crew.', 'info');
         }
 
+        // ---- Effects: living plants, celebrations, smoke, rolling numbers, holo cards, strain glow, ranks ----
+        const FX_KEYS = ['plants', 'celebrate', 'smoke', 'roll', 'holo', 'glow'];
+        const FX_INFO = {
+            plants: ['Living plants', 'Growing leaves sway, ready grows pulse and the Grows badge pings.'],
+            celebrate: ['Celebrations', 'Leaves on a harvest, a brick stamp when pressing, a stamp when something goes out.'],
+            smoke: ['Smoke in the header', 'Slow smoke drifting behind the logo and menu.'],
+            roll: ['Rolling numbers', 'Counts roll to their new number and flash when they change.'],
+            holo: ['Holo sticker cards', 'Dashboard cards tilt with a foil shine when you hover them.'],
+            glow: ['Strain glow', 'Cards light up in their strain\'s color when you hover them.']
+        };
+        const FX_DEFAULTS = { on: Object.fromEntries(FX_KEYS.map(k => [k, true])), stamp: 'SENT', ranks: true, rankNames: ['Seedling', 'Grower', 'Kingpin'], rankAt: [10, 50, 100] };
+
+        function cleanFxSettings(x) {
+            x = isPlainObject(x) ? x : {};
+            const on = isPlainObject(x.on) ? x.on : {};
+            const names = Array.isArray(x.rankNames) ? x.rankNames : [];
+            const at = Array.isArray(x.rankAt) ? x.rankAt : [];
+            const rankAt = FX_DEFAULTS.rankAt.map((d, i) => Math.max(1, toCount(at[i]) || d));
+            for (let i = 1; i < rankAt.length; i++) rankAt[i] = Math.max(rankAt[i], rankAt[i - 1] + 1); // always climbing
+            return {
+                on: Object.fromEntries(FX_KEYS.map(k => [k, on[k] !== false])),
+                stamp: typeof x.stamp === 'string' && x.stamp.trim() ? x.stamp.trim().slice(0, 12) : FX_DEFAULTS.stamp,
+                ranks: x.ranks !== false,
+                rankNames: FX_DEFAULTS.rankNames.map((d, i) => typeof names[i] === 'string' && names[i].trim() ? names[i].trim().slice(0, 14) : d),
+                rankAt
+            };
+        }
+
+        function fxSettings() {
+            return appState.fxSettings || cleanFxSettings(null);
+        }
+
+        const fxMotionOff = () => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } };
+
+        // On for this person: the admin allows it, they haven't turned it off, and Reduce motion is off
+        function fxOn(key) {
+            const prefs = myProfile();
+            if (!fxSettings().on[key] || prefs.calm || (prefs.fxOff && prefs.fxOff[key])) return false;
+            return key === 'glow' || !fxMotionOff();
+        }
+
+        function applyFx() {
+            FX_KEYS.forEach(k => document.body.classList.toggle(`fx-off-${k}`, !fxOn(k)));
+            fxSmoke(fxOn('smoke'));
+        }
+
+        function setMyFx(key, on) {
+            const off = { ...(myProfile().fxOff || {}) };
+            if (on) delete off[key]; else off[key] = true;
+            saveMyProfile({ fxOff: off });
+            applyFx();
+        }
+
+        function renderProfileFx() {
+            const box = document.getElementById('profile-fx');
+            if (!box) return;
+            const prefs = myProfile();
+            box.innerHTML = FX_KEYS.map(k => {
+                const adminOff = !fxSettings().on[k];
+                const mine = !(prefs.fxOff && prefs.fxOff[k]);
+                return `<label class="dx-toggle ${adminOff || prefs.calm ? 'opacity-50' : ''}"><input type="checkbox" data-fx="${k}" ${mine && !adminOff ? 'checked' : ''} ${adminOff || prefs.calm ? 'disabled' : ''} onchange="setMyFx('${k}', this.checked)"><span class="sw"></span>
+                    <span><b>${FX_INFO[k][0]}</b><small>${adminOff ? 'Turned off for everyone by an admin.' : prefs.calm ? 'Off while Reduce motion is on.' : FX_INFO[k][1]}</small></span></label>`;
+            }).join('');
+        }
+
+        // 3: smoke drifting through the header (a small canvas, paused when off or the tab is hidden)
+        const fxSmokeState = { on: false, puffs: [], raf: 0, last: 0 };
+        function fxSmoke(on) {
+            const header = document.querySelector('.gl-header');
+            if (!header) return;
+            let canvas = document.getElementById('fx-smoke');
+            if (!on) {
+                fxSmokeState.on = false;
+                if (canvas) canvas.remove();
+                return;
+            }
+            if (!canvas) {
+                canvas = document.createElement('canvas');
+                canvas.id = 'fx-smoke';
+                header.prepend(canvas);
+            }
+            if (fxSmokeState.on) return;
+            fxSmokeState.on = true;
+            if (!fxSmokeState.puffs.length) {
+                for (let i = 0; i < 24; i++) fxSmokeState.puffs.push({ x: Math.random(), y: Math.random(), r: 0.05 + Math.random() * 0.09, vx: 0.00008 + Math.random() * 0.00022, vy: -0.0004 - Math.random() * 0.0008, a: 0.03 + Math.random() * 0.05, purple: Math.random() < 0.55 });
+            }
+            const step = t => {
+                if (!fxSmokeState.on || !canvas.isConnected) return;
+                fxSmokeState.raf = requestAnimationFrame(step);
+                if (document.hidden || t - fxSmokeState.last < 33) return; // ~30 fps is plenty
+                fxSmokeState.last = t;
+                const w = canvas.clientWidth, h = canvas.clientHeight;
+                if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, w, h);
+                fxSmokeState.puffs.forEach(p => {
+                    const R = p.r * w * 0.5, g = ctx.createRadialGradient(p.x * w, p.y * h, 0, p.x * w, p.y * h, R);
+                    const c = p.purple ? '168,85,247' : '205,205,215';
+                    g.addColorStop(0, `rgba(${c},${p.a})`); g.addColorStop(1, `rgba(${c},0)`);
+                    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x * w, p.y * h, R, 0, 7); ctx.fill();
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x - p.r > 1.1 || p.y < -0.6) { p.x = -0.1 - Math.random() * 0.2; p.y = 0.8 + Math.random() * 0.8; }
+                });
+            };
+            fxSmokeState.raf = requestAnimationFrame(step);
+        }
+
+        // 4: numbers marked data-roll="key" roll from their last value to the new one.
+        // A re-render while a roll is still going (live updates often come in pairs) picks it up where it was.
+        const fxLastNumbers = {};
+        const fxRolls = {};
+        const FX_ROLL_MS = 900;
+        function rollNumbers(root) {
+            (root || document).querySelectorAll('[data-roll]').forEach(el => {
+                const key = el.dataset.roll, text = el.textContent.trim(), prev = fxLastNumbers[key];
+                fxLastNumbers[key] = text;
+                if (prev === undefined || !fxOn('roll') || !/^[\d,.]+$/.test(text)) return;
+                const now = performance.now();
+                let roll = fxRolls[key];
+                if (prev !== text) roll = fxRolls[key] = { from: prev, to: text, t: now };
+                else if (!roll || roll.to !== text || now - roll.t > FX_ROLL_MS) return;
+                const elapsed = Math.round(now - roll.t);
+                const from = roll.from.replace(/\D/g, '').padStart(text.replace(/\D/g, '').length, '0').split('');
+                let di = 0;
+                el.innerHTML = `<span class="fx-odo" style="animation-delay:-${elapsed}ms">${[...text].map(ch => {
+                    if (!/\d/.test(ch)) return ch;
+                    const start = from[di++] || '0';
+                    return `<span class="d"><span style="transform:translateY(-${Number(start) * 1.15}em);transition-delay:-${elapsed}ms" data-to="${ch}">${'0123456789'.split('').map(n => `<b>${n}</b>`).join('')}</span></span>`;
+                }).join('')}</span>`;
+                el.getBoundingClientRect(); // lay out the start position before moving to the new one
+                el.querySelectorAll('[data-to]').forEach(col => { col.style.transform = `translateY(-${Number(col.dataset.to) * 1.15}em)`; });
+            });
+        }
+
+        // 5: holo cards follow the mouse
+        document.addEventListener('pointermove', e => {
+            const card = e.target.closest && e.target.closest('.fx-holo');
+            if (!card || document.body.classList.contains('fx-off-holo')) return;
+            const r = card.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+            card.style.transform = `perspective(800px) rotateY(${((px - 0.5) * 16).toFixed(2)}deg) rotateX(${((0.5 - py) * 16).toFixed(2)}deg)`;
+            card.style.setProperty('--px', `${(px * 100).toFixed(1)}%`);
+            card.style.setProperty('--py', `${(py * 100).toFixed(1)}%`);
+        });
+        document.addEventListener('pointerout', e => {
+            const card = e.target.closest && e.target.closest('.fx-holo');
+            if (card && !card.contains(e.relatedTarget)) card.style.transform = '';
+        });
+        const holoLayers = '<span class="fx-foil"></span><span class="fx-glare"></span>';
+
+        // 2: celebrations, placed over whatever was just clicked (or the middle of the screen)
+        let fxLastPointer = null;
+        document.addEventListener('pointerdown', e => { fxLastPointer = { el: e.target, x: e.clientX, y: e.clientY }; }, true);
+        function fxAnchor(el) {
+            const target = el && el.isConnected ? el : fxLastPointer && fxLastPointer.el && fxLastPointer.el.isConnected ? fxLastPointer.el : null;
+            if (target) { const r = target.getBoundingClientRect(); if (r.width) return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+            if (fxLastPointer) return { x: fxLastPointer.x, y: fxLastPointer.y };
+            return { x: innerWidth / 2, y: innerHeight / 2 };
+        }
+
+        function celebrate(kind, el, label) {
+            if (!fxOn('celebrate')) return;
+            const at = fxAnchor(el);
+            const layer = document.createElement('div');
+            layer.className = 'fx-layer';
+            const place = node => { node.style.left = `${at.x}px`; node.style.top = `${at.y}px`; layer.appendChild(node); };
+            if (kind === 'harvest') {
+                for (let i = 0; i < 10; i++) {
+                    const leaf = document.createElement('i');
+                    leaf.className = 'fa-solid fa-cannabis fx-leaf';
+                    leaf.style.fontSize = `${12 + Math.random() * 14}px`;
+                    leaf.style.setProperty('--dx', `${Math.round(Math.random() * 180 - 90)}px`);
+                    leaf.style.setProperty('--dy', `${-Math.round(60 + Math.random() * 100)}px`);
+                    leaf.style.setProperty('--r', `${Math.round(Math.random() * 300 - 150)}deg`);
+                    leaf.style.animationDelay = `${i * 40}ms`;
+                    place(leaf);
+                }
+            } else if (kind === 'press') {
+                const brick = document.createElement('div');
+                brick.className = 'fx-brick';
+                brick.textContent = (label || '').slice(0, 4).toUpperCase();
+                place(brick);
+            } else if (kind === 'stamp') {
+                const stamp = document.createElement('div');
+                stamp.className = 'fx-stamp';
+                stamp.textContent = fxSettings().stamp;
+                place(stamp);
+            }
+            document.body.appendChild(layer);
+            setTimeout(() => layer.remove(), 1800);
+        }
+
+        // 8: harvest ranks (names and harvest counts set in Admin → Effects)
+        function rankFor(harvests) {
+            const fx = fxSettings();
+            if (!fx.ranks) return null;
+            let tier = 0;
+            fx.rankAt.forEach((n, i) => { if (harvests >= n) tier = i + 1; });
+            return tier ? { tier, name: fx.rankNames[tier - 1] } : null;
+        }
+
+        function rankBadge(harvests) {
+            const r = rankFor(harvests);
+            return r ? `<span class="fx-rank t${r.tier}" title="${escapeHtml(r.name)}: ${harvestsLabel(harvests)}"><i class="fa-solid fa-cannabis"></i>${escapeHtml(r.name)}</span>` : '';
+        }
+
+        // What's left to the next rank, e.g. "6 more harvests to Grower"
+        function nextRankText(harvests) {
+            const fx = fxSettings();
+            if (!fx.ranks) return '';
+            const i = fx.rankAt.findIndex(n => harvests < n);
+            return i === -1 ? `Top rank: ${fx.rankNames[fx.rankNames.length - 1]}` : `${fx.rankAt[i] - harvests} more ${fx.rankAt[i] - harvests === 1 ? 'harvest' : 'harvests'} to ${fx.rankNames[i]}`;
+        }
+
+        // 9: a friendly empty state with a leaf drawing and an optional button
+        function emptyState(title, text, action) {
+            return `<div class="fx-empty"><div class="art"><i class="fa-solid fa-cannabis"></i><i class="fa-solid fa-cannabis"></i><i class="fa-solid fa-cannabis"></i></div>
+                <b>${title}</b><p>${text}</p>${action || ''}</div>`;
+        }
+
+        // Admin → Effects
+        function renderAdminFx() {
+            const box = document.getElementById('admin-fx');
+            if (!box || box.contains(document.activeElement)) return;
+            const fx = fxSettings();
+            box.innerHTML = `
+                <div class="space-y-3">${FX_KEYS.map(k => `<label class="dx-toggle"><input type="checkbox" data-admin-fx="${k}" ${fx.on[k] ? 'checked' : ''}><span class="sw"></span>
+                    <span><b>${FX_INFO[k][0]}</b><small>${FX_INFO[k][1]}</small></span></label>`).join('')}</div>
+                <label class="block text-xs font-semibold text-slate-300 max-w-xs">Stamp word <span class="font-normal text-slate-500">(lands when something is logged going out)</span>
+                    <input type="text" id="admin-fx-stamp" maxlength="12" value="${escapeHtml(fx.stamp)}" class="dx-input mt-1 w-full font-bold tracking-widest uppercase"></label>
+                <div class="space-y-2">
+                    <label class="dx-toggle"><input type="checkbox" id="admin-fx-ranks" ${fx.ranks ? 'checked' : ''}><span class="sw"></span>
+                        <span><b>Harvest ranks</b><small>A badge next to names in Who's online, the crew list and My Profile.</small></span></label>
+                    <div class="overflow-x-auto"><table class="dx-sales-table" style="max-width:420px">
+                        <thead><tr><th>Badge</th><th>Name</th><th class="r">From harvests</th></tr></thead>
+                        <tbody>${fx.rankNames.map((name, i) => `<tr><td><span class="fx-rank t${i + 1}"><i class="fa-solid fa-cannabis"></i>${escapeHtml(name)}</span></td>
+                            <td><input type="text" data-rank-name="${i}" maxlength="14" value="${escapeHtml(name)}" class="dx-input w-full"></td>
+                            <td class="r"><input type="number" data-rank-at="${i}" min="1" step="1" value="${fx.rankAt[i]}" class="dx-input w-24 text-right font-mono"></td></tr>`).join('')}</tbody>
+                    </table></div>
+                </div>`;
+        }
+
+        function saveAdminFx() {
+            if (!allowed('admin')) return;
+            const box = document.getElementById('admin-fx');
+            const fx = cleanFxSettings({
+                on: Object.fromEntries([...box.querySelectorAll('[data-admin-fx]')].map(i => [i.dataset.adminFx, i.checked])),
+                stamp: document.getElementById('admin-fx-stamp').value.toUpperCase(),
+                ranks: document.getElementById('admin-fx-ranks').checked,
+                rankNames: [...box.querySelectorAll('[data-rank-name]')].map(i => i.value),
+                rankAt: [...box.querySelectorAll('[data-rank-at]')].map(i => i.value)
+            });
+            writeShared({ 'settings/fx': fx });
+            document.activeElement && document.activeElement.blur();
+            showAlert('Effects saved.', 'success');
+        }
+
         // ---- Admin page tabs ----
-        const ADMIN_TABS = ['crew', 'locations', 'discord', 'logos', 'products', 'sales', 'data'];
+        const ADMIN_TABS = ['crew', 'locations', 'discord', 'logos', 'products', 'sales', 'effects', 'data'];
 
         function showAdminTab(name) {
             if (!ADMIN_TABS.includes(name)) name = 'crew';
@@ -2893,7 +3223,7 @@
         const ACCENT_SWATCHES = [142, 172, 195, 215, 250, 280, 320, 350, 20, 45];
         const NAME_COLORS = ['#f87171', '#fb923c', '#fbbf24', '#a3e635', '#4ade80', '#2dd4bf', '#38bdf8', '#818cf8', '#c084fc', '#f472b6'];
         // Personal settings saved with the profile (besides picture and background hue)
-        const PROFILE_KEYS = ['avatar', 'hue', 'accent', 'nameColor', 'compact', 'calm', 'alertSound', 'alertVolume', 'alertNotify'];
+        const PROFILE_KEYS = ['avatar', 'hue', 'accent', 'nameColor', 'compact', 'calm', 'alertSound', 'alertVolume', 'alertNotify', 'fxOff'];
         let accentPreview = null;
 
         function safeNameColor(value) {
@@ -2909,7 +3239,8 @@
                 calm: Boolean(p.calm),
                 alertSound: Boolean(p.alertSound),
                 alertVolume: p.alertVolume !== null && p.alertVolume !== undefined && Number.isFinite(volume) ? Math.max(0, Math.min(100, Math.round(volume))) : null,
-                alertNotify: Boolean(p.alertNotify)
+                alertNotify: Boolean(p.alertNotify),
+                fxOff: Object.fromEntries(FX_KEYS.filter(k => isPlainObject(p.fxOff) && p.fxOff[k] === true).map(k => [k, true])) // effects this person turned off
             };
         }
 
@@ -2953,6 +3284,7 @@
             document.documentElement.style.setProperty('--acc-h', accentPreview !== null ? accentPreview : myAccent());
             document.body.classList.toggle('dx-compact', Boolean(prefs.compact));
             document.body.classList.toggle('dx-calm', Boolean(prefs.calm));
+            applyFx();
         }
 
         // Save part of my profile: to the crew list when signed in as a member, otherwise to this device
@@ -3040,6 +3372,7 @@
             const setChecked = (id, on) => { const box = document.getElementById(id); if (box !== document.activeElement) box.checked = on; };
             setChecked('profile-compact', Boolean(prefs.compact));
             setChecked('profile-calm', Boolean(prefs.calm));
+            renderProfileFx();
             setChecked('profile-alert-sound', Boolean(prefs.alertSound));
             setChecked('profile-alert-notify', Boolean(prefs.alertNotify));
             const volume = document.getElementById('profile-volume');
@@ -3847,11 +4180,13 @@
             renderAdminSalesSettings();
             renderAdminProducts();
             renderProfileEarnings();
+            renderAdminFx();
             document.querySelectorAll('[data-sales-only]').forEach(el => el.classList.toggle('hidden', !can('sales')));
             const salesTab = document.getElementById('tab-sales');
             if (salesTab && !salesTab.classList.contains('hidden') && !can('sales')) switchTab('dashboard');
             const badge = document.getElementById('active-timers-badge');
             if (badge) badge.innerText = visibleLocations().length;
+            fxReadyPing();
             const postalList = document.getElementById('timers-postal-list');
             if (postalList) postalList.innerText = visibleLocations().map(l => l.id).join(', ') || '—';
             // An admin tab left open after losing admin access goes back to the dashboard
@@ -4071,11 +4406,12 @@
                 return `
                     <div class="dx-glass dx-stat ${tile.hot ? 'hot' : ''}" ${tile.link ? `onclick="switchTab('${tile.link}')" style="cursor:pointer" title="Open the Log"` : ''}>
                         <div class="lbl" style="${tile.labelColor ? `color:${tile.labelColor}` : tile.hot ? 'color:hsl(var(--acc-h) 69% 58%)' : ''}">${tile.label}</div>
-                        <div class="num dx-mono" style="${tile.numColor ? `color:${tile.numColor}` : ''}">${tile.display || tile.value.toLocaleString()}</div>
+                        <div class="num dx-mono" data-roll="kpi-${tile.key}" style="${tile.numColor ? `color:${tile.numColor}` : ''}">${tile.display || tile.value.toLocaleString()}</div>
                         ${sub}
                         ${sparklineSvg(series, tile.color)}
                     </div>`;
             }).join('');
+            rollNumbers(box);
         }
 
         function timerState(loc) {
@@ -4192,41 +4528,42 @@
                 const potential = Math.floor(inv.trimmed / BRICK_SIZE);
                 const flash = dashFlashes[strain.id] && dashFlashes[strain.id].until > now ? dashFlashes[strain.id] : null;
                 return `
-                    <div class="dx-glass dx-sc dx-tint ${flash ? 'flash' : ''}" style="--tint:${strain.tint}">
+                    <div class="dx-glass dx-sc dx-tint fx-holo ${flash ? 'flash' : ''}" style="--tint:${strain.tint}">${holoLayers}
                         ${flash ? `<span class="dx-flashtag">${escapeHtml(flash.label)}</span>` : ''}
                         <div class="logo">${getStrainLogo(strain.id)}</div>
                         <div class="name ${strain.nameColor}">${escapeHtml(strain.name)}</div>
                         <div class="dx-sc-nums">
-                            <div class="gold" title="Bricks on hand"><span class="l">On hand</span><span class="v ${inv.bricks ? '' : 'zero'}">${inv.bricks.toLocaleString()}</span></div>
-                            <div class="green" title="Bricks you can press from the trimmed bud"><span class="l">To press</span><span class="v ${potential ? '' : 'zero'}">${potential.toLocaleString()}</span></div>
+                            <div class="gold" title="Bricks on hand"><span class="l">On hand</span><span class="v ${inv.bricks ? '' : 'zero'}" data-roll="sc-${strain.id}-oh">${inv.bricks.toLocaleString()}</span></div>
+                            <div class="green" title="Bricks you can press from the trimmed bud"><span class="l">To press</span><span class="v ${potential ? '' : 'zero'}" data-roll="sc-${strain.id}-tp">${potential.toLocaleString()}</span></div>
                         </div>
                         <div class="row"><span class="dx-muted">Trimmed</span><b class="dx-mono text-weed-200">${inv.trimmed.toLocaleString()}</b></div>
                         <div class="dx-bar" title="${toNext.toLocaleString()} to next brick"><i style="width:${pct.toFixed(1)}%"></i></div>
                         <div class="row minor"><span>Untrimmed</span><b class="dx-mono">${inv.untrimmed.toLocaleString()}</b></div>
                     </div>`;
             }).join('') + productDashCards();
+            rollNumbers(box);
         }
 
         // Coke Bricks and Meth Bins next to the strains on the dashboard
         function productDashCards() {
             const p = appState.products;
             const recipe = cokeRecipe();
-            const v = n => `<span class="v ${n ? '' : 'zero'}">${n.toLocaleString()}</span>`;
+            const v = (n, key) => `<span class="v ${n ? '' : 'zero'}" data-roll="sc-${key}">${n.toLocaleString()}</span>`;
             return `
-                <div class="dx-glass dx-sc dx-tint" style="--tint:56,189,248">
+                <div class="dx-glass dx-sc dx-tint fx-holo" style="--tint:56,189,248">${holoLayers}
                     <div class="logo">${cokeLogoPair()}</div>
                     <div class="name text-sky-300">Coke Bricks</div>
                     <div class="dx-sc-nums">
-                        <div class="gold" title="Small coke bricks"><span class="l">Small</span>${v(p.cokeSmall)}</div>
-                        <div class="gold" title="Large coke bricks"><span class="l">Large</span>${v(p.cokeLarge)}</div>
+                        <div class="gold" title="Small coke bricks"><span class="l">Small</span>${v(p.cokeSmall, 'cokeSmall')}</div>
+                        <div class="gold" title="Large coke bricks"><span class="l">Large</span>${v(p.cokeLarge, 'cokeLarge')}</div>
                     </div>
                     <div class="row"><span class="dx-muted">Coca leaves</span><b class="dx-mono text-sky-200">${p.coca.toLocaleString()}</b></div>
                     <div class="row minor"><span>Leaves make</span><b class="dx-mono">${cokeCanMake(p, 'small')} S · ${cokeCanMake(p, 'large')} L</b></div>
                 </div>
-                <div class="dx-glass dx-sc dx-tint" style="--tint:34,211,238">
+                <div class="dx-glass dx-sc dx-tint fx-holo" style="--tint:34,211,238">${holoLayers}
                     <div class="logo">${getStrainLogo('meth')}</div>
                     <div class="name text-cyan-300">Meth Bins</div>
-                    <div class="dx-sc-nums"><div class="gold" style="grid-column:1/-1" title="Meth bins"><span class="l">Bins</span>${v(p.meth)}</div></div>
+                    <div class="dx-sc-nums"><div class="gold" style="grid-column:1/-1" title="Meth bins"><span class="l">Bins</span>${v(p.meth, 'meth')}</div></div>
                     <div class="row minor"><span>Finished product</span><b></b></div>
                 </div>`;
         }
@@ -4248,7 +4585,7 @@
             if (!list) return;
             const entries = appState.activity.filter(activityVisible).slice(0, ACTIVITY_KEEP);
             list.innerHTML = entries.length === 0
-                ? `<li class="dx-muted">No activity yet. Changes the crew makes show up here live.</li>`
+                ? `<li style="display:block">${emptyState('Quiet so far', 'Harvests, presses and things going out show up here live as the crew works.')}</li>`
                 : entries.map(entry => `
                     <li>${avatarHtml(entry.who)}<div class="min-w-0">${activityTextHtml(entry)}<div class="when">${relativeTime(entry.ts)}</div></div></li>`).join('');
         }
@@ -4415,13 +4752,13 @@
                 <div class="dx-glass dx-hero gold">
                     <i class="fa-solid fa-cube ico"></i>
                     <div class="lbl">Bricks on hand</div>
-                    <div class="num dx-mono">${t.bricks.toLocaleString()}</div>
+                    <div class="num dx-mono" data-roll="inv-${escapeHtml(view)}-bricks">${t.bricks.toLocaleString()}</div>
                     <div class="sub">${t.potential ? `<b>${(t.bricks + t.potential).toLocaleString()}</b> once it's all pressed` : 'Packaged and ready'}</div>
                 </div>
                 <div class="dx-glass dx-hero green">
                     <i class="fa-solid fa-cubes ico"></i>
                     <div class="lbl">Ready to press</div>
-                    <div class="num dx-mono">${t.potential.toLocaleString()}</div>
+                    <div class="num dx-mono" data-roll="inv-${escapeHtml(view)}-potential">${t.potential.toLocaleString()}</div>
                     <div class="sub">Pressed from <b>${t.trimmed.toLocaleString()}</b> trimmed</div>
                 </div>
                 <div class="dx-side">
@@ -4449,6 +4786,7 @@
                         (current && current.kind === 'grow' && !current.storage ? noStorageNote(current) : '') +
                         (current ? withholdNote(current) : '');
 
+            rollNumbers(document.getElementById('inv-stats'));
             grid.innerHTML = (isAll ? renderInvAllCards(buckets) : renderInvBucketCards(view, bucket, step)).join('');
             if (!isAll && !can('inventory')) {
                 grid.querySelectorAll('button, input').forEach(el => { el.disabled = true; });
@@ -4780,6 +5118,7 @@
             }).then(result => {
                 if (!result) return showAlert(`Not enough leaves for a ${size} brick here. It takes ${leaves.toLocaleString()} leaves.`, 'warning');
                 recordMade('cokeMade', result.n);
+                celebrate('press', null, 'COKE');
                 logActivity({ kind: 'coca', loc: bucket });
                 offerUndo({ key: `press-coke|${bucket}|${size}`, bucket, kind: 'coca', made: { cokeMade: result.n },
                     deltas: [{ bucket, strainId: 'root', field: 'coca', delta: -result.n * leaves }, { bucket, strainId: 'root', field, delta: result.n }],
@@ -4839,6 +5178,7 @@
             }).then(result => {
                 if (!result) return showAlert(`Not enough trimmed ${strainName(strainId)} here (${BRICK_SIZE} per brick).`, 'warning');
                 recordBricksMade(result.bricks);
+                celebrate('press', null, strainName(strainId).replace(/[^A-Za-z]/g, ''));
                 logActivity({ kind: 'buds', loc: bucket });
                 offerUndo({ key: `press|${bucket}|${strainId}`, bucket, kind: 'buds', bricksMade: result.bricks,
                     deltas: [{ bucket, strainId, field: 'trimmed', delta: -result.bricks * BRICK_SIZE }, { bucket, strainId, field: 'bricks', delta: result.bricks }],
@@ -5010,6 +5350,7 @@
                 if (!result) return showError(`Not enough ${strainName(strainId)} ${unitWord(strainId, 2)} at ${bucketLabel(bucket)} (${saleBricksAt(bucket, strainId)} there).`);
                 const form = document.getElementById('sale-form');
                 form.classList.remove('flash'); void form.offsetWidth; form.classList.add('flash');
+                celebrate('stamp', document.getElementById('sale-submit') || form);
                 const id = newActivityId();
                 const seller = personFromKey(document.getElementById('sale-seller').value);
                 const record = { strain: strainId, bricks, bucket, who: seller.name, by: appState.crewName || 'Someone', cut: cutFor(seller.id, seller.name), ts: timestampValue(), note };
@@ -5159,7 +5500,8 @@
             }).join('');
             document.getElementById('sales-table').innerHTML = list.length
                 ? `<thead><tr><th>When</th><th>Who</th><th>Product</th><th class="r">Qty</th><th>From</th>${prices ? '<th class="r">Price</th>' : ''}<th>Note</th>${admin ? '<th></th>' : ''}</tr></thead><tbody>${rows}</tbody>`
-                : `<tbody><tr><td class="m" style="padding:14px 8px">${all.length ? 'Nothing matches these filters.' : 'Nothing logged yet. Use <b>Log Something Going Out</b> above, or the truck button on anything in the Stash.'}</td></tr></tbody>`;
+                : `<tbody><tr><td class="m" style="padding:14px 8px">${all.length ? 'Nothing matches these filters.' : emptyState("Nothing's gone out yet", 'When something gets sold or handed off, log it with <b>Log Something Going Out</b> above and it comes out of the stash.',
+                    `<button class="dx-btn dx-btn-g" onclick="document.getElementById('sale-form').scrollIntoView({ behavior: 'smooth', block: 'center' })"><i class="fa-solid fa-truck-fast mr-1"></i>Log Something Going Out</button>`)}</td></tr></tbody>`;
             document.getElementById('sales-more').innerHTML = list.length > salesShown
                 ? `<button class="dx-act" style="flex:none;padding:6px 14px" onclick="salesShown += ${SALES_PAGE_SIZE}; renderSalesPage()">Show more (${list.length - salesShown} left)</button>` : '';
         }
@@ -5465,13 +5807,13 @@
             box.classList.toggle('hidden', !key);
             if (!key) return;
             const s = personStats(key);
-            box.innerHTML = `<h3>My Stats</h3>
+            box.innerHTML = `<h3 class="flex items-center gap-2">My Stats ${rankBadge(s.harvests)}</h3>
                 <div class="dx-earn">
                     <div><div class="l">Harvests</div><div class="v">${s.harvests.toLocaleString()}</div></div>
                     <div><div class="l">Bud harvested</div><div class="v">${s.bud.toLocaleString()}</div></div>
                     <div><div class="l">≈ Bricks</div><div class="v">${Math.floor(s.bud / BRICK_SIZE).toLocaleString()}</div></div>
                 </div>
-                <p class="text-[11px] text-slate-500 mt-2">Counts every harvest you log with bud entered (a bare timer restart doesn't count).</p>`;
+                <p class="text-[11px] text-slate-500 mt-2">${nextRankText(s.harvests) ? `${escapeHtml(nextRankText(s.harvests))}. ` : ''}Counts every harvest you log with bud entered (a bare timer restart doesn't count).</p>`;
         }
 
         function openLedger(type, toKey) {
@@ -6095,7 +6437,9 @@
             renderUpcomingHarvests();
 
             if (locations.length === 0) {
-                grid.innerHTML = `<div class="dx-glass p-8 text-center text-slate-400 text-sm" style="grid-column:1/-1">${appState.locations.length ? 'No grow locations assigned to you.' : 'No grow locations yet. Add one in Admin.'}</div>`;
+                grid.innerHTML = `<div style="grid-column:1/-1">${appState.locations.length
+                    ? emptyState('No grows for you yet', 'An admin can give you access to grows in Admin → Crew.')
+                    : emptyState('No grows yet', 'Add your first grow spot by its postal and its timer starts here.', hasAdminAccess() ? `<button class="dx-btn dx-btn-g" onclick="switchTab('admin'); showAdminTab('locations')"><i class="fa-solid fa-plus mr-1"></i>Add a Grow</button>` : '')}</div>`;
                 renderTimerBulkBar();
                 return;
             }
@@ -6347,7 +6691,12 @@
             mutateStock(stock => {
                 Object.entries(amounts).forEach(([strainId, amount]) => { stockCell(stock, bucket, strainId).untrimmed += amount; });
                 return { total };
-            }).then(result => { if (result) logIt(); });
+            }).then(result => {
+                if (!result) return;
+                logIt();
+                const card = [...document.querySelectorAll('[data-tc-loc], [data-dx-loc]')].find(el => (el.dataset.tcLoc || el.dataset.dxLoc) === locId && el.getClientRects().length);
+                celebrate('harvest', card);
+            });
         }
 
         function stopTimer(locId) {
@@ -6384,7 +6733,14 @@
 
         let tickCount = 0;
 
+        // The Grows badge pings while any grow you can see is ready
+        function fxReadyPing() {
+            const badge = document.getElementById('active-timers-badge');
+            if (badge) badge.classList.toggle('fx-ping', readyLocationIds().length > 0);
+        }
+
         function tickTimers() {
+            fxReadyPing();
             checkHarvestAlerts();
             checkPersonalHarvestAlerts();
 
