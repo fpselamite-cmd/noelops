@@ -102,6 +102,16 @@ In **Admin → Crew** you can add crew members, each with a name and a 4-8 digit
 
 This is a simple lock that stops casual misuse. Someone technical could still get around it, because the site has no server of its own.
 
+## Grow Planner
+
+Plan which strains go in each location's pots.
+
+- **Location tabs** show how many pots are planned (amber = some unassigned, red = more planned than the location has) and whether it's growing.
+- **The meter** shows the plan as a bar in each strain's color. **+N** on a strain card gives it all the unassigned pots; − / + change one pot at a time.
+- **Smart Balance** fills the location's pots, giving the most to the strains you're lowest on. It counts bricks and bud in stock everywhere plus what the other locations are already planned to grow. **Even Split** spreads them evenly; **Clear** empties the plan.
+- **All Locations** shows every location's plan side by side, with total pots and expected bricks per strain.
+- **Estimates learn from real harvests.** They start at about 198 bud per pot. Whenever someone changes a number in the harvest form, that real amount per pot is saved for the strain, and estimates (and the next harvest form) use the average of its last 10 harvests. Each strain card shows where its number comes from. Admins can reset the learned yields from the link at the top of the page.
+
 ## My Profile
 
 The button with your picture and name in the top right (or **My Profile** in the phone menu) opens your profile. It has three tabs.
