@@ -357,13 +357,7 @@
         @media (max-width: 1365px) {
             #presence-count { display: none; }
         }
-        header nav .lbl-short { display: none; }
-        @media (max-width: 1439px) {
-            header nav .lbl-full { display: none; }   /* shorter labels: Inventory, Planner, Timers */
-            header nav .lbl-short { display: inline; }
-            header nav .nav-btn { padding-left: 11px; padding-right: 11px; }
-        }
-        @media (max-width: 1249px) {
+        @media (max-width: 1023px) {
             header nav .nav-btn > span:not([id]) { display: none; }   /* icon-only menu… */
             header nav .nav-btn.bg-weed-600 > span:not([id]) { display: inline; } /* …except the page you're on */
         }
@@ -819,22 +813,18 @@
                             <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
                         </button>
-                        <button onclick="switchTab('inventory')" id="nav-inventory" title="Inventory Vault" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <i class="fa-solid fa-cannabis"></i>
-                            <span><span class="lbl-full">Inventory Vault</span><span class="lbl-short">Inventory</span></span>
-                        </button>
-                        <button onclick="switchTab('planner')" id="nav-planner" title="Grow Planner" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <i class="fa-solid fa-calculator"></i>
-                            <span><span class="lbl-full">Grow Planner</span><span class="lbl-short">Planner</span></span>
-                        </button>
-                        <button onclick="switchTab('timers')" id="nav-timers" title="Grow Timers" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <i class="fa-solid fa-clock"></i>
-                            <span><span class="lbl-full">Grow Timers</span><span class="lbl-short">Timers</span></span>
+                        <button onclick="switchTab('timers')" id="nav-timers" title="Grows: timers and pot plans" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <i class="fa-solid fa-seedling"></i>
+                            <span>Grows</span>
                             <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
                         </button>
-                        <button onclick="switchTab('sales')" id="nav-sales" title="Sales" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('inventory')" id="nav-inventory" title="Stash: what's in each stash house" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <i class="fa-solid fa-warehouse"></i>
+                            <span>Stash</span>
+                        </button>
+                        <button onclick="switchTab('sales')" id="nav-sales" title="Log: what went out" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-truck-fast"></i>
-                            <span>Sales</span>
+                            <span>Log</span>
                         </button>
                         <button onclick="switchTab('admin')" id="nav-admin" title="Admin" data-admin-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i id="nav-admin-icon" class="fa-solid fa-lock"></i>
@@ -869,10 +859,9 @@
             <!-- Mobile Menu Dropdown -->
             <div id="mobile-menu" class="hidden md:hidden border-t border-weed-900/60 bg-darkbg px-4 pt-2 pb-4 space-y-2">
                 <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Dashboard</button>
-                <button onclick="switchTab('inventory'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Inventory Vault</button>
-                <button onclick="switchTab('planner'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Planner</button>
-                <button onclick="switchTab('timers'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Timers</button>
-                <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Sales</button>
+                <button onclick="switchTab('timers'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grows</button>
+                <button onclick="switchTab('inventory'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
+                <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Log</button>
                 <button onclick="switchTab('admin'); toggleMobileMenu()" data-admin-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
                 <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
                 <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
@@ -892,7 +881,7 @@
             <section id="tab-dashboard" class="tab-content">
                 <div id="dx-layout" class="dx-layout">
                     <div class="dx-main min-w-0">
-                        <div class="dx-sec"><h2>Vault</h2><button data-detail-only onclick="switchTab('inventory')">Open vault →</button></div>
+                        <div class="dx-sec"><h2>Stash</h2><button data-detail-only onclick="switchTab('inventory')">Open stash →</button></div>
                         <div id="dx-strains" class="dx-strains" style="margin-bottom:26px"></div>
 
                         <div class="dx-sec"><h2>Totals &amp; Trends</h2></div>
@@ -906,8 +895,8 @@
                                 <div id="dx-chart" class="dx-io"></div>
                             </div>
                             <div class="dx-glass dx-panel">
-                                <div class="dx-sec"><h2>Stock by Product</h2><button type="button" class="dx-tbl-btn" onclick="toggleChartTable(this)">Table</button></div>
-                                <div class="dx-legend"><span><i style="background:var(--viz-onhand)"></i>On hand</span><span><i style="background:var(--viz-made)"></i>Can make (potential)</span></div>
+                                <div class="dx-sec"><h2>What's in Stock</h2><button type="button" class="dx-tbl-btn" onclick="toggleChartTable(this)">Table</button></div>
+                                <div class="dx-legend"><span><i style="background:var(--viz-onhand)"></i>On hand</span><span><i style="background:var(--viz-made)"></i>Can still make</span></div>
                                 <div id="dx-strain-chart" class="dx-sbs"></div>
                             </div>
                         </div>
@@ -925,8 +914,8 @@
             <section id="tab-inventory" class="tab-content hidden">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="text-2xl font-black text-white">Inventory Vault</h1>
-                        <p class="text-xs text-slate-400 mt-1">Stock is tracked per location. <span class="text-weed-400 font-semibold">750 trimmed = 1 brick</span>, and strains can't be mixed.</p>
+                        <h1 class="text-2xl font-black text-white">Stash</h1>
+                        <p class="text-xs text-slate-400 mt-1">What's in each stash house. <span class="text-weed-400 font-semibold">750 trimmed bud = 1 brick</span>, and strains can't be mixed.</p>
                     </div>
                     <label class="flex items-center gap-2 text-xs text-slate-400" title="Amount used by the − / + and Trim buttons">
                         <span class="font-semibold">Step amount</span>
@@ -942,8 +931,8 @@
             <section id="tab-sales" class="tab-content hidden">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="text-2xl font-black text-white"><i class="fa-solid fa-truck-fast text-amber-400 mr-2"></i>Sales</h1>
-                        <p class="text-xs text-slate-400 mt-1">Bricks going out: sold, delivered or handed off. Logging them removes them from stock.</p>
+                        <h1 class="text-2xl font-black text-white"><i class="fa-solid fa-truck-fast text-amber-400 mr-2"></i>Log</h1>
+                        <p class="text-xs text-slate-400 mt-1">Everything that went out: sold, delivered or handed off. Logging it takes it out of the stash.</p>
                     </div>
                     <div class="dx-plan-actions">
                         <button class="dx-act" onclick="exportSalesCsv()"><i class="fa-solid fa-file-csv mr-1"></i>Export CSV</button>
@@ -953,7 +942,7 @@
                 <!-- Log bricks out: pick a strain, where from, how many, submit -->
                 <form id="sale-form" class="dx-glass dx-qs" onsubmit="saveSale(event)">
                     <input type="hidden" id="sale-strain"><input type="hidden" id="sale-from">
-                    <div class="dx-sec"><h2><i class="fa-solid fa-truck-fast text-amber-400 mr-1"></i>Log Bricks Out</h2><span class="text-xs dx-muted hidden sm:inline">Takes them out of stock and adds them to the log.</span></div>
+                    <div class="dx-sec"><h2><i class="fa-solid fa-truck-fast text-amber-400 mr-1"></i>Log Something Going Out</h2><span class="text-xs dx-muted hidden sm:inline">Takes it out of the stash and adds it to the log.</span></div>
                     <div class="qs-step"><span>1</span>What's going out</div>
                     <div id="qs-strains" class="qs-strains"></div>
                     <div class="qs-cols">
@@ -999,8 +988,8 @@
                     <span id="sales-f-summary" class="text-xs dx-muted ml-auto"></span>
                 </div>
                 <div class="dx-charts mb-4">
-                    <div class="dx-glass dx-panel"><div class="dx-sec"><h2>By Product</h2><span class="text-xs dx-muted">bricks out</span></div><div id="sales-by-strain" class="dx-hbars"></div></div>
-                    <div class="dx-glass dx-panel"><div class="dx-sec"><h2>By Person</h2><span class="text-xs dx-muted">bricks out</span></div><div id="sales-by-who" class="dx-hbars"></div></div>
+                    <div class="dx-glass dx-panel"><div class="dx-sec"><h2>By Product</h2><span class="text-xs dx-muted">went out</span></div><div id="sales-by-strain" class="dx-hbars"></div></div>
+                    <div class="dx-glass dx-panel"><div class="dx-sec"><h2>By Person</h2><span class="text-xs dx-muted">went out</span></div><div id="sales-by-who" class="dx-hbars"></div></div>
                 </div>
                 <div class="dx-glass dx-sales">
                     <div class="dx-sec"><h2>Log</h2></div>
@@ -1010,10 +999,11 @@
             </section>
 
             <section id="tab-planner" class="tab-content hidden">
+                <div class="dx-tabs mb-4"><button class="dx-tab" onclick="switchTab('timers')"><i class="fa-solid fa-clock"></i>Timers</button><button class="dx-tab on"><i class="fa-solid fa-table-cells"></i>Pot Plan</button></div>
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="text-2xl font-black text-white">Grow Planner</h1>
-                        <p class="text-xs text-slate-400 mt-1">Plan which strains go in each location's pots. <span class="text-weed-400 font-semibold">1 pot = 4 plants, 750 bud = 1 brick.</span> <span id="planner-yield-note"></span></p>
+                        <h1 class="text-2xl font-black text-white">Pot Plan</h1>
+                        <p class="text-xs text-slate-400 mt-1">Pick which strains go in each grow's pots. <span class="text-weed-400 font-semibold">1 pot = 4 plants, 750 bud = 1 brick.</span> <span id="planner-yield-note"></span></p>
                     </div>
                     <button onclick="switchTab('admin')" data-admin-only class="dx-tab self-start md:self-auto"><i class="fa-solid fa-plus"></i>Add / Manage Locations</button>
                 </div>
@@ -1023,10 +1013,11 @@
             </section>
 
             <section id="tab-timers" class="tab-content hidden">
+                <div class="dx-tabs mb-4"><button class="dx-tab on"><i class="fa-solid fa-clock"></i>Timers</button><button class="dx-tab" data-planner-link onclick="switchTab('planner')"><i class="fa-solid fa-table-cells"></i>Pot Plan</button></div>
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="text-2xl font-black text-white">Grow Timers</h1>
-                        <p class="text-xs text-slate-400 mt-1">Postals: <span id="timers-postal-list" class="text-weed-300 font-bold font-mono">&mdash;</span>. Discord gets an alert when a grow is ready.</p>
+                        <h1 class="text-2xl font-black text-white">Grows</h1>
+                        <p class="text-xs text-slate-400 mt-1">Postals: <span id="timers-postal-list" class="text-weed-300 font-bold font-mono">&mdash;</span>. Discord gets a message when a grow is ready.</p>
                     </div>
                     <div id="timers-actions" class="dx-plan-actions"></div>
                 </div>
@@ -1145,8 +1136,8 @@
                                 <i class="fa-solid fa-plus text-lg"></i>
                             </div>
                             <div>
-                                <h2 class="font-bold text-white text-base">Add New Grow Location Timer</h2>
-                                <p class="text-xs text-slate-400">Expand syndicate operations with custom postal location IDs</p>
+                                <h2 class="font-bold text-white text-base">Add a Grow</h2>
+                                <p class="text-xs text-slate-400">A grow spot, named by its postal</p>
                             </div>
                         </div>
 
@@ -1167,7 +1158,7 @@
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-300 mb-1">Postal Alias / Notes (Optional)</label>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Nickname (optional)</label>
                                 <input type="text" id="new-loc-alias" placeholder="e.g. Sandy Shores Farm House" class="w-full bg-darkbg border border-weed-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-weed-500">
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
@@ -1178,7 +1169,7 @@
                                     <span><span class="block text-sm text-slate-100 font-semibold">On-site storage</span><span class="block text-[11px] text-slate-500">Bud and bricks can be kept here, and harvests stay on site</span></span></label>
                             </div>
                             <button type="submit" class="w-full py-2.5 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-bold text-xs transition-all shadow-md">
-                                <i class="fa-solid fa-circle-plus mr-1"></i> Add Grow Operation Location
+                                <i class="fa-solid fa-circle-plus mr-1"></i> Add Grow
                             </button>
                         </form>
                     </div>
@@ -1186,7 +1177,7 @@
                 <!-- Existing Locations Management Table -->
                 <div class="dx-glass dx-admin-card space-y-4">
                     <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center justify-between">
-                        <span>Manage Existing Grow Locations</span>
+                        <span>Grows</span>
                         <span id="admin-loc-count-badge" class="text-xs px-2 py-0.5 rounded bg-weed-950 text-weed-400 border border-weed-800">4 Active</span>
                     </h2>
 
@@ -1298,7 +1289,7 @@
                                 <i class="fa-solid fa-shield-halved text-lg"></i>
                             </div>
                             <div>
-                                <h2 class="font-bold text-white text-base">Master Syndicate Branding Logo</h2>
+                                <h2 class="font-bold text-white text-base">Site Logo</h2>
                                 <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">NoelOpsLogo.png</span> (shown from its small copy, <span class="font-mono text-weed-300">NoelOpsLogo-web.jpg</span>) from the repo. Uploads or URLs here override it in this browser only.</p>
                             </div>
                         </div>
@@ -1352,7 +1343,7 @@
                     <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                         <div class="w-12 h-12 shrink-0 flex items-center justify-center" id="admin-coke-logo"></div>
                         <div><h2 class="font-bold text-white text-base">Coke Recipe</h2>
-                            <p class="text-xs text-slate-400">Coca leaves are the raw stage (like untrimmed bud). On a location's Coke Bricks card, <b class="text-slate-200">Press small</b> and <b class="text-slate-200">Press large</b> use these supplies to make one brick.</p></div>
+                            <p class="text-xs text-slate-400">On a stash's Coke Bricks card, <b class="text-slate-200">Press small</b> and <b class="text-slate-200">Press large</b> take the coca leaves. Only leaves are counted in the stash; oil, cement and acid are shown as a reminder of what to bring.</p></div>
                     </div>
                     <div id="admin-coke-recipe" class="overflow-x-auto"></div>
                     <button onclick="saveCokeRecipe()" class="dx-btn dx-btn-g" style="width:auto;padding:9px 18px"><i class="fa-solid fa-floppy-disk mr-1"></i> Save Recipe</button>
@@ -1361,7 +1352,7 @@
                     <div class="flex items-center space-x-3">
                         <div class="w-12 h-12 shrink-0 flex items-center justify-center" id="admin-meth-logo"></div>
                         <div><h2 class="font-bold text-white text-base">Meth Bins</h2>
-                            <p class="text-xs text-slate-400">Tracked as finished bins per location: add or remove them on the Meth Bins card, move them between locations, and log them going out on the Sales page.</p></div>
+                            <p class="text-xs text-slate-400">Tracked as finished bins per location: add or remove them on the Meth Bins card, move them between locations, and log them going out on the Log page.</p></div>
                     </div>
                 </div>
                 </div>
@@ -1384,7 +1375,7 @@
                     <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                         <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-user-lock"></i></div>
                         <div><h2 class="font-bold text-white text-base">Who Sees What</h2>
-                            <p class="text-xs text-slate-400">Who can open the Sales page and log bricks out is the <b class="text-slate-200">Sales / bricks out</b> permission on each person in the <button class="text-weed-400 underline" onclick="showAdminTab('crew')">Crew</button> tab (Managers have it by default).</p></div>
+                            <p class="text-xs text-slate-400">Who can open the Log page and log things going out is the <b class="text-slate-200">Log things going out</b> permission on each person in the <button class="text-weed-400 underline" onclick="showAdminTab('crew')">Crew</button> tab (Managers have it by default).</p></div>
                     </div>
                     <label class="dx-toggle"><input type="checkbox" id="sales-hide-prices" onchange="setHidePrices(this.checked)"><span class="sw"></span>
                         <span><b>Only admins see prices</b><small>Crew still see bricks and notes; prices, cash totals and the price box are hidden from them. Default prices still fill in.</small></span></label>
@@ -1844,8 +1835,9 @@
         const INV_FIELDS = ['untrimmed', 'trimmed', 'bricks'];
         // Other products, kept per location next to the strains: coca leaves (the raw stage, like untrimmed bud)
         // are pressed into small or large coke bricks; meth is stored as finished bins.
-        const ROOT_FIELDS = { coca: 'Coca leaves', oil: 'Oil barrels', cement: 'Cement bags', acid: 'Battery acid', cokeSmall: 'Small coke bricks', cokeLarge: 'Large coke bricks', meth: 'Meth bins' };
-        // What goes into a coke brick (amounts per brick, set in Admin → Products)
+        const ROOT_FIELDS = { coca: 'Coca leaves', cokeSmall: 'Small coke bricks', cokeLarge: 'Large coke bricks', meth: 'Meth bins' };
+        // What goes into a coke brick (amounts per brick, set in Admin → Products).
+        // Only the leaves are tracked as stock; the rest is shown as a reminder of what to bring.
         const COKE_INGREDIENTS = [
             { key: 'coca', label: 'Coca leaves', short: 'leaves', icon: 'fa-leaf' },
             { key: 'oil', label: 'Oil barrels', short: 'oil', icon: 'fa-oil-can' },
@@ -1868,22 +1860,26 @@
             large: { coca: 4000, oil: 20, cement: 80, acid: 50 }
         };
 
-        // How many bricks of a size the supplies in `have` (a location, or totals) can make
+        // Leaves per brick of a size
+        function cokeLeavesFor(size) {
+            return Math.max(1, toCount(cokeRecipe()[size].coca));
+        }
+
+        // How many bricks of a size the leaves in `have` (a location, or totals) can make
         function cokeCanMake(have, size) {
-            const need = cokeRecipe()[size];
-            const counts = COKE_INGREDIENTS.filter(i => need[i.key] > 0).map(i => Math.floor(toCount(have[i.key]) / need[i.key]));
-            return counts.length ? Math.min(...counts) : 0;
+            return Math.floor(toCount(have.coca) / cokeLeavesFor(size));
         }
 
-        // The ingredients a location is short of for one brick
-        function cokeShortfall(have, size) {
-            const need = cokeRecipe()[size];
-            return COKE_INGREDIENTS.filter(i => toCount(have[i.key]) < need[i.key]).map(i => i.short);
-        }
-
+        // Everything a brick takes, e.g. "2,000 leaves · 10 oil · 40 cement · 25 acid"
         function cokeRecipeText(size) {
             const need = cokeRecipe()[size];
             return COKE_INGREDIENTS.filter(i => need[i.key] > 0).map(i => `${need[i.key].toLocaleString()} ${i.short}`).join(' · ');
+        }
+
+        // The untracked supplies to bring, e.g. "10 oil · 40 cement · 25 acid"
+        function cokeBringText(size) {
+            const need = cokeRecipe()[size];
+            return COKE_INGREDIENTS.filter(i => i.key !== 'coca' && need[i.key] > 0).map(i => `${need[i.key].toLocaleString()} ${i.short}`).join(' · ');
         }
 
         // The Coke Bricks card shows both stickers (small in front, large behind)
@@ -2397,8 +2393,8 @@
         const PERMISSIONS = [
             { key: 'inventory', label: 'Edit inventory', hint: 'Add/remove, trim, press, move stock' },
             { key: 'timers', label: 'Timers & harvests', hint: 'Start, stop, restart, harvest' },
-            { key: 'planner', label: 'Grow planner', hint: 'Change pots and pot plans' },
-            { key: 'sales', label: 'Sales / bricks out', hint: 'See the Sales page and log bricks going out' }
+            { key: 'planner', label: 'Pot plans', hint: 'Change pots and what gets planted' },
+            { key: 'sales', label: 'Log things going out', hint: 'See the Log page and log things going out' }
         ];
         // The Admin page isn't a crew permission: it only opens with the admin password (link in the footer)
         const ROLE_PRESETS = {
@@ -3778,7 +3774,7 @@
 
         // Navigation Tab Switching Logic
         function switchTab(tabId) {
-            const navTabId = tabId;
+            const navTabId = tabId === 'planner' ? 'timers' : tabId; // the pot plan lives under Grows
             if (tabId === 'admin' && !hasAdminAccess()) tabId = 'login';
             if (isStatsOnly() && ['inventory', 'planner', 'timers'].includes(tabId)) tabId = 'dashboard';
             if (tabId === 'sales' && !can('sales')) tabId = 'dashboard';
@@ -4039,8 +4035,8 @@
                 : `${week.bricks > lastWeek ? '▲' : '▼'} ${Math.abs(week.bricks - lastWeek)} vs the week before`;
             const tiles = [
                 { key: 'bricks', label: 'Bricks on hand', value: t.bricks, color: 'var(--viz-onhand)', sub: 'Packaged & ready' },
-                { key: 'potential', label: 'Potential bricks', value: t.potential, color: 'var(--viz-made)', hot: true, sub: `from ${t.trimmed.toLocaleString()} trimmed`, fixedSub: true },
-                { key: 'out', label: 'Out · 7 days', value: week.bricks, color: 'var(--viz-out)', sub: [mix, week.priced && canSeePrices() ? `$${week.cash.toLocaleString()}` : '', outDelta].filter(Boolean).join(' · '), fixedSub: true, series: dailyOut(7).map(d => d.n), link: can('sales') ? 'sales' : null },
+                { key: 'potential', label: 'Ready to press', value: t.potential, color: 'var(--viz-made)', hot: true, sub: `bricks from ${t.trimmed.toLocaleString()} trimmed`, fixedSub: true },
+                { key: 'out', label: 'Went out · this week', value: week.bricks, color: 'var(--viz-out)', sub: [mix, week.priced && canSeePrices() ? `$${week.cash.toLocaleString()}` : '', outDelta].filter(Boolean).join(' · '), fixedSub: true, series: dailyOut(7).map(d => d.n), link: can('sales') ? 'sales' : null },
                 statsOnly ? null : { key: 'next', label: 'Coming in · next 24h', value: next.bricks, display: `~${fmtBricks(next.bricks)}`, sub: next.count ? `est. bricks from ${next.count} ${next.count === 1 ? 'harvest' : 'harvests'}` : 'No harvests due', fixedSub: true, series: [] }
             ].filter(Boolean);
             box.classList.toggle('n3', tiles.length === 3);
@@ -4053,7 +4049,7 @@
                 const delta = tile.fixedSub ? '' : deltaHtml(series, '', tile.deltaColor);
                 const sub = tile.fixedSub || !delta ? `<div class="delta" style="color:${tile.hot ? 'hsl(var(--acc-h) 69% 58%)' : '#8a9a8e'}">${escapeHtml(tile.sub)}</div>` : delta;
                 return `
-                    <div class="dx-glass dx-stat ${tile.hot ? 'hot' : ''}" ${tile.link ? `onclick="switchTab('${tile.link}')" style="cursor:pointer" title="Open the Sales page"` : ''}>
+                    <div class="dx-glass dx-stat ${tile.hot ? 'hot' : ''}" ${tile.link ? `onclick="switchTab('${tile.link}')" style="cursor:pointer" title="Open the Log"` : ''}>
                         <div class="lbl" style="${tile.labelColor ? `color:${tile.labelColor}` : tile.hot ? 'color:hsl(var(--acc-h) 69% 58%)' : ''}">${tile.label}</div>
                         <div class="num dx-mono" style="${tile.numColor ? `color:${tile.numColor}` : ''}">${tile.display || tile.value.toLocaleString()}</div>
                         ${sub}
@@ -4113,7 +4109,7 @@
                 const ready = st.status === 'ready', idle = st.status === 'idle';
                 const stage = growStage(st);
                 const time = ready
-                    ? `<span class="t">READY</span><span class="s">Harvest now</span>`
+                    ? `<span class="t">Ready!</span><span class="s">Harvest now</span>`
                     : idle
                         ? `<span class="t">${formatTime(Math.round(st.totalSecs))}</span><span class="s">Not started</span>`
                         : `<span class="t dx-ring-t">${formatTime(st.remainingSecs)}</span><span class="s dx-ring-s">${Math.floor(st.pct)}% grown</span>`;
@@ -4126,7 +4122,7 @@
                 return `
                     <div class="dx-gb ${st.status} ${ready ? 'ready' : ''}" data-dx-loc="${escapeHtml(loc.id)}" title="Postal ${escapeHtml(loc.id)} · ${escapeHtml(tip)}">
                         <div class="pot"><i class="fa-solid ${stage.icon}" style="--grow:${stage.scale.toFixed(2)}"></i></div>
-                        <div class="who"><span class="pid">${escapeHtml(loc.id)}</span><span class="alias">${escapeHtml(loc.alias || 'Grow Operation')}</span></div>
+                        <div class="who"><span class="pid">${escapeHtml(loc.id)}</span><span class="alias">${escapeHtml(loc.alias || 'Grow')}</span></div>
                         <div class="time">${time}</div>
                         <div class="low">${low}</div>
                     </div>`;
@@ -4181,7 +4177,7 @@
                         <div class="name ${strain.nameColor}">${escapeHtml(strain.name)}</div>
                         <div class="dx-sc-nums">
                             <div class="gold" title="Bricks on hand"><span class="l">On hand</span><span class="v ${inv.bricks ? '' : 'zero'}">${inv.bricks.toLocaleString()}</span></div>
-                            <div class="green" title="Bricks you can press from the trimmed bud"><span class="l">Potential</span><span class="v ${potential ? '' : 'zero'}">${potential.toLocaleString()}</span></div>
+                            <div class="green" title="Bricks you can press from the trimmed bud"><span class="l">To press</span><span class="v ${potential ? '' : 'zero'}">${potential.toLocaleString()}</span></div>
                         </div>
                         <div class="row"><span class="dx-muted">Trimmed</span><b class="dx-mono text-weed-200">${inv.trimmed.toLocaleString()}</b></div>
                         <div class="dx-bar" title="${toNext.toLocaleString()} to next brick"><i style="width:${pct.toFixed(1)}%"></i></div>
@@ -4204,7 +4200,7 @@
                         <div class="gold" title="Large coke bricks"><span class="l">Large</span>${v(p.cokeLarge)}</div>
                     </div>
                     <div class="row"><span class="dx-muted">Coca leaves</span><b class="dx-mono text-sky-200">${p.coca.toLocaleString()}</b></div>
-                    <div class="row minor"><span>Supplies make</span><b class="dx-mono">${cokeCanMake(p, 'small')} S · ${cokeCanMake(p, 'large')} L</b></div>
+                    <div class="row minor"><span>Leaves make</span><b class="dx-mono">${cokeCanMake(p, 'small')} S · ${cokeCanMake(p, 'large')} L</b></div>
                 </div>
                 <div class="dx-glass dx-sc dx-tint" style="--tint:34,211,238">
                     <div class="logo">${getStrainLogo('meth')}</div>
@@ -4306,8 +4302,8 @@
             box.innerHTML = rows.map(r => {
                 const total = r.onHand + r.potential;
                 const tip = r.product
-                    ? `<b>${escapeHtml(r.st.name)}s</b><br><i style="background:var(--viz-onhand)"></i>On hand <b>${r.onHand}</b>${r.st.id === 'meth' ? '' : `<br><i style="background:var(--viz-made)"></i>Supplies can make <b>${r.potential}</b><br><span style="opacity:.7">(small or large: they share supplies)</span>`}`
-                    : `<b>${escapeHtml(r.st.name)}</b><br><i style="background:var(--viz-onhand)"></i>On hand <b>${r.onHand}</b><br><i style="background:var(--viz-made)"></i>Potential <b>${r.potential}</b><br>Trimmed <b>${r.trimmed.toLocaleString()}</b> · Untrimmed <b>${r.untrimmed.toLocaleString()}</b>`;
+                    ? `<b>${escapeHtml(r.st.name)}s</b><br><i style="background:var(--viz-onhand)"></i>On hand <b>${r.onHand}</b>${r.st.id === 'meth' ? '' : `<br><i style="background:var(--viz-made)"></i>Leaves can make <b>${r.potential}</b><br><span style="opacity:.7">(small or large: they share leaves)</span>`}`
+                    : `<b>${escapeHtml(r.st.name)}</b><br><i style="background:var(--viz-onhand)"></i>On hand <b>${r.onHand}</b><br><i style="background:var(--viz-made)"></i>Ready to press <b>${r.potential}</b><br>Trimmed <b>${r.trimmed.toLocaleString()}</b> · Untrimmed <b>${r.untrimmed.toLocaleString()}</b>`;
                 const seg = (cls, v) => v ? `<i class="${cls}" style="width:calc(${(v / max * 100).toFixed(2)}% * 0.82)"></i>` : '';
                 return `<div class="row" data-tip="${escapeHtml(tip)}">
                     <div class="nm"><span class="lg">${getStrainLogo(r.st.logo || r.st.id)}</span><span>${escapeHtml(r.st.name)}</span></div>
@@ -4316,7 +4312,7 @@
             }).join('');
             let table = panel.querySelector('.dx-viz-table');
             if (!table) { table = document.createElement('table'); table.className = 'dx-viz-table'; panel.appendChild(table); }
-            table.innerHTML = `<thead><tr><th>Strain</th><th class="r">On hand</th><th class="r">Potential</th><th class="r">Trimmed</th></tr></thead><tbody>${rows.map(r =>
+            table.innerHTML = `<thead><tr><th>Strain</th><th class="r">On hand</th><th class="r">Can make</th><th class="r">Trimmed</th></tr></thead><tbody>${rows.map(r =>
                 `<tr><td>${escapeHtml(r.st.name)}</td><td class="r">${r.onHand}</td><td class="r">${r.potential}</td><td class="r">${r.product ? '—' : r.trimmed.toLocaleString()}</td></tr>`).join('')}</tbody>`;
         }
 
@@ -4399,13 +4395,13 @@
                     <i class="fa-solid fa-cube ico"></i>
                     <div class="lbl">Bricks on hand</div>
                     <div class="num dx-mono">${t.bricks.toLocaleString()}</div>
-                    <div class="sub">${t.potential ? `<b>${(t.bricks + t.potential).toLocaleString()}</b> once the potential is pressed` : 'Packaged and ready'}</div>
+                    <div class="sub">${t.potential ? `<b>${(t.bricks + t.potential).toLocaleString()}</b> once it's all pressed` : 'Packaged and ready'}</div>
                 </div>
                 <div class="dx-glass dx-hero green">
                     <i class="fa-solid fa-cubes ico"></i>
-                    <div class="lbl">Potential bricks</div>
+                    <div class="lbl">Ready to press</div>
                     <div class="num dx-mono">${t.potential.toLocaleString()}</div>
-                    <div class="sub">Ready to press from <b>${t.trimmed.toLocaleString()}</b> trimmed</div>
+                    <div class="sub">Pressed from <b>${t.trimmed.toLocaleString()}</b> trimmed</div>
                 </div>
                 <div class="dx-side">
                     <div class="dx-glass dx-mid">
@@ -4530,8 +4526,8 @@
                         <div class="cell gold"><span class="lbl">Small</span><span class="big ${p.cokeSmall ? '' : 'zero'}">${p.cokeSmall.toLocaleString()}</span></div>
                         <div class="cell gold"><span class="lbl">Large</span><span class="big ${p.cokeLarge ? '' : 'zero'}">${p.cokeLarge.toLocaleString()}</span></div>
                     </div>
-                    <div class="totline minor"><span>Leaves · oil · cement · acid</span><b>${p.coca.toLocaleString()} · ${p.oil} · ${p.cement} · ${p.acid}</b></div>
-                    <div class="totline minor"><span>Supplies make</span><b>${cokeCanMake(p, 'small')} small · ${cokeCanMake(p, 'large')} large</b></div>
+                    <div class="totline minor"><span>Coca leaves</span><b>${p.coca.toLocaleString()}</b></div>
+                    <div class="totline minor"><span>Leaves make</span><b>${cokeCanMake(p, 'small')} small · ${cokeCanMake(p, 'large')} large</b></div>
                     <div>${whereList(b => [b.cokeSmall ? `${b.cokeSmall} small` : '', b.cokeLarge ? `${b.cokeLarge} large` : '', b.coca ? `${b.coca.toLocaleString()} leaves` : ''].filter(Boolean).join(' · '))}</div>
                 </div>
                 <div class="dx-glass dx-inv dx-tint" style="--tint:34,211,238">
@@ -4550,7 +4546,7 @@
                             <div class="min-w-0"><div class="font-extrabold text-base ${strain.nameColor} truncate">${escapeHtml(strain.name)}</div></div></div>
                         <div class="dx-inv-top">
                             <div class="cell gold"><span class="lbl">On hand</span><span class="big ${inv.bricks ? '' : 'zero'}">${inv.bricks.toLocaleString()}</span></div>
-                            <div class="cell green"><span class="lbl">Potential</span><span class="big ${potential ? '' : 'zero'}">${potential.toLocaleString()}</span></div>
+                            <div class="cell green"><span class="lbl">To press</span><span class="big ${potential ? '' : 'zero'}">${potential.toLocaleString()}</span></div>
                         </div>
                         <div class="totline mid"><span class="dx-muted">Trimmed</span><b>${inv.trimmed.toLocaleString()}</b></div>
                         <div class="totline minor"><span>Untrimmed</span><b>${inv.untrimmed.toLocaleString()}</b></div>
@@ -4579,21 +4575,18 @@
             const truck = id => can('sales') ? `<button class="dx-step dx-out" onclick="openSale(${k}, '${id}')" ${bucket[id] ? '' : 'disabled'} title="Going out (sold / delivered)"><i class="fa-solid fa-truck-fast"></i></button>` : '';
             const bigInput = (field, label) => `<input type="number" min="0" class="big ${bucket[field] ? '' : 'zero'}" aria-label="${label}" data-focus-key="inv-${escapeHtml(key)}-${field}" value="${bucket[field]}" onchange="updateRootFromInput('${field}', this, ${k})">`;
             const canSmall = cokeCanMake(bucket, 'small'), canLarge = cokeCanMake(bucket, 'large');
-            const shortSmall = cokeShortfall(bucket, 'small');
-            const supplyRow = ing => {
-                const d = ing.key === 'coca' ? step : 1;
-                return `<div class="qrow sm">
-                    <span class="lbl"><i class="fa-solid ${ing.icon} mr-1"></i>${ing.label}</span>
-                    <button class="dx-step" onclick="adjustRoot('${ing.key}', -${d}, ${k})" ${bucket[ing.key] ? '' : 'disabled'} title="−${d}">−</button>
-                    <input type="number" min="0" class="dx-input" data-focus-key="inv-${escapeHtml(key)}-${ing.key}" value="${bucket[ing.key]}" onchange="updateRootFromInput('${ing.key}', this, ${k})">
-                    <button class="dx-step" onclick="adjustRoot('${ing.key}', ${d}, ${k})" title="+${d}">+</button>
+            const bringSmall = cokeBringText('small'), bringLarge = cokeBringText('large');
+            const qrowRoot = (field, label, d) => `<div class="qrow sm">
+                    <span class="lbl"><i class="fa-solid fa-leaf mr-1"></i>${label}</span>
+                    <button class="dx-step" onclick="adjustRoot('${field}', -${d}, ${k})" ${bucket[field] ? '' : 'disabled'} title="−${d}">−</button>
+                    <input type="number" min="0" class="dx-input" data-focus-key="inv-${escapeHtml(key)}-${field}" value="${bucket[field]}" onchange="updateRootFromInput('${field}', this, ${k})">
+                    <button class="dx-step" onclick="adjustRoot('${field}', ${d}, ${k})" title="+${d}">+</button>
                 </div>`;
-            };
             const coca = `
                 <div class="dx-glass dx-inv dx-tint" style="--tint:56,189,248">
                     <div class="head"><div class="logo">${cokeLogoPair()}</div>
-                        <div class="flex-1 min-w-0"><div class="font-extrabold text-base text-sky-300">Coke Bricks</div><div class="text-[11px] dx-muted">Leaves + oil + cement + acid → bricks</div></div>
-                        <button class="dx-step px-3" onclick="openTransfer(${k}, 'coke')" ${['coca', 'oil', 'cement', 'acid', 'cokeSmall', 'cokeLarge'].some(f => bucket[f]) ? '' : 'disabled'} title="Move to another location"><i class="fa-solid fa-right-left"></i></button></div>
+                        <div class="flex-1 min-w-0"><div class="font-extrabold text-base text-sky-300">Coke Bricks</div><div class="text-[11px] dx-muted">Coca leaves → bricks</div></div>
+                        <button class="dx-step px-3" onclick="openTransfer(${k}, 'coke')" ${['coca', 'cokeSmall', 'cokeLarge'].some(f => bucket[f]) ? '' : 'disabled'} title="Move to another location"><i class="fa-solid fa-right-left"></i></button></div>
                     <div class="dx-inv-top">
                         <div class="cell gold"><span class="lbl">Small</span>${bigInput('cokeSmall', 'Small coke bricks')}
                             <div class="btns">${rootStep('cokeSmall', -1, bucket.cokeSmall, 'small brick')}${rootStep('cokeSmall', 1, bucket.cokeSmall, 'small brick')}${truck('cokeSmall')}</div></div>
@@ -4605,9 +4598,9 @@
                         <button class="dx-act" onclick="pressCoke(${k}, 'large', false)" ${canLarge ? '' : 'disabled'} title="Uses ${escapeHtml(cokeRecipeText('large'))}"><i class="fa-solid fa-cubes mr-1"></i>Press large</button>
                     </div>
                     <div class="dx-inv-minor space-y-1.5">
-                        <div class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Supplies</div>
-                        ${COKE_INGREDIENTS.map(supplyRow).join('')}
-                        <div class="text-[11px] text-right ${canSmall ? 'dx-muted' : 'text-amber-300/80'}">${canSmall || canLarge ? `Enough for ${canSmall} small or ${canLarge} large` : `Short on ${shortSmall.join(', ')} for a small brick`}</div>
+                        ${qrowRoot('coca', 'Coca leaves', step)}
+                        <div class="text-[11px] text-right ${canSmall ? 'dx-muted' : 'text-amber-300/80'}">${canSmall || canLarge ? `Enough leaves for ${canSmall} small or ${canLarge} large` : `Need ${cokeLeavesFor('small').toLocaleString()} leaves for a small brick`}</div>
+                        ${bringSmall ? `<div class="text-[11px] dx-muted"><i class="fa-solid fa-toolbox mr-1"></i>Also bring: <b class="text-slate-300">${escapeHtml(bringSmall)}</b> (small) · <b class="text-slate-300">${escapeHtml(bringLarge)}</b> (large)</div>` : ''}
                     </div>
                 </div>
                 <div class="dx-glass dx-inv dx-tint" style="--tint:34,211,238">
@@ -4648,7 +4641,7 @@
                                 </div>
                             </div>
                             <div class="cell green">
-                                <span class="lbl">Potential</span>
+                                <span class="lbl">To press</span>
                                 <span class="big ${pressable ? '' : 'zero'}" title="Bricks you can press from the trimmed bud">${pressable.toLocaleString()}</span>
                                 <div class="btns">
                                     <button class="dx-act" onclick="pressBricks(${k}, ${s}, false)" ${pressable ? '' : 'disabled'} title="Press 1 brick"><i class="fa-solid fa-cube mr-1"></i>Press 1</button>
@@ -4749,31 +4742,26 @@
             offerUndo({ key: `q|${bucket}|${field}`, bucket, kind, deltas: [{ bucket, strainId: 'root', field, delta: value - current }], made: madeField ? { [madeField]: value - current } : {} });
         }
 
-        // Press a small or large coke brick: uses leaves, oil, cement and battery acid from the location
+        // Press a small or large coke brick: uses the coca leaves at the location (the other supplies aren't tracked)
         function pressCoke(bucket, size, all) {
             if (!allowed('inventory', bucket)) return;
-            const need = cokeRecipe()[size];
+            const leaves = cokeLeavesFor(size);
             const field = size === 'large' ? 'cokeLarge' : 'cokeSmall';
             mutateStock(stock => {
                 if (!isPlainObject(stock[bucket])) stock[bucket] = {};
                 const have = stock[bucket];
-                const counts = COKE_INGREDIENTS.filter(i => need[i.key] > 0).map(i => Math.floor(toCount(have[i.key]) / need[i.key]));
-                const can = counts.length ? Math.min(...counts) : 0;
+                const can = Math.floor(toCount(have.coca) / leaves);
                 const n = all ? can : Math.min(1, can);
                 if (!n) return false;
-                COKE_INGREDIENTS.forEach(i => { have[i.key] = toCount(have[i.key]) - n * need[i.key]; });
+                have.coca = toCount(have.coca) - n * leaves;
                 have[field] = toCount(have[field]) + n;
                 return { n };
             }).then(result => {
-                if (!result) {
-                    const short = cokeShortfall(appState.stock[bucket] || {}, size);
-                    return showAlert(`Not enough for a ${size} brick here${short.length ? `: short on ${short.join(', ')}` : ''}. Needs ${cokeRecipeText(size)}.`, 'warning');
-                }
+                if (!result) return showAlert(`Not enough leaves for a ${size} brick here. It takes ${leaves.toLocaleString()} leaves.`, 'warning');
                 recordMade('cokeMade', result.n);
                 logActivity({ kind: 'coca', loc: bucket });
                 offerUndo({ key: `press-coke|${bucket}|${size}`, bucket, kind: 'coca', made: { cokeMade: result.n },
-                    deltas: COKE_INGREDIENTS.filter(i => need[i.key] > 0).map(i => ({ bucket, strainId: 'root', field: i.key, delta: -result.n * need[i.key] }))
-                        .concat([{ bucket, strainId: 'root', field, delta: result.n }]),
+                    deltas: [{ bucket, strainId: 'root', field: 'coca', delta: -result.n * leaves }, { bucket, strainId: 'root', field, delta: result.n }],
                     text: e => { const n = (e.deltas.find(d => d.field === field) || { delta: 0 }).delta; return `Pressed ${n} ${size} coke ${n === 1 ? 'brick' : 'bricks'}`; } });
             });
         }
@@ -5150,7 +5138,7 @@
             }).join('');
             document.getElementById('sales-table').innerHTML = list.length
                 ? `<thead><tr><th>When</th><th>Who</th><th>Product</th><th class="r">Qty</th><th>From</th>${prices ? '<th class="r">Price</th>' : ''}<th>Note</th>${admin ? '<th></th>' : ''}</tr></thead><tbody>${rows}</tbody>`
-                : `<tbody><tr><td class="m" style="padding:14px 8px">${all.length ? 'Nothing matches these filters.' : 'Nothing logged yet. Use <b>Log Bricks Out</b> above, or the truck button on a strain in the Inventory Vault.'}</td></tr></tbody>`;
+                : `<tbody><tr><td class="m" style="padding:14px 8px">${all.length ? 'Nothing matches these filters.' : 'Nothing logged yet. Use <b>Log Something Going Out</b> above, or the truck button on anything in the Stash.'}</td></tr></tbody>`;
             document.getElementById('sales-more').innerHTML = list.length > salesShown
                 ? `<button class="dx-act" style="flex:none;padding:6px 14px" onclick="salesShown += ${SALES_PAGE_SIZE}; renderSalesPage()">Show more (${list.length - salesShown} left)</button>` : '';
         }
@@ -5220,7 +5208,7 @@
                 const [size, key] = input.dataset.recipe.split('.');
                 recipe[size][key] = toCount(input.value);
             });
-            if (['small', 'large'].some(size => !COKE_INGREDIENTS.some(i => recipe[size][i.key] > 0))) return showAlert('Each brick needs at least one ingredient.', 'warning');
+            if (['small', 'large'].some(size => !(recipe[size].coca > 0))) return showAlert('Each brick needs some coca leaves.', 'warning');
             writeShared({ 'settings/cokeRecipe': recipe });
             showAlert('Coke recipe saved.', 'success');
         }
@@ -5549,7 +5537,7 @@
                 `${strainId === 'coca' ? 'Coca leaves' : strainName(strainId)} from ${bucketLabel(bucket)}`;
             const single = strainId === 'coca' || strainId === 'meth';
             document.getElementById('transfer-field-row').classList.toggle('hidden', single);
-            const options = strainId === 'coke' ? [['cokeLarge', 'Large coke bricks'], ['cokeSmall', 'Small coke bricks'], ...COKE_INGREDIENTS.map(i => [i.key, i.label])]
+            const options = strainId === 'coke' ? [['cokeLarge', 'Large coke bricks'], ['cokeSmall', 'Small coke bricks'], ['coca', 'Coca leaves']]
                 : single ? [[strainId, ROOT_FIELDS[strainId]]]
                 : [['bricks', 'Bricks'], ['trimmed', 'Trimmed bud'], ['untrimmed', 'Untrimmed bud']];
             document.getElementById('transfer-field').innerHTML = options.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
@@ -6096,8 +6084,8 @@
                 const isReady = st.status === 'ready', isIdle = st.status === 'idle';
                 const stage = growStage(st);
                 const picked = timerSelection.has(loc.id);
-                const chip = isReady ? '<span class="dx-status rdy">READY</span>' : isIdle ? '<span class="dx-status idle">IDLE</span>' : '<span class="dx-status run">RUNNING</span>';
-                const clock = isReady ? `<div class="t">READY</div><div class="s">Harvest now</div>`
+                const chip = isReady ? '<span class="dx-status rdy">Ready!</span>' : isIdle ? '<span class="dx-status idle">Not started</span>' : '<span class="dx-status run">Growing</span>';
+                const clock = isReady ? `<div class="t">Ready!</div><div class="s">Harvest now</div>`
                     : isIdle ? `<div class="t">${formatTime(Math.round(st.totalSecs))}</div><div class="s">${formatDuration(loc.durationHours)} cycle · not started</div>`
                     : `<div class="t tc-t">${formatTime(st.remainingSecs)}</div><div class="s tc-s">${Math.floor(st.pct)}% grown</div>`;
                 const est = planEstimate(loc).bricks;
@@ -6111,7 +6099,7 @@
                 return `
                     <div class="dx-glass dx-tc ${st.status} ${picked ? 'picked' : ''}" data-tc-loc="${escapeHtml(loc.id)}">
                         <div class="top">
-                            <div class="min-w-0"><h2>${escapeHtml(loc.id)}</h2><div class="alias">${escapeHtml(loc.alias || 'Grow Operation')}</div></div>
+                            <div class="min-w-0"><h2>${escapeHtml(loc.id)}</h2><div class="alias">${escapeHtml(loc.alias || 'Grow')}</div></div>
                             <div class="sel">${chip}${canTime ? `<input type="checkbox" ${picked ? 'checked' : ''} onchange="toggleTimerSelect(${id}, this.checked)" title="Select for bulk actions" aria-label="Select ${escapeHtml(loc.id)}">` : ''}</div>
                         </div>
                         <div class="mid"><div class="bigpot"><i class="fa-solid ${stage.icon}" style="--grow:${stage.scale.toFixed(2)}"></i></div><div class="clock">${clock}</div></div>
@@ -6728,7 +6716,7 @@
                         <td class="p-3 whitespace-nowrap">${where}</td>
                         <td class="p-3">
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${isRunning ? 'bg-weed-950 text-weed-400 border border-weed-700' : 'bg-slate-900 text-slate-400 border border-slate-800'}">
-                                ${isRunning ? 'ACTIVE' : 'IDLE'}
+                                ${isRunning ? 'GROWING' : 'NOT STARTED'}
                             </span>
                         </td>
                         <td class="p-3 text-right whitespace-nowrap">
