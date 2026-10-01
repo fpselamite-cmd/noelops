@@ -348,6 +348,29 @@
         .dx-sc .row.minor b { font-size: 11px; color: #94a3b8; font-weight: 600; }
         .dx-bar { width: 100%; height: 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.06); overflow: hidden; margin-top: 6px; }
         .dx-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, hsl(var(--acc-h) 76% 36%), hsl(var(--acc-h) 69% 58%)); }
+        /* Header: shrink in steps so everything fits on laptop screens */
+        header nav .nav-btn { white-space: nowrap; }
+        @media (max-width: 1599px) {
+            #presence-count { display: none; }
+            #sync-status-text { display: none; }
+            #sync-status-pill { padding: 5px 7px; }
+            header nav .nav-btn { padding-left: 12px; padding-right: 12px; }
+        }
+        header nav .lbl-short { display: none; }
+        @media (max-width: 1439px) {
+            header nav .lbl-full { display: none; }   /* shorter labels: Inventory, Planner, Timers */
+            header nav .lbl-short { display: inline; }
+            header nav .nav-btn { padding-left: 11px; padding-right: 11px; }
+        }
+        @media (max-width: 1249px) {
+            header nav .nav-btn > span:not([id]) { display: none; }   /* icon-only menu… */
+            header nav .nav-btn.bg-weed-600 > span:not([id]) { display: inline; } /* …except the page you're on */
+        }
+        @media (max-width: 1100px) {
+            #profile-btn-name { display: none !important; }
+            #profile-btn { padding-right: 4px; }
+            #live-clock { font-size: 11px; }
+        }
         .dx-header-logo { width: 120px; height: 72px; box-shadow: 0 0 24px hsl(var(--acc-h) 71% 45% / 0.22); }
         .dx-header-logo img { width: 100%; height: 100%; object-fit: cover; }
         @media (max-width: 640px) { .dx-header-logo { width: 100px; height: 62px; } }
@@ -651,6 +674,52 @@
         .dx-sales-table td.r, .dx-sales-table th.r { text-align: right; font-variant-numeric: tabular-nums; }
         .dx-sales-table td.m { color: #8a9a8e; font-size: 11.5px; }
         .dx-sales-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+        /* Log bricks out (quick sale) */
+        .dx-qs { padding: 18px; margin-bottom: 18px; border-color: rgba(251, 191, 36, 0.28); }
+        .qs-step { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.06em; margin: 14px 0 8px; }
+        .qs-step > span { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; background: #fbbf24; color: #0a110c; }
+        .qs-step em { font-style: normal; font-weight: 600; text-transform: none; letter-spacing: 0; color: #8a9a8e; }
+        .qs-strains { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+        .qs-strain { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 8px 9px; border-radius: 14px; cursor: pointer;
+            background: linear-gradient(180deg, rgba(var(--tint), 0.14), rgba(6, 10, 7, 0.75)); border: 2px solid rgba(var(--tint), 0.25); transition: transform 0.12s, border-color 0.15s, box-shadow 0.15s; }
+        .qs-strain:hover { transform: translateY(-2px); border-color: rgba(var(--tint), 0.6); }
+        .qs-strain.on { border-color: #fbbf24; box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.35), 0 8px 24px rgba(0, 0, 0, 0.5); }
+        .qs-strain.on::after { content: '\2713'; position: absolute; top: 6px; right: 8px; width: 20px; height: 20px; border-radius: 50%; background: #fbbf24; color: #0a110c; font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+        .qs-strain .lg { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)); }
+        .qs-strain .lg img { width: 100%; height: 100%; object-fit: contain; }
+        .qs-strain b { font-size: 13px; text-align: center; line-height: 1.15; }
+        .qs-strain small { font-size: 11px; color: #a3b3a7; font-weight: 600; }
+        .qs-strain small b { font-size: 12px; color: #fde68a; }
+        .qs-strain.empty { opacity: 0.4; cursor: not-allowed; }
+        .qs-strain.empty:hover { transform: none; border-color: rgba(var(--tint), 0.25); }
+        .qs-cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 18px; }
+        .qs-from { display: flex; flex-wrap: wrap; gap: 8px; }
+        .qs-from button { padding: 10px 14px; border-radius: 12px; font-size: 13px; font-weight: 700; color: #cbd5e1; background: rgba(6, 10, 7, 0.7); border: 2px solid rgba(255, 255, 255, 0.08); }
+        .qs-from button b { margin-left: 6px; color: #fde68a; font-family: 'JetBrains Mono', monospace; }
+        .qs-from button.on { border-color: #fbbf24; color: #fff; background: rgba(251, 191, 36, 0.12); }
+        .qs-from button:disabled { opacity: 0.35; cursor: not-allowed; }
+        .qs-count { display: grid; grid-template-columns: 56px minmax(0, 1fr) 56px; gap: 8px; }
+        .qs-count button { height: 56px; border-radius: 14px; font-size: 26px; font-weight: 800; color: #fde68a; background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.3); }
+        .qs-count button:hover { background: rgba(251, 191, 36, 0.2); }
+        .dx-qs .qs-count input { height: 56px; text-align: center; font-size: 28px; font-weight: 900; font-family: 'JetBrains Mono', monospace; color: #fff; background: #060a07; border: 2px solid rgba(255, 255, 255, 0.12); border-radius: 14px; }
+        .qs-quick { display: flex; gap: 6px; margin-top: 8px; }
+        .qs-quick button { flex: 1; padding: 7px 0; border-radius: 10px; font-size: 13px; font-weight: 800; color: #cbd5e1; background: rgba(6, 10, 7, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .qs-quick button:hover { border-color: #fbbf24; color: #fde68a; }
+        .qs-details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+        .qs-details label { display: block; font-size: 12px; font-weight: 700; color: #cbd5e1; }
+        .qs-details label > span { font-weight: 500; color: #64748b; }
+        .qs-details label.hidden { display: none; }
+        .qs-details .dx-input { margin-top: 4px; padding: 10px 12px; font-size: 14px; }
+        .qs-submit { width: 100%; margin-top: 16px; padding: 16px; border-radius: 14px; font-size: 17px; font-weight: 900; color: #1a1203; background: linear-gradient(180deg, #fcd34d, #f59e0b);
+            box-shadow: 0 10px 28px rgba(245, 158, 11, 0.3); transition: filter 0.15s, transform 0.1s; }
+        .qs-submit:hover:not(:disabled) { filter: brightness(1.08); }
+        .qs-submit:active:not(:disabled) { transform: translateY(1px); }
+        .qs-submit:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+        .dx-qs.flash { animation: dxQsFlash 0.9s ease-out; }
+        @keyframes dxQsFlash { 0% { box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.8); } 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); } }
+        @media (max-width: 1100px) { .qs-strains { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        @media (max-width: 860px) { .qs-cols, .qs-details { grid-template-columns: minmax(0, 1fr); } .qs-strains { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 520px) { .qs-strains { grid-template-columns: repeat(2, minmax(0, 1fr)); } .qs-strain .lg { width: 52px; height: 52px; } }
         /* Budget */
         .dx-budget { padding: 16px 18px; }
         .dx-budget-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
@@ -733,28 +802,28 @@
 
                     <!-- Navigation Links -->
                     <nav class="hidden md:flex space-x-1 bg-darkcard/90 p-1.5 rounded-xl border border-weed-900/60 whitespace-nowrap">
-                        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-weed-600 text-white shadow-md shadow-weed-900/50">
+                        <button onclick="switchTab('dashboard')" id="nav-dashboard" title="Dashboard" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-weed-600 text-white shadow-md shadow-weed-900/50">
                             <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
                         </button>
-                        <button onclick="switchTab('inventory')" id="nav-inventory" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('inventory')" id="nav-inventory" title="Inventory Vault" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-cannabis"></i>
-                            <span>Inventory Vault</span>
+                            <span><span class="lbl-full">Inventory Vault</span><span class="lbl-short">Inventory</span></span>
                         </button>
-                        <button onclick="switchTab('planner')" id="nav-planner" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('planner')" id="nav-planner" title="Grow Planner" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-calculator"></i>
-                            <span>Grow Planner</span>
+                            <span><span class="lbl-full">Grow Planner</span><span class="lbl-short">Planner</span></span>
                         </button>
-                        <button onclick="switchTab('timers')" id="nav-timers" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('timers')" id="nav-timers" title="Grow Timers" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-clock"></i>
-                            <span>Grow Timers</span>
+                            <span><span class="lbl-full">Grow Timers</span><span class="lbl-short">Timers</span></span>
                             <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
                         </button>
-                        <button onclick="switchTab('sales')" id="nav-sales" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('sales')" id="nav-sales" title="Sales" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-truck-fast"></i>
                             <span>Sales</span>
                         </button>
-                        <button onclick="switchTab('admin')" id="nav-admin" data-admin-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('admin')" id="nav-admin" title="Admin" data-admin-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i id="nav-admin-icon" class="fa-solid fa-lock"></i>
                             <span>Admin</span>
                         </button>
@@ -868,10 +937,49 @@
                         <p class="text-xs text-slate-400 mt-1">Bricks going out: sold, delivered or handed off. Logging them removes them from stock.</p>
                     </div>
                     <div class="dx-plan-actions">
-                        <button class="dx-act solid" onclick="openSale()"><i class="fa-solid fa-plus mr-1"></i>Log Bricks Out</button>
                         <button class="dx-act" onclick="exportSalesCsv()"><i class="fa-solid fa-file-csv mr-1"></i>Export CSV</button>
                     </div>
                 </div>
+
+                <!-- Log bricks out: pick a strain, where from, how many, submit -->
+                <form id="sale-form" class="dx-glass dx-qs" onsubmit="saveSale(event)">
+                    <input type="hidden" id="sale-strain"><input type="hidden" id="sale-from">
+                    <div class="dx-sec"><h2><i class="fa-solid fa-truck-fast text-amber-400 mr-1"></i>Log Bricks Out</h2><span class="text-xs dx-muted hidden sm:inline">Takes them out of stock and adds them to the log.</span></div>
+                    <div class="qs-step"><span>1</span>Pick a strain</div>
+                    <div id="qs-strains" class="qs-strains"></div>
+                    <div class="qs-cols">
+                        <div>
+                            <div class="qs-step"><span>2</span>From</div>
+                            <div id="qs-from" class="qs-from"></div>
+                        </div>
+                        <div>
+                            <div class="qs-step"><span>3</span>How many bricks <em id="sale-available"></em></div>
+                            <div class="qs-count">
+                                <button type="button" onclick="stepSaleCount(-1)" aria-label="One less">−</button>
+                                <input type="number" id="sale-amount" min="1" step="1" inputmode="numeric" aria-label="Bricks" oninput="onSaleCountChange()">
+                                <button type="button" onclick="stepSaleCount(1)" aria-label="One more">+</button>
+                            </div>
+                            <div class="qs-quick">
+                                <button type="button" onclick="setSaleCount(1)">1</button><button type="button" onclick="setSaleCount(2)">2</button><button type="button" onclick="setSaleCount(5)">5</button><button type="button" onclick="setSaleCount(10)">10</button><button type="button" onclick="setSaleCount('all')">All</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qs-step"><span>4</span>Details</div>
+                    <div class="qs-details">
+                        <label>Sold by <span>(gets the seller's cut)</span>
+                            <select id="sale-seller" class="dx-input w-full" onchange="saleDraft.sellerPicked = true"></select>
+                        </label>
+                        <label id="sale-price-box">Total price <span>(fills in from the default)</span>
+                            <input type="number" id="sale-price" min="0" step="1" placeholder="$" class="dx-input w-full font-mono" oninput="this.dataset.touched = '1'; renderQuickSaleSubmit()">
+                        </label>
+                        <label>Note <span>(optional)</span>
+                            <input type="text" id="sale-note" maxlength="60" placeholder="Buyer, drop spot…" class="dx-input w-full">
+                        </label>
+                    </div>
+                    <p id="sale-error" class="hidden text-sm text-red-400 font-semibold mt-3"></p>
+                    <button type="submit" id="sale-submit" class="qs-submit"></button>
+                </form>
+
                 <div id="sales-stats" class="dx-stats"></div>
                 <div id="sales-budget" class="mb-4"></div>
                 <div class="dx-sales-filters dx-glass">
@@ -1509,39 +1617,6 @@
             <p id="crew-error" class="hidden text-xs text-red-400 font-semibold text-center"></p>
             <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px">Save</button>
             <button type="button" onclick="closeCrewEditor()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
-        </form>
-    </div>
-
-    <!-- Bricks going out (sales log) -->
-    <div id="sale-modal" class="dx-modal hidden">
-        <form class="dx-glass dx-modal-card dx-modal-wide space-y-3 text-left" onsubmit="saveSale(event)">
-            <h2 class="text-xl font-black text-white text-center"><i class="fa-solid fa-truck-fast text-amber-400 mr-1"></i>Bricks Going Out</h2>
-            <p class="text-xs text-slate-400 text-center">Removes the bricks from stock and adds them to the outgoing log.</p>
-            <div class="grid grid-cols-2 gap-3">
-                <label class="block text-xs font-semibold text-slate-300">Strain
-                    <select id="sale-strain" class="dx-input mt-1 w-full" onchange="updateSaleAvailable(); fillDefaultSalePrice()"></select>
-                </label>
-                <label class="block text-xs font-semibold text-slate-300">From
-                    <select id="sale-from" class="dx-input mt-1 w-full" onchange="updateSaleAvailable()"></select>
-                </label>
-            </div>
-            <label class="block text-xs font-semibold text-slate-300">Sold by <span class="font-normal text-slate-500">(gets the seller's cut)</span>
-                <select id="sale-seller" class="dx-input mt-1 w-full"></select>
-            </label>
-            <label class="block text-xs font-semibold text-slate-300">Bricks <span id="sale-available" class="font-normal text-slate-500"></span>
-                <input type="number" id="sale-amount" min="1" step="1" required class="mt-1 font-mono" oninput="fillDefaultSalePrice()">
-            </label>
-            <div class="grid grid-cols-2 gap-3">
-                <label id="sale-price-box" class="block text-xs font-semibold text-slate-300">Total price <span class="font-normal text-slate-500">(optional)</span>
-                    <input type="number" id="sale-price" min="0" step="1" placeholder="$" class="mt-1 font-mono" oninput="this.dataset.touched = '1'">
-                </label>
-                <label class="block text-xs font-semibold text-slate-300">Note <span class="font-normal text-slate-500">(optional)</span>
-                    <input type="text" id="sale-note" maxlength="60" placeholder="Buyer, drop spot…" class="mt-1">
-                </label>
-            </div>
-            <p id="sale-error" class="hidden text-xs text-red-400 font-semibold text-center"></p>
-            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-truck-fast mr-1"></i> Log &amp; Remove Bricks</button>
-            <button type="button" onclick="closeSale()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
         </form>
     </div>
 
@@ -4267,45 +4342,130 @@
         // ---- Bricks going out (sales log) ----
         const SALES_KEEP = 500;
 
+        // Quick sale panel on the Sales page: strain → from → how many → details → submit
+        const saleDraft = { strain: null, from: null };
+
+        function saleBricksAt(bucket, strainId) {
+            return appState.stock[bucket] && appState.stock[bucket][strainId] ? appState.stock[bucket][strainId].bricks : 0;
+        }
+
+        function saleBuckets() {
+            return inventoryBuckets().filter(b => !b.orphan || DEFAULT_STRAINS.some(st => saleBricksAt(b.key, st.id)));
+        }
+
+        // Where to take a strain from: the current choice if it has some, else the location with the most
+        function bestSaleFrom(strainId, prefer) {
+            const buckets = saleBuckets();
+            if (prefer && buckets.some(b => b.key === prefer) && saleBricksAt(prefer, strainId)) return prefer;
+            const withStock = buckets.filter(b => saleBricksAt(b.key, strainId)).sort((x, y) => saleBricksAt(y.key, strainId) - saleBricksAt(x.key, strainId));
+            return (withStock[0] || buckets.find(b => b.key === prefer) || buckets[0] || { key: STASH_KEY }).key;
+        }
+
+        // Inventory's truck button (and anything else) opens the Sales page with the strain and location picked
         function openSale(bucket, strainId) {
             if (!allowed('sales', bucket || undefined)) return;
-            const strainSel = document.getElementById('sale-strain');
-            strainSel.innerHTML = DEFAULT_STRAINS.map(st => `<option value="${st.id}">${escapeHtml(st.name)}</option>`).join('');
-            const fromSel = document.getElementById('sale-from');
-            fromSel.innerHTML = inventoryBuckets().filter(b => !b.orphan || (appState.stock[b.key] && bucketTotals(appState.stock[b.key]).bricks))
-                .map(b => `<option value="${escapeHtml(b.key)}">${escapeHtml(b.label)}${b.alias ? ' · ' + escapeHtml(b.alias) : ''}</option>`).join('');
-            fromSel.value = bucket || activeInvBucket();
-            if (strainId) strainSel.value = strainId;
-            else { // the strain with the most bricks in that location
-                const b = appState.stock[fromSel.value];
-                const best = b ? DEFAULT_STRAINS.slice().sort((x, y) => b[y.id].bricks - b[x.id].bricks)[0] : null;
-                if (best) strainSel.value = best.id;
+            switchTab('sales');
+            if (strainId) {
+                saleDraft.strain = strainId;
+                saleDraft.from = bestSaleFrom(strainId, bucket);
             }
+            document.getElementById('sale-amount').value = 1;
+            resetSaleDetails();
+            renderQuickSale();
+            const form = document.getElementById('sale-form');
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetSaleDetails() {
             ['sale-price', 'sale-note'].forEach(id => { document.getElementById(id).value = ''; });
             delete document.getElementById('sale-price').dataset.touched;
+            document.getElementById('sale-error').classList.add('hidden');
+        }
+
+        function selectSaleStrain(strainId) {
+            saleDraft.strain = strainId;
+            saleDraft.from = bestSaleFrom(strainId, saleDraft.from);
+            const amount = document.getElementById('sale-amount');
+            if (!toCount(amount.value)) amount.value = 1;
+            document.getElementById('sale-error').classList.add('hidden');
+            renderQuickSale();
+        }
+
+        function selectSaleFrom(bucket) {
+            saleDraft.from = bucket;
+            renderQuickSale();
+        }
+
+        function setSaleCount(n) {
+            const have = saleDraft.strain ? saleBricksAt(saleDraft.from, saleDraft.strain) : 0;
+            document.getElementById('sale-amount').value = n === 'all' ? have : n;
+            onSaleCountChange();
+        }
+
+        function stepSaleCount(delta) {
+            const input = document.getElementById('sale-amount');
+            input.value = Math.max(1, toCount(input.value) + delta);
+            onSaleCountChange();
+        }
+
+        function onSaleCountChange() {
+            fillDefaultSalePrice();
+            renderQuickSaleSubmit();
+        }
+
+        // The parts that change with live data (stock counts) and choices; typed fields are left alone
+        function renderQuickSale() {
+            const form = document.getElementById('sale-form');
+            if (!form) return;
+            const buckets = saleBuckets();
+            if (saleDraft.strain && !saleDraft.from) saleDraft.from = bestSaleFrom(saleDraft.strain);
+            if (saleDraft.from && !buckets.some(b => b.key === saleDraft.from)) saleDraft.from = saleDraft.strain ? bestSaleFrom(saleDraft.strain) : null;
+            document.getElementById('sale-strain').value = saleDraft.strain || '';
+            document.getElementById('sale-from').value = saleDraft.from || '';
+            // 1. strains, with how many bricks you could log (across the places you can see)
+            document.getElementById('qs-strains').innerHTML = DEFAULT_STRAINS.map(st => {
+                const total = buckets.reduce((sum, b) => sum + saleBricksAt(b.key, st.id), 0);
+                return `<button type="button" class="qs-strain ${saleDraft.strain === st.id ? 'on' : ''} ${total ? '' : 'empty'}" style="--tint:${st.tint}" data-strain="${st.id}"
+                    onclick="${total ? `selectSaleStrain('${st.id}')` : ''}" ${total ? '' : 'aria-disabled="true"'} title="${escapeHtml(st.name)}: ${total} bricks on hand">
+                    <span class="lg">${getStrainLogo(st.id)}</span><b class="${st.nameColor}">${escapeHtml(st.name)}</b><small><b>${total}</b> on hand</small></button>`;
+            }).join('');
+            // 2. from
+            document.getElementById('qs-from').innerHTML = saleDraft.strain
+                ? buckets.map(b => {
+                    const n = saleBricksAt(b.key, saleDraft.strain);
+                    return `<button type="button" class="${saleDraft.from === b.key ? 'on' : ''}" ${n ? '' : 'disabled'} onclick="selectSaleFrom(${jsArg(b.key)})">${escapeHtml(b.label)}<b>${n}</b></button>`;
+                }).join('')
+                : '<p class="text-xs dx-muted">Pick a strain first.</p>';
+            const have = saleDraft.strain ? saleBricksAt(saleDraft.from, saleDraft.strain) : 0;
+            document.getElementById('sale-available').textContent = saleDraft.strain ? `(${have} at ${bucketLabel(saleDraft.from)})` : '';
+            // 4. sellers (keep the choice)
             const sellers = sellerOptions();
             const sellerSel = document.getElementById('sale-seller');
-            sellerSel.innerHTML = sellers.map(o => `<option value="${escapeHtml(o.key)}">${escapeHtml(o.name)}</option>`).join('');
-            sellerSel.value = myPersonKey() && sellers.some(o => o.key === myPersonKey()) ? myPersonKey() : sellers[0].key;
+            const keep = sellerSel.value;
+            if (sellerSel !== document.activeElement) {
+                sellerSel.innerHTML = sellers.map(o => `<option value="${escapeHtml(o.key)}">${escapeHtml(o.name)}</option>`).join('');
+                const mine = myPersonKey() && sellers.some(o => o.key === myPersonKey()) ? myPersonKey() : sellers[0].key;
+                sellerSel.value = saleDraft.sellerPicked && sellers.some(o => o.key === keep) ? keep : mine; // you, unless someone else was picked
+            }
             document.getElementById('sale-price-box').classList.toggle('hidden', !canSeePrices());
-            document.getElementById('sale-error').classList.add('hidden');
-            updateSaleAvailable(true);
-            fillDefaultSalePrice();
-            document.getElementById('sale-modal').classList.remove('hidden');
-            setTimeout(() => document.getElementById('sale-amount').select(), 50);
-        }
-
-        function updateSaleAvailable(reset) {
-            const bucket = document.getElementById('sale-from').value;
-            const strainId = document.getElementById('sale-strain').value;
-            const have = appState.stock[bucket] && appState.stock[bucket][strainId] ? appState.stock[bucket][strainId].bricks : 0;
-            document.getElementById('sale-available').textContent = `(${have.toLocaleString()} on hand)`;
             const amount = document.getElementById('sale-amount');
-            if (reset !== false) amount.value = have ? 1 : 0;
+            if (amount.value === '') amount.value = 1;
+            fillDefaultSalePrice();
+            renderQuickSaleSubmit();
         }
 
-        function closeSale() {
-            document.getElementById('sale-modal').classList.add('hidden');
+        function renderQuickSaleSubmit() {
+            const btn = document.getElementById('sale-submit');
+            if (!btn) return;
+            const n = toCount(document.getElementById('sale-amount').value);
+            const price = document.getElementById('sale-price').value.trim();
+            if (!saleDraft.strain) {
+                btn.disabled = true;
+                btn.innerHTML = 'Pick a strain to start';
+                return;
+            }
+            btn.disabled = n < 1;
+            btn.innerHTML = `<i class="fa-solid fa-check mr-2"></i>Log ${n} ${escapeHtml(strainName(saleDraft.strain))} ${n === 1 ? 'brick' : 'bricks'} out${price && canSeePrices() ? ` · ${money(price)}` : ''}`;
         }
 
         function saveSale(event) {
@@ -4319,14 +4479,16 @@
             const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
             if (!allowed('sales', bucket)) return;
             if (bricks < 1) return showError('Enter at least 1 brick.');
+            if (!strainId) return showError('Pick a strain first.');
             mutateStock(stock => {
                 const cell = stockCell(stock, bucket, strainId);
                 if (cell.bricks < bricks) return false;
                 cell.bricks -= bricks;
                 return { bricks };
             }).then(result => {
-                if (!result) return showError(`Not enough ${strainName(strainId)} bricks there. Someone may have just changed it.`);
-                closeSale();
+                if (!result) return showError(`Not enough ${strainName(strainId)} bricks at ${bucketLabel(bucket)} (${saleBricksAt(bucket, strainId)} there).`);
+                const form = document.getElementById('sale-form');
+                form.classList.remove('flash'); void form.offsetWidth; form.classList.add('flash');
                 const id = newActivityId();
                 const seller = personFromKey(document.getElementById('sale-seller').value);
                 const record = { strain: strainId, bricks, bucket, who: seller.name, by: appState.crewName || 'Someone', cut: cutFor(seller.id, seller.name), ts: timestampValue(), note };
@@ -4340,6 +4502,10 @@
                 offerUndo({ perm: 'sales', bucket, kind: 'sale', restore: { [`sales/${id}`]: null },
                     deltas: [{ bucket, strainId, field: 'bricks', delta: -bricks }],
                     text: `Logged ${bricks} ${strainName(strainId)} ${bricks === 1 ? 'brick' : 'bricks'} going out${record.price !== undefined && canSeePrices() ? ` for $${record.price.toLocaleString()}` : ''}.` });
+                // Ready for the next one (same strain & seller)
+                document.getElementById('sale-amount').value = 1;
+                resetSaleDetails();
+                renderQuickSale();
             });
         }
 
@@ -4441,6 +4607,7 @@
             fillSelect('sales-f-who', [...sellers.entries()].sort((a, b) => a[1].localeCompare(b[1])), 'Everyone');
             fillSelect('sales-f-from', inventoryBuckets().map(b => [b.key, b.label]), 'All locations');
             renderBudget();
+            renderQuickSale();
             const list = filteredSales();
             const bricks = list.reduce((sum, x) => sum + x.bricks, 0);
             const cash = list.reduce((sum, x) => sum + (x.price || 0), 0);
@@ -4465,7 +4632,7 @@
             }).join('');
             document.getElementById('sales-table').innerHTML = list.length
                 ? `<thead><tr><th>When</th><th>Who</th><th>Strain</th><th class="r">Bricks</th><th>From</th>${prices ? '<th class="r">Price</th>' : ''}<th>Note</th>${admin ? '<th></th>' : ''}</tr></thead><tbody>${rows}</tbody>`
-                : `<tbody><tr><td class="m" style="padding:14px 8px">${all.length ? 'Nothing matches these filters.' : 'Nothing logged yet. Use <b>Log Bricks Out</b>, or the truck button on a strain in the Inventory Vault.'}</td></tr></tbody>`;
+                : `<tbody><tr><td class="m" style="padding:14px 8px">${all.length ? 'Nothing matches these filters.' : 'Nothing logged yet. Use <b>Log Bricks Out</b> above, or the truck button on a strain in the Inventory Vault.'}</td></tr></tbody>`;
             document.getElementById('sales-more').innerHTML = list.length > salesShown
                 ? `<button class="dx-act" style="flex:none;padding:6px 14px" onclick="salesShown += ${SALES_PAGE_SIZE}; renderSalesPage()">Show more (${list.length - salesShown} left)</button>` : '';
         }
@@ -4775,6 +4942,7 @@
         // Fill the price box from the strain's default (until the person types their own)
         function fillDefaultSalePrice() {
             const box = document.getElementById('sale-price');
+            if (!box) return;
             if (box.dataset.touched) return;
             const unit = appState.salesSettings.prices[document.getElementById('sale-strain').value];
             const amount = toCount(document.getElementById('sale-amount').value);
