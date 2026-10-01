@@ -199,6 +199,12 @@ For crew members, everything is saved to their profile and follows them to any d
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
 
+### 💜 Oct 1, 2026: Grow Light look
+- New header: purple grow-light glow with a neon green underline on the page you're on
+- Main buttons glow green, secondary buttons glow purple
+- Page titles get an icon and a little weed-leaf underline
+- Faint weed-leaf pattern in the background
+
 ### 🧹 Oct 1, 2026: Simpler and easier to read
 - The menu is now just **Dashboard**, **Grows**, **Stash** and **Log**. The pot plan lives under **Grows** (Timers / Pot Plan tabs)
 - Coke only counts **coca leaves** now. Pressing takes the leaves, and the card reminds you what oil, cement and acid to bring
