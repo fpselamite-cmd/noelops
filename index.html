@@ -204,7 +204,7 @@
         @keyframes dxToastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
         .dx-modal { position: fixed; inset: 0; z-index: 200; background: rgba(2, 5, 3, 0.75); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px; }
-        .dx-modal.hidden { display: none; }
+        .dx-modal.hidden, [data-admin-panel].hidden, #signin-create.hidden { display: none; }
         .dt-preview { background: #313338; border-radius: 12px; padding: 14px 16px; color: #dbdee1; font-size: 14px; }
         .dt-msg { display: flex; gap: 14px; }
         .dt-av { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
@@ -534,8 +534,8 @@
                 </div>
             </section>
 
-            <section id="tab-admin" class="tab-content hidden space-y-8">
-                
+            <section id="tab-admin" class="tab-content hidden space-y-6">
+
                 <!-- Admin Header -->
                 <div class="glass-card p-6 rounded-2xl border-weed-900 flex justify-between items-center">
                     <div>
@@ -550,89 +550,41 @@
                     </button>
                 </div>
 
-                <!-- Per-Strain Logo Manager -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60 bg-gradient-to-r from-weed-950/40 via-darkcard to-weed-950/40">
-                    <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
-                        <div class="w-8 h-8 rounded-lg bg-purple-950 text-purple-400 flex items-center justify-center">
-                            <i class="fa-solid fa-images text-lg"></i>
-                        </div>
-                        <div>
-                            <h2 class="font-bold text-white text-base">Strain Logos</h2>
-                            <p class="text-xs text-slate-400">Each strain loads its own file from <span class="font-mono text-weed-300">logos/&lt;strain&gt;.png</span> in the repo, so everyone sees the same logos. Uploads here override a logo in this browser only.</p>
-                        </div>
-                        <button id="reset-all-strain-logos-btn" onclick="resetAllStrainLogos()" class="hidden ml-auto px-3 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 hover:bg-red-900/80 text-xs font-semibold transition-all shrink-0" title="Remove every custom upload and use the repo files">
-                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset All to Repo Files
-                        </button>
-                    </div>
-
-                    <input type="file" id="strain-logo-file-input" accept="image/*" onchange="handleStrainLogoFileUpload(event)" class="hidden">
-                    <div id="admin-strain-logos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                        <!-- Populated dynamically -->
-                    </div>
+                <!-- Admin sections -->
+                <div id="admin-tabs" class="dx-tabs">
+                    <button class="dx-tab" data-admin-tab="crew" onclick="showAdminTab('crew')"><i class="fa-solid fa-users-gear"></i>Crew <span id="admin-pending-badge" class="count hidden"></span></button>
+                    <button class="dx-tab" data-admin-tab="locations" onclick="showAdminTab('locations')"><i class="fa-solid fa-location-dot"></i>Locations</button>
+                    <button class="dx-tab" data-admin-tab="discord" onclick="showAdminTab('discord')"><i class="fa-brands fa-discord"></i>Discord</button>
+                    <button class="dx-tab" data-admin-tab="logos" onclick="showAdminTab('logos')"><i class="fa-solid fa-image"></i>Logos</button>
+                    <button class="dx-tab" data-admin-tab="data" onclick="showAdminTab('data')"><i class="fa-solid fa-database"></i>Data &amp; Backups</button>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    
-                    <!-- Discord Webhook Configuration -->
-                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
-                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
-                            <div class="w-8 h-8 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center">
-                                <i class="fa-brands fa-discord text-lg"></i>
-                            </div>
+                <div data-admin-panel="crew" class="space-y-6">
+                <!-- Crew & Permissions -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-weed-900 pb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-users-gear text-lg"></i></div>
                             <div>
-                                <h2 class="font-bold text-white text-base">Discord Webhook Alerts</h2>
-                                <p class="text-xs text-slate-400">Send automatic messages to your server when harvests are ready</p>
+                                <h2 class="font-bold text-white text-base">Crew &amp; Permissions</h2>
+                                <p class="text-xs text-slate-400">Give each person a PIN and choose what they can see and do.</p>
                             </div>
                         </div>
-
-                        <div class="space-y-3">
-                            <label class="block text-xs font-semibold text-slate-300">Discord Webhook URL</label>
-                            <input type="text" id="admin-webhook-url" placeholder="https://discord.com/api/webhooks/..." class="w-full bg-darkbg border border-weed-900 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-weed-400 font-mono">
-                            
-                            <div class="flex space-x-3">
-                                <button onclick="saveWebhookUrl()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all shadow-md">
-                                    <i class="fa-solid fa-floppy-disk mr-1"></i> Save Webhook URL
-                                </button>
-                                <button onclick="testDiscordWebhook()" class="px-4 py-2 rounded-xl bg-darkbg border border-indigo-800 text-indigo-300 hover:bg-indigo-950 text-xs transition-all">
-                                    <i class="fa-solid fa-paper-plane mr-1"></i> Test Dispatch
-                                </button>
-                            </div>
-                        </div>
+                        <button onclick="openCrewEditor()" class="px-4 py-2 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all shadow-md whitespace-nowrap">
+                            <i class="fa-solid fa-user-plus mr-1"></i> Add Crew Member
+                        </button>
                     </div>
+                    <div id="crew-mode-note" class="text-xs"></div>
+                    <label class="flex items-start gap-3 p-3 rounded-xl bg-darkbg/70 border border-weed-900 cursor-pointer">
+                        <input id="signup-toggle" type="checkbox" onchange="setSignupAllowed(this.checked)" class="mt-0.5 accent-green-500">
+                        <span><span class="block text-sm font-semibold text-slate-100">Let new people create their own profile</span>
+                        <span class="block text-[11px] text-slate-500">They type a new name and PIN on the sign-in screen and start as a Viewer (dashboard stats only) until you review them here.</span></span>
+                    </label>
+                    <div id="crew-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </div>
+                </div>
 
-                    <!-- Master Logo Settings -->
-                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
-                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
-                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center">
-                                <i class="fa-solid fa-shield-halved text-lg"></i>
-                            </div>
-                            <div>
-                                <h2 class="font-bold text-white text-base">Master Syndicate Branding Logo</h2>
-                                <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">NoelOpsLogo.png</span> from the repo. Uploads or URLs here override it in this browser only.</p>
-                            </div>
-                        </div>
-
-                        <div class="space-y-3">
-                            <div class="flex items-center space-x-4">
-                                <div id="admin-logo-preview" class="w-[84px] h-14 rounded-xl bg-darkbg border border-weed-800 flex items-center justify-center overflow-hidden p-1 shrink-0">
-                                    <!-- Dynamic Logo Preview -->
-                                </div>
-                                <div class="space-y-2 flex-1">
-                                    <input type="file" id="master-logo-file-input" accept="image/*" onchange="handleMasterLogoFileUpload(event)" class="hidden">
-                                    <button onclick="document.getElementById('master-logo-file-input').click()" class="w-full py-2 px-3 rounded-xl bg-weed-950 border border-weed-700 text-weed-300 hover:bg-weed-900 text-xs font-bold transition-all flex items-center justify-center space-x-2">
-                                        <i class="fa-solid fa-upload"></i>
-                                        <span>Upload Custom Logo File</span>
-                                    </button>
-                                    <div class="flex space-x-2">
-                                        <input type="text" id="master-logo-url-input" placeholder="Or enter Image URL (https://...)" class="flex-1 bg-darkbg border border-weed-900 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-weed-400 font-mono">
-                                        <button onclick="saveMasterLogoUrl()" class="px-3 py-1.5 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all">Set URL</button>
-                                        <button onclick="resetMasterLogo()" class="px-2.5 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 text-xs" title="Reset to repo logo"><i class="fa-solid fa-rotate-left"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                <div data-admin-panel="locations" class="space-y-6">
                     <!-- Add / Edit Grow Locations Form -->
                     <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
                         <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
@@ -671,7 +623,59 @@
                         </form>
                     </div>
 
+                <!-- Existing Locations Management Table -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-900">
+                    <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center justify-between">
+                        <span>Manage Existing Grow Locations</span>
+                        <span id="admin-loc-count-badge" class="text-xs px-2 py-0.5 rounded bg-weed-950 text-weed-400 border border-weed-800">4 Active</span>
+                    </h2>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-darkbg text-slate-400 font-mono uppercase">
+                                <tr>
+                                    <th class="p-3 rounded-l-lg">Postal ID</th>
+                                    <th class="p-3">Alias / Notes</th>
+                                    <th class="p-3">Timer Duration</th>
+                                    <th class="p-3">Current Status</th>
+                                    <th class="p-3 text-right rounded-r-lg">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-locations-table-body" class="divide-y divide-weed-900/40">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                </div>
+
+                <div data-admin-panel="discord" class="space-y-6">
+                    <!-- Discord Webhook Configuration -->
+                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center">
+                                <i class="fa-brands fa-discord text-lg"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-white text-base">Discord Webhook Alerts</h2>
+                                <p class="text-xs text-slate-400">Send automatic messages to your server when harvests are ready</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="block text-xs font-semibold text-slate-300">Discord Webhook URL</label>
+                            <input type="text" id="admin-webhook-url" placeholder="https://discord.com/api/webhooks/..." class="w-full bg-darkbg border border-weed-900 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-weed-400 font-mono">
+                            
+                            <div class="flex space-x-3">
+                                <button onclick="saveWebhookUrl()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all shadow-md">
+                                    <i class="fa-solid fa-floppy-disk mr-1"></i> Save Webhook URL
+                                </button>
+                                <button onclick="testDiscordWebhook()" class="px-4 py-2 rounded-xl bg-darkbg border border-indigo-800 text-indigo-300 hover:bg-indigo-950 text-xs transition-all">
+                                    <i class="fa-solid fa-paper-plane mr-1"></i> Test Dispatch
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                 <!-- Discord harvest message editor -->
                 <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
@@ -722,50 +726,67 @@
                         </div>
                     </form>
                 </div>
+                </div>
 
-                <!-- Crew & Permissions -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-weed-900 pb-3">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-users-gear text-lg"></i></div>
+                <div data-admin-panel="logos" class="space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Master Logo Settings -->
+                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center">
+                                <i class="fa-solid fa-shield-halved text-lg"></i>
+                            </div>
                             <div>
-                                <h2 class="font-bold text-white text-base">Crew &amp; Permissions</h2>
-                                <p class="text-xs text-slate-400">Give each person a PIN and choose what they can see and do.</p>
+                                <h2 class="font-bold text-white text-base">Master Syndicate Branding Logo</h2>
+                                <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">NoelOpsLogo.png</span> from the repo. Uploads or URLs here override it in this browser only.</p>
                             </div>
                         </div>
-                        <button onclick="openCrewEditor()" class="px-4 py-2 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all shadow-md whitespace-nowrap">
-                            <i class="fa-solid fa-user-plus mr-1"></i> Add Crew Member
+
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-4">
+                                <div id="admin-logo-preview" class="w-[84px] h-14 rounded-xl bg-darkbg border border-weed-800 flex items-center justify-center overflow-hidden p-1 shrink-0">
+                                    <!-- Dynamic Logo Preview -->
+                                </div>
+                                <div class="space-y-2 flex-1">
+                                    <input type="file" id="master-logo-file-input" accept="image/*" onchange="handleMasterLogoFileUpload(event)" class="hidden">
+                                    <button onclick="document.getElementById('master-logo-file-input').click()" class="w-full py-2 px-3 rounded-xl bg-weed-950 border border-weed-700 text-weed-300 hover:bg-weed-900 text-xs font-bold transition-all flex items-center justify-center space-x-2">
+                                        <i class="fa-solid fa-upload"></i>
+                                        <span>Upload Custom Logo File</span>
+                                    </button>
+                                    <div class="flex space-x-2">
+                                        <input type="text" id="master-logo-url-input" placeholder="Or enter Image URL (https://...)" class="flex-1 bg-darkbg border border-weed-900 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-weed-400 font-mono">
+                                        <button onclick="saveMasterLogoUrl()" class="px-3 py-1.5 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all">Set URL</button>
+                                        <button onclick="resetMasterLogo()" class="px-2.5 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 text-xs" title="Reset to repo logo"><i class="fa-solid fa-rotate-left"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Per-Strain Logo Manager -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60 bg-gradient-to-r from-weed-950/40 via-darkcard to-weed-950/40">
+                    <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                        <div class="w-8 h-8 rounded-lg bg-purple-950 text-purple-400 flex items-center justify-center">
+                            <i class="fa-solid fa-images text-lg"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-white text-base">Strain Logos</h2>
+                            <p class="text-xs text-slate-400">Each strain loads its own file from <span class="font-mono text-weed-300">logos/&lt;strain&gt;.png</span> in the repo, so everyone sees the same logos. Uploads here override a logo in this browser only.</p>
+                        </div>
+                        <button id="reset-all-strain-logos-btn" onclick="resetAllStrainLogos()" class="hidden ml-auto px-3 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 hover:bg-red-900/80 text-xs font-semibold transition-all shrink-0" title="Remove every custom upload and use the repo files">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset All to Repo Files
                         </button>
                     </div>
-                    <div id="crew-mode-note" class="text-xs"></div>
-                    <div id="crew-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-                </div>
 
-                <!-- Existing Locations Management Table -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-900">
-                    <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center justify-between">
-                        <span>Manage Existing Grow Locations</span>
-                        <span id="admin-loc-count-badge" class="text-xs px-2 py-0.5 rounded bg-weed-950 text-weed-400 border border-weed-800">4 Active</span>
-                    </h2>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-darkbg text-slate-400 font-mono uppercase">
-                                <tr>
-                                    <th class="p-3 rounded-l-lg">Postal ID</th>
-                                    <th class="p-3">Alias / Notes</th>
-                                    <th class="p-3">Timer Duration</th>
-                                    <th class="p-3">Current Status</th>
-                                    <th class="p-3 text-right rounded-r-lg">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admin-locations-table-body" class="divide-y divide-weed-900/40">
-                                <!-- Populated dynamically -->
-                            </tbody>
-                        </table>
+                    <input type="file" id="strain-logo-file-input" accept="image/*" onchange="handleStrainLogoFileUpload(event)" class="hidden">
+                    <div id="admin-strain-logos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                        <!-- Populated dynamically -->
                     </div>
                 </div>
+                </div>
 
+                <div data-admin-panel="data" class="space-y-6">
                 <!-- Data Backup & Reset Tools -->
                 <div class="glass-card p-6 rounded-2xl space-y-4 border-red-950/40">
                     <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center space-x-2">
@@ -793,6 +814,7 @@
                             <div class="text-[10px] text-red-400/70">Wipe localStorage and return to defaults</div>
                         </button>
                     </div>
+                </div>
                 </div>
 
             </section>
@@ -856,10 +878,15 @@
     <div id="signin-modal" class="dx-modal dx-modal-solid hidden">
         <form class="dx-glass dx-modal-card space-y-4" onsubmit="submitSignIn(event)">
             <img src="NoelOpsLogo.png" alt="NoelOps" width="160" height="96" class="rounded-xl mx-auto border border-weed-800">
-            <h2 class="text-xl font-black text-white">Sign in</h2>
+            <h2 id="signin-title" class="text-xl font-black text-white">Sign in</h2>
             <div id="signin-crew" class="space-y-3">
-                <select id="signin-member" class="dx-input w-full text-center" aria-label="Your name"></select>
-                <input id="signin-pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN" aria-label="PIN">
+                <input id="signin-name" type="text" maxlength="20" autocomplete="username" placeholder="Your name" aria-label="Your name" oninput="setSignInCreateMode(false)">
+                <input id="signin-pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN (4-8 digits)" aria-label="PIN">
+                <div id="signin-create" class="hidden space-y-3">
+                    <p id="signin-create-note" class="text-xs text-slate-300"></p>
+                    <input id="signin-pin2" type="password" inputmode="numeric" autocomplete="new-password" placeholder="Type your PIN again" aria-label="Confirm PIN">
+                </div>
+                <p id="signin-hint" class="text-[11px] text-slate-500"></p>
                 <button type="button" onclick="toggleSignInMaster(true)" class="text-[11px] text-slate-500 hover:text-slate-300">Use the admin password instead</button>
             </div>
             <div id="signin-master" class="hidden space-y-3">
@@ -867,7 +894,7 @@
                 <button type="button" onclick="toggleSignInMaster(false)" class="text-[11px] text-slate-500 hover:text-slate-300">Back to crew sign-in</button>
             </div>
             <p id="signin-error" class="hidden text-xs text-red-400 font-semibold"></p>
-            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-right-to-bracket mr-1"></i> Sign In</button>
+            <button type="submit" id="signin-submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-right-to-bracket mr-1"></i> Sign In</button>
         </form>
     </div>
 
@@ -1012,6 +1039,7 @@
             crewName: '', // This device's crew member name
             crew: {}, // Shared crew list: { [member id]: { name, pinHash, role, perms: {...}, locations: 'all' | { [bucket key]: true } } }
             session: null, // This device's sign-in: { memberId, pinHash }
+            signupSettings: { allowSignup: true }, // Shared: can new people create their own (Viewer) profile
             activity: [], // Shared activity feed, newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
             presence: [] // Who's online right now (live mode only, never saved)
@@ -1115,10 +1143,12 @@
                     pinHash: m.pinHash,
                     role: ROLE_PRESETS[m.role] ? m.role : 'viewer',
                     perms: Object.fromEntries(PERMISSIONS.map(p => [p.key, Boolean(perms[p.key])])),
-                    locations: isPlainObject(m.locations) ? m.locations : 'all'
+                    locations: isPlainObject(m.locations) ? m.locations : 'all',
+                    pending: Boolean(m.pending)
                 };
             });
             if (!isPlainObject(appState.session)) appState.session = null;
+            if (!isPlainObject(appState.signupSettings)) appState.signupSettings = { allowSignup: true };
 
             // Totals across the locations this person can see, used by the dashboard
             appState.inventory = {};
@@ -1210,7 +1240,11 @@
             return {
                 stock: JSON.parse(JSON.stringify(state.stock || {})),
                 locations,
-                settings: { webhookUrl: state.webhookUrl || '', discordTemplate: normalizeDiscordTemplate(state.discordTemplate) },
+                settings: {
+                    webhookUrl: state.webhookUrl || '',
+                    discordTemplate: normalizeDiscordTemplate(state.discordTemplate),
+                    allowSignup: !(isPlainObject(state.signupSettings) && state.signupSettings.allowSignup === false)
+                },
                 activity,
                 history: JSON.parse(JSON.stringify(state.history || {})),
                 crew: JSON.parse(JSON.stringify(state.crew || {}))
@@ -1228,6 +1262,7 @@
                 .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
             appState.webhookUrl = isPlainObject(tree.settings) && typeof tree.settings.webhookUrl === 'string' ? tree.settings.webhookUrl : '';
             appState.discordTemplate = isPlainObject(tree.settings) ? tree.settings.discordTemplate : null;
+            appState.signupSettings = { allowSignup: !(isPlainObject(tree.settings) && tree.settings.allowSignup === false) };
             appState.activity = Object.entries(isPlainObject(tree.activity) ? tree.activity : {})
                 .filter(([, record]) => isPlainObject(record))
                 .map(([id, record]) => ({ ...record, id }));
@@ -1451,17 +1486,55 @@
         function openSignIn() {
             const modal = document.getElementById('signin-modal');
             if (!modal || !modal.classList.contains('hidden')) return;
-            const select = document.getElementById('signin-member');
-            const members = Object.entries(appState.crew).sort((a, b) => a[1].name.localeCompare(b[1].name));
-            select.innerHTML = `<option value="">Choose your name…</option>` +
-                members.map(([id, m]) => `<option value="${escapeHtml(id)}">${escapeHtml(m.name)}</option>`).join('');
-            const guess = members.find(([, m]) => m.name === appState.crewName);
-            if (guess) select.value = guess[0];
+            const name = document.getElementById('signin-name');
+            name.value = appState.crewName && appState.crewName !== 'Admin' ? appState.crewName : '';
             document.getElementById('signin-pin').value = '';
             document.getElementById('signin-error').classList.add('hidden');
             document.getElementById('signin-master').classList.add('hidden');
+            document.getElementById('signin-crew').classList.remove('hidden');
+            document.getElementById('signin-hint').textContent = signupAllowed()
+                ? "New here? Enter the name and PIN you want, and you'll get a profile."
+                : '';
+            setSignInCreateMode(false);
             modal.classList.remove('hidden');
-            setTimeout(() => (select.value ? document.getElementById('signin-pin') : select).focus(), 50);
+            setTimeout(() => (name.value ? document.getElementById('signin-pin') : name).focus(), 50);
+        }
+
+        function signupAllowed() {
+            return !(isPlainObject(appState.signupSettings) && appState.signupSettings.allowSignup === false);
+        }
+
+        function findMemberByName(name) {
+            const wanted = name.trim().toLowerCase();
+            return Object.entries(appState.crew).find(([, m]) => m.name.toLowerCase() === wanted) || null;
+        }
+
+        // Second step for a new name: confirm the PIN, then the profile is created
+        function setSignInCreateMode(on, name) {
+            const box = document.getElementById('signin-create');
+            if (!box) return;
+            box.classList.toggle('hidden', !on);
+            if (on) {
+                document.getElementById('signin-create-note').innerHTML =
+                    `There's no profile for <b class="text-white">${escapeHtml(name)}</b> yet. Type your PIN again to create one. You'll see the dashboard stats until an admin reviews it.`;
+                document.getElementById('signin-pin2').value = '';
+                setTimeout(() => document.getElementById('signin-pin2').focus(), 50);
+            }
+            document.getElementById('signin-hint').classList.toggle('hidden', on);
+            document.getElementById('signin-title').textContent = on ? 'Create your profile' : 'Sign in';
+            document.getElementById('signin-submit').innerHTML = on
+                ? '<i class="fa-solid fa-user-plus mr-1"></i> Create My Profile'
+                : '<i class="fa-solid fa-right-to-bracket mr-1"></i> Sign In';
+        }
+
+        function finishSignIn(memberId, member, message) {
+            appState.session = { memberId, pinHash: member.pinHash };
+            appState.crewName = member.name;
+            saveState();
+            closeSignIn();
+            registerPresence();
+            renderAll();
+            showAlert(message, 'success');
         }
 
         function closeSignIn() {
@@ -1494,21 +1567,40 @@
                 return showAlert('Signed in with the admin password.', 'success');
             }
 
-            const memberId = document.getElementById('signin-member').value;
+            const name = document.getElementById('signin-name').value.trim().replace(/\s+/g, ' ').slice(0, 20);
             const pin = document.getElementById('signin-pin').value.trim();
-            const member = appState.crew[memberId];
-            if (!member) return showError('Choose your name.');
-            const hash = await pinHash(memberId, pin);
-            document.getElementById('signin-pin').value = '';
-            if (hash !== member.pinHash) return setTimeout(() => showError('Wrong PIN.'), 600); // slows down guessing
+            if (!name) return showError('Enter your name.');
+            const found = findMemberByName(name);
 
-            appState.session = { memberId, pinHash: member.pinHash };
-            appState.crewName = member.name;
-            saveState();
-            closeSignIn();
-            registerPresence();
-            renderAll();
-            showAlert(`Signed in as ${member.name}.`, 'success');
+            if (found) {
+                const [memberId, member] = found;
+                const hash = await pinHash(memberId, pin);
+                document.getElementById('signin-pin').value = '';
+                if (hash !== member.pinHash) return setTimeout(() => showError('Wrong PIN.'), 600); // slows down guessing
+                return finishSignIn(memberId, member, `Signed in as ${member.name}.`);
+            }
+
+            // A name that isn't on the roster: create a profile (if allowed)
+            if (!signupAllowed()) return showError(`There's no profile for ${name}. Ask an admin to add you.`);
+            if (name.length < 2 || name.toLowerCase() === SYSTEM_NAME.toLowerCase() || name.toLowerCase() === 'admin') return showError('Pick a different name.');
+            if (!/^\d{4,8}$/.test(pin)) return showError('Pick a PIN of 4 to 8 digits.');
+            const creating = !document.getElementById('signin-create').classList.contains('hidden');
+            if (!creating) return setSignInCreateMode(true, name);
+            if (document.getElementById('signin-pin2').value.trim() !== pin) return showError("The PINs don't match. Try again.");
+
+            const memberId = newActivityId();
+            const member = {
+                name,
+                pinHash: await pinHash(memberId, pin),
+                role: 'viewer',
+                perms: { inventory: false, timers: false, planner: false, admin: false },
+                locations: 'all',
+                pending: true
+            };
+            writeShared({ [`crew/${memberId}`]: member });
+            appState.crew[memberId] = member; // so the sign-in below sees it before the live update arrives
+            logActivity({ who: name, kind: 'joined' });
+            finishSignIn(memberId, member, `Welcome, ${name}! You can see the dashboard stats until an admin reviews your profile.`);
         }
 
         function toggleSignInMaster(show) {
@@ -1536,7 +1628,9 @@
             const list = document.getElementById('crew-list');
             const note = document.getElementById('crew-mode-note');
             if (!list || !note) return;
-            const members = Object.entries(appState.crew).sort((a, b) => a[1].name.localeCompare(b[1].name));
+            const members = Object.entries(appState.crew).sort((a, b) => (b[1].pending - a[1].pending) || a[1].name.localeCompare(b[1].name));
+            const toggle = document.getElementById('signup-toggle');
+            if (toggle && toggle !== document.activeElement) toggle.checked = signupAllowed();
             note.innerHTML = members.length === 0
                 ? `<p class="text-slate-400"><i class="fa-solid fa-lock-open text-amber-400 mr-1"></i>No crew yet, so the site is open to anyone with the link. <b class="text-slate-200">Once you add the first person, everyone has to sign in with their name and PIN.</b> The admin password always works as a master key.</p>`
                 : `<p class="text-slate-400"><i class="fa-solid fa-lock text-weed-400 mr-1"></i>Sign-in is on. The admin password always works as a master key. This is a simple lock: it stops casual misuse, but someone technical could get around it.</p>`;
@@ -1545,15 +1639,15 @@
                     ? '<span class="dx-pill">All locations</span>'
                     : Object.keys(m.locations).filter(k => m.locations[k]).map(k => `<span class="dx-pill">${escapeHtml(bucketLabel(k))}</span>`).join('') || '<span class="dx-pill off">No locations</span>';
                 return `
-                    <div class="dx-glass dx-member">
+                    <div class="dx-glass dx-member" ${m.pending ? 'style="border-color:rgba(251,191,36,.55)"' : ''}>
                         ${avatarHtml(m.name)}
                         <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2"><b class="text-white">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
+                            <div class="flex items-center gap-2"><b class="text-white">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pending ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-black">New · needs review</span>' : ''}${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
                             <div>${PERMISSIONS.map(p => `<span class="dx-pill ${m.perms[p.key] ? '' : 'off'}">${p.label}</span>`).join('')}</div>
                             <div class="mt-1">${where}</div>
                         </div>
                         <div class="flex flex-col gap-1">
-                            <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid fa-pen mr-1"></i>Edit</button>
+                            <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid ${m.pending ? 'fa-user-check' : 'fa-pen'} mr-1"></i>${m.pending ? 'Review' : 'Edit'}</button>
                             <button onclick="removeCrewMember(${jsArg(id)})" class="px-2.5 py-1 rounded bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold border border-red-800"><i class="fa-solid fa-trash-can mr-1"></i>Remove</button>
                         </div>
                     </div>`;
@@ -1628,7 +1722,8 @@
                 pinHash: pin ? await pinHash(id, pin) : appState.crew[existingId].pinHash,
                 role: document.getElementById('crew-role').value,
                 perms,
-                locations
+                locations,
+                pending: false // saving in the editor counts as reviewed
             };
             const firstMember = !crewMode();
             // Whoever sets up the first crew member stays signed in (as admin) instead of being locked out mid-edit
@@ -1645,6 +1740,45 @@
             showAlert(firstMember
                 ? `${name} added. Sign-in is now on: everyone will be asked for their name and PIN.`
                 : `${name} ${existingId ? 'updated' : 'added'}.`, 'success');
+        }
+
+        function setSignupAllowed(on) {
+            if (!allowed('admin')) return renderCrewPanel();
+            writeShared({ 'settings/allowSignup': Boolean(on) });
+            showAlert(on ? 'New people can now create their own profile.' : 'Sign-ups are off. Only admins can add crew.', 'info');
+        }
+
+        // ---- Admin page tabs ----
+        const ADMIN_TABS = ['crew', 'locations', 'discord', 'logos', 'data'];
+
+        function showAdminTab(name) {
+            if (!ADMIN_TABS.includes(name)) name = 'crew';
+            document.querySelectorAll('[data-admin-panel]').forEach(p => p.classList.toggle('hidden', p.dataset.adminPanel !== name));
+            document.querySelectorAll('[data-admin-tab]').forEach(t => t.classList.toggle('on', t.dataset.adminTab === name));
+            try { localStorage.setItem('noelops_admin_tab', name); } catch (e) { /* remembering the tab is optional */ }
+        }
+
+        function savedAdminTab() {
+            try { return localStorage.getItem('noelops_admin_tab') || 'crew'; } catch (e) { return 'crew'; }
+        }
+
+        // New self-made profiles waiting for an admin, shown on the Admin nav and Crew tab
+        function renderPendingBadge() {
+            const pending = hasAdminAccess() ? Object.values(appState.crew).filter(m => m.pending).length : 0;
+            const tabBadge = document.getElementById('admin-pending-badge');
+            if (tabBadge) { tabBadge.textContent = pending ? `${pending} new` : ''; tabBadge.classList.toggle('hidden', !pending); }
+            const nav = document.getElementById('nav-admin');
+            if (nav) {
+                let dot = document.getElementById('nav-admin-pending');
+                if (!dot) {
+                    dot = document.createElement('span');
+                    dot.id = 'nav-admin-pending';
+                    dot.className = 'ml-1 px-1.5 py-0.5 text-xs rounded-full bg-amber-400 text-black font-bold';
+                    nav.appendChild(dot);
+                }
+                dot.textContent = pending;
+                dot.classList.toggle('hidden', !pending);
+            }
         }
 
         function removeCrewMember(memberId) {
@@ -1790,7 +1924,8 @@
             locations: { pre: 'updated', hi: 'the grow locations', post: '' },
             crew: { pre: 'updated', hi: 'the crew list', post: '' },
             discord: { pre: 'updated', hi: 'the Discord settings', post: '' },
-            backup: { pre: 'restored', hi: 'a backup', post: '' }
+            backup: { pre: 'restored', hi: 'a backup', post: '' },
+            joined: { pre: 'created', hi: 'a profile', post: '(needs review)' }
         };
         const ACTIVITY_MERGE_MS = 5 * 60 * 1000;
 
@@ -2098,6 +2233,7 @@
                 const input = document.getElementById('admin-password-input');
                 if (input) input.focus();
             }
+            if (tabId === 'admin') showAdminTab(savedAdminTab());
         }
 
         function toggleMobileMenu() {
@@ -2116,6 +2252,7 @@
             renderPresence();
             updateWebhookPill();
             renderCrewPanel();
+            renderPendingBadge();
             renderDiscordEditor();
             const badge = document.getElementById('active-timers-badge');
             if (badge) badge.innerText = visibleLocations().length;

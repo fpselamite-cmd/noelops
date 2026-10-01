@@ -74,7 +74,7 @@ GitHub pauses scheduled workflows in repos with no activity for 60 days and emai
 
 ## Discord harvest message
 
-**Admin → Discord Message** changes what the harvest alert says: bot name and picture, title, message, footer, side color, and whether the Postal / Pots / Ready At details are shown. Tags are filled in per harvest:
+**Admin → Discord** → **Discord Message** changes what the harvest alert says: bot name and picture, title, message, footer, side color, and whether the Postal / Pots / Ready At details are shown. Tags are filled in per harvest:
 
 | Tag | Becomes |
 |---|---|
@@ -89,12 +89,13 @@ The preview updates as you type, **Send Test** posts what's in the editor to you
 
 ## Crew & permissions
 
-In **Admin → Crew & Permissions** you can add crew members, each with a name and a 4-8 digit PIN.
+In **Admin → Crew** you can add crew members, each with a name and a 4-8 digit PIN.
 
 - Until the first crew member is added, anyone with the link can use everything.
 - Once there's at least one, everyone signs in with their name and PIN, and stays signed in on that device until they sign out (click the avatars in the header).
 - Pick a role (Admin, Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, grow planner, Admin page. You can also limit which locations (and the Main Stash) they see.
 - People with no permissions (Viewer) only see the dashboard stats: no locations, timers or activity.
+- **New people can sign themselves up:** on the sign-in screen they type a new name and PIN (twice) and get a profile as a **Viewer**, marked **New · needs review**. Admins see a badge on the Admin page; click **Review**, pick a role and save. Turn this off with **Let new people create their own profile** on the Crew tab.
 - Changing someone's PIN or removing them signs them out everywhere.
 - The admin password always works on the sign-in screen as a master key.
 
