@@ -36,9 +36,9 @@ Out of the box, data is saved in each person's browser only (the header shows **
    };
    ```
 
-   Make sure the object includes `databaseURL`. If it's missing, copy the URL shown at the top of the Realtime Database page. If this block is ever pasted wrong, the rest of the site keeps working and the header pill just shows **Local Only**.
+   Make sure the object includes `databaseURL`. If it's missing, copy the URL shown at the top of the Realtime Database page. If this block is ever pasted wrong, the rest of the site keeps working and the footer pill just shows **Local Only**.
 
-6. Commit the change. The header pill turns green and reads **Live Sync**.
+6. Commit the change. The sync pill in the footer (next to the clock) turns green and reads **Live Sync**.
 
 The first browser to connect uploads its current data to the empty database, so open the site first on the device that has the most up-to-date numbers.
 
@@ -109,16 +109,20 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 - **Grow Timers page:** a card per location with a growing plant, countdown, progress bar, ready time, pot plan and estimated bricks. Tick the boxes to **Start**, **Stop** or **Harvest** several grows at once (harvesting opens the harvest form for each in turn). **Start all idle** only starts grows that aren't running.
 - **Upcoming harvests:** a timeline at the top of the Grow Timers page shows when each grow is due and roughly how many bricks it should give, plus what's ready now. The dashboard's grow bar shows the next 24 hours' total.
 - **Bricks out:** the truck button on a strain (Inventory, by location) or **Log Bricks Out** on the Sales page records bricks leaving. It removes them from stock and adds them to the sales log (see **Sales & budget** below).
-- **Dashboard charts:** headline tiles for bricks on hand, potential bricks, bricks out this week and bricks coming in over the next 24 hours; a **Bricks In & Out** chart (pressed vs out per day, last 14 days) and **Stock by Strain** (on hand + potential). Hover a bar for details, or click **Table** to see the numbers.
+- **Dashboard charts:** headline tiles for bricks on hand, potential bricks, everything out this week (split into weed, coke and meth) and bricks coming in over the next 24 hours; a **Made & Out** chart (made vs out per day, last 14 days, filterable to All, Weed, Coke or Meth) and **Stock by Product** (on hand + what can still be made, for every strain plus small/large coke bricks and meth bins). Hover a bar for details, or click **Table** to see the numbers.
 
 ## Coke and meth
 
 Each location also tracks:
 
-- **Coke Bricks:** coca leaves are the raw stage (like untrimmed bud). On the Coke Bricks card, **Press small** or **Press large** turns leaves into one brick. By default a small brick takes 100 leaves and a large one 500; change that in **Admin → Products**. The card shows how many small and large bricks the leaves can make, with − / + and a truck button for each size.
+- **Coke Bricks:** coca leaves are the raw stage (like untrimmed bud), plus three supplies: oil barrels, cement bags and battery acid. The card's **Supplies** section tracks all four. **Press small** or **Press large** uses up the recipe and makes one brick:
+  - Small brick: 2000 coca leaves, 10 oil barrels, 40 cement bags, 25 battery acid.
+  - Large brick: double that (4000 / 20 / 80 / 50).
+
+  Change the recipe in **Admin → Products**. The card shows how many small and large bricks the supplies can make, or what you're short on, with − / + and a truck button for each size.
 - **Meth Bins:** a finished product, counted in bins, with − / + and a truck button.
 
-Both can be moved between locations, logged going out on the Sales page (with their own default prices in Admin → Sales), and show on the dashboard next to the strains. Their logos are `logos/coke.png` and `logos/meth.png` (replaceable in Admin → Logos like the strain logos).
+Both can be moved between locations (the supplies too), logged going out on the Sales page (with their own default prices in Admin → Sales), and show on the dashboard next to the strains. Their logos are `logos/cokeSmall.png`, `logos/cokeLarge.png` and `logos/meth.png` (replaceable in Admin → Logos like the strain logos).
 
 ## Sales & budget
 

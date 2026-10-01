@@ -350,11 +350,12 @@
         .dx-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, hsl(var(--acc-h) 76% 36%), hsl(var(--acc-h) 69% 58%)); }
         /* Header: shrink in steps so everything fits on laptop screens */
         header nav .nav-btn { white-space: nowrap; }
+        #presence-stack .dx-av { flex-shrink: 0; width: 30px; height: 30px; }
         @media (max-width: 1599px) {
-            #presence-count { display: none; }
-            #sync-status-text { display: none; }
-            #sync-status-pill { padding: 5px 7px; }
             header nav .nav-btn { padding-left: 12px; padding-right: 12px; }
+        }
+        @media (max-width: 1365px) {
+            #presence-count { display: none; }
         }
         header nav .lbl-short { display: none; }
         @media (max-width: 1439px) {
@@ -369,7 +370,6 @@
         @media (max-width: 1100px) {
             #profile-btn-name { display: none !important; }
             #profile-btn { padding-right: 4px; }
-            #live-clock { font-size: 11px; }
         }
         .dx-header-logo { width: 120px; height: 72px; box-shadow: 0 0 24px hsl(var(--acc-h) 71% 45% / 0.22); }
         .dx-header-logo img { width: 100%; height: 100%; object-fit: cover; }
@@ -395,6 +395,11 @@
         .dx-stats-extra b { color: #e6efe8; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
         .dx-charts { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 16px; }
         .dx-charts .dx-panel { margin-bottom: 0; }
+        .dx-seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: rgba(6, 10, 7, 0.7); border: 1px solid rgba(255, 255, 255, 0.07); margin: -4px 0 10px; }
+        .dx-seg button { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 7px; color: #8a9a8e; }
+        .dx-seg button:hover { color: #e6efe8; }
+        .dx-seg button.on { background: rgba(255, 255, 255, 0.08); color: #f1f5f2; }
+        .dx-panel.show-table .dx-seg { display: inline-flex; }
         .dx-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 11px; color: #a3b3a7; margin: -4px 0 10px; }
         .dx-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
         .dx-legend b { color: #e6efe8; font-family: 'JetBrains Mono', monospace; }
@@ -562,7 +567,7 @@
         .dx-inv-trim .meta { display: flex; justify-content: space-between; font-size: 11px; color: #8a9a8e; }
         .dx-inv-minor { border-top: 1px dashed rgba(148, 163, 184, 0.15); padding-top: 8px; opacity: 0.8; }
         .dx-inv-minor:hover, .dx-inv-minor:focus-within { opacity: 1; }
-        .dx-inv .qrow.sm { grid-template-columns: 86px 28px 1fr 28px; }
+        .dx-inv .qrow.sm { grid-template-columns: 104px 28px 1fr 28px; }
         .dx-inv .qrow.sm .dx-step { height: 28px; font-size: 12px; }
         .dx-inv .qrow.sm input { font-size: 12px; font-weight: 600; padding: 4px 6px; color: #cbd5e1; }
         .dx-inv .qrow.sm .lbl { font-size: 10px; color: #64748b; }
@@ -676,6 +681,11 @@
         .dx-sales-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
         /* Log bricks out (quick sale) */
         #admin-coke-logo img, #admin-meth-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .dx-logo-pair { position: relative; display: block; width: 100%; height: 100%; }
+        .dx-logo-pair > span { position: absolute; width: 74%; height: 74%; display: flex; align-items: center; justify-content: center; }
+        .dx-logo-pair > span:first-child { right: 0; top: 0; transform: rotate(6deg); }
+        .dx-logo-pair > span:last-child { left: 0; bottom: 0; transform: rotate(-6deg); }
+        .dx-logo-pair img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)); }
         .dx-qs { padding: 18px; margin-bottom: 18px; border-color: rgba(251, 191, 36, 0.28); }
         .qs-step { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.06em; margin: 14px 0 8px; }
         .qs-step > span { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; background: #fbbf24; color: #0a110c; }
@@ -830,17 +840,12 @@
                         </button>
                     </nav>
 
-                    <!-- Who's online, sync status & live time -->
-                    <div class="hidden lg:flex items-center space-x-4 whitespace-nowrap">
-                        <div id="presence-box" class="flex items-center space-x-2 cursor-pointer" onclick="onPresenceClick(event)" title="See who's online" role="button" aria-haspopup="true" aria-expanded="false">
+                    <!-- Who's online (sync status and the clock live in the footer) -->
+                    <div class="hidden lg:flex items-center whitespace-nowrap shrink-0">
+                        <div id="presence-box" class="flex items-center gap-2 cursor-pointer" onclick="onPresenceClick(event)" title="See who's online" role="button" aria-haspopup="true" aria-expanded="false">
                             <div id="presence-stack" class="dx-stack"></div>
                             <span id="presence-count" class="text-xs text-slate-400 cursor-pointer"></span>
                         </div>
-                        <div id="sync-status-pill" class="flex items-center space-x-1.5 text-xs px-2.5 py-1 rounded-full border bg-slate-900 text-slate-400 border-slate-800" title="Shared data sync status">
-                            <i class="fa-solid fa-tower-broadcast text-[10px]"></i>
-                            <span id="sync-status-text">Local Only</span>
-                        </div>
-                        <div id="live-clock" class="text-xs font-mono font-bold text-weed-400">--:--:--</div>
                     </div>
 
                     <!-- My Profile -->
@@ -893,13 +898,14 @@
                         <div id="dx-stats-extra" class="dx-stats-extra"></div>
                         <div class="dx-charts">
                             <div class="dx-glass dx-panel">
-                                <div class="dx-sec"><h2>Bricks In &amp; Out <span class="dx-muted text-xs font-semibold">· last 14 days</span></h2><button type="button" class="dx-tbl-btn" onclick="toggleChartTable(this)">Table</button></div>
+                                <div class="dx-sec"><h2>Made &amp; Out <span class="dx-muted text-xs font-semibold">· last 14 days</span></h2><button type="button" class="dx-tbl-btn" onclick="toggleChartTable(this)">Table</button></div>
+                                <div id="dx-io-filter" class="dx-seg" role="group" aria-label="Product"></div>
                                 <div id="dx-io-legend" class="dx-legend"></div>
                                 <div id="dx-chart" class="dx-io"></div>
                             </div>
                             <div class="dx-glass dx-panel">
-                                <div class="dx-sec"><h2>Stock by Strain</h2><button type="button" class="dx-tbl-btn" onclick="toggleChartTable(this)">Table</button></div>
-                                <div class="dx-legend"><span><i style="background:var(--viz-onhand)"></i>On hand</span><span><i style="background:var(--viz-made)"></i>Potential</span></div>
+                                <div class="dx-sec"><h2>Stock by Product</h2><button type="button" class="dx-tbl-btn" onclick="toggleChartTable(this)">Table</button></div>
+                                <div class="dx-legend"><span><i style="background:var(--viz-onhand)"></i>On hand</span><span><i style="background:var(--viz-made)"></i>Can make (potential)</span></div>
                                 <div id="dx-strain-chart" class="dx-sbs"></div>
                             </div>
                         </div>
@@ -1299,14 +1305,9 @@
                     <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                         <div class="w-12 h-12 shrink-0 flex items-center justify-center" id="admin-coke-logo"></div>
                         <div><h2 class="font-bold text-white text-base">Coke Recipe</h2>
-                            <p class="text-xs text-slate-400">Coca leaves are the raw stage (like untrimmed bud). On a location's Coke Bricks card, <b class="text-slate-200">Press small</b> and <b class="text-slate-200">Press large</b> turn this many leaves into one brick.</p></div>
+                            <p class="text-xs text-slate-400">Coca leaves are the raw stage (like untrimmed bud). On a location's Coke Bricks card, <b class="text-slate-200">Press small</b> and <b class="text-slate-200">Press large</b> use these supplies to make one brick.</p></div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl">
-                        <label class="block text-xs font-semibold text-slate-300">Leaves per small brick
-                            <input type="number" id="admin-coke-small" min="1" step="1" class="mt-1 w-full px-3 py-2 text-sm font-mono"></label>
-                        <label class="block text-xs font-semibold text-slate-300">Leaves per large brick
-                            <input type="number" id="admin-coke-large" min="1" step="1" class="mt-1 w-full px-3 py-2 text-sm font-mono"></label>
-                    </div>
+                    <div id="admin-coke-recipe" class="overflow-x-auto"></div>
                     <button onclick="saveCokeRecipe()" class="dx-btn dx-btn-g" style="width:auto;padding:9px 18px"><i class="fa-solid fa-floppy-disk mr-1"></i> Save Recipe</button>
                 </div>
                 <div class="dx-glass dx-admin-card space-y-2">
@@ -1396,6 +1397,13 @@
             <div class="flex items-center space-x-2">
                 <i class="fa-solid fa-cannabis text-weed-500"></i>
                 <span class="font-bold text-slate-400">NoelOps Grow Dashboard</span>
+            </div>
+            <div class="flex items-center gap-3 order-first sm:order-none">
+                <div id="sync-status-pill" class="flex items-center space-x-1.5 text-xs px-2.5 py-1 rounded-full border bg-slate-900 text-slate-400 border-slate-800" title="Shared data sync status">
+                    <i class="fa-solid fa-tower-broadcast text-[10px]"></i>
+                    <span id="sync-status-text">Local Only</span>
+                </div>
+                <div id="live-clock" class="text-xs font-mono font-bold text-weed-400">--:--:--</div>
             </div>
             <div class="flex items-center gap-3">
                 <span>Custom Built 2026</span>
@@ -1757,18 +1765,52 @@
         const INV_FIELDS = ['untrimmed', 'trimmed', 'bricks'];
         // Other products, kept per location next to the strains: coca leaves (the raw stage, like untrimmed bud)
         // are pressed into small or large coke bricks; meth is stored as finished bins.
-        const ROOT_FIELDS = { coca: 'Coca leaves', cokeSmall: 'Small coke bricks', cokeLarge: 'Large coke bricks', meth: 'Meth bins' };
+        const ROOT_FIELDS = { coca: 'Coca leaves', oil: 'Oil barrels', cement: 'Cement bags', acid: 'Battery acid', cokeSmall: 'Small coke bricks', cokeLarge: 'Large coke bricks', meth: 'Meth bins' };
+        // What goes into a coke brick (amounts per brick, set in Admin → Products)
+        const COKE_INGREDIENTS = [
+            { key: 'coca', label: 'Coca leaves', short: 'leaves', icon: 'fa-leaf' },
+            { key: 'oil', label: 'Oil barrels', short: 'oil', icon: 'fa-oil-can' },
+            { key: 'cement', label: 'Cement bags', short: 'cement', icon: 'fa-sack-xmark' },
+            { key: 'acid', label: 'Battery acid', short: 'acid', icon: 'fa-car-battery' }
+        ];
         const PRODUCTS = [
-            { id: 'cokeSmall', name: 'Small Coke Brick', short: 'Small', logo: 'coke', tint: '125,211,252', nameColor: 'text-sky-300', unit: 'brick' },
-            { id: 'cokeLarge', name: 'Large Coke Brick', short: 'Large', logo: 'coke', tint: '56,189,248', nameColor: 'text-sky-300', unit: 'brick' },
+            { id: 'cokeSmall', name: 'Small Coke Brick', short: 'Small', logo: 'cokeSmall', tint: '125,211,252', nameColor: 'text-sky-300', unit: 'brick' },
+            { id: 'cokeLarge', name: 'Large Coke Brick', short: 'Large', logo: 'cokeLarge', tint: '56,189,248', nameColor: 'text-sky-300', unit: 'brick' },
             { id: 'meth', name: 'Meth Bin', short: 'Bins', logo: 'meth', tint: '34,211,238', nameColor: 'text-cyan-300', unit: 'bin' }
         ];
         // Logos besides the strains (logos/<id>.png), shown on the Coke Bricks and Meth Bins cards
         const PRODUCT_LOGOS = [
-            { id: 'coke', name: 'Coke Bricks', nameColor: 'text-sky-300' },
-            { id: 'meth', name: 'Meth Bins', nameColor: 'text-cyan-300' }
+            { id: 'cokeSmall', name: 'Small Coke Brick', nameColor: 'text-sky-300' },
+            { id: 'cokeLarge', name: 'Large Coke Brick', nameColor: 'text-amber-300' },
+            { id: 'meth', name: 'Meth Bin', nameColor: 'text-cyan-300' }
         ];
-        const DEFAULT_COKE_RECIPE = { small: 100, large: 500 }; // coca leaves per brick
+        const DEFAULT_COKE_RECIPE = {
+            small: { coca: 2000, oil: 10, cement: 40, acid: 25 },
+            large: { coca: 4000, oil: 20, cement: 80, acid: 50 }
+        };
+
+        // How many bricks of a size the supplies in `have` (a location, or totals) can make
+        function cokeCanMake(have, size) {
+            const need = cokeRecipe()[size];
+            const counts = COKE_INGREDIENTS.filter(i => need[i.key] > 0).map(i => Math.floor(toCount(have[i.key]) / need[i.key]));
+            return counts.length ? Math.min(...counts) : 0;
+        }
+
+        // The ingredients a location is short of for one brick
+        function cokeShortfall(have, size) {
+            const need = cokeRecipe()[size];
+            return COKE_INGREDIENTS.filter(i => toCount(have[i.key]) < need[i.key]).map(i => i.short);
+        }
+
+        function cokeRecipeText(size) {
+            const need = cokeRecipe()[size];
+            return COKE_INGREDIENTS.filter(i => need[i.key] > 0).map(i => `${need[i.key].toLocaleString()} ${i.short}`).join(' · ');
+        }
+
+        // The Coke Bricks card shows both stickers (small in front, large behind)
+        function cokeLogoPair() {
+            return `<span class="dx-logo-pair"><span>${getStrainLogo('cokeLarge')}</span><span>${getStrainLogo('cokeSmall')}</span></span>`;
+        }
 
         function isRootField(field) {
             return Object.prototype.hasOwnProperty.call(ROOT_FIELDS, field);
@@ -1782,7 +1824,7 @@
         let appState = {
             stock: null, // Per-location stock: { [bucket key]: { [strain id]: { untrimmed, trimmed, bricks }, coca, cokeSmall, cokeLarge, meth } }
             products: { coca: 0, cokeSmall: 0, cokeLarge: 0, meth: 0 }, // Totals across the locations this person can see (derived)
-            productSettings: { small: 100, large: 500 }, // Shared: coca leaves per small / large coke brick
+            productSettings: null, // Shared: coke recipe { small: { coca, oil, cement, acid }, large: {…} }
             inventory: {}, // Totals across every location (derived from stock)
             coca: { quantity: 0, notes: '' }, // Total coca across every location (derived from stock)
             selectedInvBucket: 'all', // Inventory tab: 'all' or a bucket key
@@ -1945,7 +1987,11 @@
             if (!isPlainObject(appState.session)) appState.session = null;
             if (!isPlainObject(appState.signupSettings)) appState.signupSettings = { allowSignup: true };
             const ps = isPlainObject(appState.productSettings) ? appState.productSettings : {};
-            appState.productSettings = { small: Math.max(1, toCount(ps.small) || DEFAULT_COKE_RECIPE.small), large: Math.max(1, toCount(ps.large) || DEFAULT_COKE_RECIPE.large) };
+            // (an older leaves-only number per size is replaced by the full recipe defaults)
+            const size = sz => isPlainObject(ps[sz])
+                ? Object.fromEntries(COKE_INGREDIENTS.map(i => [i.key, toCount(ps[sz][i.key])]))
+                : { ...DEFAULT_COKE_RECIPE[sz] };
+            appState.productSettings = { small: size('small'), large: size('large') };
             const ss = isPlainObject(appState.salesSettings) ? appState.salesSettings : {};
             appState.salesSettings = {
                 hidePrices: Boolean(ss.hidePrices),
@@ -3357,6 +3403,15 @@
             if (delta !== 0) adjustShared(`history/${dayKey()}/bricksMade`, delta);
         }
 
+        // Coke bricks made and meth bins added per day, for the Made & Out chart
+        function recordMade(field, delta) {
+            if (delta !== 0) adjustShared(`history/${dayKey()}/${field}`, delta);
+        }
+
+        function madeFieldFor(rootField) {
+            return rootField === 'cokeSmall' || rootField === 'cokeLarge' ? 'cokeMade' : rootField === 'meth' ? 'methMade' : null;
+        }
+
         function handleSyncWriteError(err) {
             console.error('Live sync write failed:', err);
             showAlert('Could not save to the shared database. Check your connection or the database rules.', 'warning');
@@ -3749,7 +3804,7 @@
 
         // Totals across every bucket, whoever is looking (for the shared daily history)
         function globalTotals() {
-            const totals = { bricks: 0, potential: 0, trimmed: 0, untrimmed: 0, coca: 0, cokeSmall: 0, cokeLarge: 0, meth: 0 };
+            const totals = { bricks: 0, potential: 0, trimmed: 0, untrimmed: 0, ...Object.fromEntries(Object.keys(ROOT_FIELDS).map(f => [f, 0])) };
             Object.values(appState.stock || {}).forEach(bucket => {
                 Object.keys(ROOT_FIELDS).forEach(f => { totals[f] += toCount(bucket[f]); });
                 DEFAULT_STRAINS.forEach(strain => {
@@ -3820,10 +3875,10 @@
         }
 
         // Bricks going out per local day, last `days` days (oldest first)
-        function dailyOut(days) {
+        function dailyOut(days, group = 'all') {
             const out = [];
             for (let back = days - 1; back >= 0; back--) out.push({ key: dayKey(back), n: 0 });
-            visibleSales().filter(x => !isProduct(x.strain)).forEach(x => {
+            visibleSales().filter(x => group === 'all' || productGroup(x.strain) === group).forEach(x => {
                 const d = new Date(x.ts - Sync.serverOffset);
                 const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
                 const slot = out.find(o => o.key === key);
@@ -3837,17 +3892,17 @@
             if (!box) return;
             const t = currentTotals();
             const statsOnly = isStatsOnly();
-            const weedOnly = x => x.list.filter(y => !isProduct(y.strain));
-            const weekAll = salesSince(7 * 86400e3);
-            const week = { ...weekAll, bricks: weedOnly(weekAll).reduce((n, y) => n + y.bricks, 0) };
-            const lastWeek = weedOnly(salesSince(14 * 86400e3)).reduce((n, y) => n + y.bricks, 0) - week.bricks;
+            const week = salesSince(7 * 86400e3);
+            const lastWeek = salesSince(14 * 86400e3).bricks - week.bricks;
+            const byGroup = g => week.list.filter(y => productGroup(y.strain) === g).reduce((n, y) => n + y.bricks, 0);
+            const mix = [['weed', byGroup('weed')], ['coke', byGroup('coke')], ['meth', byGroup('meth')]].filter(([, n]) => n).map(([g, n]) => `${n} ${g}`).join(' · ');
             const next = nextDaySummary();
             const outDelta = week.bricks === lastWeek ? 'Same as the week before'
                 : `${week.bricks > lastWeek ? '▲' : '▼'} ${Math.abs(week.bricks - lastWeek)} vs the week before`;
             const tiles = [
                 { key: 'bricks', label: 'Bricks on hand', value: t.bricks, color: 'var(--viz-onhand)', sub: 'Packaged & ready' },
                 { key: 'potential', label: 'Potential bricks', value: t.potential, color: 'var(--viz-made)', hot: true, sub: `from ${t.trimmed.toLocaleString()} trimmed`, fixedSub: true },
-                { key: 'out', label: 'Bricks out · 7 days', value: week.bricks, color: 'var(--viz-out)', sub: week.priced && canSeePrices() ? `$${week.cash.toLocaleString()} · ${outDelta}` : outDelta, fixedSub: true, series: dailyOut(7).map(d => d.n), link: can('sales') ? 'sales' : null },
+                { key: 'out', label: 'Out · 7 days', value: week.bricks, color: 'var(--viz-out)', sub: [mix, week.priced && canSeePrices() ? `$${week.cash.toLocaleString()}` : '', outDelta].filter(Boolean).join(' · '), fixedSub: true, series: dailyOut(7).map(d => d.n), link: can('sales') ? 'sales' : null },
                 statsOnly ? null : { key: 'next', label: 'Coming in · next 24h', value: next.bricks, display: `~${fmtBricks(next.bricks)}`, sub: next.count ? `est. bricks from ${next.count} ${next.count === 1 ? 'harvest' : 'harvests'}` : 'No harvests due', fixedSub: true, series: [] }
             ].filter(Boolean);
             box.classList.toggle('n3', tiles.length === 3);
@@ -4004,14 +4059,14 @@
             const v = n => `<span class="v ${n ? '' : 'zero'}">${n.toLocaleString()}</span>`;
             return `
                 <div class="dx-glass dx-sc dx-tint" style="--tint:56,189,248">
-                    <div class="logo">${getStrainLogo('coke')}</div>
+                    <div class="logo">${cokeLogoPair()}</div>
                     <div class="name text-sky-300">Coke Bricks</div>
                     <div class="dx-sc-nums">
                         <div class="gold" title="Small coke bricks"><span class="l">Small</span>${v(p.cokeSmall)}</div>
                         <div class="gold" title="Large coke bricks"><span class="l">Large</span>${v(p.cokeLarge)}</div>
                     </div>
                     <div class="row"><span class="dx-muted">Coca leaves</span><b class="dx-mono text-sky-200">${p.coca.toLocaleString()}</b></div>
-                    <div class="row minor"><span>Makes</span><b class="dx-mono">${Math.floor(p.coca / recipe.small)} S · ${Math.floor(p.coca / recipe.large)} L</b></div>
+                    <div class="row minor"><span>Supplies make</span><b class="dx-mono">${cokeCanMake(p, 'small')} S · ${cokeCanMake(p, 'large')} L</b></div>
                 </div>
                 <div class="dx-glass dx-sc dx-tint" style="--tint:34,211,238">
                     <div class="logo">${getStrainLogo('meth')}</div>
@@ -4058,28 +4113,42 @@
             const panel = chart.closest('.dx-panel');
             panel.classList.toggle('hidden', !seesAllLocations());
             const letters = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-            const outs = dailyOut(14);
+            const group = ioFilter();
+            const groups = [['all', 'All'], ['weed', 'Weed'], ['coke', 'Coke'], ['meth', 'Meth']];
+            document.getElementById('dx-io-filter').innerHTML = groups.map(([g, l]) => `<button type="button" class="${g === group ? 'on' : ''}" onclick="setIoFilter('${g}')">${l}</button>`).join('');
+            const madeFields = { all: ['bricksMade', 'cokeMade', 'methMade'], weed: ['bricksMade'], coke: ['cokeMade'], meth: ['methMade'] }[group];
+            const outs = dailyOut(14, group);
             const days = outs.map((o, i) => {
-                const made = toCount(appState.history[o.key] && appState.history[o.key].bricksMade);
+                const h = appState.history[o.key] || {};
+                const made = madeFields.reduce((sum, f) => sum + toCount(h[f]), 0);
                 const date = new Date(o.key + 'T00:00:00');
                 return { key: o.key, made, out: o.n, date, letter: letters[date.getDay()], today: i === outs.length - 1 };
             });
             const totalIn = days.reduce((sum, d) => sum + d.made, 0);
             const totalOut = days.reduce((sum, d) => sum + d.out, 0);
             document.getElementById('dx-io-legend').innerHTML =
-                `<span><i style="background:var(--viz-made)"></i>Pressed <b>${totalIn}</b></span><span><i style="background:var(--viz-out)"></i>Out <b>${totalOut}</b></span>`;
+                `<span><i style="background:var(--viz-made)"></i>${group === 'meth' ? 'Added' : group === 'weed' ? 'Pressed' : 'Made'} <b>${totalIn}</b></span><span><i style="background:var(--viz-out)"></i>Out <b>${totalOut}</b></span>`;
             const max = niceMax(Math.max(1, ...days.map(d => Math.max(d.made, d.out))));
             const grid = [0, 0.25, 0.5, 0.75, 1].map(f => `<div style="bottom:${f * 100}%"><span>${Math.round(max * f)}</span></div>`).join('');
             const h = v => v ? `${Math.max(2, v / max * 100).toFixed(1)}%` : '0';
             const fmtDay = d => d.date.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
             chart.innerHTML = `<div class="grid">${grid}</div>` + days.map(d => {
-                const tip = `<b>${escapeHtml(fmtDay(d))}${d.today ? ' (today)' : ''}</b><br><i style="background:var(--viz-made)"></i>Pressed <b>${d.made}</b><br><i style="background:var(--viz-out)"></i>Out <b>${d.out}</b><br>Net <b>${d.made - d.out > 0 ? '+' : ''}${d.made - d.out}</b>`;
+                const tip = `<b>${escapeHtml(fmtDay(d))}${d.today ? ' (today)' : ''}</b><br><i style="background:var(--viz-made)"></i>${group === 'meth' ? 'Added' : 'Made'} <b>${d.made}</b><br><i style="background:var(--viz-out)"></i>Out <b>${d.out}</b><br>Net <b>${d.made - d.out > 0 ? '+' : ''}${d.made - d.out}</b>`;
                 return `<div class="day ${d.today ? 'today' : ''}" data-tip="${escapeHtml(tip)}"><i class="in" style="height:${h(d.made)}"></i><i class="out" style="height:${h(d.out)}"></i><span class="x">${d.letter}</span></div>`;
             }).join('');
             let table = panel.querySelector('.dx-viz-table');
             if (!table) { table = document.createElement('table'); table.className = 'dx-viz-table'; panel.appendChild(table); }
-            table.innerHTML = `<thead><tr><th>Day</th><th class="r">Pressed</th><th class="r">Out</th><th class="r">Net</th></tr></thead><tbody>${days.slice().reverse().map(d =>
+            table.innerHTML = `<thead><tr><th>Day</th><th class="r">Made</th><th class="r">Out</th><th class="r">Net</th></tr></thead><tbody>${days.slice().reverse().map(d =>
                 `<tr><td>${escapeHtml(fmtDay(d))}</td><td class="r">${d.made}</td><td class="r">${d.out}</td><td class="r">${d.made - d.out}</td></tr>`).join('')}</tbody>`;
+        }
+
+        function ioFilter() {
+            try { return ['all', 'weed', 'coke', 'meth'].includes(localStorage.getItem('noelops_io_filter')) ? localStorage.getItem('noelops_io_filter') : 'all'; } catch (e) { return 'all'; }
+        }
+
+        function setIoFilter(group) {
+            try { localStorage.setItem('noelops_io_filter', group); } catch (e) { /* remembering is optional */ }
+            renderBricksChart();
         }
 
         // On hand + potential bricks per strain (the locations this person can see)
@@ -4087,24 +4156,30 @@
             const box = document.getElementById('dx-strain-chart');
             if (!box) return;
             const panel = box.closest('.dx-panel');
+            const p = appState.products;
             const rows = DEFAULT_STRAINS.map(st => {
                 const inv = appState.inventory[st.id];
                 return { st, onHand: inv.bricks, potential: Math.floor(inv.trimmed / BRICK_SIZE), trimmed: inv.trimmed, untrimmed: inv.untrimmed };
-            }).sort((a, b) => (b.onHand + b.potential) - (a.onHand + a.potential) || a.st.name.localeCompare(b.st.name));
+            }).concat(PRODUCTS.map(pr => ({
+                st: pr, product: true, onHand: p[pr.id],
+                potential: pr.id === 'meth' ? 0 : cokeCanMake(p, pr.id === 'cokeSmall' ? 'small' : 'large')
+            }))).sort((a, b) => (b.onHand + b.potential) - (a.onHand + a.potential) || a.st.name.localeCompare(b.st.name));
             const max = Math.max(1, ...rows.map(r => r.onHand + r.potential));
             box.innerHTML = rows.map(r => {
                 const total = r.onHand + r.potential;
-                const tip = `<b>${escapeHtml(r.st.name)}</b><br><i style="background:var(--viz-onhand)"></i>On hand <b>${r.onHand}</b><br><i style="background:var(--viz-made)"></i>Potential <b>${r.potential}</b><br>Trimmed <b>${r.trimmed.toLocaleString()}</b> · Untrimmed <b>${r.untrimmed.toLocaleString()}</b>`;
+                const tip = r.product
+                    ? `<b>${escapeHtml(r.st.name)}s</b><br><i style="background:var(--viz-onhand)"></i>On hand <b>${r.onHand}</b>${r.st.id === 'meth' ? '' : `<br><i style="background:var(--viz-made)"></i>Supplies can make <b>${r.potential}</b><br><span style="opacity:.7">(small or large: they share supplies)</span>`}`
+                    : `<b>${escapeHtml(r.st.name)}</b><br><i style="background:var(--viz-onhand)"></i>On hand <b>${r.onHand}</b><br><i style="background:var(--viz-made)"></i>Potential <b>${r.potential}</b><br>Trimmed <b>${r.trimmed.toLocaleString()}</b> · Untrimmed <b>${r.untrimmed.toLocaleString()}</b>`;
                 const seg = (cls, v) => v ? `<i class="${cls}" style="width:calc(${(v / max * 100).toFixed(2)}% * 0.82)"></i>` : '';
                 return `<div class="row" data-tip="${escapeHtml(tip)}">
-                    <div class="nm"><span class="lg">${getStrainLogo(r.st.id)}</span><span>${escapeHtml(r.st.name)}</span></div>
+                    <div class="nm"><span class="lg">${getStrainLogo(r.st.logo || r.st.id)}</span><span>${escapeHtml(r.st.name)}</span></div>
                     <div class="bar">${seg('oh', r.onHand)}${seg('pt', r.potential)}<em class="${total ? '' : 'zero'}">${total ? `${r.onHand} + ${r.potential}` : '0'}</em></div>
                 </div>`;
             }).join('');
             let table = panel.querySelector('.dx-viz-table');
             if (!table) { table = document.createElement('table'); table.className = 'dx-viz-table'; panel.appendChild(table); }
             table.innerHTML = `<thead><tr><th>Strain</th><th class="r">On hand</th><th class="r">Potential</th><th class="r">Trimmed</th></tr></thead><tbody>${rows.map(r =>
-                `<tr><td>${escapeHtml(r.st.name)}</td><td class="r">${r.onHand}</td><td class="r">${r.potential}</td><td class="r">${r.trimmed.toLocaleString()}</td></tr>`).join('')}</tbody>`;
+                `<tr><td>${escapeHtml(r.st.name)}</td><td class="r">${r.onHand}</td><td class="r">${r.potential}</td><td class="r">${r.product ? '—' : r.trimmed.toLocaleString()}</td></tr>`).join('')}</tbody>`;
         }
 
         function toggleChartTable(btn) {
@@ -4232,13 +4307,14 @@
             const p = appState.products;
             const coca = `
                 <div class="dx-glass dx-inv dx-tint" style="--tint:56,189,248">
-                    <div class="head"><div class="logo">${getStrainLogo('coke')}</div>
+                    <div class="head"><div class="logo">${cokeLogoPair()}</div>
                         <div class="min-w-0"><div class="font-extrabold text-base text-sky-300">Coke Bricks</div></div></div>
                     <div class="dx-inv-top">
                         <div class="cell gold"><span class="lbl">Small</span><span class="big ${p.cokeSmall ? '' : 'zero'}">${p.cokeSmall.toLocaleString()}</span></div>
                         <div class="cell gold"><span class="lbl">Large</span><span class="big ${p.cokeLarge ? '' : 'zero'}">${p.cokeLarge.toLocaleString()}</span></div>
                     </div>
-                    <div class="totline minor"><span>Coca leaves</span><b>${p.coca.toLocaleString()}</b></div>
+                    <div class="totline minor"><span>Leaves · oil · cement · acid</span><b>${p.coca.toLocaleString()} · ${p.oil} · ${p.cement} · ${p.acid}</b></div>
+                    <div class="totline minor"><span>Supplies make</span><b>${cokeCanMake(p, 'small')} small · ${cokeCanMake(p, 'large')} large</b></div>
                     <div>${whereList(b => [b.cokeSmall ? `${b.cokeSmall} small` : '', b.cokeLarge ? `${b.cokeLarge} large` : '', b.coca ? `${b.coca.toLocaleString()} leaves` : ''].filter(Boolean).join(' · '))}</div>
                 </div>
                 <div class="dx-glass dx-inv dx-tint" style="--tint:34,211,238">
@@ -4285,12 +4361,22 @@
             const rootStep = (field, d, value, label) => `<button class="dx-step" onclick="adjustRoot('${field}', ${d}, ${k})" ${d < 0 && !value ? 'disabled' : ''} title="${d > 0 ? '+' : '−'}1 ${label}">${d > 0 ? '+' : '−'}</button>`;
             const truck = id => can('sales') ? `<button class="dx-step dx-out" onclick="openSale(${k}, '${id}')" ${bucket[id] ? '' : 'disabled'} title="Going out (sold / delivered)"><i class="fa-solid fa-truck-fast"></i></button>` : '';
             const bigInput = (field, label) => `<input type="number" min="0" class="big ${bucket[field] ? '' : 'zero'}" aria-label="${label}" data-focus-key="inv-${escapeHtml(key)}-${field}" value="${bucket[field]}" onchange="updateRootFromInput('${field}', this, ${k})">`;
-            const canSmall = Math.floor(bucket.coca / recipe.small), canLarge = Math.floor(bucket.coca / recipe.large);
+            const canSmall = cokeCanMake(bucket, 'small'), canLarge = cokeCanMake(bucket, 'large');
+            const shortSmall = cokeShortfall(bucket, 'small');
+            const supplyRow = ing => {
+                const d = ing.key === 'coca' ? step : 1;
+                return `<div class="qrow sm">
+                    <span class="lbl"><i class="fa-solid ${ing.icon} mr-1"></i>${ing.label}</span>
+                    <button class="dx-step" onclick="adjustRoot('${ing.key}', -${d}, ${k})" ${bucket[ing.key] ? '' : 'disabled'} title="−${d}">−</button>
+                    <input type="number" min="0" class="dx-input" data-focus-key="inv-${escapeHtml(key)}-${ing.key}" value="${bucket[ing.key]}" onchange="updateRootFromInput('${ing.key}', this, ${k})">
+                    <button class="dx-step" onclick="adjustRoot('${ing.key}', ${d}, ${k})" title="+${d}">+</button>
+                </div>`;
+            };
             const coca = `
                 <div class="dx-glass dx-inv dx-tint" style="--tint:56,189,248">
-                    <div class="head"><div class="logo">${getStrainLogo('coke')}</div>
-                        <div class="flex-1 min-w-0"><div class="font-extrabold text-base text-sky-300">Coke Bricks</div><div class="text-[11px] dx-muted">${recipe.small} leaves = small · ${recipe.large} = large</div></div>
-                        <button class="dx-step px-3" onclick="openTransfer(${k}, 'coke')" ${bucket.coca || bucket.cokeSmall || bucket.cokeLarge ? '' : 'disabled'} title="Move to another location"><i class="fa-solid fa-right-left"></i></button></div>
+                    <div class="head"><div class="logo">${cokeLogoPair()}</div>
+                        <div class="flex-1 min-w-0"><div class="font-extrabold text-base text-sky-300">Coke Bricks</div><div class="text-[11px] dx-muted">Leaves + oil + cement + acid → bricks</div></div>
+                        <button class="dx-step px-3" onclick="openTransfer(${k}, 'coke')" ${['coca', 'oil', 'cement', 'acid', 'cokeSmall', 'cokeLarge'].some(f => bucket[f]) ? '' : 'disabled'} title="Move to another location"><i class="fa-solid fa-right-left"></i></button></div>
                     <div class="dx-inv-top">
                         <div class="cell gold"><span class="lbl">Small</span>${bigInput('cokeSmall', 'Small coke bricks')}
                             <div class="btns">${rootStep('cokeSmall', -1, bucket.cokeSmall, 'small brick')}${rootStep('cokeSmall', 1, bucket.cokeSmall, 'small brick')}${truck('cokeSmall')}</div></div>
@@ -4298,17 +4384,13 @@
                             <div class="btns">${rootStep('cokeLarge', -1, bucket.cokeLarge, 'large brick')}${rootStep('cokeLarge', 1, bucket.cokeLarge, 'large brick')}${truck('cokeLarge')}</div></div>
                     </div>
                     <div class="flex gap-2">
-                        <button class="dx-act" onclick="pressCoke(${k}, 'small', false)" ${canSmall ? '' : 'disabled'} title="Use ${recipe.small} leaves"><i class="fa-solid fa-cube mr-1"></i>Press small</button>
-                        <button class="dx-act" onclick="pressCoke(${k}, 'large', false)" ${canLarge ? '' : 'disabled'} title="Use ${recipe.large} leaves"><i class="fa-solid fa-cubes mr-1"></i>Press large</button>
+                        <button class="dx-act" onclick="pressCoke(${k}, 'small', false)" ${canSmall ? '' : 'disabled'} title="Uses ${escapeHtml(cokeRecipeText('small'))}"><i class="fa-solid fa-cube mr-1"></i>Press small</button>
+                        <button class="dx-act" onclick="pressCoke(${k}, 'large', false)" ${canLarge ? '' : 'disabled'} title="Uses ${escapeHtml(cokeRecipeText('large'))}"><i class="fa-solid fa-cubes mr-1"></i>Press large</button>
                     </div>
                     <div class="dx-inv-minor space-y-1.5">
-                        <div class="qrow sm">
-                            <span class="lbl">Coca leaves</span>
-                            <button class="dx-step" onclick="adjustCoca(-${step}, ${k})" ${bucket.coca === 0 ? 'disabled' : ''}>−</button>
-                            <input type="number" min="0" class="dx-input" data-focus-key="inv-${escapeHtml(key)}-coca" value="${bucket.coca}" onchange="updateCocaFromInput(this, ${k})">
-                            <button class="dx-step" onclick="adjustCoca(${step}, ${k})">+</button>
-                        </div>
-                        <div class="text-[11px] dx-muted text-right">${bucket.coca ? `Enough for ${canSmall} small or ${canLarge} large` : 'No leaves here'}</div>
+                        <div class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Supplies</div>
+                        ${COKE_INGREDIENTS.map(supplyRow).join('')}
+                        <div class="text-[11px] text-right ${canSmall ? 'dx-muted' : 'text-amber-300/80'}">${canSmall || canLarge ? `Enough for ${canSmall} small or ${canLarge} large` : `Short on ${shortSmall.join(', ')} for a small brick`}</div>
                     </div>
                 </div>
                 <div class="dx-glass dx-inv dx-tint" style="--tint:34,211,238">
@@ -4375,6 +4457,11 @@
             return strain ? strain.name : (ROOT_FIELDS[strainId] || strainId);
         }
 
+        // weed / coke / meth, for filtering charts
+        function productGroup(itemId) {
+            return itemId === 'meth' ? 'meth' : itemId === 'cokeSmall' || itemId === 'cokeLarge' ? 'coke' : 'weed';
+        }
+
         function isProduct(id) {
             return PRODUCTS.some(p => p.id === id);
         }
@@ -4420,13 +4507,16 @@
         // Coca leaves, coke bricks and meth bins: numbers kept straight on the location
         function adjustRoot(field, delta, bucket = activeInvBucket()) {
             if (field === 'coca') return adjustCoca(delta, bucket);
+            if (!isRootField(field)) return;
             if (!allowed('inventory', bucket)) return;
             const applied = Math.max(-(appState.stock[bucket] ? appState.stock[bucket][field] : 0), delta);
             adjustShared(`stock/${bucket}/${field}`, delta);
             if (applied === 0) return;
             const kind = field === 'meth' ? 'meth' : 'coca';
+            const madeField = madeFieldFor(field);
+            if (madeField) recordMade(madeField, applied);
             logActivity({ kind, loc: bucket });
-            offerUndo({ key: `q|${bucket}|${field}`, bucket, kind, deltas: [{ bucket, strainId: 'root', field, delta: applied }] });
+            offerUndo({ key: `q|${bucket}|${field}`, bucket, kind, deltas: [{ bucket, strainId: 'root', field, delta: applied }], made: madeField ? { [madeField]: applied } : {} });
         }
 
         function updateRootFromInput(field, inputEl, bucket = activeInvBucket()) {
@@ -4436,28 +4526,37 @@
             if (value === current) return;
             writeShared({ [`stock/${bucket}/${field}`]: value });
             const kind = field === 'meth' ? 'meth' : 'coca';
+            const madeField = madeFieldFor(field);
+            if (madeField) recordMade(madeField, value - current);
             logActivity({ kind, loc: bucket });
-            offerUndo({ key: `q|${bucket}|${field}`, bucket, kind, deltas: [{ bucket, strainId: 'root', field, delta: value - current }] });
+            offerUndo({ key: `q|${bucket}|${field}`, bucket, kind, deltas: [{ bucket, strainId: 'root', field, delta: value - current }], made: madeField ? { [madeField]: value - current } : {} });
         }
 
-        // Press coca leaves into a small or large coke brick
+        // Press a small or large coke brick: uses leaves, oil, cement and battery acid from the location
         function pressCoke(bucket, size, all) {
             if (!allowed('inventory', bucket)) return;
-            const per = cokeRecipe()[size];
+            const need = cokeRecipe()[size];
             const field = size === 'large' ? 'cokeLarge' : 'cokeSmall';
             mutateStock(stock => {
                 if (!isPlainObject(stock[bucket])) stock[bucket] = {};
-                const leaves = toCount(stock[bucket].coca);
-                const n = all ? Math.floor(leaves / per) : (leaves >= per ? 1 : 0);
+                const have = stock[bucket];
+                const counts = COKE_INGREDIENTS.filter(i => need[i.key] > 0).map(i => Math.floor(toCount(have[i.key]) / need[i.key]));
+                const can = counts.length ? Math.min(...counts) : 0;
+                const n = all ? can : Math.min(1, can);
                 if (!n) return false;
-                stock[bucket].coca = leaves - n * per;
-                stock[bucket][field] = toCount(stock[bucket][field]) + n;
+                COKE_INGREDIENTS.forEach(i => { have[i.key] = toCount(have[i.key]) - n * need[i.key]; });
+                have[field] = toCount(have[field]) + n;
                 return { n };
             }).then(result => {
-                if (!result) return showAlert(`Not enough coca leaves here (${per} per ${size} brick).`, 'warning');
+                if (!result) {
+                    const short = cokeShortfall(appState.stock[bucket] || {}, size);
+                    return showAlert(`Not enough for a ${size} brick here${short.length ? `: short on ${short.join(', ')}` : ''}. Needs ${cokeRecipeText(size)}.`, 'warning');
+                }
+                recordMade('cokeMade', result.n);
                 logActivity({ kind: 'coca', loc: bucket });
-                offerUndo({ key: `press-coke|${bucket}|${size}`, bucket, kind: 'coca',
-                    deltas: [{ bucket, strainId: 'root', field: 'coca', delta: -result.n * per }, { bucket, strainId: 'root', field, delta: result.n }],
+                offerUndo({ key: `press-coke|${bucket}|${size}`, bucket, kind: 'coca', made: { cokeMade: result.n },
+                    deltas: COKE_INGREDIENTS.filter(i => need[i.key] > 0).map(i => ({ bucket, strainId: 'root', field: i.key, delta: -result.n * need[i.key] }))
+                        .concat([{ bucket, strainId: 'root', field, delta: result.n }]),
                     text: e => { const n = (e.deltas.find(d => d.field === field) || { delta: 0 }).delta; return `Pressed ${n} ${size} coke ${n === 1 ? 'brick' : 'bricks'}`; } });
             });
         }
@@ -4882,23 +4981,30 @@
         }
 
         function renderAdminProducts() {
-            const small = document.getElementById('admin-coke-small');
-            if (!small) return;
-            const recipe = cokeRecipe();
-            if (small !== document.activeElement) small.value = recipe.small;
-            const large = document.getElementById('admin-coke-large');
-            if (large !== document.activeElement) large.value = recipe.large;
-            document.getElementById('admin-coke-logo').innerHTML = getStrainLogo('coke');
+            const box = document.getElementById('admin-coke-recipe');
+            if (!box) return;
+            if (!box.contains(document.activeElement)) {
+                const recipe = cokeRecipe();
+                box.innerHTML = `<table class="dx-sales-table" style="max-width:720px">
+                    <thead><tr><th>Per brick</th>${COKE_INGREDIENTS.map(i => `<th class="r"><i class="fa-solid ${i.icon} mr-1"></i>${i.label}</th>`).join('')}</tr></thead>
+                    <tbody>${['small', 'large'].map(size => `<tr><td><b>${size === 'small' ? 'Small' : 'Large'} brick</b></td>${COKE_INGREDIENTS.map(i =>
+                        `<td class="r"><input type="number" min="0" step="1" data-recipe="${size}.${i.key}" value="${recipe[size][i.key]}" class="w-24 px-2 py-1.5 text-sm font-mono text-right"></td>`).join('')}</tr>`).join('')}</tbody>
+                </table>`;
+            }
+            document.getElementById('admin-coke-logo').innerHTML = cokeLogoPair();
             document.getElementById('admin-meth-logo').innerHTML = getStrainLogo('meth');
         }
 
         function saveCokeRecipe() {
             if (!allowed('admin')) return;
-            const small = toCount(document.getElementById('admin-coke-small').value);
-            const large = toCount(document.getElementById('admin-coke-large').value);
-            if (!small || !large) return showAlert('Both amounts need to be at least 1 leaf.', 'warning');
-            writeShared({ 'settings/cokeRecipe': { small, large } });
-            showAlert(`Coke recipe saved: ${small} leaves = small, ${large} leaves = large.`, 'success');
+            const recipe = { small: {}, large: {} };
+            document.querySelectorAll('#admin-coke-recipe [data-recipe]').forEach(input => {
+                const [size, key] = input.dataset.recipe.split('.');
+                recipe[size][key] = toCount(input.value);
+            });
+            if (['small', 'large'].some(size => !COKE_INGREDIENTS.some(i => recipe[size][i.key] > 0))) return showAlert('Each brick needs at least one ingredient.', 'warning');
+            writeShared({ 'settings/cokeRecipe': recipe });
+            showAlert('Coke recipe saved.', 'success');
         }
 
         function saveSalePrices() {
@@ -5187,7 +5293,7 @@
                 `${strainId === 'coca' ? 'Coca leaves' : strainName(strainId)} from ${bucketLabel(bucket)}`;
             const single = strainId === 'coca' || strainId === 'meth';
             document.getElementById('transfer-field-row').classList.toggle('hidden', single);
-            const options = strainId === 'coke' ? [['cokeLarge', 'Large coke bricks'], ['cokeSmall', 'Small coke bricks'], ['coca', 'Coca leaves']]
+            const options = strainId === 'coke' ? [['cokeLarge', 'Large coke bricks'], ['cokeSmall', 'Small coke bricks'], ...COKE_INGREDIENTS.map(i => [i.key, i.label])]
                 : single ? [[strainId, ROOT_FIELDS[strainId]]]
                 : [['bricks', 'Bricks'], ['trimmed', 'Trimmed bud'], ['untrimmed', 'Untrimmed bud']];
             document.getElementById('transfer-field').innerHTML = options.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
@@ -6726,7 +6832,7 @@
             return [...byCell.values()].filter(d => d.delta !== 0);
         }
 
-        const UNDO_FIELD_LABELS = { untrimmed: 'untrimmed', trimmed: 'trimmed', bricks: 'bricks', coca: 'coca leaves', cokeSmall: 'small coke bricks', cokeLarge: 'large coke bricks', meth: 'meth bins' };
+        const UNDO_FIELD_LABELS = { untrimmed: 'untrimmed', trimmed: 'trimmed', bricks: 'bricks', coca: 'coca leaves', oil: 'oil barrels', cement: 'cement bags', acid: 'battery acid', cokeSmall: 'small coke bricks', cokeLarge: 'large coke bricks', meth: 'meth bins' };
 
         function describeDeltas(deltas) {
             if (!deltas.length) return 'No change';
@@ -6742,9 +6848,10 @@
                 entry.deltas = mergeDeltas(entry.deltas.concat(opts.deltas || []));
                 entry.restore = { ...(opts.restore || {}), ...entry.restore }; // keep the oldest values
                 entry.bricksMade += opts.bricksMade || 0;
+                Object.entries(opts.made || {}).forEach(([f, n]) => { entry.made[f] = (entry.made[f] || 0) + n; });
             } else {
                 entry = { key: opts.key, perm: opts.perm || 'inventory', bucket: opts.bucket, kind: opts.kind, loc: opts.loc, loc2: opts.loc2, text: opts.text,
-                    deltas: mergeDeltas(opts.deltas || []), restore: { ...(opts.restore || {}) }, bricksMade: opts.bricksMade || 0, done: false };
+                    deltas: mergeDeltas(opts.deltas || []), restore: { ...(opts.restore || {}) }, bricksMade: opts.bricksMade || 0, made: { ...(opts.made || {}) }, done: false };
                 entry.toast = pushToast('', 'success', UNDO_MS);
                 if (!entry.toast) return;
                 lastUndo = entry;
@@ -6776,6 +6883,7 @@
             }
             if (Object.keys(entry.restore).length) writeShared(entry.restore);
             if (entry.bricksMade) recordBricksMade(-entry.bricksMade);
+            Object.entries(entry.made || {}).forEach(([f, n]) => { if (n) recordMade(f, -n); });
             if (entry.kind) logActivity({ kind: entry.kind, loc: entry.loc || entry.bucket, loc2: entry.loc2 });
             showAlert('Undone.', 'info');
         }
