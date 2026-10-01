@@ -106,41 +106,41 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 
 - **Who's online:** click the avatars in the header (or **Who's Online** in the phone menu) to see everyone online now, with their role and how long they've been on, plus the rest of the crew who are offline.
 - **Undo:** most changes show a pop-up with an **Undo** button for about 8 seconds: stock changes, trimming, pressing, moving stock, logging bricks out, harvests, timer starts/stops and plan changes. Repeated presses on the same thing (+100, +100) merge into one Undo. Undo reverses just your change, so anything someone else changed in the meantime is kept.
-- **Grow Timers page:** a card per location with a growing plant, countdown, progress bar, ready time, pot plan and estimated bricks. Tick the boxes to **Start**, **Stop** or **Harvest** several grows at once (harvesting opens the harvest form for each in turn). **Start all idle** only starts grows that aren't running.
-- **Upcoming harvests:** a timeline at the top of the Grow Timers page shows when each grow is due and roughly how many bricks it should give, plus what's ready now. The dashboard's grow bar shows the next 24 hours' total.
-- **Bricks out:** the truck button on a strain (Inventory, by location) or **Log Bricks Out** on the Sales page records bricks leaving. It removes them from stock and adds them to the sales log (see **Sales & budget** below).
-- **Dashboard charts:** headline tiles for bricks on hand, potential bricks, everything out this week (split into weed, coke and meth) and bricks coming in over the next 24 hours; a **Made & Out** chart (made vs out per day, last 14 days, filterable to All, Weed, Coke or Meth) and **Stock by Product** (on hand + what can still be made, for every strain plus small/large coke bricks and meth bins). Hover a bar for details, or click **Table** to see the numbers.
+- **Grows page** (Timers tab): a card per location with a growing plant, countdown, progress bar, ready time, pot plan and estimated bricks. Tick the boxes to **Start**, **Stop** or **Harvest** several grows at once (harvesting opens the harvest form for each in turn). **Start all idle** only starts grows that aren't running.
+- **Upcoming harvests:** a timeline at the top of the Grows page shows when each grow is due and roughly how many bricks it should give, plus what's ready now. The dashboard's grow bar shows the next 24 hours' total.
+- **Going out:** the truck button on anything in the **Stash**, or **Log Something Going Out** on the **Log** page, records it leaving. It takes it out of the stash and adds it to the log (see **Log & budget** below).
+- **Dashboard charts:** headline tiles for bricks on hand, bricks ready to press, everything that went out this week (split into weed, coke and meth) and bricks coming in over the next 24 hours; a **Made & Out** chart (made vs out per day, last 14 days, filterable to All, Weed, Coke or Meth) and **What's in Stock** (on hand + what can still be made, for every strain plus small/large coke bricks and meth bins). Hover a bar for details, or click **Table** to see the numbers.
 
 ## Stash houses and storage
 
 - **Stash houses** hold bud, bricks, coke, meth and supplies. Add, rename or delete them in **Admin → Locations**. The built-in **Main Stash** can be renamed but not deleted. Deleting a stash house moves its stock to the Main Stash.
-- **Grow ops don't store stock by default.** Each grow location has a **Stash house** its harvests go to, plus an **On-site storage** switch for the few that do keep stock. The harvest form has a **Send to** picker that starts on the grow op's stash house, or on site if it has storage. Each Grow Timers card shows where its harvest goes.
-- A grow op without storage that still holds old stock keeps its Inventory tab, with a warning and a **Move everything to…** button (Undo works).
-- **Leave out of totals:** any stash house or grow op can be left out of the totals. Its stock still shows on its own tab, but it doesn't count toward the dashboard, the All tab, the charts, the daily history or Smart Balance. Switch it on the place's Inventory tab (anyone who can edit inventory), in the stash table, or in the grow location's Edit form. The All tab lists what isn't counted.
+- **Grow ops don't store stock by default.** Each grow location has a **Stash house** its harvests go to, plus an **On-site storage** switch for the few that do keep stock. The harvest form has a **Send to** picker that starts on the grow op's stash house, or on site if it has storage. Each card on the Grows page shows where its harvest goes.
+- A grow op without storage that still holds old stock keeps its Stash tab, with a warning and a **Move everything to…** button (Undo works).
+- **Leave out of totals:** any stash house or grow op can be left out of the totals. Its stock still shows on its own tab, but it doesn't count toward the dashboard, the All tab, the charts, the daily history or Smart Balance. Switch it on the place's Stash tab (anyone who can edit inventory), in the stash table, or in the grow location's Edit form. The All tab lists what isn't counted.
 - In **Admin → Crew**, stash houses can be given or kept from each person like grow locations.
 
 ## Coke and meth
 
 Each stash house (and grow op with storage) also tracks:
 
-- **Coke Bricks:** coca leaves are the raw stage (like untrimmed bud), plus three supplies: oil barrels, cement bags and battery acid. The card's **Supplies** section tracks all four. **Press small** or **Press large** uses up the recipe and makes one brick:
-  - Small brick: 2000 coca leaves, 10 oil barrels, 40 cement bags, 25 battery acid.
-  - Large brick: double that (4000 / 20 / 80 / 50).
+- **Coke Bricks:** only the coca leaves are counted. **Press small** or **Press large** takes the leaves and makes one brick:
+  - Small brick: 2000 coca leaves (and bring 10 oil barrels, 40 cement bags, 25 battery acid).
+  - Large brick: double that (4000 leaves, and 20 / 80 / 50).
 
-  Change the recipe in **Admin → Products**. The card shows how many small and large bricks the supplies can make, or what you're short on, with − / + and a truck button for each size.
+  Oil, cement and acid aren't tracked; the card just reminds you what to bring. Change the recipe in **Admin → Products**. The card shows how many small and large bricks the leaves can make, with − / + and a truck button for each size.
 - **Meth Bins:** a finished product, counted in bins, with − / + and a truck button.
 
-Both can be moved between locations (the supplies too), logged going out on the Sales page (with their own default prices in Admin → Sales), and show on the dashboard next to the strains. Their logos are `logos/cokeSmall.png`, `logos/cokeLarge.png` and `logos/meth.png` (replaceable in Admin → Logos like the strain logos).
+Both can be moved between stashes (the leaves too), logged going out on the **Log** page (with their own default prices in Admin → Sales), and show on the dashboard next to the strains. Their logos are `logos/cokeSmall.png`, `logos/cokeLarge.png` and `logos/meth.png` (replaceable in Admin → Logos like the strain logos).
 
-## Sales & budget
+## Log & budget
 
 The **Sales** page (in the main menu) is the log of bricks going out:
 
 - **Totals:** today, last 7 days, last 30 days and all time, in bricks (and dollars when prices are entered).
 - **Filters** by period, strain, person and location, with **By Strain** and **By Person** charts and the full log underneath. **Export CSV** downloads it as a spreadsheet.
-- **Logging something out:** the **Log Bricks Out** panel at the top walks through it: tap a big button for the strain (or Small / Large Coke Brick, or Meth Bin), pick where it comes from, set how many (− / +, or 1 / 2 / 5 / 10 / All), check who sold it and the price, and hit the big submit button. If an admin has set a default price, the price fills in by itself. The truck button on an Inventory card jumps here with that item and location picked.
+- **Logging something out:** the **Log Something Going Out** panel at the top walks through it: tap a big button for the strain (or Small / Large Coke Brick, or Meth Bin), pick where it comes from, set how many (− / +, or 1 / 2 / 5 / 10 / All), check who sold it and the price, and hit the big submit button. If an admin has set a default price, the price fills in by itself. The truck button on a Stash card jumps here with that item and location picked.
 
-**Budget** (top of the Sales page):
+**Budget** (top of the Log page, admins only):
 
 - The budget is **admin only** for now (behind the scenes): crew don't see cuts, earnings, payouts or the crew bank.
 - Every sale is credited to the person who sold it, and they earn their **cut** of the price (a %). The default cut is set in **Admin → Sales**; give someone a different cut when editing them in **Admin → Crew**. Each sale keeps the cut it had at the time.
@@ -148,9 +148,9 @@ The **Sales** page (in the main menu) is the log of bricks going out:
 - **Payouts by person** ranks sellers by what they earned, with sold / earned / paid / owed. Admins click **Pay** to record paying someone (it fills in what they're owed), or **Record Expense** for crew spending. Both can be undone or removed.
 - Admins see each person's cut and what they're owed in the crew list.
 
-**Who can use it:** the **Sales / bricks out** permission on each person (Admin → Crew) controls the Sales page and logging. Managers have it by default; Growers and Viewers don't. In **Admin → Sales** you can also set default prices, turn on **Only admins see prices**, export the log, or clear it.
+**Who can use it:** the **Log things going out** permission on each person (Admin → Crew) controls the Log page and logging. Managers have it by default; Growers and Viewers don't. In **Admin → Sales** you can also set default prices, turn on **Only admins see prices**, export the log, or clear it.
 
-## Grow Planner
+## Pot Plan (Grows page)
 
 Plan which strains go in each location's pots.
 
@@ -165,7 +165,7 @@ Plan which strains go in each location's pots.
 The button with your picture and name in the top right (or **My Profile** in the phone menu) opens your profile. It has three tabs.
 
 **Account**
-- **My Stats:** how many grows you've harvested, how much bud you brought in, and about how many bricks that makes. Your harvest count also shows next to your name in **Who's online** (and on the crew list for admins). Undoing a harvest takes it back off.
+- **My Stats:** how many grows you've harvested (only harvests with bud entered count, not a bare **Just Restart the Timer**), how much bud you brought in, and about how many bricks that makes. Your harvest count also shows next to your name in **Who's online** (and on the crew list for admins). Undoing a harvest takes it back off.
 - **Picture:** upload any image. It's cropped to a square, shrunk, and shown everywhere your initials used to be (header, who's online, activity feed, crew list).
 - **Name:** change the name you show up as. It has to be different from everyone else's on the crew.
 - **PIN:** type your current PIN, then the new one twice. You stay signed in on that device; your other devices ask for the new PIN.
@@ -198,6 +198,12 @@ For crew members, everything is saved to their profile and follows them to any d
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 🧹 Oct 1, 2026: Simpler and easier to read
+- The menu is now just **Dashboard**, **Grows**, **Stash** and **Log**. The pot plan lives under **Grows** (Timers / Pot Plan tabs)
+- Coke only counts **coca leaves** now. Pressing takes the leaves, and the card reminds you what oil, cement and acid to bring
+- Plainer wording everywhere: **Ready to press** instead of "potential", **Ready!** / **Growing** / **Not started** on grows, **Log Something Going Out** for sales
+- Harvests only count on your profile when bud is entered
 
 ### 🌱 Oct 1, 2026: Harvest counts on profiles
 - **My Profile** now has **My Stats**: how many grows you've harvested, total bud and about how many bricks that makes
