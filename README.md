@@ -104,14 +104,26 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 
 ## My Profile
 
-The button with your picture and name in the top right (or **My Profile** in the phone menu) opens your profile:
+The button with your picture and name in the top right (or **My Profile** in the phone menu) opens your profile. It has three tabs.
 
+**Account**
 - **Picture:** upload any image. It's cropped to a square, shrunk, and shown everywhere your initials used to be (header, who's online, activity feed, crew list).
 - **Name:** change the name you show up as. It has to be different from everyone else's on the crew.
 - **PIN:** type your current PIN, then the new one twice. You stay signed in on that device; your other devices ask for the new PIN.
-- **Background color:** drag around the color wheel, use the slider, or tap a swatch. Only the page background changes, and only for you. **Reset to green** puts it back.
 
-For crew members, all of this is saved to their profile and follows them to any device. Without crew sign-in (or when signed in with the admin password) the picture and color are saved on that device only, and there's no PIN to change. Admins editing someone in **Admin → Crew** keep that person's picture and color.
+**Look**
+- **Background color:** drag around the color wheel, use the slider, or tap a swatch. Only the page background changes.
+- **Accent color:** recolors the green buttons, glows, progress bars and highlights. Strain logos and card colors stay the same.
+- **Name color:** the color your name shows in for the crew, in Live Activity, pop-ups and as a ring around your picture.
+- **Compact cards:** smaller strain cards and logos, so more fits on screen.
+- **Reduce motion:** turns off the timer animations, pulsing and glows.
+
+**Alerts** (when a grow you can see finishes)
+- **Play a sound:** a short chime, with a volume slider and a **Test** button. Browsers only play sound after you've clicked somewhere on the page once.
+- **Show a notification:** a pop-up from your browser, even when the tab is in the background. The browser asks for permission the first time. These name the postal, but only on your own device; the shared activity feed stays vague.
+- Alerts work while the site is open in a tab. Grows that finished while it was closed don't alert when you come back.
+
+For crew members, everything is saved to their profile and follows them to any device. Without crew sign-in (or when signed in with the admin password) it's saved on that device only, and there's no PIN to change. Admins editing someone in **Admin → Crew** keep that person's picture and settings. Everything except name color only changes what you see.
 
 ## Hosting on GitHub Pages
 
