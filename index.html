@@ -232,7 +232,9 @@
         @keyframes dxToastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
         .dx-modal { position: fixed; inset: 0; z-index: 200; background: rgba(2, 5, 3, 0.75); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px; }
-        .dx-modal.hidden, [data-admin-panel].hidden, #signin-create.hidden { display: none; }
+        .dx-modal.hidden, [data-admin-panel].hidden, #signin-create.hidden, [data-admin-only].hidden { display: none; }
+        .dx-footer-admin { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: #334155; transition: color 0.2s; }
+        .dx-footer-admin:hover { color: #94a3b8; }
         .dt-preview { background: #313338; border-radius: 12px; padding: 14px 16px; color: #dbdee1; font-size: 14px; }
         .dt-msg { display: flex; gap: 14px; }
         .dt-av { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
@@ -344,7 +346,7 @@
                             <span>Grow Timers</span>
                             <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
                         </button>
-                        <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('admin')" id="nav-admin" data-admin-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i id="nav-admin-icon" class="fa-solid fa-lock"></i>
                             <span>Admin</span>
                         </button>
@@ -385,7 +387,7 @@
                 <button onclick="switchTab('inventory'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Inventory Vault</button>
                 <button onclick="switchTab('planner'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Planner</button>
                 <button onclick="switchTab('timers'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Timers</button>
-                <button onclick="switchTab('admin'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
+                <button onclick="switchTab('admin'); toggleMobileMenu()" data-admin-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
                 <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
             </div>
         </header>
@@ -504,7 +506,7 @@
                         <div id="planner-location-tabs" class="flex space-x-2">
                             <!-- Dynamic location tab buttons injected via JS -->
                         </div>
-                        <button onclick="switchTab('admin')" class="px-3 py-1.5 rounded-lg bg-darkbg border border-weed-900 hover:border-weed-600 text-xs text-slate-300 font-medium whitespace-nowrap ml-2">
+                        <button onclick="switchTab('admin')" data-admin-only class="px-3 py-1.5 rounded-lg bg-darkbg border border-weed-900 hover:border-weed-600 text-xs text-slate-300 font-medium whitespace-nowrap ml-2">
                             <i class="fa-solid fa-plus text-weed-400 mr-1"></i> Add / Manage Locations
                         </button>
                     </div>
@@ -864,7 +866,12 @@
                 <i class="fa-solid fa-cannabis text-weed-500"></i>
                 <span class="font-bold text-slate-400">NoelOps Grow Dashboard</span>
             </div>
-            <div>Custom Built 2026</div>
+            <div class="flex items-center gap-3">
+                <span>Custom Built 2026</span>
+                <button id="footer-admin-link" onclick="footerAdminClick()" class="dx-footer-admin" title="Admin">
+                    <i id="footer-admin-icon" class="fa-solid fa-lock"></i><span id="footer-admin-text">Admin</span>
+                </button>
+            </div>
         </div>
     </footer>
 
@@ -1015,7 +1022,6 @@
             </div>
             <label class="block text-xs font-semibold text-slate-300">Role
                 <select id="crew-role" onchange="applyRolePreset()" class="dx-input mt-1 w-full">
-                    <option value="admin">Admin: everything</option>
                     <option value="manager">Manager: inventory, timers, planner</option>
                     <option value="grower">Grower: inventory and timers</option>
                     <option value="viewer">Viewer: dashboard stats only</option>
@@ -1247,7 +1253,7 @@
                 appState.crew[id] = {
                     name: m.name,
                     pinHash: m.pinHash,
-                    role: ROLE_PRESETS[m.role] ? m.role : 'viewer',
+                    role: ROLE_PRESETS[m.role] ? m.role : (m.role === 'admin' ? 'manager' : 'viewer'), // the old Admin role is now Manager
                     perms: Object.fromEntries(PERMISSIONS.map(p => [p.key, Boolean(perms[p.key])])),
                     locations: isPlainObject(m.locations) ? m.locations : 'all',
                     pending: Boolean(m.pending),
@@ -1501,21 +1507,20 @@
         //
         // With no crew members added, everyone can use everything (as before).
         // Once the admin adds crew, everyone signs in with name + PIN and the
-        // site hides what they aren't allowed to do. The admin password always
-        // works as a master key. This is a convenience lock, not real security:
+        // site hides what they aren't allowed to do. The Admin page only opens
+        // with the admin password, which also works as a master key. This is a convenience lock, not real security:
         // someone technical could get around it.
         // ---------------------------------------------------------------------
         const PERMISSIONS = [
             { key: 'inventory', label: 'Edit inventory', hint: 'Add/remove, trim, press, move stock' },
             { key: 'timers', label: 'Timers & harvests', hint: 'Start, stop, restart, harvest' },
-            { key: 'planner', label: 'Grow planner', hint: 'Change pots and pot plans' },
-            { key: 'admin', label: 'Admin page', hint: 'Locations, crew, webhook, logos, backups' }
+            { key: 'planner', label: 'Grow planner', hint: 'Change pots and pot plans' }
         ];
+        // The Admin page isn't a crew permission: it only opens with the admin password (link in the footer)
         const ROLE_PRESETS = {
-            admin: { label: 'Admin', perms: { inventory: true, timers: true, planner: true, admin: true } },
-            manager: { label: 'Manager', perms: { inventory: true, timers: true, planner: true, admin: false } },
-            grower: { label: 'Grower', perms: { inventory: true, timers: true, planner: false, admin: false } },
-            viewer: { label: 'Viewer (stats only)', perms: { inventory: false, timers: false, planner: false, admin: false } }
+            manager: { label: 'Manager', perms: { inventory: true, timers: true, planner: true } },
+            grower: { label: 'Grower', perms: { inventory: true, timers: true, planner: false } },
+            viewer: { label: 'Viewer (stats only)', perms: { inventory: false, timers: false, planner: false } }
         };
 
         function crewMode() {
@@ -1548,7 +1553,7 @@
         }
 
         function hasAdminAccess() {
-            return isAdminUnlocked() || (crewMode() && can('admin'));
+            return isAdminUnlocked();
         }
 
         function seesAllLocations() {
@@ -1701,7 +1706,7 @@
                 name,
                 pinHash: await pinHash(memberId, pin),
                 role: 'viewer',
-                perms: { inventory: false, timers: false, planner: false, admin: false },
+                perms: { inventory: false, timers: false, planner: false },
                 locations: 'all',
                 pending: true
             };
@@ -1737,8 +1742,8 @@
             const toggle = document.getElementById('signup-toggle');
             if (toggle && toggle !== document.activeElement) toggle.checked = signupAllowed();
             note.innerHTML = members.length === 0
-                ? `<p class="text-slate-400"><i class="fa-solid fa-lock-open text-amber-400 mr-1"></i>No crew yet, so the site is open to anyone with the link. <b class="text-slate-200">Once you add the first person, everyone has to sign in with their name and PIN.</b> The admin password always works as a master key.</p>`
-                : `<p class="text-slate-400"><i class="fa-solid fa-lock text-weed-400 mr-1"></i>Sign-in is on. The admin password always works as a master key. This is a simple lock: it stops casual misuse, but someone technical could get around it.</p>`;
+                ? `<p class="text-slate-400"><i class="fa-solid fa-lock-open text-amber-400 mr-1"></i>No crew yet, so the site is open to anyone with the link. <b class="text-slate-200">Once you add the first person, everyone has to sign in with their name and PIN.</b> The Admin page only opens with the admin password (the small Admin link at the bottom of the page), which also works as a master key.</p>`
+                : `<p class="text-slate-400"><i class="fa-solid fa-lock text-weed-400 mr-1"></i>Sign-in is on. Crew can't open the Admin page; that needs the admin password (the small Admin link at the bottom of the page), which also works as a master key. This is a simple lock: it stops casual misuse, but someone technical could get around it.</p>`;
             list.innerHTML = members.map(([id, m]) => {
                 const where = m.locations === 'all'
                     ? '<span class="dx-pill">All locations</span>'
@@ -1994,7 +1999,7 @@
             document.getElementById('profile-av').innerHTML = avatarHtml(name, 'dx-pf-av');
             document.getElementById('profile-title').textContent = name;
             document.getElementById('profile-role').textContent = member
-                ? roleLabel(member) + (member.pending ? ' · waiting for admin review' : '')
+                ? roleLabel(member) + (member.pending ? ' · waiting for admin review' : '') + (isAdminUnlocked() ? ' · Admin unlocked' : '')
                 : (isMasterSession() ? 'Signed in with the admin password' : 'Saved on this device');
             document.getElementById('profile-av-remove').classList.toggle('hidden', !myProfile().avatar);
             document.getElementById('profile-pin-box').classList.toggle('hidden', !member);
@@ -2538,6 +2543,23 @@
             }
             const icon = document.getElementById('nav-admin-icon');
             if (icon) icon.className = unlocked ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock';
+            renderAdminLinks();
+        }
+
+        // Admin nav buttons only show once the admin password is entered; the footer link is the way in
+        function renderAdminLinks() {
+            const unlocked = isAdminUnlocked();
+            document.querySelectorAll('[data-admin-only]').forEach(el => el.classList.toggle('hidden', !unlocked));
+            const icon = document.getElementById('footer-admin-icon');
+            if (icon) icon.className = unlocked ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock';
+            const text = document.getElementById('footer-admin-text');
+            if (text) text.textContent = unlocked ? 'Lock admin' : 'Admin';
+        }
+
+        function footerAdminClick() {
+            if (isAdminUnlocked()) return adminLogout();
+            switchTab('admin');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         async function sha256Hex(text) {
@@ -2565,6 +2587,7 @@
             if (hash === ADMIN_PASSWORD_SHA256) {
                 submit.disabled = false;
                 setAdminUnlocked(true);
+                renderAll();
                 switchTab('admin');
                 showAlert('Admin unlocked.', 'success');
             } else {
@@ -2581,6 +2604,7 @@
         function adminLogout() {
             setAdminUnlocked(false);
             switchTab('dashboard');
+            renderAll();
             showAlert('Logged out of admin.', 'info');
         }
 
@@ -2617,6 +2641,7 @@
 
         function renderAll() {
             applyTheme();
+            renderAdminLinks();
             renderProfileButton();
             renderProfileModal();
             renderMasterLogo();
@@ -2681,7 +2706,7 @@
 
         function getStrainLogo(strainId) {
             const strain = DEFAULT_STRAINS.find(s => s.id === strainId);
-            const fallback = `<div class="w-full h-full flex flex-col items-center justify-center text-[10px] font-bold text-weed-400 bg-weed-950/80 rounded-xl p-2 text-center border border-weed-800 cursor-pointer hover:bg-weed-900/60 transition-colors" onclick="switchTab('admin')" title="Add ${escapeHtml(STRAIN_LOGO_DIR)}/${escapeHtml(strainId)}.png to the repo, or upload one in Admin">
+            const fallback = `<div class="w-full h-full flex flex-col items-center justify-center text-[10px] font-bold text-weed-400 bg-weed-950/80 rounded-xl p-2 text-center border border-weed-800 cursor-pointer hover:bg-weed-900/60 transition-colors" onclick="if (hasAdminAccess()) switchTab('admin')" title="Add ${escapeHtml(STRAIN_LOGO_DIR)}/${escapeHtml(strainId)}.png to the repo, or upload one in Admin">
                         <i class="fa-solid fa-cannabis text-2xl mb-1 text-weed-400"></i>
                         <span>No Logo</span>
                     </div>`;
