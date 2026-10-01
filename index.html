@@ -109,12 +109,40 @@
             background: #22c55e;
         }
         /* ---------- Dashboard redesign ---------- */
+        /* Background tint follows --bg-h (hue 0-359, set per person in My Profile; 142 = the original green) */
+        :root { --bg-h: 142; }
         body {
+            background-color: hsl(var(--bg-h) 23% 3%);
             background-image:
-                radial-gradient(900px 500px at 12% -10%, rgba(34, 197, 94, 0.16), transparent 60%),
-                radial-gradient(700px 500px at 100% 110%, rgba(16, 185, 129, 0.10), transparent 60%),
-                radial-gradient(rgba(74, 222, 128, 0.06) 1px, transparent 1px);
+                radial-gradient(900px 500px at 12% -10%, hsl(var(--bg-h) 71% 45% / 0.16), transparent 60%),
+                radial-gradient(700px 500px at 100% 110%, hsl(calc(var(--bg-h) + 18) 84% 39% / 0.10), transparent 60%),
+                radial-gradient(hsl(var(--bg-h) 69% 58% / 0.06) 1px, transparent 1px);
             background-size: auto, auto, 22px 22px;
+        }
+        img.dx-av { object-fit: cover; background: #0b140e; }
+        .dx-profile-btn { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; border-radius: 999px; background: rgba(6, 10, 7, 0.7); border: 1px solid rgba(74, 222, 128, 0.22); color: #e6efe8; font-size: 12px; font-weight: 700; max-width: 180px; }
+        .dx-profile-btn:hover { border-color: #4ade80; }
+        .dx-profile-btn.hidden, #profile-pin-box.hidden, #profile-signout.hidden { display: none; }
+        .dx-profile-btn .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-pf-sec { padding: 14px; border-radius: 14px; background: rgba(6, 10, 7, 0.55); border: 1px solid rgba(74, 222, 128, 0.12); }
+        .dx-pf-sec h3 { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #8a9a8e; margin-bottom: 10px; }
+        .dx-modal-card .dx-pf-row input { text-align: left; padding: 8px 12px; font-size: 14px; }
+        .dx-modal-card img.dx-pf-av, .dx-pf-av { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; font-size: 28px; border-width: 3px; }
+        .dx-wheel { position: relative; width: 150px; height: 150px; border-radius: 50%; flex-shrink: 0; cursor: crosshair; touch-action: none;
+            background: conic-gradient(from 90deg, hsl(0 85% 50%), hsl(60 85% 50%), hsl(120 85% 50%), hsl(180 85% 50%), hsl(240 85% 50%), hsl(300 85% 50%), hsl(360 85% 50%)); }
+        .dx-wheel::after { content: ''; position: absolute; inset: 26px; border-radius: 50%; background: hsl(var(--bg-h) 23% 6%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
+        .dx-wheel .knob { position: absolute; z-index: 1; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.6); pointer-events: none; }
+        .dx-modal-card input.dx-hue-range { -webkit-appearance: none; appearance: none; height: 12px; padding: 0; border-radius: 99px; border: none;
+            background: linear-gradient(90deg, hsl(0 85% 50%), hsl(60 85% 50%), hsl(120 85% 50%), hsl(180 85% 50%), hsl(240 85% 50%), hsl(300 85% 50%), hsl(360 85% 50%)); }
+        .dx-hue-range::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid #0b140e; cursor: pointer; }
+        .dx-hue-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid #0b140e; cursor: pointer; }
+        .dx-swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.15); }
+        .dx-swatch.on { border-color: #fff; }
+        #profile-av { flex-shrink: 0; }
+        .dx-pf-hue { display: flex; align-items: center; gap: 20px; }
+        @media (max-width: 480px) {
+            .dx-pf-hue { flex-direction: column; align-items: stretch; }
+            .dx-pf-hue .dx-wheel { align-self: center; }
         }
         .dx-glass { background: rgba(16, 26, 19, 0.72); border: 1px solid rgba(74, 222, 128, 0.14); border-radius: 18px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04); }
         .dx-muted { color: #8a9a8e; }
@@ -204,7 +232,9 @@
         @keyframes dxToastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
         .dx-modal { position: fixed; inset: 0; z-index: 200; background: rgba(2, 5, 3, 0.75); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px; }
-        .dx-modal.hidden { display: none; }
+        .dx-modal.hidden, [data-admin-panel].hidden, #signin-create.hidden, [data-admin-only].hidden { display: none; }
+        .dx-footer-admin { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: #334155; transition: color 0.2s; }
+        .dx-footer-admin:hover { color: #94a3b8; }
         .dt-preview { background: #313338; border-radius: 12px; padding: 14px 16px; color: #dbdee1; font-size: 14px; }
         .dt-msg { display: flex; gap: 14px; }
         .dt-av { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
@@ -316,7 +346,7 @@
                             <span>Grow Timers</span>
                             <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
                         </button>
-                        <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('admin')" id="nav-admin" data-admin-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i id="nav-admin-icon" class="fa-solid fa-lock"></i>
                             <span>Admin</span>
                         </button>
@@ -324,7 +354,7 @@
 
                     <!-- Who's online, sync status & live time -->
                     <div class="hidden lg:flex items-center space-x-4 whitespace-nowrap">
-                        <div id="presence-box" class="flex items-center space-x-2" onclick="onPresenceClick()" title="Who's online. Click to change your name or sign out.">
+                        <div id="presence-box" class="flex items-center space-x-2" onclick="onPresenceClick()" title="Who's online">
                             <div id="presence-stack" class="dx-stack"></div>
                             <span id="presence-count" class="text-xs text-slate-400 cursor-pointer"></span>
                         </div>
@@ -334,6 +364,12 @@
                         </div>
                         <div id="live-clock" class="text-xs font-mono font-bold text-weed-400">--:--:--</div>
                     </div>
+
+                    <!-- My Profile -->
+                    <button id="profile-btn" onclick="openProfile()" class="dx-profile-btn hidden shrink-0" title="My profile: picture, name, PIN and background color">
+                        <span id="profile-btn-av"></span>
+                        <span id="profile-btn-name" class="nm hidden sm:inline"></span>
+                    </button>
 
                     <!-- Mobile Navigation Hamburger -->
                     <div class="md:hidden flex items-center">
@@ -351,7 +387,8 @@
                 <button onclick="switchTab('inventory'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Inventory Vault</button>
                 <button onclick="switchTab('planner'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Planner</button>
                 <button onclick="switchTab('timers'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grow Timers</button>
-                <button onclick="switchTab('admin'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
+                <button onclick="switchTab('admin'); toggleMobileMenu()" data-admin-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
+                <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
             </div>
         </header>
 
@@ -469,7 +506,7 @@
                         <div id="planner-location-tabs" class="flex space-x-2">
                             <!-- Dynamic location tab buttons injected via JS -->
                         </div>
-                        <button onclick="switchTab('admin')" class="px-3 py-1.5 rounded-lg bg-darkbg border border-weed-900 hover:border-weed-600 text-xs text-slate-300 font-medium whitespace-nowrap ml-2">
+                        <button onclick="switchTab('admin')" data-admin-only class="px-3 py-1.5 rounded-lg bg-darkbg border border-weed-900 hover:border-weed-600 text-xs text-slate-300 font-medium whitespace-nowrap ml-2">
                             <i class="fa-solid fa-plus text-weed-400 mr-1"></i> Add / Manage Locations
                         </button>
                     </div>
@@ -534,8 +571,8 @@
                 </div>
             </section>
 
-            <section id="tab-admin" class="tab-content hidden space-y-8">
-                
+            <section id="tab-admin" class="tab-content hidden space-y-6">
+
                 <!-- Admin Header -->
                 <div class="glass-card p-6 rounded-2xl border-weed-900 flex justify-between items-center">
                     <div>
@@ -550,89 +587,41 @@
                     </button>
                 </div>
 
-                <!-- Per-Strain Logo Manager -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60 bg-gradient-to-r from-weed-950/40 via-darkcard to-weed-950/40">
-                    <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
-                        <div class="w-8 h-8 rounded-lg bg-purple-950 text-purple-400 flex items-center justify-center">
-                            <i class="fa-solid fa-images text-lg"></i>
-                        </div>
-                        <div>
-                            <h2 class="font-bold text-white text-base">Strain Logos</h2>
-                            <p class="text-xs text-slate-400">Each strain loads its own file from <span class="font-mono text-weed-300">logos/&lt;strain&gt;.png</span> in the repo, so everyone sees the same logos. Uploads here override a logo in this browser only.</p>
-                        </div>
-                        <button id="reset-all-strain-logos-btn" onclick="resetAllStrainLogos()" class="hidden ml-auto px-3 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 hover:bg-red-900/80 text-xs font-semibold transition-all shrink-0" title="Remove every custom upload and use the repo files">
-                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset All to Repo Files
-                        </button>
-                    </div>
-
-                    <input type="file" id="strain-logo-file-input" accept="image/*" onchange="handleStrainLogoFileUpload(event)" class="hidden">
-                    <div id="admin-strain-logos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                        <!-- Populated dynamically -->
-                    </div>
+                <!-- Admin sections -->
+                <div id="admin-tabs" class="dx-tabs">
+                    <button class="dx-tab" data-admin-tab="crew" onclick="showAdminTab('crew')"><i class="fa-solid fa-users-gear"></i>Crew <span id="admin-pending-badge" class="count hidden"></span></button>
+                    <button class="dx-tab" data-admin-tab="locations" onclick="showAdminTab('locations')"><i class="fa-solid fa-location-dot"></i>Locations</button>
+                    <button class="dx-tab" data-admin-tab="discord" onclick="showAdminTab('discord')"><i class="fa-brands fa-discord"></i>Discord</button>
+                    <button class="dx-tab" data-admin-tab="logos" onclick="showAdminTab('logos')"><i class="fa-solid fa-image"></i>Logos</button>
+                    <button class="dx-tab" data-admin-tab="data" onclick="showAdminTab('data')"><i class="fa-solid fa-database"></i>Data &amp; Backups</button>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    
-                    <!-- Discord Webhook Configuration -->
-                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
-                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
-                            <div class="w-8 h-8 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center">
-                                <i class="fa-brands fa-discord text-lg"></i>
-                            </div>
+                <div data-admin-panel="crew" class="space-y-6">
+                <!-- Crew & Permissions -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-weed-900 pb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-users-gear text-lg"></i></div>
                             <div>
-                                <h2 class="font-bold text-white text-base">Discord Webhook Alerts</h2>
-                                <p class="text-xs text-slate-400">Send automatic messages to your server when harvests are ready</p>
+                                <h2 class="font-bold text-white text-base">Crew &amp; Permissions</h2>
+                                <p class="text-xs text-slate-400">Give each person a PIN and choose what they can see and do.</p>
                             </div>
                         </div>
-
-                        <div class="space-y-3">
-                            <label class="block text-xs font-semibold text-slate-300">Discord Webhook URL</label>
-                            <input type="text" id="admin-webhook-url" placeholder="https://discord.com/api/webhooks/..." class="w-full bg-darkbg border border-weed-900 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-weed-400 font-mono">
-                            
-                            <div class="flex space-x-3">
-                                <button onclick="saveWebhookUrl()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all shadow-md">
-                                    <i class="fa-solid fa-floppy-disk mr-1"></i> Save Webhook URL
-                                </button>
-                                <button onclick="testDiscordWebhook()" class="px-4 py-2 rounded-xl bg-darkbg border border-indigo-800 text-indigo-300 hover:bg-indigo-950 text-xs transition-all">
-                                    <i class="fa-solid fa-paper-plane mr-1"></i> Test Dispatch
-                                </button>
-                            </div>
-                        </div>
+                        <button onclick="openCrewEditor()" class="px-4 py-2 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all shadow-md whitespace-nowrap">
+                            <i class="fa-solid fa-user-plus mr-1"></i> Add Crew Member
+                        </button>
                     </div>
+                    <div id="crew-mode-note" class="text-xs"></div>
+                    <label class="flex items-start gap-3 p-3 rounded-xl bg-darkbg/70 border border-weed-900 cursor-pointer">
+                        <input id="signup-toggle" type="checkbox" onchange="setSignupAllowed(this.checked)" class="mt-0.5 accent-green-500">
+                        <span><span class="block text-sm font-semibold text-slate-100">Let new people create their own profile</span>
+                        <span class="block text-[11px] text-slate-500">They type a new name and PIN on the sign-in screen and start as a Viewer (dashboard stats only) until you review them here.</span></span>
+                    </label>
+                    <div id="crew-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </div>
+                </div>
 
-                    <!-- Master Logo Settings -->
-                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
-                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
-                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center">
-                                <i class="fa-solid fa-shield-halved text-lg"></i>
-                            </div>
-                            <div>
-                                <h2 class="font-bold text-white text-base">Master Syndicate Branding Logo</h2>
-                                <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">NoelOpsLogo.png</span> from the repo. Uploads or URLs here override it in this browser only.</p>
-                            </div>
-                        </div>
-
-                        <div class="space-y-3">
-                            <div class="flex items-center space-x-4">
-                                <div id="admin-logo-preview" class="w-[84px] h-14 rounded-xl bg-darkbg border border-weed-800 flex items-center justify-center overflow-hidden p-1 shrink-0">
-                                    <!-- Dynamic Logo Preview -->
-                                </div>
-                                <div class="space-y-2 flex-1">
-                                    <input type="file" id="master-logo-file-input" accept="image/*" onchange="handleMasterLogoFileUpload(event)" class="hidden">
-                                    <button onclick="document.getElementById('master-logo-file-input').click()" class="w-full py-2 px-3 rounded-xl bg-weed-950 border border-weed-700 text-weed-300 hover:bg-weed-900 text-xs font-bold transition-all flex items-center justify-center space-x-2">
-                                        <i class="fa-solid fa-upload"></i>
-                                        <span>Upload Custom Logo File</span>
-                                    </button>
-                                    <div class="flex space-x-2">
-                                        <input type="text" id="master-logo-url-input" placeholder="Or enter Image URL (https://...)" class="flex-1 bg-darkbg border border-weed-900 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-weed-400 font-mono">
-                                        <button onclick="saveMasterLogoUrl()" class="px-3 py-1.5 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all">Set URL</button>
-                                        <button onclick="resetMasterLogo()" class="px-2.5 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 text-xs" title="Reset to repo logo"><i class="fa-solid fa-rotate-left"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                <div data-admin-panel="locations" class="space-y-6">
                     <!-- Add / Edit Grow Locations Form -->
                     <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
                         <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
@@ -671,7 +660,59 @@
                         </form>
                     </div>
 
+                <!-- Existing Locations Management Table -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-900">
+                    <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center justify-between">
+                        <span>Manage Existing Grow Locations</span>
+                        <span id="admin-loc-count-badge" class="text-xs px-2 py-0.5 rounded bg-weed-950 text-weed-400 border border-weed-800">4 Active</span>
+                    </h2>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-darkbg text-slate-400 font-mono uppercase">
+                                <tr>
+                                    <th class="p-3 rounded-l-lg">Postal ID</th>
+                                    <th class="p-3">Alias / Notes</th>
+                                    <th class="p-3">Timer Duration</th>
+                                    <th class="p-3">Current Status</th>
+                                    <th class="p-3 text-right rounded-r-lg">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-locations-table-body" class="divide-y divide-weed-900/40">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                </div>
+
+                <div data-admin-panel="discord" class="space-y-6">
+                    <!-- Discord Webhook Configuration -->
+                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center">
+                                <i class="fa-brands fa-discord text-lg"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-white text-base">Discord Webhook Alerts</h2>
+                                <p class="text-xs text-slate-400">Send automatic messages to your server when harvests are ready</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="block text-xs font-semibold text-slate-300">Discord Webhook URL</label>
+                            <input type="text" id="admin-webhook-url" placeholder="https://discord.com/api/webhooks/..." class="w-full bg-darkbg border border-weed-900 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-weed-400 font-mono">
+                            
+                            <div class="flex space-x-3">
+                                <button onclick="saveWebhookUrl()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all shadow-md">
+                                    <i class="fa-solid fa-floppy-disk mr-1"></i> Save Webhook URL
+                                </button>
+                                <button onclick="testDiscordWebhook()" class="px-4 py-2 rounded-xl bg-darkbg border border-indigo-800 text-indigo-300 hover:bg-indigo-950 text-xs transition-all">
+                                    <i class="fa-solid fa-paper-plane mr-1"></i> Test Dispatch
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                 <!-- Discord harvest message editor -->
                 <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
@@ -722,50 +763,67 @@
                         </div>
                     </form>
                 </div>
+                </div>
 
-                <!-- Crew & Permissions -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-weed-900 pb-3">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-users-gear text-lg"></i></div>
+                <div data-admin-panel="logos" class="space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Master Logo Settings -->
+                    <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60">
+                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center">
+                                <i class="fa-solid fa-shield-halved text-lg"></i>
+                            </div>
                             <div>
-                                <h2 class="font-bold text-white text-base">Crew &amp; Permissions</h2>
-                                <p class="text-xs text-slate-400">Give each person a PIN and choose what they can see and do.</p>
+                                <h2 class="font-bold text-white text-base">Master Syndicate Branding Logo</h2>
+                                <p class="text-xs text-slate-400">Defaults to <span class="font-mono text-weed-300">NoelOpsLogo.png</span> from the repo. Uploads or URLs here override it in this browser only.</p>
                             </div>
                         </div>
-                        <button onclick="openCrewEditor()" class="px-4 py-2 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all shadow-md whitespace-nowrap">
-                            <i class="fa-solid fa-user-plus mr-1"></i> Add Crew Member
+
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-4">
+                                <div id="admin-logo-preview" class="w-[84px] h-14 rounded-xl bg-darkbg border border-weed-800 flex items-center justify-center overflow-hidden p-1 shrink-0">
+                                    <!-- Dynamic Logo Preview -->
+                                </div>
+                                <div class="space-y-2 flex-1">
+                                    <input type="file" id="master-logo-file-input" accept="image/*" onchange="handleMasterLogoFileUpload(event)" class="hidden">
+                                    <button onclick="document.getElementById('master-logo-file-input').click()" class="w-full py-2 px-3 rounded-xl bg-weed-950 border border-weed-700 text-weed-300 hover:bg-weed-900 text-xs font-bold transition-all flex items-center justify-center space-x-2">
+                                        <i class="fa-solid fa-upload"></i>
+                                        <span>Upload Custom Logo File</span>
+                                    </button>
+                                    <div class="flex space-x-2">
+                                        <input type="text" id="master-logo-url-input" placeholder="Or enter Image URL (https://...)" class="flex-1 bg-darkbg border border-weed-900 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-weed-400 font-mono">
+                                        <button onclick="saveMasterLogoUrl()" class="px-3 py-1.5 rounded-xl bg-weed-600 hover:bg-weed-500 text-white font-semibold text-xs transition-all">Set URL</button>
+                                        <button onclick="resetMasterLogo()" class="px-2.5 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 text-xs" title="Reset to repo logo"><i class="fa-solid fa-rotate-left"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Per-Strain Logo Manager -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-800/60 bg-gradient-to-r from-weed-950/40 via-darkcard to-weed-950/40">
+                    <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                        <div class="w-8 h-8 rounded-lg bg-purple-950 text-purple-400 flex items-center justify-center">
+                            <i class="fa-solid fa-images text-lg"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-white text-base">Strain Logos</h2>
+                            <p class="text-xs text-slate-400">Each strain loads its own file from <span class="font-mono text-weed-300">logos/&lt;strain&gt;.png</span> in the repo, so everyone sees the same logos. Uploads here override a logo in this browser only.</p>
+                        </div>
+                        <button id="reset-all-strain-logos-btn" onclick="resetAllStrainLogos()" class="hidden ml-auto px-3 py-1.5 rounded-xl bg-red-950/60 border border-red-800 text-red-300 hover:bg-red-900/80 text-xs font-semibold transition-all shrink-0" title="Remove every custom upload and use the repo files">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset All to Repo Files
                         </button>
                     </div>
-                    <div id="crew-mode-note" class="text-xs"></div>
-                    <div id="crew-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-                </div>
 
-                <!-- Existing Locations Management Table -->
-                <div class="glass-card p-6 rounded-2xl space-y-4 border-weed-900">
-                    <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center justify-between">
-                        <span>Manage Existing Grow Locations</span>
-                        <span id="admin-loc-count-badge" class="text-xs px-2 py-0.5 rounded bg-weed-950 text-weed-400 border border-weed-800">4 Active</span>
-                    </h2>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-darkbg text-slate-400 font-mono uppercase">
-                                <tr>
-                                    <th class="p-3 rounded-l-lg">Postal ID</th>
-                                    <th class="p-3">Alias / Notes</th>
-                                    <th class="p-3">Timer Duration</th>
-                                    <th class="p-3">Current Status</th>
-                                    <th class="p-3 text-right rounded-r-lg">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admin-locations-table-body" class="divide-y divide-weed-900/40">
-                                <!-- Populated dynamically -->
-                            </tbody>
-                        </table>
+                    <input type="file" id="strain-logo-file-input" accept="image/*" onchange="handleStrainLogoFileUpload(event)" class="hidden">
+                    <div id="admin-strain-logos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                        <!-- Populated dynamically -->
                     </div>
                 </div>
+                </div>
 
+                <div data-admin-panel="data" class="space-y-6">
                 <!-- Data Backup & Reset Tools -->
                 <div class="glass-card p-6 rounded-2xl space-y-4 border-red-950/40">
                     <h2 class="font-bold text-white text-base border-b border-weed-900 pb-3 flex items-center space-x-2">
@@ -794,6 +852,7 @@
                         </button>
                     </div>
                 </div>
+                </div>
 
             </section>
 
@@ -807,7 +866,12 @@
                 <i class="fa-solid fa-cannabis text-weed-500"></i>
                 <span class="font-bold text-slate-400">NoelOps Grow Dashboard</span>
             </div>
-            <div>Custom Built 2026</div>
+            <div class="flex items-center gap-3">
+                <span>Custom Built 2026</span>
+                <button id="footer-admin-link" onclick="footerAdminClick()" class="dx-footer-admin" title="Admin">
+                    <i id="footer-admin-icon" class="fa-solid fa-lock"></i><span id="footer-admin-text">Admin</span>
+                </button>
+            </div>
         </div>
     </footer>
 
@@ -824,6 +888,73 @@
             <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px">Let's go</button>
             <button type="button" id="name-modal-cancel" onclick="closeNameModal()" class="hidden text-xs text-slate-400 hover:text-white">Cancel</button>
         </form>
+    </div>
+
+    <!-- My Profile: picture, name, PIN, background color -->
+    <div id="profile-modal" class="dx-modal hidden" onclick="if (event.target === this) closeProfile()">
+        <div class="dx-glass dx-modal-card dx-modal-wide space-y-3 text-left">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-black text-white">My Profile</h2>
+                <button type="button" onclick="closeProfile()" class="text-slate-400 hover:text-white text-lg" title="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="dx-pf-sec flex items-center gap-4">
+                <div id="profile-av"></div>
+                <div class="min-w-0 space-y-2">
+                    <div>
+                        <div id="profile-title" class="text-lg font-black text-white truncate"></div>
+                        <div id="profile-role" class="text-xs text-slate-400"></div>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="document.getElementById('profile-file-input').click()" class="dx-btn dx-btn-g" style="width:auto;padding:6px 12px;font-size:12px"><i class="fa-solid fa-camera mr-1"></i> Upload Picture</button>
+                        <button type="button" id="profile-av-remove" onclick="removeProfilePicture()" class="dx-btn dx-btn-o" style="width:auto;padding:6px 12px;font-size:12px">Remove</button>
+                    </div>
+                    <input type="file" id="profile-file-input" accept="image/*" class="hidden" onchange="handleProfilePicture(event)">
+                </div>
+            </div>
+
+            <form class="dx-pf-sec" onsubmit="saveProfileName(event)">
+                <h3>Name</h3>
+                <div class="dx-pf-row flex gap-2">
+                    <input id="profile-name" type="text" maxlength="20" required autocomplete="nickname" placeholder="Your name">
+                    <button type="submit" class="dx-btn dx-btn-g" style="width:auto;padding:8px 14px;font-size:13px">Save</button>
+                </div>
+                <p id="profile-name-error" class="hidden mt-2 text-xs text-red-400 font-semibold"></p>
+            </form>
+
+            <form id="profile-pin-box" class="dx-pf-sec space-y-2" onsubmit="saveProfilePin(event)">
+                <h3>Change PIN</h3>
+                <div class="dx-pf-row space-y-2">
+                    <input id="profile-pin-current" type="password" inputmode="numeric" maxlength="8" autocomplete="current-password" placeholder="Current PIN">
+                    <div class="flex gap-2">
+                        <input id="profile-pin-new" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password" placeholder="New PIN">
+                        <input id="profile-pin-new2" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password" placeholder="New PIN again">
+                    </div>
+                </div>
+                <p id="profile-pin-error" class="hidden text-xs text-red-400 font-semibold"></p>
+                <button type="submit" class="dx-btn dx-btn-g" style="padding:8px 14px;font-size:13px">Change PIN</button>
+                <p class="text-[11px] text-slate-500">4 to 8 digits. You stay signed in here; your other devices will ask for the new PIN.</p>
+            </form>
+
+            <div class="dx-pf-sec">
+                <h3>Background Color</h3>
+                <div class="dx-pf-hue">
+                    <div id="profile-wheel" class="dx-wheel" title="Drag around the ring to pick a color"><span class="knob" id="profile-wheel-knob"></span></div>
+                    <div class="flex-1 min-w-0 space-y-3">
+                        <input id="profile-hue" type="range" min="0" max="359" step="1" class="dx-hue-range" aria-label="Background hue"
+                               oninput="previewHue(this.value)" onchange="commitHue(this.value)">
+                        <div id="profile-swatches" class="flex flex-wrap gap-2"></div>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-slate-400">Hue <b id="profile-hue-value" class="font-mono text-white"></b></span>
+                            <button type="button" onclick="commitHue(DEFAULT_BG_HUE)" class="text-weed-400 hover:text-weed-300 font-semibold">Reset to green</button>
+                        </div>
+                    </div>
+                </div>
+                <p id="profile-hue-note" class="mt-2 text-[11px] text-slate-500"></p>
+            </div>
+
+            <button type="button" id="profile-signout" onclick="closeProfile(); signOut()" class="w-full text-sm font-semibold text-red-400 hover:text-red-300 py-1"><i class="fa-solid fa-right-from-bracket mr-1"></i> Sign out of this device</button>
+        </div>
     </div>
 
     <!-- Edit grow location -->
@@ -856,10 +987,15 @@
     <div id="signin-modal" class="dx-modal dx-modal-solid hidden">
         <form class="dx-glass dx-modal-card space-y-4" onsubmit="submitSignIn(event)">
             <img src="NoelOpsLogo.png" alt="NoelOps" width="160" height="96" class="rounded-xl mx-auto border border-weed-800">
-            <h2 class="text-xl font-black text-white">Sign in</h2>
+            <h2 id="signin-title" class="text-xl font-black text-white">Sign in</h2>
             <div id="signin-crew" class="space-y-3">
-                <select id="signin-member" class="dx-input w-full text-center" aria-label="Your name"></select>
-                <input id="signin-pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN" aria-label="PIN">
+                <input id="signin-name" type="text" maxlength="20" autocomplete="username" placeholder="Your name" aria-label="Your name" oninput="setSignInCreateMode(false)">
+                <input id="signin-pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN (4-8 digits)" aria-label="PIN">
+                <div id="signin-create" class="hidden space-y-3">
+                    <p id="signin-create-note" class="text-xs text-slate-300"></p>
+                    <input id="signin-pin2" type="password" inputmode="numeric" autocomplete="new-password" placeholder="Type your PIN again" aria-label="Confirm PIN">
+                </div>
+                <p id="signin-hint" class="text-[11px] text-slate-500"></p>
                 <button type="button" onclick="toggleSignInMaster(true)" class="text-[11px] text-slate-500 hover:text-slate-300">Use the admin password instead</button>
             </div>
             <div id="signin-master" class="hidden space-y-3">
@@ -867,7 +1003,7 @@
                 <button type="button" onclick="toggleSignInMaster(false)" class="text-[11px] text-slate-500 hover:text-slate-300">Back to crew sign-in</button>
             </div>
             <p id="signin-error" class="hidden text-xs text-red-400 font-semibold"></p>
-            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-right-to-bracket mr-1"></i> Sign In</button>
+            <button type="submit" id="signin-submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-right-to-bracket mr-1"></i> Sign In</button>
         </form>
     </div>
 
@@ -886,7 +1022,6 @@
             </div>
             <label class="block text-xs font-semibold text-slate-300">Role
                 <select id="crew-role" onchange="applyRolePreset()" class="dx-input mt-1 w-full">
-                    <option value="admin">Admin: everything</option>
                     <option value="manager">Manager: inventory, timers, planner</option>
                     <option value="grower">Grower: inventory and timers</option>
                     <option value="viewer">Viewer: dashboard stats only</option>
@@ -1010,14 +1145,17 @@
             selectedPlannerLocId: '7078', // Selected planner location tab
             masterLogo: null, // Per-browser header logo override; null = repo default
             crewName: '', // This device's crew member name
+            profileLocal: { avatar: null, hue: null }, // Picture & background hue for this device when not signed in as a crew member
             crew: {}, // Shared crew list: { [member id]: { name, pinHash, role, perms: {...}, locations: 'all' | { [bucket key]: true } } }
             session: null, // This device's sign-in: { memberId, pinHash }
+            signupSettings: { allowSignup: true }, // Shared: can new people create their own (Viewer) profile
             activity: [], // Shared activity feed, newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
             presence: [] // Who's online right now (live mode only, never saved)
         };
 
         function initApp() {
+            initHueWheel();
             loadState();
             recordDailySnapshot();
             setAdminUnlocked(isAdminUnlocked());
@@ -1060,6 +1198,8 @@
             if (typeof appState.webhookUrl !== 'string') appState.webhookUrl = '';
             appState.discordTemplate = normalizeDiscordTemplate(appState.discordTemplate);
             if (typeof appState.crewName !== 'string') appState.crewName = '';
+            const local = isPlainObject(appState.profileLocal) ? appState.profileLocal : {};
+            appState.profileLocal = { avatar: safeAvatar(local.avatar), hue: safeHue(local.hue) };
             if (!Array.isArray(appState.activity)) appState.activity = [];
             appState.activity = appState.activity
                 .filter(a => isPlainObject(a) && a.id && typeof a.who === 'string' && Number(a.ts) > 0)
@@ -1113,12 +1253,16 @@
                 appState.crew[id] = {
                     name: m.name,
                     pinHash: m.pinHash,
-                    role: ROLE_PRESETS[m.role] ? m.role : 'viewer',
+                    role: ROLE_PRESETS[m.role] ? m.role : (m.role === 'admin' ? 'manager' : 'viewer'), // the old Admin role is now Manager
                     perms: Object.fromEntries(PERMISSIONS.map(p => [p.key, Boolean(perms[p.key])])),
-                    locations: isPlainObject(m.locations) ? m.locations : 'all'
+                    locations: isPlainObject(m.locations) ? m.locations : 'all',
+                    pending: Boolean(m.pending),
+                    avatar: safeAvatar(m.avatar),
+                    hue: safeHue(m.hue)
                 };
             });
             if (!isPlainObject(appState.session)) appState.session = null;
+            if (!isPlainObject(appState.signupSettings)) appState.signupSettings = { allowSignup: true };
 
             // Totals across the locations this person can see, used by the dashboard
             appState.inventory = {};
@@ -1210,7 +1354,11 @@
             return {
                 stock: JSON.parse(JSON.stringify(state.stock || {})),
                 locations,
-                settings: { webhookUrl: state.webhookUrl || '', discordTemplate: normalizeDiscordTemplate(state.discordTemplate) },
+                settings: {
+                    webhookUrl: state.webhookUrl || '',
+                    discordTemplate: normalizeDiscordTemplate(state.discordTemplate),
+                    allowSignup: !(isPlainObject(state.signupSettings) && state.signupSettings.allowSignup === false)
+                },
                 activity,
                 history: JSON.parse(JSON.stringify(state.history || {})),
                 crew: JSON.parse(JSON.stringify(state.crew || {}))
@@ -1228,6 +1376,7 @@
                 .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
             appState.webhookUrl = isPlainObject(tree.settings) && typeof tree.settings.webhookUrl === 'string' ? tree.settings.webhookUrl : '';
             appState.discordTemplate = isPlainObject(tree.settings) ? tree.settings.discordTemplate : null;
+            appState.signupSettings = { allowSignup: !(isPlainObject(tree.settings) && tree.settings.allowSignup === false) };
             appState.activity = Object.entries(isPlainObject(tree.activity) ? tree.activity : {})
                 .filter(([, record]) => isPlainObject(record))
                 .map(([id, record]) => ({ ...record, id }));
@@ -1358,21 +1507,20 @@
         //
         // With no crew members added, everyone can use everything (as before).
         // Once the admin adds crew, everyone signs in with name + PIN and the
-        // site hides what they aren't allowed to do. The admin password always
-        // works as a master key. This is a convenience lock, not real security:
+        // site hides what they aren't allowed to do. The Admin page only opens
+        // with the admin password, which also works as a master key. This is a convenience lock, not real security:
         // someone technical could get around it.
         // ---------------------------------------------------------------------
         const PERMISSIONS = [
             { key: 'inventory', label: 'Edit inventory', hint: 'Add/remove, trim, press, move stock' },
             { key: 'timers', label: 'Timers & harvests', hint: 'Start, stop, restart, harvest' },
-            { key: 'planner', label: 'Grow planner', hint: 'Change pots and pot plans' },
-            { key: 'admin', label: 'Admin page', hint: 'Locations, crew, webhook, logos, backups' }
+            { key: 'planner', label: 'Grow planner', hint: 'Change pots and pot plans' }
         ];
+        // The Admin page isn't a crew permission: it only opens with the admin password (link in the footer)
         const ROLE_PRESETS = {
-            admin: { label: 'Admin', perms: { inventory: true, timers: true, planner: true, admin: true } },
-            manager: { label: 'Manager', perms: { inventory: true, timers: true, planner: true, admin: false } },
-            grower: { label: 'Grower', perms: { inventory: true, timers: true, planner: false, admin: false } },
-            viewer: { label: 'Viewer (stats only)', perms: { inventory: false, timers: false, planner: false, admin: false } }
+            manager: { label: 'Manager', perms: { inventory: true, timers: true, planner: true } },
+            grower: { label: 'Grower', perms: { inventory: true, timers: true, planner: false } },
+            viewer: { label: 'Viewer (stats only)', perms: { inventory: false, timers: false, planner: false } }
         };
 
         function crewMode() {
@@ -1405,7 +1553,7 @@
         }
 
         function hasAdminAccess() {
-            return isAdminUnlocked() || (crewMode() && can('admin'));
+            return isAdminUnlocked();
         }
 
         function seesAllLocations() {
@@ -1451,17 +1599,55 @@
         function openSignIn() {
             const modal = document.getElementById('signin-modal');
             if (!modal || !modal.classList.contains('hidden')) return;
-            const select = document.getElementById('signin-member');
-            const members = Object.entries(appState.crew).sort((a, b) => a[1].name.localeCompare(b[1].name));
-            select.innerHTML = `<option value="">Choose your name…</option>` +
-                members.map(([id, m]) => `<option value="${escapeHtml(id)}">${escapeHtml(m.name)}</option>`).join('');
-            const guess = members.find(([, m]) => m.name === appState.crewName);
-            if (guess) select.value = guess[0];
+            const name = document.getElementById('signin-name');
+            name.value = appState.crewName && appState.crewName !== 'Admin' ? appState.crewName : '';
             document.getElementById('signin-pin').value = '';
             document.getElementById('signin-error').classList.add('hidden');
             document.getElementById('signin-master').classList.add('hidden');
+            document.getElementById('signin-crew').classList.remove('hidden');
+            document.getElementById('signin-hint').textContent = signupAllowed()
+                ? "New here? Enter the name and PIN you want, and you'll get a profile."
+                : '';
+            setSignInCreateMode(false);
             modal.classList.remove('hidden');
-            setTimeout(() => (select.value ? document.getElementById('signin-pin') : select).focus(), 50);
+            setTimeout(() => (name.value ? document.getElementById('signin-pin') : name).focus(), 50);
+        }
+
+        function signupAllowed() {
+            return !(isPlainObject(appState.signupSettings) && appState.signupSettings.allowSignup === false);
+        }
+
+        function findMemberByName(name) {
+            const wanted = name.trim().toLowerCase();
+            return Object.entries(appState.crew).find(([, m]) => m.name.toLowerCase() === wanted) || null;
+        }
+
+        // Second step for a new name: confirm the PIN, then the profile is created
+        function setSignInCreateMode(on, name) {
+            const box = document.getElementById('signin-create');
+            if (!box) return;
+            box.classList.toggle('hidden', !on);
+            if (on) {
+                document.getElementById('signin-create-note').innerHTML =
+                    `There's no profile for <b class="text-white">${escapeHtml(name)}</b> yet. Type your PIN again to create one. You'll see the dashboard stats until an admin reviews it.`;
+                document.getElementById('signin-pin2').value = '';
+                setTimeout(() => document.getElementById('signin-pin2').focus(), 50);
+            }
+            document.getElementById('signin-hint').classList.toggle('hidden', on);
+            document.getElementById('signin-title').textContent = on ? 'Create your profile' : 'Sign in';
+            document.getElementById('signin-submit').innerHTML = on
+                ? '<i class="fa-solid fa-user-plus mr-1"></i> Create My Profile'
+                : '<i class="fa-solid fa-right-to-bracket mr-1"></i> Sign In';
+        }
+
+        function finishSignIn(memberId, member, message) {
+            appState.session = { memberId, pinHash: member.pinHash };
+            appState.crewName = member.name;
+            saveState();
+            closeSignIn();
+            registerPresence();
+            renderAll();
+            showAlert(message, 'success');
         }
 
         function closeSignIn() {
@@ -1494,21 +1680,40 @@
                 return showAlert('Signed in with the admin password.', 'success');
             }
 
-            const memberId = document.getElementById('signin-member').value;
+            const name = document.getElementById('signin-name').value.trim().replace(/\s+/g, ' ').slice(0, 20);
             const pin = document.getElementById('signin-pin').value.trim();
-            const member = appState.crew[memberId];
-            if (!member) return showError('Choose your name.');
-            const hash = await pinHash(memberId, pin);
-            document.getElementById('signin-pin').value = '';
-            if (hash !== member.pinHash) return setTimeout(() => showError('Wrong PIN.'), 600); // slows down guessing
+            if (!name) return showError('Enter your name.');
+            const found = findMemberByName(name);
 
-            appState.session = { memberId, pinHash: member.pinHash };
-            appState.crewName = member.name;
-            saveState();
-            closeSignIn();
-            registerPresence();
-            renderAll();
-            showAlert(`Signed in as ${member.name}.`, 'success');
+            if (found) {
+                const [memberId, member] = found;
+                const hash = await pinHash(memberId, pin);
+                document.getElementById('signin-pin').value = '';
+                if (hash !== member.pinHash) return setTimeout(() => showError('Wrong PIN.'), 600); // slows down guessing
+                return finishSignIn(memberId, member, `Signed in as ${member.name}.`);
+            }
+
+            // A name that isn't on the roster: create a profile (if allowed)
+            if (!signupAllowed()) return showError(`There's no profile for ${name}. Ask an admin to add you.`);
+            if (name.length < 2 || name.toLowerCase() === SYSTEM_NAME.toLowerCase() || name.toLowerCase() === 'admin') return showError('Pick a different name.');
+            if (!/^\d{4,8}$/.test(pin)) return showError('Pick a PIN of 4 to 8 digits.');
+            const creating = !document.getElementById('signin-create').classList.contains('hidden');
+            if (!creating) return setSignInCreateMode(true, name);
+            if (document.getElementById('signin-pin2').value.trim() !== pin) return showError("The PINs don't match. Try again.");
+
+            const memberId = newActivityId();
+            const member = {
+                name,
+                pinHash: await pinHash(memberId, pin),
+                role: 'viewer',
+                perms: { inventory: false, timers: false, planner: false },
+                locations: 'all',
+                pending: true
+            };
+            writeShared({ [`crew/${memberId}`]: member });
+            appState.crew[memberId] = member; // so the sign-in below sees it before the live update arrives
+            logActivity({ who: name, kind: 'joined' });
+            finishSignIn(memberId, member, `Welcome, ${name}! You can see the dashboard stats until an admin reviews your profile.`);
         }
 
         function toggleSignInMaster(show) {
@@ -1517,12 +1722,9 @@
             setTimeout(() => document.getElementById(show ? 'signin-password' : 'signin-pin').focus(), 50);
         }
 
-        // Header avatars: change name (open mode) or sign out (crew mode)
+        // Header avatars open My Profile
         function onPresenceClick() {
-            if (!crewMode()) return openNameModal();
-            const who = currentMember() ? currentMember().name : 'admin';
-            if (!confirm(`Signed in as ${who}. Sign out of this device?`)) return;
-            signOut();
+            openProfile();
         }
 
         // ---- Admin: crew panel ----
@@ -1536,24 +1738,26 @@
             const list = document.getElementById('crew-list');
             const note = document.getElementById('crew-mode-note');
             if (!list || !note) return;
-            const members = Object.entries(appState.crew).sort((a, b) => a[1].name.localeCompare(b[1].name));
+            const members = Object.entries(appState.crew).sort((a, b) => (b[1].pending - a[1].pending) || a[1].name.localeCompare(b[1].name));
+            const toggle = document.getElementById('signup-toggle');
+            if (toggle && toggle !== document.activeElement) toggle.checked = signupAllowed();
             note.innerHTML = members.length === 0
-                ? `<p class="text-slate-400"><i class="fa-solid fa-lock-open text-amber-400 mr-1"></i>No crew yet, so the site is open to anyone with the link. <b class="text-slate-200">Once you add the first person, everyone has to sign in with their name and PIN.</b> The admin password always works as a master key.</p>`
-                : `<p class="text-slate-400"><i class="fa-solid fa-lock text-weed-400 mr-1"></i>Sign-in is on. The admin password always works as a master key. This is a simple lock: it stops casual misuse, but someone technical could get around it.</p>`;
+                ? `<p class="text-slate-400"><i class="fa-solid fa-lock-open text-amber-400 mr-1"></i>No crew yet, so the site is open to anyone with the link. <b class="text-slate-200">Once you add the first person, everyone has to sign in with their name and PIN.</b> The Admin page only opens with the admin password (the small Admin link at the bottom of the page), which also works as a master key.</p>`
+                : `<p class="text-slate-400"><i class="fa-solid fa-lock text-weed-400 mr-1"></i>Sign-in is on. Crew can't open the Admin page; that needs the admin password (the small Admin link at the bottom of the page), which also works as a master key. This is a simple lock: it stops casual misuse, but someone technical could get around it.</p>`;
             list.innerHTML = members.map(([id, m]) => {
                 const where = m.locations === 'all'
                     ? '<span class="dx-pill">All locations</span>'
                     : Object.keys(m.locations).filter(k => m.locations[k]).map(k => `<span class="dx-pill">${escapeHtml(bucketLabel(k))}</span>`).join('') || '<span class="dx-pill off">No locations</span>';
                 return `
-                    <div class="dx-glass dx-member">
+                    <div class="dx-glass dx-member" ${m.pending ? 'style="border-color:rgba(251,191,36,.55)"' : ''}>
                         ${avatarHtml(m.name)}
                         <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2"><b class="text-white">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
+                            <div class="flex items-center gap-2"><b class="text-white">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pending ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-black">New · needs review</span>' : ''}${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
                             <div>${PERMISSIONS.map(p => `<span class="dx-pill ${m.perms[p.key] ? '' : 'off'}">${p.label}</span>`).join('')}</div>
                             <div class="mt-1">${where}</div>
                         </div>
                         <div class="flex flex-col gap-1">
-                            <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid fa-pen mr-1"></i>Edit</button>
+                            <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid ${m.pending ? 'fa-user-check' : 'fa-pen'} mr-1"></i>${m.pending ? 'Review' : 'Edit'}</button>
                             <button onclick="removeCrewMember(${jsArg(id)})" class="px-2.5 py-1 rounded bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold border border-red-800"><i class="fa-solid fa-trash-can mr-1"></i>Remove</button>
                         </div>
                     </div>`;
@@ -1628,8 +1832,13 @@
                 pinHash: pin ? await pinHash(id, pin) : appState.crew[existingId].pinHash,
                 role: document.getElementById('crew-role').value,
                 perms,
-                locations
+                locations,
+                pending: false // saving in the editor counts as reviewed
             };
+            // Keep the member's own picture and background color
+            const previous = existingId ? appState.crew[existingId] : null;
+            if (previous && previous.avatar) record.avatar = previous.avatar;
+            if (previous && previous.hue !== null && previous.hue !== undefined) record.hue = previous.hue;
             const firstMember = !crewMode();
             // Whoever sets up the first crew member stays signed in (as admin) instead of being locked out mid-edit
             if (firstMember) setAdminUnlocked(true);
@@ -1647,6 +1856,45 @@
                 : `${name} ${existingId ? 'updated' : 'added'}.`, 'success');
         }
 
+        function setSignupAllowed(on) {
+            if (!allowed('admin')) return renderCrewPanel();
+            writeShared({ 'settings/allowSignup': Boolean(on) });
+            showAlert(on ? 'New people can now create their own profile.' : 'Sign-ups are off. Only admins can add crew.', 'info');
+        }
+
+        // ---- Admin page tabs ----
+        const ADMIN_TABS = ['crew', 'locations', 'discord', 'logos', 'data'];
+
+        function showAdminTab(name) {
+            if (!ADMIN_TABS.includes(name)) name = 'crew';
+            document.querySelectorAll('[data-admin-panel]').forEach(p => p.classList.toggle('hidden', p.dataset.adminPanel !== name));
+            document.querySelectorAll('[data-admin-tab]').forEach(t => t.classList.toggle('on', t.dataset.adminTab === name));
+            try { localStorage.setItem('noelops_admin_tab', name); } catch (e) { /* remembering the tab is optional */ }
+        }
+
+        function savedAdminTab() {
+            try { return localStorage.getItem('noelops_admin_tab') || 'crew'; } catch (e) { return 'crew'; }
+        }
+
+        // New self-made profiles waiting for an admin, shown on the Admin nav and Crew tab
+        function renderPendingBadge() {
+            const pending = hasAdminAccess() ? Object.values(appState.crew).filter(m => m.pending).length : 0;
+            const tabBadge = document.getElementById('admin-pending-badge');
+            if (tabBadge) { tabBadge.textContent = pending ? `${pending} new` : ''; tabBadge.classList.toggle('hidden', !pending); }
+            const nav = document.getElementById('nav-admin');
+            if (nav) {
+                let dot = document.getElementById('nav-admin-pending');
+                if (!dot) {
+                    dot = document.createElement('span');
+                    dot.id = 'nav-admin-pending';
+                    dot.className = 'ml-1 px-1.5 py-0.5 text-xs rounded-full bg-amber-400 text-black font-bold';
+                    nav.appendChild(dot);
+                }
+                dot.textContent = pending;
+                dot.classList.toggle('hidden', !pending);
+            }
+        }
+
         function removeCrewMember(memberId) {
             if (!allowed('admin')) return;
             const member = appState.crew[memberId];
@@ -1658,6 +1906,256 @@
             writeShared({ [`crew/${memberId}`]: null });
             logActivity({ kind: 'crew' });
             showAlert(`${member.name} removed.`, 'info');
+        }
+
+        // ---- My Profile: picture, name, PIN and background color ----
+        const DEFAULT_BG_HUE = 142; // the original green
+        const AVATAR_PX = 128;
+        const HUE_SWATCHES = [142, 172, 200, 225, 265, 300, 335, 0, 25, 48];
+        let huePreview = null; // hue shown while dragging, before it is saved
+
+        function safeAvatar(value) {
+            return typeof value === 'string' && value.length < 200000 && /^data:image\/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(value) ? value : null;
+        }
+
+        function safeHue(value) {
+            if (value === null || value === undefined || value === '') return null;
+            const hue = Math.round(Number(value));
+            return Number.isFinite(hue) ? ((hue % 360) + 360) % 360 : null;
+        }
+
+        // Whose profile this device edits: the signed-in crew member, or this device (open mode / admin password)
+        function myMemberId() {
+            return currentMember() ? appState.session.memberId : null;
+        }
+
+        function myProfile() {
+            const member = currentMember();
+            return member ? { avatar: member.avatar, hue: member.hue } : appState.profileLocal;
+        }
+
+        function myHue() {
+            const hue = myProfile().hue;
+            return hue === null || hue === undefined ? DEFAULT_BG_HUE : hue;
+        }
+
+        function applyTheme() {
+            document.documentElement.style.setProperty('--bg-h', huePreview !== null ? huePreview : myHue());
+        }
+
+        // Save part of my profile: to the crew list when signed in as a member, otherwise to this device
+        function saveMyProfile(fields) {
+            const memberId = myMemberId();
+            if (memberId) {
+                const changes = {};
+                Object.entries(fields).forEach(([key, value]) => {
+                    appState.crew[memberId][key] = value; // show it right away, before the live update arrives
+                    changes[`crew/${memberId}/${key}`] = value;
+                });
+                saveState();
+                return writeShared(changes);
+            }
+            Object.assign(appState.profileLocal, fields);
+            saveState();
+            registerPresence();
+            renderAll();
+            return Promise.resolve();
+        }
+
+        function renderProfileButton() {
+            const btn = document.getElementById('profile-btn');
+            if (!btn) return;
+            const name = appState.crewName;
+            const show = Boolean(name) && (!crewMode() || currentMember() || isAdminUnlocked());
+            btn.classList.toggle('hidden', !show);
+            if (!show) return;
+            document.getElementById('profile-btn-av').innerHTML = avatarHtml(name);
+            document.getElementById('profile-btn-name').textContent = name;
+        }
+
+        function openProfile() {
+            if (crewMode() && !currentMember() && !isAdminUnlocked()) return;
+            if (!appState.crewName) return openNameModal();
+            const modal = document.getElementById('profile-modal');
+            document.getElementById('profile-name').value = appState.crewName;
+            ['profile-name-error', 'profile-pin-error'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            ['profile-pin-current', 'profile-pin-new', 'profile-pin-new2'].forEach(id => { document.getElementById(id).value = ''; });
+            modal.classList.remove('hidden');
+            renderProfileModal();
+        }
+
+        function closeProfile() {
+            if (huePreview !== null) commitHue(huePreview);
+            document.getElementById('profile-modal').classList.add('hidden');
+        }
+
+        // Live parts of the open profile (typed fields are left alone)
+        function renderProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            if (!modal || modal.classList.contains('hidden')) return;
+            if (crewMode() && !currentMember() && !isAdminUnlocked()) return modal.classList.add('hidden'); // signed out elsewhere
+            const member = currentMember();
+            const name = appState.crewName;
+            document.getElementById('profile-av').innerHTML = avatarHtml(name, 'dx-pf-av');
+            document.getElementById('profile-title').textContent = name;
+            document.getElementById('profile-role').textContent = member
+                ? roleLabel(member) + (member.pending ? ' · waiting for admin review' : '') + (isAdminUnlocked() ? ' · Admin unlocked' : '')
+                : (isMasterSession() ? 'Signed in with the admin password' : 'Saved on this device');
+            document.getElementById('profile-av-remove').classList.toggle('hidden', !myProfile().avatar);
+            document.getElementById('profile-pin-box').classList.toggle('hidden', !member);
+            document.getElementById('profile-signout').classList.toggle('hidden', !crewMode());
+            document.getElementById('profile-hue-note').textContent = member
+                ? 'Only changes the background, and only for you. Saved to your profile, so it follows you to any device.'
+                : 'Only changes the background, and only for you. Saved on this device.';
+            renderHuePicker(huePreview !== null ? huePreview : myHue());
+        }
+
+        function renderHuePicker(hue) {
+            const knob = document.getElementById('profile-wheel-knob');
+            const wheel = document.getElementById('profile-wheel');
+            if (!knob || !wheel) return;
+            const size = wheel.offsetWidth || 150;
+            const radius = size / 2 - 13; // middle of the color ring
+            const rad = hue * Math.PI / 180;
+            knob.style.left = `${size / 2 + radius * Math.cos(rad)}px`;
+            knob.style.top = `${size / 2 + radius * Math.sin(rad)}px`;
+            knob.style.background = `hsl(${hue} 85% 50%)`;
+            const range = document.getElementById('profile-hue');
+            if (range !== document.activeElement) range.value = hue;
+            document.getElementById('profile-hue-value').textContent = `${hue}°`;
+            document.getElementById('profile-swatches').innerHTML = HUE_SWATCHES.map(h =>
+                `<button type="button" class="dx-swatch${h === hue ? ' on' : ''}" style="background:hsl(${h} 70% 40%)" title="Hue ${h}°" onclick="commitHue(${h})"></button>`).join('');
+        }
+
+        function previewHue(value) {
+            huePreview = safeHue(value);
+            applyTheme();
+            renderHuePicker(huePreview);
+        }
+
+        function commitHue(value) {
+            const hue = safeHue(value);
+            huePreview = null;
+            if (hue === null || hue === myHue()) return renderAll();
+            saveMyProfile({ hue: hue === DEFAULT_BG_HUE ? null : hue });
+        }
+
+        // Color wheel: the angle around the ring picks the hue
+        function hueFromPointer(event) {
+            const box = document.getElementById('profile-wheel').getBoundingClientRect();
+            const deg = Math.atan2(event.clientY - (box.top + box.height / 2), event.clientX - (box.left + box.width / 2)) * 180 / Math.PI;
+            return (Math.round(deg) + 360) % 360;
+        }
+
+        function initHueWheel() {
+            const wheel = document.getElementById('profile-wheel');
+            if (!wheel) return;
+            let dragging = false;
+            wheel.addEventListener('pointerdown', event => {
+                dragging = true;
+                wheel.setPointerCapture(event.pointerId);
+                previewHue(hueFromPointer(event));
+            });
+            wheel.addEventListener('pointermove', event => { if (dragging) previewHue(hueFromPointer(event)); });
+            const finish = () => {
+                if (!dragging) return;
+                dragging = false;
+                if (huePreview !== null) commitHue(huePreview);
+            };
+            wheel.addEventListener('pointerup', finish);
+            wheel.addEventListener('pointercancel', finish);
+        }
+
+        // Square-crop the middle of an image and shrink it to a small profile picture
+        function readSquareImage(file, px, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const side = Math.min(img.width, img.height);
+                    const canvas = document.createElement('canvas');
+                    canvas.width = canvas.height = px;
+                    const ctx = canvas.getContext('2d');
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, px, px);
+                    let url = canvas.toDataURL('image/webp', 0.85);
+                    if (!url.startsWith('data:image/webp')) url = canvas.toDataURL('image/jpeg', 0.85); // browsers without WebP export
+                    callback(url);
+                };
+                img.onerror = () => showAlert('That file could not be read as an image.', 'warning');
+                img.src = e.target.result;
+            };
+            reader.onerror = () => showAlert('That file could not be read.', 'warning');
+            reader.readAsDataURL(file);
+        }
+
+        function handleProfilePicture(event) {
+            const file = event.target.files[0];
+            event.target.value = ''; // allow picking the same file again
+            if (!file) return;
+            readSquareImage(file, AVATAR_PX, dataUrl => {
+                if (!safeAvatar(dataUrl)) return showAlert('That picture could not be used. Try a different one.', 'warning');
+                saveMyProfile({ avatar: dataUrl });
+                showAlert('Profile picture updated.', 'success');
+            });
+        }
+
+        function removeProfilePicture() {
+            saveMyProfile({ avatar: null });
+            showAlert('Profile picture removed.', 'info');
+        }
+
+        function saveProfileName(event) {
+            event.preventDefault();
+            const error = document.getElementById('profile-name-error');
+            const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
+            error.classList.add('hidden');
+            const name = document.getElementById('profile-name').value.trim().replace(/\s+/g, ' ').slice(0, 20);
+            if (name.length < 2) return showError('Use at least 2 characters.');
+            if (name === appState.crewName) return showError("That's already your name.");
+            if (name.toLowerCase() === SYSTEM_NAME.toLowerCase() || (crewMode() && name.toLowerCase() === 'admin')) return showError('Pick a different name.');
+            const memberId = myMemberId();
+            const taken = Object.entries(appState.crew).some(([id, m]) => id !== memberId && m.name.toLowerCase() === name.toLowerCase());
+            if (taken) return showError(`${name} is already on the crew.`);
+            const old = appState.crewName;
+            appState.crewName = name;
+            if (memberId) {
+                saveMyProfile({ name });
+                registerPresence();
+            } else {
+                saveState();
+                registerPresence();
+                renderAll();
+            }
+            document.getElementById('profile-name').value = name;
+            showAlert(`${old} is now ${name}.`, 'success');
+        }
+
+        async function saveProfilePin(event) {
+            event.preventDefault();
+            const error = document.getElementById('profile-pin-error');
+            const showError = message => { error.textContent = message; error.classList.remove('hidden'); };
+            error.classList.add('hidden');
+            const memberId = myMemberId();
+            if (!memberId) return;
+            if (!window.crypto || !crypto.subtle) return showError('Needs the page to be served over HTTPS.');
+            const current = document.getElementById('profile-pin-current').value.trim();
+            const next = document.getElementById('profile-pin-new').value.trim();
+            const again = document.getElementById('profile-pin-new2').value.trim();
+            if ((await pinHash(memberId, current)) !== appState.crew[memberId].pinHash) {
+                document.getElementById('profile-pin-current').value = '';
+                return setTimeout(() => showError('Your current PIN is wrong.'), 600);
+            }
+            if (!/^\d{4,8}$/.test(next)) return showError('New PIN must be 4 to 8 digits.');
+            if (next !== again) return showError("The new PINs don't match.");
+            const hash = await pinHash(memberId, next);
+            // Update the member and this device's sign-in together, so this device stays signed in
+            appState.crew[memberId].pinHash = hash;
+            appState.session = { memberId, pinHash: hash };
+            saveState();
+            writeShared({ [`crew/${memberId}/pinHash`]: hash });
+            ['profile-pin-current', 'profile-pin-new', 'profile-pin-new2'].forEach(id => { document.getElementById(id).value = ''; });
+            showAlert('PIN changed. Use the new one next time you sign in.', 'success');
         }
 
         function signOut() {
@@ -1699,14 +2197,25 @@
             ['#f9a8d4', '#db2777', '#ffffff'], ['#67e8f9', '#0891b2', '#04121a'], ['#fdba74', '#ea580c', '#1a0c03']
         ];
 
-        function avatarHtml(name) {
+        // Profile picture for a name: a crew member's, someone online's, or this device's own
+        function avatarFor(name) {
+            const member = Object.values(appState.crew || {}).find(m => m.name === name);
+            if (member) return member.avatar;
+            const online = appState.presence.find(p => p.client !== CLIENT_ID && p.name === name && safeAvatar(p.avatar));
+            if (online) return safeAvatar(online.avatar);
+            return name === appState.crewName && !currentMember() ? appState.profileLocal.avatar : null;
+        }
+
+        function avatarHtml(name, extraClass = '') {
             if (name === SYSTEM_NAME) {
-                return `<span class="dx-av" style="background:#052e16;color:#4ade80;border-color:#166534" title="NoelOps"><i class="fa-solid fa-cannabis"></i></span>`;
+                return `<span class="dx-av ${extraClass}" style="background:#052e16;color:#4ade80;border-color:#166534" title="NoelOps"><i class="fa-solid fa-cannabis"></i></span>`;
             }
+            const picture = avatarFor(name);
+            if (picture) return `<img class="dx-av ${extraClass}" src="${escapeHtml(picture)}" alt="${escapeHtml(name)}" title="${escapeHtml(name)}">`;
             let hash = 0;
             for (const ch of String(name)) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
             const [from, to, text] = AVATAR_COLORS[hash % AVATAR_COLORS.length];
-            return `<span class="dx-av" style="background:linear-gradient(135deg,${from},${to});color:${text}" title="${escapeHtml(name)}">${escapeHtml(initials(name))}</span>`;
+            return `<span class="dx-av ${extraClass}" style="background:linear-gradient(135deg,${from},${to});color:${text}" title="${escapeHtml(name)}">${escapeHtml(initials(name))}</span>`;
         }
 
         function openNameModal() {
@@ -1735,6 +2244,7 @@
             document.getElementById('name-modal').classList.add('hidden');
             registerPresence();
             renderPresence();
+            renderProfileButton();
             showAlert(isNew ? `Welcome to the crew, ${name}!` : `You're now showing as ${name}.`, 'success');
         }
 
@@ -1743,7 +2253,10 @@
             if (Sync.mode !== 'cloud' || !appState.crewName) return;
             if (!presenceRef) presenceRef = Sync.root.child('presence').push();
             presenceRef.onDisconnect().remove();
-            presenceRef.set({ name: appState.crewName, client: CLIENT_ID, since: timestampValue() })
+            const record = { name: appState.crewName, client: CLIENT_ID, since: timestampValue() };
+            // Crew members' pictures come from the crew list; anyone else shares theirs while online
+            if (!currentMember() && appState.profileLocal.avatar) record.avatar = appState.profileLocal.avatar;
+            presenceRef.set(record)
                 .catch(err => console.error('Presence update failed:', err));
         }
 
@@ -1790,7 +2303,8 @@
             locations: { pre: 'updated', hi: 'the grow locations', post: '' },
             crew: { pre: 'updated', hi: 'the crew list', post: '' },
             discord: { pre: 'updated', hi: 'the Discord settings', post: '' },
-            backup: { pre: 'restored', hi: 'a backup', post: '' }
+            backup: { pre: 'restored', hi: 'a backup', post: '' },
+            joined: { pre: 'created', hi: 'a profile', post: '(needs review)' }
         };
         const ACTIVITY_MERGE_MS = 5 * 60 * 1000;
 
@@ -2029,6 +2543,23 @@
             }
             const icon = document.getElementById('nav-admin-icon');
             if (icon) icon.className = unlocked ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock';
+            renderAdminLinks();
+        }
+
+        // Admin nav buttons only show once the admin password is entered; the footer link is the way in
+        function renderAdminLinks() {
+            const unlocked = isAdminUnlocked();
+            document.querySelectorAll('[data-admin-only]').forEach(el => el.classList.toggle('hidden', !unlocked));
+            const icon = document.getElementById('footer-admin-icon');
+            if (icon) icon.className = unlocked ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock';
+            const text = document.getElementById('footer-admin-text');
+            if (text) text.textContent = unlocked ? 'Lock admin' : 'Admin';
+        }
+
+        function footerAdminClick() {
+            if (isAdminUnlocked()) return adminLogout();
+            switchTab('admin');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         async function sha256Hex(text) {
@@ -2056,6 +2587,7 @@
             if (hash === ADMIN_PASSWORD_SHA256) {
                 submit.disabled = false;
                 setAdminUnlocked(true);
+                renderAll();
                 switchTab('admin');
                 showAlert('Admin unlocked.', 'success');
             } else {
@@ -2072,6 +2604,7 @@
         function adminLogout() {
             setAdminUnlocked(false);
             switchTab('dashboard');
+            renderAll();
             showAlert('Logged out of admin.', 'info');
         }
 
@@ -2098,6 +2631,7 @@
                 const input = document.getElementById('admin-password-input');
                 if (input) input.focus();
             }
+            if (tabId === 'admin') showAdminTab(savedAdminTab());
         }
 
         function toggleMobileMenu() {
@@ -2106,6 +2640,10 @@
         }
 
         function renderAll() {
+            applyTheme();
+            renderAdminLinks();
+            renderProfileButton();
+            renderProfileModal();
             renderMasterLogo();
             renderDashboard();
             renderInventory();
@@ -2116,6 +2654,7 @@
             renderPresence();
             updateWebhookPill();
             renderCrewPanel();
+            renderPendingBadge();
             renderDiscordEditor();
             const badge = document.getElementById('active-timers-badge');
             if (badge) badge.innerText = visibleLocations().length;
@@ -2167,7 +2706,7 @@
 
         function getStrainLogo(strainId) {
             const strain = DEFAULT_STRAINS.find(s => s.id === strainId);
-            const fallback = `<div class="w-full h-full flex flex-col items-center justify-center text-[10px] font-bold text-weed-400 bg-weed-950/80 rounded-xl p-2 text-center border border-weed-800 cursor-pointer hover:bg-weed-900/60 transition-colors" onclick="switchTab('admin')" title="Add ${escapeHtml(STRAIN_LOGO_DIR)}/${escapeHtml(strainId)}.png to the repo, or upload one in Admin">
+            const fallback = `<div class="w-full h-full flex flex-col items-center justify-center text-[10px] font-bold text-weed-400 bg-weed-950/80 rounded-xl p-2 text-center border border-weed-800 cursor-pointer hover:bg-weed-900/60 transition-colors" onclick="if (hasAdminAccess()) switchTab('admin')" title="Add ${escapeHtml(STRAIN_LOGO_DIR)}/${escapeHtml(strainId)}.png to the repo, or upload one in Admin">
                         <i class="fa-solid fa-cannabis text-2xl mb-1 text-weed-400"></i>
                         <span>No Logo</span>
                     </div>`;
