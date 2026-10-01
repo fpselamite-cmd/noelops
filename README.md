@@ -204,6 +204,7 @@ Newest first. Every merge adds an entry here, written so it can be pasted straig
 - Main buttons glow green, secondary buttons glow purple
 - Page titles get an icon and a little weed-leaf underline
 - Faint weed-leaf pattern in the background
+- The **Grows** icon and the plant on every grow timer are now a weed leaf that grows as the timer runs
 
 ### 🧹 Oct 1, 2026: Simpler and easier to read
 - The menu is now just **Dashboard**, **Grows**, **Stash** and **Log**. The pot plan lives under **Grows** (Timers / Pot Plan tabs)

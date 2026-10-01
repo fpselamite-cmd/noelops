@@ -834,7 +834,7 @@
                             <span>Dashboard</span>
                         </button>
                         <button onclick="switchTab('timers')" id="nav-timers" title="Grows: timers and pot plans" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <i class="fa-solid fa-seedling"></i>
+                            <i class="fa-solid fa-cannabis"></i>
                             <span>Grows</span>
                             <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
                         </button>
@@ -890,7 +890,7 @@
             <!-- Grow timers sub-bar (dashboard only) -->
             <div id="dx-growbar" class="dx-growbar hidden">
                 <div class="dx-growbar-in">
-                    <div class="gb-label"><b><i class="fa-solid fa-seedling mr-1 text-weed-500"></i>Grows</b><span id="gb-next" class="text-[10px] dx-muted"></span><button onclick="switchTab('timers')">Manage →</button></div>
+                    <div class="gb-label"><b><i class="fa-solid fa-cannabis mr-1 text-weed-500"></i>Grows</b><span id="gb-next" class="text-[10px] dx-muted"></span><button onclick="switchTab('timers')">Manage →</button></div>
                     <div id="dx-timers"></div>
                 </div>
             </div>
@@ -1036,7 +1036,7 @@
                 <div class="dx-tabs mb-4"><button class="dx-tab on"><i class="fa-solid fa-clock"></i>Timers</button><button class="dx-tab" data-planner-link onclick="switchTab('planner')"><i class="fa-solid fa-table-cells"></i>Pot Plan</button></div>
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-seedling text-weed-400 mr-2"></i>Grows</h1>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-cannabis text-weed-400 mr-2"></i>Grows</h1>
                         <p class="text-xs text-slate-400 mt-1">Postals: <span id="timers-postal-list" class="text-weed-300 font-bold font-mono">&mdash;</span>. Discord gets a message when a grow is ready.</p>
                     </div>
                     <div id="timers-actions" class="dx-plan-actions"></div>
@@ -1793,7 +1793,7 @@
             </label>
             <div id="harvest-rows" class="max-h-[46vh] overflow-y-auto pr-1 divide-y divide-weed-900/40"></div>
             <p id="harvest-total" class="text-right text-xs font-mono text-weed-300"></p>
-            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-seedling mr-1"></i> Add to Stock &amp; Restart</button>
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-cannabis mr-1"></i> Add to Stock &amp; Restart</button>
             <button type="button" onclick="saveHarvest(null, true)" class="dx-btn dx-btn-o">Just Restart the Timer</button>
             <button type="button" onclick="closeHarvestModal()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
         </form>
@@ -2696,7 +2696,7 @@
 
         function harvestsTag(name) {
             const n = personStats(personKeyForName(name)).harvests;
-            return n ? ` · <i class="fa-solid fa-seedling text-weed-500"></i> ${harvestsLabel(n)}` : '';
+            return n ? ` · <i class="fa-solid fa-cannabis text-weed-500"></i> ${harvestsLabel(n)}` : '';
         }
 
         // ---- Admin: crew panel ----
@@ -2727,7 +2727,7 @@
                             <div class="flex items-center gap-2"><b class="text-white" style="${m.nameColor ? `color:${m.nameColor}` : ''}">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pending ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-black">New · needs review</span>' : ''}${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
                             <div>${PERMISSIONS.map(p => `<span class="dx-pill ${m.perms[p.key] ? '' : 'off'}">${p.label}</span>`).join('')}</div>
                             <div class="mt-1">${where}</div>
-                            <div class="mt-1 text-[11px] text-slate-400"><i class="fa-solid fa-seedling text-weed-500"></i> <b class="text-slate-200">${harvestsLabel(personStats(personKey(id)).harvests)}</b> · Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
+                            <div class="mt-1 text-[11px] text-slate-400"><i class="fa-solid fa-cannabis text-weed-500"></i> <b class="text-slate-200">${harvestsLabel(personStats(personKey(id)).harvests)}</b> · Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid ${m.pending ? 'fa-user-check' : 'fa-pen'} mr-1"></i>${m.pending ? 'Review' : 'Edit'}</button>
@@ -4104,10 +4104,11 @@
 
         // Plant icon and size for how far along a grow is
         function growStage(st) {
+            // Always a cannabis leaf: it grows from small to full size as the timer runs
             if (st.status === 'ready') return { icon: 'fa-cannabis', scale: 1.15, key: 'ready' };
-            if (st.status === 'idle') return { icon: 'fa-seedling', scale: 0.7, key: 'idle' };
-            const icon = st.pct < 33 ? 'fa-seedling' : st.pct < 66 ? 'fa-leaf' : 'fa-cannabis';
-            return { icon, scale: 0.7 + (st.pct / 100) * 0.45, key: icon };
+            if (st.status === 'idle') return { icon: 'fa-cannabis', scale: 0.6, key: 'idle' };
+            const key = st.pct < 33 ? 'sprout' : st.pct < 66 ? 'veg' : 'flower';
+            return { icon: 'fa-cannabis', scale: 0.6 + (st.pct / 100) * 0.55, key };
         }
 
         // Grow timers live in the sub-bar under the header, shown on the dashboard
@@ -4134,7 +4135,7 @@
                         ? `<span class="t">${formatTime(Math.round(st.totalSecs))}</span><span class="s">Not started</span>`
                         : `<span class="t dx-ring-t">${formatTime(st.remainingSecs)}</span><span class="s dx-ring-s">${Math.floor(st.pct)}% grown</span>`;
                 const low = ready
-                    ? (canTime ? `<button onclick="openHarvestModal(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-seedling mr-1"></i> Harvest &amp; Restart</button>` : `<span class="note">Ready to harvest</span>`)
+                    ? (canTime ? `<button onclick="openHarvestModal(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-cannabis mr-1"></i> Harvest &amp; Restart</button>` : `<span class="note">Ready to harvest</span>`)
                     : idle
                         ? (canTime ? `<button onclick="startTimer(${jsArg(loc.id)})" class="dx-btn dx-btn-o"><i class="fa-solid fa-play mr-1"></i> Start ${formatDuration(loc.durationHours)} cycle</button>` : `<span class="note">Not running</span>`)
                         : `<div class="track"><div class="fill" style="width:${st.pct.toFixed(2)}%"></div></div><div class="eta">${escapeHtml(readyAtLabel(loc))}</div>`;
@@ -6089,7 +6090,7 @@
             const active = states.length - idle;
             document.getElementById('timers-actions').innerHTML = canTime && locations.length ? `
                 <button class="dx-act solid" onclick="startAllTimers()" ${idle ? '' : 'disabled'}><i class="fa-solid fa-play mr-1"></i>Start all idle${idle ? ` (${idle})` : ''}</button>
-                <button class="dx-act" onclick="harvestLocations(readyLocationIds())" ${ready ? '' : 'disabled'}><i class="fa-solid fa-seedling mr-1"></i>Harvest all ready${ready ? ` (${ready})` : ''}</button>
+                <button class="dx-act" onclick="harvestLocations(readyLocationIds())" ${ready ? '' : 'disabled'}><i class="fa-solid fa-cannabis mr-1"></i>Harvest all ready${ready ? ` (${ready})` : ''}</button>
                 <button class="dx-act" onclick="resetAllTimersPrompt()" ${active ? '' : 'disabled'}><i class="fa-solid fa-stop mr-1"></i>Stop all</button>` : '';
             renderUpcomingHarvests();
 
@@ -6110,7 +6111,7 @@
                     : `<div class="t tc-t">${formatTime(st.remainingSecs)}</div><div class="s tc-s">${Math.floor(st.pct)}% grown</div>`;
                 const est = planEstimate(loc).bricks;
                 const acts = !canTime ? '' : isReady
-                    ? `<button class="dx-btn dx-btn-g" onclick="openHarvestModal(${id})"><i class="fa-solid fa-seedling mr-1"></i>Harvest &amp; Restart</button>
+                    ? `<button class="dx-btn dx-btn-g" onclick="openHarvestModal(${id})"><i class="fa-solid fa-cannabis mr-1"></i>Harvest &amp; Restart</button>
                        <button class="dx-btn dx-stop" onclick="stopTimer(${id})" title="Stop without harvesting"><i class="fa-solid fa-stop"></i></button>`
                     : isIdle
                         ? `<button class="dx-btn dx-btn-o" onclick="startTimer(${id})"><i class="fa-solid fa-play mr-1"></i>Start ${formatDuration(loc.durationHours)} cycle</button>`
@@ -6167,7 +6168,7 @@
             const n = s => status.filter(x => x === s).length;
             bar.innerHTML = `<b>${picked.length} selected</b>
                 <button class="dx-act solid" onclick="bulkTimers('start')" ${n('idle') ? '' : 'disabled'}><i class="fa-solid fa-play mr-1"></i>Start${n('idle') ? ` (${n('idle')})` : ''}</button>
-                <button class="dx-act" onclick="bulkTimers('harvest')" ${n('ready') ? '' : 'disabled'}><i class="fa-solid fa-seedling mr-1"></i>Harvest${n('ready') ? ` (${n('ready')})` : ''}</button>
+                <button class="dx-act" onclick="bulkTimers('harvest')" ${n('ready') ? '' : 'disabled'}><i class="fa-solid fa-cannabis mr-1"></i>Harvest${n('ready') ? ` (${n('ready')})` : ''}</button>
                 <button class="dx-act" onclick="bulkTimers('stop')" ${n('idle') < picked.length ? '' : 'disabled'}><i class="fa-solid fa-stop mr-1"></i>Stop</button>
                 <button class="dx-act" onclick="selectAllTimers()">Select all</button>
                 <button class="dx-act" onclick="timerSelection.clear(); renderTimersPage()">Clear</button>`;
