@@ -93,14 +93,16 @@
         }
         /* ---------- Dashboard redesign ---------- */
         /* Background tint follows --bg-h (hue 0-359, set per person in My Profile; 142 = the original green) */
-        :root { --bg-h: 142; --acc-h: 142; }
+        :root { --bg-h: 142; --acc-h: 142; --gl: 271 91% 65%;
+            /* Faint pot-leaf texture behind every page (Font Awesome Free 'cannabis' icon, CC BY 4.0) */
+            --leaf-tex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cdefs%3E%3Cpath id='l' d='M256 0c5.3 0 10.3 2.7 13.3 7.1c15.8 23.5 36.7 63.7 49.2 109c7.2 26.4 11.8 55.2 10.4 84c11.5-8.8 23.7-16.7 35.8-23.6c41-23.3 84.4-36.9 112.2-42.5c5.2-1 10.7 .6 14.4 4.4s5.4 9.2 4.4 14.5c-5.6 27.7-19.3 70.9-42.7 111.7c-9.1 15.9-19.9 31.7-32.4 46.3c27.8 6.6 52.4 17.3 67.2 25.5c5.1 2.8 8.2 8.2 8.2 14s-3.2 11.2-8.2 14c-15.2 8.4-40.9 19.5-69.8 26.1c-20.2 4.6-42.9 7.2-65.2 4.6l8.3 33.1c1.5 6.1-.6 12.4-5.5 16.4s-11.6 4.6-17.2 1.9L280 417.2V488c0 13.3-10.7 24-24 24s-24-10.7-24-24V417.2l-58.5 29.1c-5.6 2.8-12.3 2.1-17.2-1.9s-7-10.3-5.5-16.4l8.3-33.1c-22.2 2.6-45 0-65.2-4.6c-28.9-6.6-54.6-17.6-69.8-26.1c-5.1-2.8-8.2-8.2-8.2-14s3.2-11.2 8.2-14c14.8-8.2 39.4-18.8 67.2-25.5C78.9 296.3 68.1 280.5 59 264.6c-23.4-40.8-37.1-84-42.7-111.7c-1.1-5.2 .6-10.7 4.4-14.5s9.2-5.4 14.4-4.4c27.9 5.5 71.2 19.2 112.2 42.5c12.1 6.9 24.3 14.7 35.8 23.6c-1.4-28.7 3.1-57.6 10.4-84c12.5-45.3 33.4-85.5 49.2-109c3-4.4 8-7.1 13.3-7.1z'/%3E%3C/defs%3E%3Cg fill='%2386efac' fill-opacity='0.05'%3E%3Cuse href='%23l' transform='translate(10 12) rotate(-14 13 13) scale(.052)'/%3E%3Cuse href='%23l' transform='translate(70 66) rotate(20 10 10) scale(.04)'/%3E%3C/g%3E%3C/svg%3E"); }
         body {
             background-color: hsl(var(--bg-h) 23% 3%);
             background-image:
                 radial-gradient(900px 500px at 12% -10%, hsl(var(--bg-h) 71% 45% / 0.16), transparent 60%),
                 radial-gradient(700px 500px at 100% 110%, hsl(calc(var(--bg-h) + 18) 84% 39% / 0.10), transparent 60%),
-                radial-gradient(hsl(var(--bg-h) 69% 58% / 0.06) 1px, transparent 1px);
-            background-size: auto, auto, 22px 22px;
+                var(--leaf-tex);
+            background-size: auto, auto, 120px 120px;
         }
         img.dx-av { object-fit: cover; background: #0b140e; }
         .dx-profile-btn { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; border-radius: 999px; background: rgba(6, 10, 7, 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.22); color: #e6efe8; font-size: 12px; font-weight: 700; max-width: 180px; }
@@ -328,6 +330,24 @@
         .dx-btn-g:hover { filter: brightness(1.1); }
         .dx-btn-o { background: hsl(var(--acc-h) 71% 45% / 0.12); color: hsl(var(--acc-h) 69% 58%); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.28); }
         .dx-btn-o:hover { background: hsl(var(--acc-h) 71% 45% / 0.22); }
+        /* ---------- Grow Light theme: purple grow-light glow, neon green for "you are here" ---------- */
+        .gl-header { background: radial-gradient(700px 140px at 50% -60px, hsl(var(--gl) / 0.22), transparent 70%), linear-gradient(180deg, rgba(11, 10, 18, 0.94), rgba(6, 5, 8, 0.92)); box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.8); }
+        .gl-header::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, transparent, hsl(var(--gl)), hsl(var(--acc-h) 71% 45%), hsl(var(--gl)), transparent); opacity: 0.8; pointer-events: none; }
+        .gl-nav { background: transparent; }
+        .gl-nav .nav-btn { position: relative; color: #a7a3b8; }
+        .gl-nav .nav-btn i { transition: color 0.2s, text-shadow 0.2s; }
+        .gl-nav .nav-btn:hover { color: #fff; background: hsl(var(--gl) / 0.08); }
+        .gl-nav .nav-btn:hover i { color: hsl(var(--gl)); text-shadow: 0 0 10px hsl(var(--gl)); }
+        .gl-nav .nav-btn.gl-on { color: #fff; background: hsl(var(--gl) / 0.14); }
+        .gl-nav .nav-btn.gl-on i { color: hsl(var(--acc-h) 69% 62%); text-shadow: 0 0 10px hsl(var(--acc-h) 71% 45%), 0 0 20px hsl(var(--acc-h) 71% 45%); }
+        .gl-nav .nav-btn.gl-on::after { content: ''; position: absolute; left: 14px; right: 14px; bottom: -7px; height: 3px; border-radius: 3px; background: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 10px hsl(var(--acc-h) 71% 45%), 0 0 22px hsl(var(--acc-h) 71% 45%); }
+        .gl-nav #active-timers-badge { background: hsl(var(--gl) / 0.2); color: #e9d5ff; border-color: hsl(var(--gl) / 0.5); }
+        .dx-btn-g, .dx-act.solid, .dx-tab.on, button.bg-weed-600 { box-shadow: inset 0 0 0 1px hsl(var(--acc-h) 69% 62% / 0.75), 0 0 20px hsl(var(--acc-h) 71% 45% / 0.45); }
+        .dx-btn-o { background: hsl(var(--gl) / 0.1); color: #e9d5ff; border: 1px solid hsl(var(--gl) / 0.5); box-shadow: 0 0 14px hsl(var(--gl) / 0.2); }
+        .dx-btn-o:hover { background: hsl(var(--gl) / 0.18); color: #fff; box-shadow: 0 0 18px hsl(var(--gl) / 0.35); }
+        .dx-act:hover:not(:disabled):not(.solid) { box-shadow: 0 0 14px hsl(var(--acc-h) 71% 45% / 0.3); }
+        /* Page titles: icon plus a short glowing underline that ends in a leaf */
+        .dx-title::after { content: '\f55f'; font-family: 'Font Awesome 6 Free'; font-weight: 900; display: block; width: 74px; height: 12px; line-height: 12px; margin-top: 5px; font-size: 10px; text-align: right; color: hsl(var(--acc-h) 69% 62%); text-shadow: 0 0 8px hsl(var(--acc-h) 71% 45%); background: linear-gradient(90deg, hsl(var(--acc-h) 71% 45%), hsl(var(--gl))) left center / 60px 2px no-repeat; }
 
         .dx-strains { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
         .dx-sc { padding: 14px 14px 12px; display: flex; flex-direction: column; align-items: center; position: relative; transition: border-color 0.4s, box-shadow 0.4s; }
@@ -359,7 +379,7 @@
         }
         @media (max-width: 1023px) {
             header nav .nav-btn > span:not([id]) { display: none; }   /* icon-only menu… */
-            header nav .nav-btn.bg-weed-600 > span:not([id]) { display: inline; } /* …except the page you're on */
+            header nav .nav-btn.gl-on > span:not([id]) { display: inline; } /* …except the page you're on */
         }
         @media (max-width: 1100px) {
             #profile-btn-name { display: none !important; }
@@ -793,7 +813,7 @@
 <body class="min-h-screen flex flex-col justify-between text-slate-100">
 
     <div>
-        <header class="sticky top-0 z-50 glass-card border-b border-weed-900/60 bg-darkbg/90 backdrop-blur-md">
+        <header class="gl-header sticky top-0 z-50 backdrop-blur-md">
             <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20 gap-4">
                     
@@ -808,13 +828,13 @@
                     </div>
 
                     <!-- Navigation Links -->
-                    <nav class="hidden md:flex space-x-1 bg-darkcard/90 p-1.5 rounded-xl border border-weed-900/60 whitespace-nowrap">
-                        <button onclick="switchTab('dashboard')" id="nav-dashboard" title="Dashboard" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-weed-600 text-white shadow-md shadow-weed-900/50">
+                    <nav class="gl-nav hidden md:flex space-x-1 p-1.5 whitespace-nowrap">
+                        <button onclick="switchTab('dashboard')" id="nav-dashboard" title="Dashboard" class="nav-btn gl-on flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200">
                             <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
                         </button>
                         <button onclick="switchTab('timers')" id="nav-timers" title="Grows: timers and pot plans" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <i class="fa-solid fa-seedling"></i>
+                            <i class="fa-solid fa-cannabis"></i>
                             <span>Grows</span>
                             <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
                         </button>
@@ -870,7 +890,7 @@
             <!-- Grow timers sub-bar (dashboard only) -->
             <div id="dx-growbar" class="dx-growbar hidden">
                 <div class="dx-growbar-in">
-                    <div class="gb-label"><b><i class="fa-solid fa-seedling mr-1 text-weed-500"></i>Grows</b><span id="gb-next" class="text-[10px] dx-muted"></span><button onclick="switchTab('timers')">Manage →</button></div>
+                    <div class="gb-label"><b><i class="fa-solid fa-cannabis mr-1 text-weed-500"></i>Grows</b><span id="gb-next" class="text-[10px] dx-muted"></span><button onclick="switchTab('timers')">Manage →</button></div>
                     <div id="dx-timers"></div>
                 </div>
             </div>
@@ -914,7 +934,7 @@
             <section id="tab-inventory" class="tab-content hidden">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="text-2xl font-black text-white">Stash</h1>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-warehouse text-weed-400 mr-2"></i>Stash</h1>
                         <p class="text-xs text-slate-400 mt-1">What's in each stash house. <span class="text-weed-400 font-semibold">750 trimmed bud = 1 brick</span>, and strains can't be mixed.</p>
                     </div>
                     <label class="flex items-center gap-2 text-xs text-slate-400" title="Amount used by the − / + and Trim buttons">
@@ -931,7 +951,7 @@
             <section id="tab-sales" class="tab-content hidden">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="text-2xl font-black text-white"><i class="fa-solid fa-truck-fast text-amber-400 mr-2"></i>Log</h1>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-truck-fast text-amber-400 mr-2"></i>Log</h1>
                         <p class="text-xs text-slate-400 mt-1">Everything that went out: sold, delivered or handed off. Logging it takes it out of the stash.</p>
                     </div>
                     <div class="dx-plan-actions">
@@ -1002,7 +1022,7 @@
                 <div class="dx-tabs mb-4"><button class="dx-tab" onclick="switchTab('timers')"><i class="fa-solid fa-clock"></i>Timers</button><button class="dx-tab on"><i class="fa-solid fa-table-cells"></i>Pot Plan</button></div>
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="text-2xl font-black text-white">Pot Plan</h1>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-table-cells text-weed-400 mr-2"></i>Pot Plan</h1>
                         <p class="text-xs text-slate-400 mt-1">Pick which strains go in each grow's pots. <span class="text-weed-400 font-semibold">1 pot = 4 plants, 750 bud = 1 brick.</span> <span id="planner-yield-note"></span></p>
                     </div>
                     <button onclick="switchTab('admin')" data-admin-only class="dx-tab self-start md:self-auto"><i class="fa-solid fa-plus"></i>Add / Manage Locations</button>
@@ -1016,7 +1036,7 @@
                 <div class="dx-tabs mb-4"><button class="dx-tab on"><i class="fa-solid fa-clock"></i>Timers</button><button class="dx-tab" data-planner-link onclick="switchTab('planner')"><i class="fa-solid fa-table-cells"></i>Pot Plan</button></div>
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="text-2xl font-black text-white">Grows</h1>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-cannabis text-weed-400 mr-2"></i>Grows</h1>
                         <p class="text-xs text-slate-400 mt-1">Postals: <span id="timers-postal-list" class="text-weed-300 font-bold font-mono">&mdash;</span>. Discord gets a message when a grow is ready.</p>
                     </div>
                     <div id="timers-actions" class="dx-plan-actions"></div>
@@ -1049,7 +1069,7 @@
 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-1">
                     <div>
-                        <h1 class="text-2xl font-black text-white"><i class="fa-solid fa-user-shield text-weed-400 mr-2"></i>Admin</h1>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-user-shield text-weed-400 mr-2"></i>Admin</h1>
                         <p class="text-xs text-slate-400 mt-1">Crew, grow locations, Discord alerts, logos and backups.</p>
                     </div>
                     <button onclick="adminLogout()" class="dx-act self-start md:self-auto" style="flex:none;padding:8px 14px"><i class="fa-solid fa-lock mr-1"></i> Lock Admin</button>
@@ -1773,7 +1793,7 @@
             </label>
             <div id="harvest-rows" class="max-h-[46vh] overflow-y-auto pr-1 divide-y divide-weed-900/40"></div>
             <p id="harvest-total" class="text-right text-xs font-mono text-weed-300"></p>
-            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-seedling mr-1"></i> Add to Stock &amp; Restart</button>
+            <button type="submit" class="dx-btn dx-btn-g" style="padding:11px 14px;font-size:14px"><i class="fa-solid fa-cannabis mr-1"></i> Add to Stock &amp; Restart</button>
             <button type="button" onclick="saveHarvest(null, true)" class="dx-btn dx-btn-o">Just Restart the Timer</button>
             <button type="button" onclick="closeHarvestModal()" class="w-full text-xs text-slate-400 hover:text-white">Cancel</button>
         </form>
@@ -2676,7 +2696,7 @@
 
         function harvestsTag(name) {
             const n = personStats(personKeyForName(name)).harvests;
-            return n ? ` · <i class="fa-solid fa-seedling text-weed-500"></i> ${harvestsLabel(n)}` : '';
+            return n ? ` · <i class="fa-solid fa-cannabis text-weed-500"></i> ${harvestsLabel(n)}` : '';
         }
 
         // ---- Admin: crew panel ----
@@ -2707,7 +2727,7 @@
                             <div class="flex items-center gap-2"><b class="text-white" style="${m.nameColor ? `color:${m.nameColor}` : ''}">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pending ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-black">New · needs review</span>' : ''}${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
                             <div>${PERMISSIONS.map(p => `<span class="dx-pill ${m.perms[p.key] ? '' : 'off'}">${p.label}</span>`).join('')}</div>
                             <div class="mt-1">${where}</div>
-                            <div class="mt-1 text-[11px] text-slate-400"><i class="fa-solid fa-seedling text-weed-500"></i> <b class="text-slate-200">${harvestsLabel(personStats(personKey(id)).harvests)}</b> · Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
+                            <div class="mt-1 text-[11px] text-slate-400"><i class="fa-solid fa-cannabis text-weed-500"></i> <b class="text-slate-200">${harvestsLabel(personStats(personKey(id)).harvests)}</b> · Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid ${m.pending ? 'fa-user-check' : 'fa-pen'} mr-1"></i>${m.pending ? 'Review' : 'Edit'}</button>
@@ -3790,7 +3810,7 @@
 
             const activeBtn = document.getElementById(`nav-${navTabId}`);
             if (activeBtn) {
-                activeBtn.className = 'nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-weed-600 text-white shadow-md shadow-weed-900/50';
+                activeBtn.className = 'nav-btn gl-on flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200';
             }
 
             if (tabId === 'login') {
@@ -4084,10 +4104,11 @@
 
         // Plant icon and size for how far along a grow is
         function growStage(st) {
+            // Always a cannabis leaf: it grows from small to full size as the timer runs
             if (st.status === 'ready') return { icon: 'fa-cannabis', scale: 1.15, key: 'ready' };
-            if (st.status === 'idle') return { icon: 'fa-seedling', scale: 0.7, key: 'idle' };
-            const icon = st.pct < 33 ? 'fa-seedling' : st.pct < 66 ? 'fa-leaf' : 'fa-cannabis';
-            return { icon, scale: 0.7 + (st.pct / 100) * 0.45, key: icon };
+            if (st.status === 'idle') return { icon: 'fa-cannabis', scale: 0.6, key: 'idle' };
+            const key = st.pct < 33 ? 'sprout' : st.pct < 66 ? 'veg' : 'flower';
+            return { icon: 'fa-cannabis', scale: 0.6 + (st.pct / 100) * 0.55, key };
         }
 
         // Grow timers live in the sub-bar under the header, shown on the dashboard
@@ -4114,7 +4135,7 @@
                         ? `<span class="t">${formatTime(Math.round(st.totalSecs))}</span><span class="s">Not started</span>`
                         : `<span class="t dx-ring-t">${formatTime(st.remainingSecs)}</span><span class="s dx-ring-s">${Math.floor(st.pct)}% grown</span>`;
                 const low = ready
-                    ? (canTime ? `<button onclick="openHarvestModal(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-seedling mr-1"></i> Harvest &amp; Restart</button>` : `<span class="note">Ready to harvest</span>`)
+                    ? (canTime ? `<button onclick="openHarvestModal(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-cannabis mr-1"></i> Harvest &amp; Restart</button>` : `<span class="note">Ready to harvest</span>`)
                     : idle
                         ? (canTime ? `<button onclick="startTimer(${jsArg(loc.id)})" class="dx-btn dx-btn-o"><i class="fa-solid fa-play mr-1"></i> Start ${formatDuration(loc.durationHours)} cycle</button>` : `<span class="note">Not running</span>`)
                         : `<div class="track"><div class="fill" style="width:${st.pct.toFixed(2)}%"></div></div><div class="eta">${escapeHtml(readyAtLabel(loc))}</div>`;
@@ -6069,7 +6090,7 @@
             const active = states.length - idle;
             document.getElementById('timers-actions').innerHTML = canTime && locations.length ? `
                 <button class="dx-act solid" onclick="startAllTimers()" ${idle ? '' : 'disabled'}><i class="fa-solid fa-play mr-1"></i>Start all idle${idle ? ` (${idle})` : ''}</button>
-                <button class="dx-act" onclick="harvestLocations(readyLocationIds())" ${ready ? '' : 'disabled'}><i class="fa-solid fa-seedling mr-1"></i>Harvest all ready${ready ? ` (${ready})` : ''}</button>
+                <button class="dx-act" onclick="harvestLocations(readyLocationIds())" ${ready ? '' : 'disabled'}><i class="fa-solid fa-cannabis mr-1"></i>Harvest all ready${ready ? ` (${ready})` : ''}</button>
                 <button class="dx-act" onclick="resetAllTimersPrompt()" ${active ? '' : 'disabled'}><i class="fa-solid fa-stop mr-1"></i>Stop all</button>` : '';
             renderUpcomingHarvests();
 
@@ -6090,7 +6111,7 @@
                     : `<div class="t tc-t">${formatTime(st.remainingSecs)}</div><div class="s tc-s">${Math.floor(st.pct)}% grown</div>`;
                 const est = planEstimate(loc).bricks;
                 const acts = !canTime ? '' : isReady
-                    ? `<button class="dx-btn dx-btn-g" onclick="openHarvestModal(${id})"><i class="fa-solid fa-seedling mr-1"></i>Harvest &amp; Restart</button>
+                    ? `<button class="dx-btn dx-btn-g" onclick="openHarvestModal(${id})"><i class="fa-solid fa-cannabis mr-1"></i>Harvest &amp; Restart</button>
                        <button class="dx-btn dx-stop" onclick="stopTimer(${id})" title="Stop without harvesting"><i class="fa-solid fa-stop"></i></button>`
                     : isIdle
                         ? `<button class="dx-btn dx-btn-o" onclick="startTimer(${id})"><i class="fa-solid fa-play mr-1"></i>Start ${formatDuration(loc.durationHours)} cycle</button>`
@@ -6147,7 +6168,7 @@
             const n = s => status.filter(x => x === s).length;
             bar.innerHTML = `<b>${picked.length} selected</b>
                 <button class="dx-act solid" onclick="bulkTimers('start')" ${n('idle') ? '' : 'disabled'}><i class="fa-solid fa-play mr-1"></i>Start${n('idle') ? ` (${n('idle')})` : ''}</button>
-                <button class="dx-act" onclick="bulkTimers('harvest')" ${n('ready') ? '' : 'disabled'}><i class="fa-solid fa-seedling mr-1"></i>Harvest${n('ready') ? ` (${n('ready')})` : ''}</button>
+                <button class="dx-act" onclick="bulkTimers('harvest')" ${n('ready') ? '' : 'disabled'}><i class="fa-solid fa-cannabis mr-1"></i>Harvest${n('ready') ? ` (${n('ready')})` : ''}</button>
                 <button class="dx-act" onclick="bulkTimers('stop')" ${n('idle') < picked.length ? '' : 'disabled'}><i class="fa-solid fa-stop mr-1"></i>Stop</button>
                 <button class="dx-act" onclick="selectAllTimers()">Select all</button>
                 <button class="dx-act" onclick="timerSelection.clear(); renderTimersPage()">Clear</button>`;
