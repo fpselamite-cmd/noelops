@@ -47,7 +47,7 @@
     <!-- Google Fonts & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Teko:wght@500;600;700&family=Press+Start+2P&family=Rubik+Wet+Paint&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -205,6 +205,166 @@
         .fx-empty p { margin: 0; font-size: 12.5px; color: #8a9a8e; line-height: 1.5; max-width: 42ch; }
         .fx-empty .dx-btn { width: auto; margin-top: 6px; padding: 9px 16px; }
 
+
+        /* ---------- Titles: MW2-style calling cards; rarity is the glow color ---------- */
+        :root { --tc-leaf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='46'%3E%3Cpath transform='translate(9 9) scale(.055)' fill='%23ffffff' fill-opacity='.08' d='M256 0c5.3 0 10.3 2.7 13.3 7.1c15.8 23.5 36.7 63.7 49.2 109c7.2 26.4 11.8 55.2 10.4 84c11.5-8.8 23.7-16.7 35.8-23.6c41-23.3 84.4-36.9 112.2-42.5c5.2-1 10.7 .6 14.4 4.4s5.4 9.2 4.4 14.5c-5.6 27.7-19.3 70.9-42.7 111.7c-9.1 15.9-19.9 31.7-32.4 46.3c27.8 6.6 52.4 17.3 67.2 25.5c5.1 2.8 8.2 8.2 8.2 14s-3.2 11.2-8.2 14c-15.2 8.4-40.9 19.5-69.8 26.1c-20.2 4.6-42.9 7.2-65.2 4.6l8.3 33.1c1.5 6.1-.6 12.4-5.5 16.4s-11.6 4.6-17.2 1.9L280 417.2V488c0 13.3-10.7 24-24 24s-24-10.7-24-24V417.2l-58.5 29.1c-5.6 2.8-12.3 2.1-17.2-1.9s-7-10.3-5.5-16.4l8.3-33.1c-22.2 2.6-45 0-65.2-4.6c-28.9-6.6-54.6-17.6-69.8-26.1c-5.1-2.8-8.2-8.2-8.2-14s3.2-11.2 8.2-14c14.8-8.2 39.4-18.8 67.2-25.5C78.9 296.3 68.1 280.5 59 264.6c-23.4-40.8-37.1-84-42.7-111.7c-1.1-5.2 .6-10.7 4.4-14.5s9.2-5.4 14.4-4.4c27.9 5.5 71.2 19.2 112.2 42.5c12.1 6.9 24.3 14.7 35.8 23.6c-1.4-28.7 3.1-57.6 10.4-84c12.5-45.3 33.4-85.5 49.2-109c3-4.4 8-7.1 13.3-7.1z'/%3E%3C/svg%3E"); --tt-common: #cbd5e1; --tt-uncommon: #4ade80; --tt-rare: #38bdf8; --tt-epic: #c084fc; --tt-legendary: #fbbf24; --tt-mythic: #fb3b64; }
+        .tt-common { --glow: color-mix(in srgb, var(--tt-common) 70%, transparent); --tc: var(--tt-common); }
+        .tt-uncommon { --glow: color-mix(in srgb, var(--tt-uncommon) 75%, transparent); --tc: var(--tt-uncommon); }
+        .tt-rare { --glow: color-mix(in srgb, var(--tt-rare) 80%, transparent); --tc: var(--tt-rare); }
+        .tt-epic { --glow: color-mix(in srgb, var(--tt-epic) 85%, transparent); --tc: var(--tt-epic); }
+        .tt-legendary { --glow: color-mix(in srgb, var(--tt-legendary) 90%, transparent); --tc: var(--tt-legendary); }
+        .tt-mythic { --glow: var(--tt-mythic); --tc: var(--tt-mythic); }
+        .tt-tag { font: 600 13px/1 'Teko', 'Arial Narrow', Impact, sans-serif; font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; display: inline-block; transform: skewX(-8deg); padding: 3px 8px 1px; border-radius: 4px; background: rgba(0, 0, 0, 0.55); box-shadow: 0 0 0 1px var(--glow), 0 0 10px var(--glow); text-shadow: 0 0 8px var(--glow); white-space: nowrap; vertical-align: middle; }
+        .tc { position: relative; aspect-ratio: 4 / 1; width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.14); display: grid; place-items: center; isolation: isolate; container-type: inline-size; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.6), inset 0 -18px 30px -18px rgba(0, 0, 0, 0.8); }
+        .tc::before { content: ''; position: absolute; inset: 0; z-index: 1; background: radial-gradient(60% 90% at 50% 55%, rgba(0, 0, 0, 0.55), transparent 70%); }
+        .tc::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 30%, transparent 70%, rgba(0, 0, 0, 0.35)); }
+        .tc-name { position: relative; z-index: 3; text-align: center; font: 600 clamp(16px, 10cqi, 36px)/1 'Teko', 'Arial Narrow', Impact, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; color: #fff; transform: skewX(-8deg); text-shadow: 0 2px 0 rgba(0, 0, 0, 0.9), 0 0 10px var(--glow), 0 0 24px var(--glow); padding: 0 8%; }
+        .tt-mythic .tc-name, .tt-mythic.tt-tag { animation: ttMythic 2.4s ease-in-out infinite; }
+        @keyframes ttMythic { 50% { text-shadow: 0 2px 0 rgba(0, 0, 0, 0.9), 0 0 14px var(--tt-mythic), 0 0 36px var(--tt-mythic), 0 0 4px #fff; } }
+        .tc-emb { position: absolute; top: 50%; z-index: 1; font-size: 36cqi; line-height: 1; color: rgba(255, 255, 255, 0.16); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5)); }
+        .tc-emb.l { left: -5%; transform: translateY(-50%) rotate(-16deg); }
+        .tc-emb.r { right: -5%; transform: translateY(-50%) rotate(16deg) scaleX(-1); }
+        .tc-emb.c { left: 50%; font-size: 30cqi; transform: translate(-50%, -50%); color: rgba(255, 255, 255, 0.07); }
+        .tc-stripe { position: absolute; left: 0; right: 0; height: 5px; z-index: 2; }
+        .tc-stripe.t { top: 0; } .tc-stripe.b { bottom: 0; }
+        .tc-tier { position: absolute; top: 5px; right: 7px; z-index: 4; padding: 3px 6px 1px; border-radius: 4px; background: rgba(0, 0, 0, 0.6); font: 600 12px/1 'Teko', 'Arial Narrow', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tc); text-shadow: 0 0 6px var(--glow); }
+        .tc-plain { background: linear-gradient(120deg, hsl(var(--gl) / 0.35), hsl(var(--acc-h) 71% 20%)); }
+        .tc-a-leaf { background: var(--tc-leaf) 0 0 / 40px 40px, radial-gradient(120% 120% at 50% 120%, #22c55e, transparent 60%), linear-gradient(120deg, #052e16, #14532d 50%, #052e16); }
+        .tc-a-leaf .tc-stripe { background: repeating-linear-gradient(90deg, #22c55e 0 18px, #14532d 18px 36px); }
+        .tc-a-gold { background: var(--tc-leaf) 0 0 / 36px 36px, radial-gradient(120% 120% at 50% 120%, #fde047, transparent 60%), linear-gradient(120deg, #422006, #a16207 50%, #422006); }
+        .tc-a-gold .tc-stripe { background: linear-gradient(90deg, #a16207, #fde68a, #a16207); }
+        .tc-a-brick { background: linear-gradient(90deg, transparent 37px, #1c0a05 37px 40px) 0 0 / 40px 20px, linear-gradient(90deg, transparent 37px, #1c0a05 37px 40px) 20px 10px / 40px 20px, linear-gradient(transparent 8px, #1c0a05 8px 10px) 0 0 / 40px 10px, radial-gradient(120% 140% at 50% 110%, #ea580c, transparent 60%), linear-gradient(120deg, #7c2d12, #9a3412 55%, #431407); }
+        .tc-a-brick .tc-stripe { background: repeating-linear-gradient(45deg, #fbbf24 0 10px, #111 10px 20px); }
+        .tc-a-snow { background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 1px, transparent 1.6px) 0 0 / 14px 14px, radial-gradient(circle, rgba(255, 255, 255, 0.55) 1px, transparent 1.6px) 7px 7px / 14px 14px, linear-gradient(120deg, #082f49, #0369a1 50%, #082f49); }
+        .tc-a-snow .tc-stripe { background: linear-gradient(90deg, transparent, #e0f2fe, transparent); }
+        .tc-a-crystal { background: conic-gradient(from 20deg at 20% 60%, #0e7490, #67e8f9, #155e75, #22d3ee, #0e7490) 0 0 / 70px 70px, linear-gradient(120deg, #083344, #0e7490); }
+        .tc-a-crystal .tc-stripe { background: linear-gradient(90deg, #22d3ee, #cffafe, #22d3ee); }
+        .tc-a-road { background: linear-gradient(90deg, #facc15 0 26px, transparent 26px 52px) 0 calc(100% - 22%) / 52px 4px repeat-x, linear-gradient(180deg, #0c0a09, #292524 55%, #1c1917); }
+        .tc-a-road .tc-stripe.t { background: repeating-linear-gradient(-45deg, #f97316 0 10px, #1c1917 10px 20px); }
+        .tc-a-route { background: linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 16px 16px, linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 16px 16px, linear-gradient(120deg, #172554, #1e3a8a 60%, #172554); }
+        .tc-a-route .tc-stripe { background: repeating-linear-gradient(90deg, #fb7185 0 8px, transparent 8px 16px); }
+        .tc-a-coca { background: var(--tc-leaf) 0 0 / 30px 30px, radial-gradient(120% 120% at 50% 120%, #a3e635, transparent 60%), linear-gradient(120deg, #1a2e05, #4d7c0f 55%, #1a2e05); }
+        .tc-a-coca .tc-stripe { background: #a3e635; }
+        .tc-a-tally { background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 22px), linear-gradient(120deg, #111827, #374151 55%, #111827); }
+        .tc-a-tally .tc-stripe { background: repeating-linear-gradient(90deg, #e5e7eb 0 3px, transparent 3px 10px); }
+        .tc-a-night { background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 1px, transparent 1.5px) 0 0 / 23px 19px, radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1.5px) 11px 9px / 31px 27px, linear-gradient(120deg, #1e1b4b, #4c1d95 60%, #1e1b4b); }
+        .tc-a-night .tc-stripe { background: linear-gradient(90deg, transparent, #a78bfa, transparent); }
+        .tc-a-dawn { background: repeating-conic-gradient(from 0deg at 50% 130%, rgba(254, 240, 138, 0.25) 0 6deg, transparent 6deg 18deg), linear-gradient(180deg, #7c2d12, #ea580c 60%, #fdba74); }
+        .tc-a-dawn .tc-stripe { background: #fde047; }
+        .tc-a-clock { background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(255, 255, 255, 0.12) 0 1.5deg, transparent 1.5deg 30deg), radial-gradient(circle at 50% 50%, #064e3b, #022c22); }
+        .tc-a-clock .tc-stripe { background: repeating-linear-gradient(90deg, #34d399 0 2px, transparent 2px 12px); }
+        .tc-a-jack { background: linear-gradient(120deg, #14532d 0 25%, #7c2d12 25% 50%, #0c4a6e 50% 75%, #4c1d95 75%); }
+        .tc-a-jack .tc-stripe { background: linear-gradient(90deg, #22c55e, #f97316, #38bdf8, #a855f7); }
+        .tc-a-rasta { background: linear-gradient(180deg, #b91c1c 0 33.3%, #ca8a04 33.3% 66.6%, #15803d 66.6%); }
+        .tc-a-glitch { background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 3px), radial-gradient(circle at 50% 50%, #1f2937, #030712); }
+        .tc-a-glitch .tc-stripe { background: linear-gradient(90deg, #ff0050, #00ffd5); }
+        .tc-a-retro { background: linear-gradient(transparent 60%, rgba(236, 72, 153, 0.35)), repeating-linear-gradient(90deg, rgba(236, 72, 153, 0.5) 0 1px, transparent 1px 24px) 0 100% / 100% 45% no-repeat, linear-gradient(180deg, #0f0326, #3b0764 70%, #831843); }
+        .tc-a-retro .tc-stripe { background: #22d3ee; }
+        .tc-a-trim { background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0 8px, transparent 8px 16px), radial-gradient(120% 120% at 50% 120%, #84cc16, transparent 60%), linear-gradient(120deg, #052e16, #365314 55%, #052e16); }
+        .tc-a-trim .tc-stripe { background: repeating-linear-gradient(90deg, #d9f99d 0 6px, transparent 6px 10px); }
+        .tc-a-blueprint { background: linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px) 0 0 / 20px 20px, linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px) 0 0 / 20px 20px, linear-gradient(120deg, #0c4a6e, #075985 60%, #0c4a6e); }
+        .tc-a-blueprint .tc-stripe { background: #bae6fd; }
+        .tc-a-crew { background: radial-gradient(circle at 20% 50%, rgba(244, 114, 182, 0.35), transparent 40%), radial-gradient(circle at 80% 50%, rgba(56, 189, 248, 0.35), transparent 40%), linear-gradient(120deg, #2e1065, #581c87 55%, #2e1065); }
+        .tc-a-crew .tc-stripe { background: linear-gradient(90deg, #f472b6, #a78bfa, #38bdf8); }
+        .tc-a-party { background: radial-gradient(circle, #fde68a 1.5px, transparent 2px) 0 0 / 18px 18px, radial-gradient(circle, #f472b6 1.5px, transparent 2px) 9px 9px / 18px 18px, linear-gradient(120deg, #1c1917, #422006 55%, #1c1917); }
+        .tc-a-party .tc-stripe { background: linear-gradient(90deg, #fbbf24, #fef3c7, #fbbf24); }
+        .tc-a-pumpkin { background: radial-gradient(circle at 50% 130%, #f97316, transparent 60%), linear-gradient(120deg, #0c0a09, #431407 55%, #0c0a09); }
+        .tc-a-pumpkin .tc-stripe { background: repeating-linear-gradient(90deg, #f97316 0 12px, #111 12px 24px); }
+        .tc-a-xmas { background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, transparent 1.6px) 0 0 / 16px 16px, linear-gradient(120deg, #7f1d1d, #14532d 50%, #7f1d1d); }
+        .tc-a-xmas .tc-stripe { background: repeating-linear-gradient(45deg, #dc2626 0 8px, #f8fafc 8px 16px); }
+        .tc-shine { position: absolute; inset: -50%; z-index: 2; pointer-events: none; background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.3) 50%, transparent 58%); animation: tcSweep 3.4s ease-in-out infinite; }
+        @keyframes tcSweep { from { transform: translateX(-60%); } to { transform: translateX(60%); } }
+        .tc-anim.tc-a-road { animation: tcDrive 0.9s linear infinite; }
+        @keyframes tcDrive { to { background-position: -52px calc(100% - 22%), 0 0; } }
+        .tc-anim.tc-a-snow, .tc-anim.tc-a-xmas { animation: tcFall 6s linear infinite; }
+        @keyframes tcFall { to { background-position: 0 140px, 7px 147px, 0 0; } }
+        .tc-anim .tc-emb.l, .tc-anim .tc-emb.r { animation: tcBob 4s ease-in-out infinite; }
+        @keyframes tcBob { 50% { margin-top: -5px; } }
+        .tc-smoke { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(circle at 25% 80%, rgba(255, 255, 255, 0.35), transparent 30%), radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.28), transparent 26%); filter: blur(8px); animation: tcSmoke 5s ease-in-out infinite alternate; }
+        @keyframes tcSmoke { from { transform: translateY(20%); opacity: 0.6; } to { transform: translateY(-15%) scale(1.2); opacity: 1; } }
+        .tc-glitch { position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, rgba(255, 0, 80, 0.4), rgba(0, 255, 220, 0.4)); mix-blend-mode: screen; opacity: 0; animation: tcGlitch 2.6s steps(1) infinite; }
+        @keyframes tcGlitch { 0%, 86%, 100% { opacity: 0; transform: none; } 88% { opacity: 1; transform: translate(-4%, 6%) scaleY(0.2); } 92% { opacity: 0.7; transform: translate(3%, -10%) scaleY(0.15); } }
+        .tc-reels { position: absolute; z-index: 1; opacity: 0.35; font: 700 22cqi/1 'Teko', sans-serif; color: #fde047; letter-spacing: 0.15em; }
+        .tc-big { position: absolute; z-index: 1; font: 700 40cqi/1 'Teko', sans-serif; color: rgba(0, 0, 0, 0.25); }
+        /* a few secrets break the centered rule on purpose */
+        .tc-q-cheat .tc-name { font: 400 clamp(10px, 5cqi, 18px)/1.3 'Press Start 2P', ui-monospace, monospace; transform: none; letter-spacing: 0; justify-self: start; padding: 0 0 0 6%; text-shadow: 3px 0 0 #ff0050, -3px 0 0 #00ffd5, 0 0 14px var(--glow); animation: tcJitter 2.6s steps(1) infinite; }
+        .tc-q-cheat .tc-name::after { content: '_'; animation: tcBlink 1s steps(1) infinite; }
+        @keyframes tcBlink { 50% { opacity: 0; } }
+        @keyframes tcJitter { 0%, 86%, 100% { translate: 0; } 88% { translate: -3px 1px; } 92% { translate: 3px -1px; } }
+        .tc-q-snoop .tc-name { position: absolute; right: 4%; bottom: -10%; font-size: clamp(20px, 14cqi, 48px); transform: skewX(-8deg) rotate(-8deg); animation: tcPeek 4s ease-in-out infinite; }
+        @keyframes tcPeek { 0%, 100% { bottom: -40%; } 30%, 70% { bottom: -8%; } }
+        .tc-q-puff .tc-name span { display: inline-block; animation: tcWave 1.8s ease-in-out infinite; animation-delay: calc(var(--i) * 90ms); }
+        @keyframes tcWave { 50% { transform: translateY(-6px); } }
+        .tc-q-hotbox .tc-name { animation: tcClear 5s ease-in-out infinite; }
+        @keyframes tcClear { 0%, 100% { filter: blur(4px); opacity: 0.75; } 45%, 60% { filter: blur(0); opacity: 1; } }
+        .tc-q-colorblind .tc-name span { display: inline-block; animation: tcHue 3s linear infinite; animation-delay: calc(var(--i) * -0.25s); }
+        @keyframes tcHue { 0%, 100% { color: #f87171; } 20% { color: #fbbf24; } 40% { color: #4ade80; } 60% { color: #38bdf8; } 80% { color: #c084fc; } }
+        .tc-q-taste .tc-name span:nth-child(5n+1) { color: #fbbf24; } .tc-q-taste .tc-name span:nth-child(5n+2) { color: #c084fc; } .tc-q-taste .tc-name span:nth-child(5n+3) { color: #5eead4; } .tc-q-taste .tc-name span:nth-child(5n+4) { color: #f472b6; } .tc-q-taste .tc-name span:nth-child(5n) { color: #a3e635; }
+        .tc-q-stash .tc-name { justify-self: end; padding-right: 6%; }
+        .tc-q-graveyard .tc-name { font-family: 'Rubik Wet Paint', 'Teko', Impact, sans-serif; font-weight: 400; animation: tcFlicker 3s steps(1) infinite; }
+        @keyframes tcFlicker { 0%, 100% { opacity: 1; } 42% { opacity: 0.35; } 44% { opacity: 1; } 47% { opacity: 0.5; } 49% { opacity: 1; } }
+        .tc-q-sevens .tc-name { font-family: 'Press Start 2P', monospace; font-size: clamp(10px, 4.6cqi, 16px); transform: none; }
+        .tc-q-midnight .tc-name { animation: tcFlash 2s ease-in-out infinite; }
+        @keyframes tcFlash { 50% { text-shadow: 0 2px 0 rgba(0, 0, 0, 0.9), 0 0 18px #ef4444, 0 0 36px #3b82f6; } }
+        /* Who's online rows and Crew cards wear the card */
+        .dx-person.has-bg { position: relative; overflow: hidden; border-radius: 12px; }
+        .dx-person .pbg { position: absolute; inset: 0; z-index: 0; opacity: 0.55; pointer-events: none; }
+        .dx-person .pbg .tc { aspect-ratio: auto; height: 100%; border-radius: 12px; border: 0; }
+        .dx-person.has-bg > :not(.pbg) { position: relative; z-index: 1; }
+        .dx-person.has-bg::after { content: ''; position: absolute; inset: 0; z-index: 0; background: linear-gradient(90deg, rgba(0, 0, 0, 0.75) 0 55%, rgba(0, 0, 0, 0.3)); border-radius: 12px; pointer-events: none; }
+        .dx-mate.has-banner { padding-top: 0; overflow: hidden; }
+        .dx-mate .mate-banner { margin: 0 -16px; }
+        .dx-mate .mate-banner .tc { border-radius: 0; border: 0; }
+        .dx-mate.has-banner .flags { top: 8px; left: 10px; right: auto; z-index: 5; }
+        /* profile pop-up */
+        #person-pop { position: fixed; z-index: 140; width: 340px; max-width: calc(100vw - 24px); border-radius: 14px; overflow: hidden; background: #0d0f14; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.95), 0 0 0 1px hsl(var(--gl) / 0.25); }
+        #person-pop.center { left: 50% !important; top: 50% !important; transform: translate(-50%, -50%); }
+        #person-pop .banner .tc { border-radius: 0; border: 0; aspect-ratio: 3 / 1; }
+        #person-pop .body { padding: 0 14px 14px; display: grid; gap: 10px; }
+        #person-pop .avrow { display: flex; align-items: flex-end; gap: 10px; margin-top: -28px; position: relative; z-index: 5; }
+        #person-pop .avrow .big { position: relative; flex-shrink: 0; }
+        #person-pop .avrow .big .dx-av { width: 64px; height: 64px; font-size: 22px; border: 5px solid #0d0f14; }
+        #person-pop .avrow .big i { position: absolute; right: 2px; bottom: 4px; width: 15px; height: 15px; border-radius: 50%; background: #475569; border: 3px solid #0d0f14; }
+        #person-pop .avrow .big i.on { background: #22c55e; }
+        #person-pop .nm { font-size: 18px; font-weight: 800; }
+        #person-pop .facts { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: #8a9a8e; }
+        #person-pop .facts b { color: #f1f5f2; }
+        #person-pop .sec { background: #090b0f; border-radius: 10px; padding: 10px 12px; display: grid; gap: 8px; }
+        #person-pop .sec h4 { margin: 0; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a9a8e; font-weight: 800; }
+        #person-pop .roles { display: flex; flex-wrap: wrap; gap: 6px; }
+        #person-pop .role { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 3px 9px 3px 7px; border-radius: 6px; background: #1a1d24; border: 1px solid rgba(255, 255, 255, 0.06); color: #e2e8f0; }
+        #person-pop .role .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--tc); box-shadow: 0 0 8px var(--glow); }
+        #person-pop .role.more { color: #8a9a8e; background: transparent; border-style: dashed; }
+        #person-pop .how { margin: 0; font-size: 11.5px; color: #94a3b8; min-height: 1em; }
+        #person-pop .acts { display: flex; gap: 8px; }
+        #person-pop .acts .dx-act { flex: none; padding: 6px 12px; }
+        /* unlock pop-up */
+        #tt-unlock { position: fixed; z-index: 150; top: 90px; left: 50%; width: 400px; max-width: calc(100vw - 24px); transform: translateX(-50%); border-radius: 14px; overflow: hidden; background: #0b0a06; border: 1px solid var(--tc); box-shadow: 0 0 40px var(--glow), 0 30px 60px -20px #000; animation: ttIn 0.5s cubic-bezier(.2, 1.4, .5, 1); cursor: pointer; }
+        @keyframes ttIn { from { transform: translate(-50%, -30px) scale(0.92); opacity: 0; } }
+        #tt-unlock .hd { font: 600 20px/1 'Teko', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tc); text-shadow: 0 0 10px var(--glow); padding: 10px 12px 6px; text-align: center; }
+        #tt-unlock .tc { border-radius: 0; border: 0; }
+        #tt-unlock .ft { font-size: 12px; color: #94a3b8; padding: 8px 12px 0; text-align: center; }
+        #tt-unlock .ft b { color: #e2e8f0; }
+        #tt-unlock button { display: block; margin: 8px auto 12px; font-size: 12px; font-weight: 800; color: #04140a; background: var(--tc); border-radius: 8px; padding: 6px 16px; }
+        /* My Profile → Titles and Admin → Titles */
+        .tt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr)); gap: 10px; }
+        .tt-item { display: grid; gap: 4px; }
+        .tt-item button { display: block; width: 100%; border-radius: 8px; }
+        .tt-item button:focus-visible { outline: 2px solid hsl(var(--acc-h) 69% 58%); outline-offset: 2px; }
+        .tt-item.locked .tc { filter: grayscale(1) brightness(0.45); }
+        .tt-item.worn .tc { box-shadow: 0 0 0 2px var(--tc), 0 0 18px var(--glow); }
+        .tt-item .how { font-size: 11px; color: #8a9a8e; text-align: center; line-height: 1.35; }
+        .tt-item .how b { color: #e2e8f0; }
+        .tt-pick { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tt-pick label { position: relative; display: inline-flex; align-items: center; padding: 6px 8px; border-radius: 8px; background: #121a15; border: 1px solid rgba(255, 255, 255, 0.06); cursor: pointer; }
+        .tt-pick label.auto { cursor: default; }
+        .tt-pick input { position: absolute; opacity: 0; pointer-events: none; }
+        .tt-pick label:has(input:checked) { border-color: var(--tc); box-shadow: inset 0 0 0 1px var(--tc), 0 0 12px var(--glow); }
+        .tt-pick label:has(input:focus-visible) { outline: 2px solid hsl(var(--acc-h) 69% 58%); }
+        .tt-admin-chip { display: inline-flex; align-items: center; gap: 4px; }
+        .tt-admin-chip button { color: #94a3b8; font-weight: 800; padding: 0 4px; }
+        .tt-admin-chip button:hover { color: #f87171; }
+
         /* Reduce motion */
         body.dx-calm *, body.dx-calm *::before, body.dx-calm *::after { animation: none !important; transition: none !important; }
         body.dx-calm .dx-gb.ready .pot::before { display: none; }
@@ -357,6 +517,54 @@
         .dx-person .tag.new { background: #fbbf24; color: #000; }
         .dx-person.off { opacity: 0.55; }
         .dx-person.off .dx-av { filter: grayscale(0.7); }
+        .dx-online-foots { display: flex; gap: 8px; margin: 0 12px 12px; }
+        .dx-online-foots .dx-online-foot { margin: 0; flex: 1; }
+        .dx-person-link { cursor: pointer; }
+        .dx-person-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+        /* ---------- Crew page ---------- */
+        .dx-crew-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+        .dx-crew-tools .dx-input { width: auto; min-width: 0; font-size: 13px; padding: 8px 10px; }
+        .dx-crew-table .dx-act { flex: none; padding: 5px 10px; }
+        #crew-search { width: 170px; }
+        .dx-seg { display: inline-flex; padding: 3px; border-radius: 10px; background: rgba(6, 10, 7, 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.2); }
+        .dx-seg button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #8a9a8e; }
+        .dx-seg button.on { color: #fff; background: hsl(var(--gl) / 0.18); box-shadow: inset 0 0 0 1px hsl(var(--gl) / 0.45); }
+        .dx-seg button.on i { color: hsl(var(--acc-h) 69% 62%); }
+        .dx-crew-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+        .dx-crew-stats > div { padding: 12px 14px; border-radius: 14px; background: rgba(10, 18, 12, 0.85); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.15); }
+        .dx-crew-stats .l { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #8a9a8e; }
+        .dx-crew-stats .v { font: 800 26px/1.2 'JetBrains Mono', monospace; color: #f1f5f2; }
+        .dx-crew-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+        .dx-mate { position: relative; padding: 16px; border-radius: 18px; display: grid; gap: 12px; align-content: start; background: linear-gradient(180deg, hsl(var(--gl) / 0.08), rgba(10, 18, 12, 0.9) 40%); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.16); transition: border-color 0.3s, box-shadow 0.3s; }
+        .dx-mate:hover { border-color: hsl(var(--gl) / 0.5); }
+        .dx-mate.focus { border-color: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 0 1px hsl(var(--acc-h) 69% 58%), 0 0 30px hsl(var(--acc-h) 71% 45% / 0.35); }
+        .dx-mate.off { opacity: 0.86; }
+        .dx-mate .top { display: flex; gap: 12px; align-items: center; min-width: 0; }
+        .dx-mate .top .dx-av { width: 54px; height: 54px; font-size: 18px; flex-shrink: 0; }
+        .dx-mate .avw { position: relative; flex-shrink: 0; }
+        .dx-mate .avw .dot { position: absolute; right: 1px; bottom: 1px; width: 14px; height: 14px; border-radius: 50%; background: #475569; border: 3px solid #0b120d; }
+        .dx-mate .avw .dot.on { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+        .dx-mate .nm { font-size: 17px; font-weight: 800; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-mate .rl { font-size: 11px; color: #8a9a8e; font-weight: 700; }
+        .dx-mate .rl .tt-tag, .dx-crew-table .tt-tag, .dx-person .who .tt-tag { margin-left: 4px; font-size: 13px; }
+        .dx-mate .status { font-size: 11px; color: #8a9a8e; margin-top: 2px; }
+        .dx-mate .status.on { color: hsl(var(--acc-h) 69% 62%); font-weight: 700; }
+        .dx-mate .nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+        .dx-mate .nums div { padding: 8px 6px 6px; border-radius: 10px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); text-align: center; }
+        .dx-mate .nums b { display: block; font: 800 18px/1.1 'JetBrains Mono', monospace; color: #f1f5f2; }
+        .dx-mate .nums span { font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #8a9a8e; }
+        .dx-mate .last { font-size: 12px; color: #94a3b8; line-height: 1.45; }
+        .dx-mate .last b { color: hsl(var(--acc-h) 69% 62%); font-weight: 700; }
+        .dx-mate .pills { display: flex; flex-wrap: wrap; gap: 4px; }
+        .dx-mate .acts { display: flex; gap: 8px; }
+        .dx-mate .acts .dx-act { flex: none; padding: 6px 12px; }
+        .dx-mate .flags { position: absolute; top: 12px; right: 12px; display: flex; gap: 4px; }
+        .dx-crew-table td .dx-av { width: 28px; height: 28px; font-size: 11px; }
+        .dx-crew-table .who { display: flex; align-items: center; gap: 8px; }
+        .dx-crew-table .ondot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #475569; margin-right: 6px; }
+        .dx-crew-table .ondot.on { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+        .dx-crew-table tr.focus td { background: hsl(var(--acc-h) 71% 45% / 0.12); }
+        @media (max-width: 640px) { .dx-seg button span { display: none; } #crew-search { width: 130px; } }
         .dx-online-foot { margin: 0 12px 12px; padding: 9px; border-radius: 12px; font-size: 12px; font-weight: 700; color: hsl(var(--acc-h) 69% 58%); background: hsl(var(--acc-h) 71% 45% / 0.1); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.2); }
         .dx-online-foot:hover { background: hsl(var(--acc-h) 71% 45% / 0.2); }
         @media (max-width: 640px) { .dx-online { top: 76px; right: 12px; left: 12px; width: auto; } }
@@ -518,7 +726,7 @@
         @keyframes dxToastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
         .dx-modal { position: fixed; inset: 0; z-index: 200; background: rgba(2, 5, 3, 0.75); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px; }
-        .dx-modal.hidden, [data-admin-panel].hidden, #signin-create.hidden, [data-admin-only].hidden, [data-sales-only].hidden { display: none; }
+        [data-page].hidden, .nav-btn.hidden, .dx-modal.hidden, [data-admin-panel].hidden, #signin-create.hidden, [data-admin-only].hidden, [data-sales-only].hidden { display: none; }
         .dx-footer-admin { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: #334155; transition: color 0.2s; }
         .dx-footer-admin:hover { color: #94a3b8; }
         .dt-preview { background: #313338; border-radius: 12px; padding: 14px 16px; color: #dbdee1; font-size: 14px; }
@@ -884,14 +1092,18 @@
                             <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
                         </button>
-                        <button onclick="switchTab('timers')" id="nav-timers" title="Grows: timers and pot plans" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('timers')" id="nav-timers" title="Grows: timers and pot plans" data-page="timers" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-cannabis"></i>
                             <span>Grows</span>
-                            <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
+                            <span id="active-timers-badge" class="hidden ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700" title="Ready to harvest">0</span>
                         </button>
-                        <button onclick="switchTab('inventory')" id="nav-inventory" title="Stash: what's in each stash house" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('inventory')" id="nav-inventory" title="Stash: what's in each stash house" data-page="inventory" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-warehouse"></i>
                             <span>Stash</span>
+                        </button>
+                        <button onclick="switchTab('crew')" id="nav-crew" title="Crew: everyone and what they've been up to" data-page="crew" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Crew</span>
                         </button>
                         <button onclick="switchTab('sales')" id="nav-sales" title="Log: what went out" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-truck-fast"></i>
@@ -930,8 +1142,9 @@
             <!-- Mobile Menu Dropdown -->
             <div id="mobile-menu" class="hidden md:hidden border-t border-weed-900/60 bg-darkbg px-4 pt-2 pb-4 space-y-2">
                 <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Dashboard</button>
-                <button onclick="switchTab('timers'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grows</button>
-                <button onclick="switchTab('inventory'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
+                <button onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grows</button>
+                <button onclick="switchTab('inventory'); toggleMobileMenu()" data-page="inventory" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
+                <button onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Crew</button>
                 <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Log</button>
                 <button onclick="switchTab('admin'); toggleMobileMenu()" data-admin-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
                 <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
@@ -952,7 +1165,7 @@
             <section id="tab-dashboard" class="tab-content">
                 <div id="dx-layout" class="dx-layout">
                     <div class="dx-main min-w-0">
-                        <div class="dx-sec"><h2>Stash</h2><button data-detail-only onclick="switchTab('inventory')">Open stash →</button></div>
+                        <div class="dx-sec"><h2>Stash</h2><button data-page="inventory" onclick="switchTab('inventory')">Open stash →</button></div>
                         <div id="dx-strains" class="dx-strains" style="margin-bottom:26px"></div>
 
                         <div class="dx-sec"><h2>Totals &amp; Trends</h2></div>
@@ -1084,7 +1297,7 @@
             </section>
 
             <section id="tab-timers" class="tab-content hidden">
-                <div class="dx-tabs mb-4"><button class="dx-tab on"><i class="fa-solid fa-clock"></i>Timers</button><button class="dx-tab" data-planner-link onclick="switchTab('planner')"><i class="fa-solid fa-table-cells"></i>Pot Plan</button></div>
+                <div class="dx-tabs mb-4"><button class="dx-tab on"><i class="fa-solid fa-clock"></i>Timers</button><button class="dx-tab" data-page="planner" onclick="switchTab('planner')"><i class="fa-solid fa-table-cells"></i>Pot Plan</button></div>
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
                         <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-cannabis text-weed-400 mr-2"></i>Grows</h1>
@@ -1095,6 +1308,32 @@
                 <div id="timers-upcoming" class="dx-glass dx-upc"></div>
                 <div id="timers-bulk" class="dx-bulk hidden"></div>
                 <div id="timers-grid" class="dx-tc-grid"></div>
+            </section>
+
+            <section id="tab-crew" class="tab-content hidden">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
+                    <div>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-users text-weed-400 mr-2"></i>Crew</h1>
+                        <p class="text-xs text-slate-400 mt-1">Everyone in the crew: who's on now and what they've been up to.</p>
+                    </div>
+                    <div class="dx-crew-tools">
+                        <input id="crew-search" type="search" placeholder="Find someone" aria-label="Find someone" oninput="renderCrewPage()" class="dx-input">
+                        <select id="crew-sort" aria-label="Sort by" onchange="renderCrewPage()" class="dx-input">
+                            <option value="online">Online first</option>
+                            <option value="harvests">Most harvests</option>
+                            <option value="out">Most gone out</option>
+                            <option value="recent">Last active</option>
+                            <option value="name">Name</option>
+                        </select>
+                        <div class="dx-seg" role="group" aria-label="View">
+                            <button type="button" id="crew-view-cards" onclick="setCrewView('cards')" title="Card view"><i class="fa-solid fa-grip"></i><span>Cards</span></button>
+                            <button type="button" id="crew-view-list" onclick="setCrewView('list')" title="List view"><i class="fa-solid fa-list"></i><span>List</span></button>
+                        </div>
+                        <button type="button" data-admin-only onclick="switchTab('admin'); showAdminTab('crew')" class="dx-act" style="flex:none;padding:8px 12px"><i class="fa-solid fa-user-gear mr-1"></i>Manage crew</button>
+                    </div>
+                </div>
+                <div id="crew-stats" class="dx-crew-stats mb-5"></div>
+                <div id="crew-body"></div>
             </section>
 
             <section id="tab-login" class="tab-content hidden">
@@ -1135,6 +1374,7 @@
                     <button class="dx-tab" data-admin-tab="products" onclick="showAdminTab('products')"><i class="fa-solid fa-flask"></i>Products</button>
                     <button class="dx-tab" data-admin-tab="sales" onclick="showAdminTab('sales')"><i class="fa-solid fa-truck-fast"></i>Sales</button>
                     <button class="dx-tab" data-admin-tab="effects" onclick="showAdminTab('effects')"><i class="fa-solid fa-wand-magic-sparkles"></i>Effects</button>
+                    <button class="dx-tab" data-admin-tab="titles" onclick="showAdminTab('titles')"><i class="fa-solid fa-medal"></i>Titles</button>
                     <button class="dx-tab" data-admin-tab="data" onclick="showAdminTab('data')"><i class="fa-solid fa-database"></i>Data &amp; Backups</button>
                 </div>
 
@@ -1477,6 +1717,17 @@
                     </div>
                 </div>
 
+                <div data-admin-panel="titles" class="space-y-6">
+                    <div class="dx-glass dx-admin-card space-y-4">
+                        <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                            <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-medal"></i></div>
+                            <div><h2 class="font-bold text-white text-base">Titles</h2>
+                                <p class="text-xs text-slate-400">120 titles people unlock by doing things on the site (28 of them secret). Give one by hand for a big RP moment, or take one back.</p></div>
+                        </div>
+                        <div id="admin-titles" class="space-y-5"></div>
+                    </div>
+                </div>
+
                 <div data-admin-panel="data" class="space-y-6">
                 <!-- Data Backup & Reset Tools -->
                 <div class="dx-glass dx-admin-card space-y-4">
@@ -1528,7 +1779,7 @@
                 <div id="live-clock" class="text-xs font-mono font-bold text-weed-400">--:--:--</div>
             </div>
             <div class="flex items-center gap-3">
-                <span>Custom Built 2026</span>
+                <span id="footer-built">Custom Built 2026</span>
                 <button id="footer-admin-link" onclick="footerAdminClick()" class="dx-footer-admin" title="Admin">
                     <i id="footer-admin-icon" class="fa-solid fa-lock"></i><span id="footer-admin-text">Admin</span>
                 </button>
@@ -1543,7 +1794,10 @@
             <button type="button" onclick="closeOnlinePanel()" class="text-slate-400 hover:text-white" title="Close"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div id="online-list" class="dx-online-list"></div>
-        <button type="button" onclick="closeOnlinePanel(); openProfile()" class="dx-online-foot"><i class="fa-solid fa-user-gear mr-1"></i>My Profile</button>
+        <div class="dx-online-foots">
+            <button type="button" data-page="crew" onclick="closeOnlinePanel(); switchTab('crew')" class="dx-online-foot"><i class="fa-solid fa-users mr-1"></i>Crew page</button>
+            <button type="button" onclick="closeOnlinePanel(); openProfile()" class="dx-online-foot"><i class="fa-solid fa-user-gear mr-1"></i>My Profile</button>
+        </div>
     </div>
 
     <div id="dx-tip" class="hidden" role="tooltip"></div>
@@ -1574,6 +1828,7 @@
                 <button type="button" data-pf-tab="account" onclick="showProfileTab('account')"><i class="fa-solid fa-user mr-1"></i>Account</button>
                 <button type="button" data-pf-tab="look" onclick="showProfileTab('look')"><i class="fa-solid fa-palette mr-1"></i>Look</button>
                 <button type="button" data-pf-tab="alerts" onclick="showProfileTab('alerts')"><i class="fa-solid fa-bell mr-1"></i>Alerts</button>
+                <button type="button" data-pf-tab="titles" onclick="showProfileTab('titles')"><i class="fa-solid fa-medal mr-1"></i>Titles</button>
             </div>
 
             <div data-pf-panel="account" class="space-y-3">
@@ -1672,6 +1927,8 @@
                 <div id="profile-fx" class="space-y-3"></div>
             </div>
             </div>
+
+            <div data-pf-panel="titles" class="space-y-3 hidden"><div id="profile-titles" class="space-y-3"></div></div>
 
             <div data-pf-panel="alerts" class="space-y-3 hidden">
             <div class="dx-pf-sec space-y-3">
@@ -2010,6 +2267,7 @@
             activity: [], // Shared activity feed, newest first
             yields: {}, // Shared: real harvest yields per strain, used for estimates
             stats: {}, // Shared per-person counters: { [statKey(person key)]: { harvests, bud } }
+            titles: {}, // Shared: unlocked titles { [statKey(person key)]: { [title id]: ts } }
             fxSettings: null, // Shared: which effects are on for everyone, the stamp word and harvest ranks (see FX_DEFAULTS)
             sales: [], // Shared: bricks going out, newest first
             ledger: [], // Shared: budget entries (payouts to crew, expenses), newest first
@@ -2084,7 +2342,11 @@
             });
             appState.yields = yields;
             appState.stats = Object.fromEntries(Object.entries(isPlainObject(appState.stats) ? appState.stats : {})
-                .filter(([, v]) => isPlainObject(v)).map(([k, v]) => [k, { harvests: toCount(v.harvests), bud: toCount(v.bud) }]));
+                .filter(([, v]) => isPlainObject(v)).map(([k, v]) => [k, {
+                    ...Object.fromEntries(STAT_FIELDS.map(f => [f, toCount(v[f])])),
+                    lastDay: typeof v.lastDay === 'string' ? v.lastDay : null, lastWeekend: typeof v.lastWeekend === 'string' ? v.lastWeekend : null }]));
+            appState.titles = Object.fromEntries(Object.entries(isPlainObject(appState.titles) ? appState.titles : {})
+                .filter(([, v]) => isPlainObject(v)).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).filter(([id]) => TITLE_BY_ID[id]))]));
             // Bricks out: [{ id, strain, bricks, bucket, who, ts, price, note }], newest first
             appState.sales = (Array.isArray(appState.sales) ? appState.sales : [])
                 .filter(x => isPlainObject(x) && x.id && DEFAULT_STRAINS.concat(PRODUCTS).some(st => st.id === x.strain) && toCount(x.bricks) > 0)
@@ -2300,6 +2562,7 @@
                 crew: JSON.parse(JSON.stringify(state.crew || {})),
                 yields: JSON.parse(JSON.stringify(state.yields || {})),
                 stats: JSON.parse(JSON.stringify(state.stats || {})),
+                titles: JSON.parse(JSON.stringify(state.titles || {})),
                 sales: Object.fromEntries((state.sales || []).map(({ id, ...record }) => [id, record])),
                 ledger: Object.fromEntries((state.ledger || []).map(({ id, ...record }) => [id, record]))
             };
@@ -2332,6 +2595,14 @@
             appState.crew = isPlainObject(tree.crew) ? tree.crew : {};
             appState.yields = isPlainObject(tree.yields) ? tree.yields : {};
             appState.stats = isPlainObject(tree.stats) ? tree.stats : {};
+            appState.titles = isPlainObject(tree.titles) ? tree.titles : {};
+            recentUnlocks.forEach((at, k) => { // re-apply unlocks that haven't come back yet
+                const [key, id] = k.split('|');
+                if (Date.now() - at > 15000) return recentUnlocks.delete(k);
+                const sk = statKey(key);
+                if (!isPlainObject(appState.titles[sk])) appState.titles[sk] = {};
+                if (!appState.titles[sk][id]) appState.titles[sk][id] = at;
+            });
             appState.sales = Object.entries(isPlainObject(tree.sales) ? tree.sales : {}).map(([id, record]) => ({ ...record, id }));
             normalizeState();
         }
@@ -2749,14 +3020,14 @@
                 return crewMode() && name === me && isAdminUnlocked() ? 'Admin password' : crewMode() ? 'Guest' : 'Crew';
             };
             const onlineRows = [...online.values()].sort((a, b) => (b.you - a.you) || a.name.localeCompare(b.name)).map(r => `
-                <div class="dx-person">
+                <div class="dx-person ${wornTitleFor(r.name) ? 'has-bg' : ''}">${wornTitleFor(r.name) ? `<div class="pbg">${titleCardHtml(wornTitleFor(r.name), { noName: true, noTier: true, still: true })}</div>` : ''}
                     <span class="av">${avatarHtml(r.name)}<i class="on"></i></span>
                     <div class="who"><b>${nameHtml(r.name)}</b><span>${escapeHtml(roleText(r.name))}${r.since ? ` · joined ${relativeTime(r.since)}` : ''}${r.devices > 1 ? ` · ${r.devices} devices` : ''}${harvestsTag(r.name)}</span></div>
                     ${r.you ? '<span class="tag you">You</span>' : ''}
                 </div>`).join('');
             const offline = crewMode() ? Object.values(appState.crew).filter(m => !online.has(m.name)).sort((a, b) => (b.pending - a.pending) || a.name.localeCompare(b.name)) : [];
             const offlineRows = offline.map(m => `
-                <div class="dx-person off">
+                <div class="dx-person off ${wornTitleFor(m.name) ? 'has-bg' : ''}">${wornTitleFor(m.name) ? `<div class="pbg">${titleCardHtml(wornTitleFor(m.name), { noName: true, noTier: true, still: true })}</div>` : ''}
                     <span class="av">${avatarHtml(m.name)}</span>
                     <div class="who"><b>${nameHtml(m.name)}</b><span>${escapeHtml(roleLabel(m).replace(' (stats only)', ''))}${harvestsTag(m.name)}</span></div>
                     ${m.pending && hasAdminAccess() ? '<span class="tag new">New</span>' : '<span class="tag">Offline</span>'}
@@ -2770,7 +3041,133 @@
 
         function harvestsTag(name) {
             const n = personStats(personKeyForName(name)).harvests;
-            return n ? ` · <i class="fa-solid fa-cannabis text-weed-500"></i> ${harvestsLabel(n)} ${rankBadge(n)}` : '';
+            return (n ? ` · <i class="fa-solid fa-cannabis text-weed-500"></i> ${harvestsLabel(n)}` : '') + (wornTitleFor(name) ? ` ${wornTagFor(name)}` : '');
+        }
+
+        // ---- Crew page: everyone, who's on and what they've been up to ----
+        let crewFocus = null;
+        function crewView() {
+            try { return localStorage.getItem('noelops_crew_view') === 'list' ? 'list' : 'cards'; } catch (e) { return 'cards'; }
+        }
+
+        function setCrewView(view) {
+            try { localStorage.setItem('noelops_crew_view', view); } catch (e) { /* remembering the view is optional */ }
+            renderCrewPage();
+        }
+
+        function onlineNames() {
+            const names = new Set(appState.presence.map(p => p.name).filter(n => typeof n === 'string' && n));
+            if (appState.crewName) names.add(appState.crewName);
+            return names;
+        }
+
+        // Members (or, without crew sign-in, everyone who has shown up), with their numbers
+        function crewPeople() {
+            const online = onlineNames();
+            const people = Object.entries(appState.crew).map(([id, m]) => ({ id, name: m.name, member: m, key: personKey(id) }));
+            if (!crewMode()) {
+                const seen = new Set(people.map(p => p.name));
+                [...online, ...appState.activity.map(a => a.who), ...appState.sales.map(s => s.who)].forEach(name => {
+                    if (typeof name === 'string' && name && name !== SYSTEM_NAME && !seen.has(name)) { seen.add(name); people.push({ id: null, name, member: null, key: personKey(null, name) }); }
+                });
+            }
+            return people.map(p => {
+                const acts = appState.activity.filter(a => a.who === p.name);
+                const last = acts.reduce((best, a) => (!best || a.ts > best.ts ? a : best), null);
+                const sales = appState.sales.filter(s => saleOwnerKey(s) === p.key || (!s.sellerId && s.who === p.name));
+                const stats = personStats(p.key);
+                return { ...p, online: online.has(p.name), you: p.name === appState.crewName, last, lastTs: online.has(p.name) ? syncNow() : last ? last.ts : 0,
+                    harvests: stats.harvests, bud: stats.bud, outCount: sales.length, outUnits: sales.reduce((n, s) => n + s.bricks, 0),
+                    role: p.member ? roleLabel(p.member).replace(' (stats only)', '') : 'Crew' };
+            });
+        }
+
+        function openCrewMember(name) {
+            crewFocus = name;
+            switchTab('crew');
+            setTimeout(() => {
+                const el = document.querySelector(`#crew-body [data-crew="${CSS.escape(name)}"]`);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 60);
+            setTimeout(() => { if (crewFocus === name) { crewFocus = null; renderCrewPage(); } }, 4000);
+        }
+
+        function renderCrewPage() {
+            const body = document.getElementById('crew-body');
+            const tab = document.getElementById('tab-crew');
+            if (!body || !tab || tab.classList.contains('hidden')) return;
+            const view = crewView();
+            document.getElementById('crew-view-cards').classList.toggle('on', view === 'cards');
+            document.getElementById('crew-view-list').classList.toggle('on', view === 'list');
+            const admin = hasAdminAccess();
+            const q = (document.getElementById('crew-search').value || '').trim().toLowerCase();
+            const sort = document.getElementById('crew-sort').value;
+            const all = crewPeople();
+            const people = all.filter(p => !q || p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q));
+            const by = {
+                online: (a, b) => (b.online - a.online) || (b.you - a.you) || a.name.localeCompare(b.name),
+                harvests: (a, b) => (b.harvests - a.harvests) || a.name.localeCompare(b.name),
+                out: (a, b) => (b.outUnits - a.outUnits) || a.name.localeCompare(b.name),
+                recent: (a, b) => (b.lastTs - a.lastTs) || a.name.localeCompare(b.name),
+                name: (a, b) => a.name.localeCompare(b.name)
+            };
+            people.sort(by[sort] || by.online);
+            const pending = all.filter(p => p.member && p.member.pending).length;
+            document.getElementById('crew-stats').innerHTML = `
+                <div><div class="l">Crew</div><div class="v">${all.length}</div></div>
+                <div><div class="l">Online now</div><div class="v" style="color:#4ade80">${all.filter(p => p.online).length}</div></div>
+                <div><div class="l">Harvests logged</div><div class="v">${all.reduce((n, p) => n + p.harvests, 0).toLocaleString()}</div></div>
+                <div><div class="l">Gone out (in the log)</div><div class="v">${all.reduce((n, p) => n + p.outUnits, 0).toLocaleString()}</div></div>
+                ${admin && pending ? `<div style="border-color:rgba(251,191,36,.5)"><div class="l">Waiting for review</div><div class="v" style="color:#fbbf24">${pending}</div></div>` : ''}`;
+            if (!all.length) {
+                body.innerHTML = emptyState('No crew yet', admin ? 'Add the first person in Admin → Crew, or wait for people to sign up.' : 'People show up here once they join.',
+                    admin ? `<button class="dx-btn dx-btn-g" onclick="switchTab('admin'); showAdminTab('crew')"><i class="fa-solid fa-user-plus mr-1"></i>Add crew</button>` : '');
+                return;
+            }
+            if (!people.length) { body.innerHTML = emptyState('Nobody by that name', 'Try a different name or clear the search.'); return; }
+            const status = p => p.online ? 'Online now' : p.last ? `Last active ${relativeTime(p.last.ts)}` : 'Not seen lately';
+            const lastLine = p => p.last ? `${escapeHtml(p.last.pre || '')} <b>${escapeHtml(p.last.hi || '')}</b> ${escapeHtml(p.last.post || '')} · ${relativeTime(p.last.ts)}` : 'Nothing logged yet';
+            const where = m => !m ? '' : m.locations === 'all' ? '<span class="dx-pill">All stashes & grows</span>'
+                : Object.keys(m.locations).filter(k => m.locations[k]).map(k => `<span class="dx-pill">${escapeHtml(bucketLabel(k))}</span>`).join('') || '<span class="dx-pill off">No access yet</span>';
+            const actions = p => [
+                p.you ? `<button class="dx-act" onclick="openProfile()"><i class="fa-solid fa-user-gear mr-1"></i>My Profile</button>` : '',
+                admin && p.id ? `<button class="dx-act" onclick="openCrewEditor(${jsArg(p.id)})"><i class="fa-solid fa-pen mr-1"></i>Edit</button>` : '',
+                can('sales') && p.outCount ? `<button class="dx-act" onclick="crewShowLog(${jsArg(p.name)})"><i class="fa-solid fa-truck-fast mr-1"></i>Their log</button>` : ''
+            ].filter(Boolean).join('');
+            const flags = p => [p.you ? '<span class="dx-pill">You</span>' : '', admin && p.member && p.member.pending ? '<span class="dx-pill" style="background:#fbbf24;color:#000">New</span>' : ''].join('');
+            if (view === 'list') {
+                body.innerHTML = `<div class="dx-glass dx-sales"><div class="overflow-x-auto"><table class="dx-sales-table dx-crew-table">
+                    <thead><tr><th>Name</th><th>Role</th><th>Status</th><th class="r">Harvests</th><th class="r">Bud</th><th class="r">Gone out</th><th>Last did</th>${admin ? '<th>Access</th>' : ''}<th></th></tr></thead>
+                    <tbody>${people.map(p => `<tr data-crew="${escapeHtml(p.name)}" class="${crewFocus === p.name ? 'focus' : ''}">
+                        <td><span class="who">${avatarHtml(p.name)}${nameHtml(p.name)} ${wornTagFor(p.name)} ${flags(p)}</span></td>
+                        <td class="m">${escapeHtml(p.role)}</td>
+                        <td class="m"><span class="ondot ${p.online ? 'on' : ''}"></span>${escapeHtml(status(p))}</td>
+                        <td class="r">${p.harvests.toLocaleString()}</td><td class="r">${p.bud.toLocaleString()}</td><td class="r">${p.outUnits.toLocaleString()}</td>
+                        <td class="m">${lastLine(p)}</td>
+                        ${admin ? `<td><div class="flex flex-wrap gap-1">${where(p.member)}</div></td>` : ''}
+                        <td class="r whitespace-nowrap"><div class="flex gap-1 justify-end">${actions(p)}</div></td></tr>`).join('')}</tbody></table></div></div>`;
+                return;
+            }
+            body.innerHTML = `<div class="dx-crew-grid">${people.map(p => `
+                <div class="dx-mate ${p.online ? '' : 'off'} ${crewFocus === p.name ? 'focus' : ''} ${wornTitleFor(p.name) ? 'has-banner' : ''}" data-crew="${escapeHtml(p.name)}">
+                    ${wornTitleFor(p.name) ? `<div class="mate-banner">${titleCardHtml(wornTitleFor(p.name), { noTier: true })}</div>` : ''}
+                    <div class="flags">${flags(p)}</div>
+                    <div class="top"><span class="avw">${avatarHtml(p.name)}<i class="dot ${p.online ? 'on' : ''}"></i></span>
+                        <div class="min-w-0"><div class="nm">${nameHtml(p.name)}</div><div class="rl">${escapeHtml(p.role)} ${wornTagFor(p.name)}</div><div class="status ${p.online ? 'on' : ''}">${escapeHtml(status(p))}</div></div></div>
+                    <div class="nums"><div><b>${p.harvests.toLocaleString()}</b><span>Harvests</span></div><div><b>${p.bud >= 10000 ? `${Math.round(p.bud / 1000)}k` : p.bud.toLocaleString()}</b><span>Bud in</span></div><div><b>${p.outUnits.toLocaleString()}</b><span>Gone out</span></div></div>
+                    <div class="last"><i class="fa-solid fa-clock-rotate-left mr-1 text-slate-500"></i>${lastLine(p)}</div>
+                    ${admin ? `<div class="pills">${where(p.member)}</div>` : ''}
+                    ${actions(p) ? `<div class="acts">${actions(p)}</div>` : ''}
+                </div>`).join('')}</div>`;
+        }
+
+        // "Their log": the Log page filtered to that person
+        function crewShowLog(name) {
+            switchTab('sales');
+            const sel = document.getElementById('sales-f-who');
+            if (!sel) return;
+            const opt = [...sel.options].find(o => o.textContent === name);
+            if (opt) { sel.value = opt.value; sel.dispatchEvent(new Event('change')); }
         }
 
         // ---- Admin: crew panel ----
@@ -2801,7 +3198,7 @@
                             <div class="flex items-center gap-2"><b class="text-white" style="${m.nameColor ? `color:${m.nameColor}` : ''}">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pending ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-black">New · needs review</span>' : ''}${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
                             <div>${PERMISSIONS.map(p => `<span class="dx-pill ${m.perms[p.key] ? '' : 'off'}">${p.label}</span>`).join('')}</div>
                             <div class="mt-1">${where}</div>
-                            <div class="mt-1 text-[11px] text-slate-400"><i class="fa-solid fa-cannabis text-weed-500"></i> <b class="text-slate-200">${harvestsLabel(personStats(personKey(id)).harvests)}</b> ${rankBadge(personStats(personKey(id)).harvests)} · Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
+                            <div class="mt-1 text-[11px] text-slate-400"><i class="fa-solid fa-cannabis text-weed-500"></i> <b class="text-slate-200">${harvestsLabel(personStats(personKey(id)).harvests)}</b> ${wornTagFor(m.name)} · Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid ${m.pending ? 'fa-user-check' : 'fa-pen'} mr-1"></i>${m.pending ? 'Review' : 'Edit'}</button>
@@ -2912,6 +3309,566 @@
             showAlert(on ? 'New people can now create their own profile.' : 'Sign-ups are off. Only admins can add crew.', 'info');
         }
 
+        // ---- Titles: earned from what people do on the site, worn like an MW2 calling card ----
+        const TITLE_CATS = ["Harvests", "Bud brought in", "Trimming", "Pressing bricks", "Coke", "Coca leaves", "Meth", "Going out", "Moving stock", "Grows & plans", "Habits & streaks", "Crew & profile"];
+        const TITLES = [
+            {"id": "sprout", "name": "Sprout", "tier": "common", "art": "leaf", "icon": "seedling", "cat": "Harvests", "how": "Log your <b>first harvest</b>", "req": ["harvests", 1]},
+            {"id": "green-thumb", "name": "Green Thumb", "tier": "common", "art": "leaf", "icon": "hand-fist", "cat": "Harvests", "how": "<b>5</b> harvests", "req": ["harvests", 5]},
+            {"id": "seedling", "name": "Seedling", "tier": "uncommon", "art": "leaf", "icon": "seedling", "cat": "Harvests", "how": "<b>10</b> harvests", "req": ["harvests", 10]},
+            {"id": "bud-farmer", "name": "Bud Farmer", "tier": "uncommon", "art": "leaf", "icon": "tractor", "cat": "Harvests", "how": "<b>25</b> harvests", "req": ["harvests", 25]},
+            {"id": "grower", "name": "Grower", "tier": "rare", "art": "leaf", "icon": "cannabis", "cat": "Harvests", "how": "<b>50</b> harvests", "req": ["harvests", 50]},
+            {"id": "kingpin", "name": "Kingpin", "tier": "epic", "art": "leaf", "icon": "crown", "cat": "Harvests", "how": "<b>100</b> harvests", "req": ["harvests", 100]},
+            {"id": "harvest-king", "name": "Harvest King", "tier": "legendary", "art": "gold", "icon": "crown", "cat": "Harvests", "how": "<b>250</b> harvests", "req": ["harvests", 250]},
+            {"id": "cannabis-cartel", "name": "Cannabis Cartel", "tier": "mythic", "art": "gold", "icon": "cannabis", "cat": "Harvests", "how": "<b>500</b> harvests", "req": ["harvests", 500]},
+            {"id": "weed-god", "name": "Weed God", "tier": "mythic", "art": "gold", "icon": "hat-wizard", "cat": "Harvests", "how": "<b>1,000</b> harvests", "req": ["harvests", 1000]},
+            {"id": "dime-bag", "name": "Dime Bag", "tier": "common", "art": "leaf", "icon": "sack-dollar", "cat": "Bud brought in", "how": "<b>1,000</b> bud harvested", "req": ["bud", 1000]},
+            {"id": "bag-filler", "name": "Bag Filler", "tier": "common", "art": "leaf", "icon": "sack-dollar", "cat": "Bud brought in", "how": "<b>10,000</b> bud harvested", "req": ["bud", 10000]},
+            {"id": "pound-town", "name": "Pound Town", "tier": "rare", "art": "leaf", "icon": "dumbbell", "cat": "Bud brought in", "how": "<b>50,000</b> bud harvested", "req": ["bud", 50000]},
+            {"id": "mile-high", "name": "Mile High", "tier": "epic", "art": "gold", "icon": "mountain", "cat": "Bud brought in", "how": "<b>100,000</b> bud harvested", "req": ["bud", 100000]},
+            {"id": "dank-baron", "name": "Dank Baron", "tier": "legendary", "art": "gold", "icon": "gem", "cat": "Bud brought in", "how": "<b>500,000</b> bud harvested", "req": ["bud", 500000]},
+            {"id": "ton-up", "name": "Ton Up", "tier": "mythic", "art": "gold", "icon": "rocket", "cat": "Bud brought in", "how": "<b>1,000,000</b> bud harvested", "req": ["bud", 1000000]},
+            {"id": "trimmer", "name": "Trimmer", "tier": "common", "art": "trim", "icon": "scissors", "cat": "Trimming", "how": "<b>1,000</b> bud trimmed", "req": ["trimmed", 1000]},
+            {"id": "scissor-hands", "name": "Scissor Hands", "tier": "uncommon", "art": "trim", "icon": "scissors", "cat": "Trimming", "how": "<b>10,000</b> bud trimmed", "req": ["trimmed", 10000]},
+            {"id": "sticky-fingers", "name": "Sticky Fingers", "tier": "rare", "art": "trim", "icon": "hand-fist", "cat": "Trimming", "how": "<b>50,000</b> bud trimmed", "req": ["trimmed", 50000]},
+            {"id": "trim-reaper", "name": "Trim Reaper", "tier": "epic", "art": "trim", "icon": "skull", "cat": "Trimming", "how": "<b>250,000</b> bud trimmed", "req": ["trimmed", 250000]},
+            {"id": "golden-shears", "name": "Golden Shears", "tier": "legendary", "art": "gold", "icon": "scissors", "cat": "Trimming", "how": "<b>1,000,000</b> bud trimmed", "req": ["trimmed", 1000000]},
+            {"id": "first-brick", "name": "First Brick", "tier": "common", "art": "brick", "icon": "cube", "cat": "Pressing bricks", "how": "Press your <b>first brick</b>", "req": ["bricks", 1]},
+            {"id": "brick-layer", "name": "Brick Layer", "tier": "uncommon", "art": "brick", "icon": "cube", "cat": "Pressing bricks", "how": "<b>25</b> bricks pressed", "req": ["bricks", 25]},
+            {"id": "brick-house", "name": "Brick House", "tier": "rare", "art": "brick", "icon": "cubes", "cat": "Pressing bricks", "how": "<b>100</b> bricks pressed", "req": ["bricks", 100]},
+            {"id": "brick-mason", "name": "Brick Mason", "tier": "epic", "art": "brick", "icon": "cubes", "cat": "Pressing bricks", "how": "<b>250</b> bricks pressed", "req": ["bricks", 250]},
+            {"id": "brick-city", "name": "Brick City", "tier": "epic", "art": "brick", "icon": "warehouse", "cat": "Pressing bricks", "how": "<b>500</b> bricks pressed", "req": ["bricks", 500]},
+            {"id": "brick-lord", "name": "Brick Lord", "tier": "legendary", "art": "brick", "icon": "crown", "cat": "Pressing bricks", "how": "<b>1,000</b> bricks pressed", "req": ["bricks", 1000]},
+            {"id": "brick-empire", "name": "Brick Empire", "tier": "mythic", "art": "brick", "icon": "chess-king", "cat": "Pressing bricks", "how": "<b>2,500</b> bricks pressed", "req": ["bricks", 2500]},
+            {"id": "nose-candy", "name": "Nose Candy", "tier": "common", "art": "snow", "icon": "snowflake", "cat": "Coke", "how": "Press your <b>first coke brick</b>", "req": ["coke", 1]},
+            {"id": "powder-puff", "name": "Powder Puff", "tier": "uncommon", "art": "snow", "icon": "snowflake", "cat": "Coke", "how": "<b>5</b> coke bricks", "req": ["coke", 5]},
+            {"id": "snow-plow", "name": "Snow Plow", "tier": "rare", "art": "snow", "icon": "snowman", "cat": "Coke", "how": "<b>10</b> coke bricks", "req": ["coke", 10]},
+            {"id": "blizzard", "name": "Blizzard", "tier": "epic", "art": "snow", "icon": "snowflake", "cat": "Coke", "how": "<b>50</b> coke bricks", "req": ["coke", 50]},
+            {"id": "scarface", "name": "Scarface", "tier": "legendary", "art": "snow", "icon": "skull", "cat": "Coke", "how": "<b>200</b> coke bricks", "req": ["coke", 200]},
+            {"id": "avalanche", "name": "Avalanche", "tier": "mythic", "art": "snow", "icon": "mountain", "cat": "Coke", "how": "<b>500</b> coke bricks", "req": ["coke", 500]},
+            {"id": "big-rock", "name": "Big Rock", "tier": "uncommon", "art": "snow", "icon": "gem", "cat": "Coke", "how": "Press your <b>first large coke brick</b>", "req": ["cokeLarge", 1]},
+            {"id": "boulder", "name": "Boulder", "tier": "epic", "art": "snow", "icon": "mountain", "cat": "Coke", "how": "<b>50</b> large coke bricks", "req": ["cokeLarge", 50]},
+            {"id": "leaf-picker", "name": "Leaf Picker", "tier": "uncommon", "art": "coca", "icon": "leaf", "cat": "Coca leaves", "how": "<b>10,000</b> coca leaves added", "req": ["coca", 10000]},
+            {"id": "coca-collector", "name": "Coca Collector", "tier": "rare", "art": "coca", "icon": "leaf", "cat": "Coca leaves", "how": "<b>50,000</b> coca leaves added", "req": ["coca", 50000]},
+            {"id": "coca-farmer", "name": "Coca Farmer", "tier": "epic", "art": "coca", "icon": "tractor", "cat": "Coca leaves", "how": "<b>100,000</b> coca leaves added", "req": ["coca", 100000]},
+            {"id": "leaf-lord", "name": "Leaf Lord", "tier": "legendary", "art": "coca", "icon": "crown", "cat": "Coca leaves", "how": "<b>500,000</b> coca leaves added", "req": ["coca", 500000]},
+            {"id": "the-cook", "name": "The Cook", "tier": "common", "art": "crystal", "icon": "flask", "cat": "Meth", "how": "Add your <b>first meth bin</b>", "req": ["meth", 1]},
+            {"id": "blue-sky", "name": "Blue Sky", "tier": "rare", "art": "crystal", "icon": "gem", "cat": "Meth", "how": "<b>10</b> meth bins", "req": ["meth", 10]},
+            {"id": "blue-magic", "name": "Blue Magic", "tier": "epic", "art": "crystal", "icon": "wand-magic-sparkles", "cat": "Meth", "how": "<b>25</b> meth bins", "req": ["meth", 25]},
+            {"id": "heisenberg", "name": "Heisenberg", "tier": "legendary", "art": "crystal", "icon": "flask", "cat": "Meth", "how": "<b>50</b> meth bins", "req": ["meth", 50]},
+            {"id": "crystal-ship", "name": "Crystal Ship", "tier": "legendary", "art": "crystal", "icon": "diamond", "cat": "Meth", "how": "<b>100</b> meth bins", "req": ["meth", 100]},
+            {"id": "cook-of-the-year", "name": "Cook Of The Year", "tier": "mythic", "art": "crystal", "icon": "trophy", "cat": "Meth", "how": "<b>250</b> meth bins", "req": ["meth", 250]},
+            {"id": "corner-boy", "name": "Corner Boy", "tier": "common", "art": "road", "icon": "truck-fast", "cat": "Going out", "how": "Log your <b>first thing going out</b>", "req": ["out", 1]},
+            {"id": "delivery-boy", "name": "Delivery Boy", "tier": "uncommon", "art": "road", "icon": "truck-fast", "cat": "Going out", "how": "<b>10</b> logged out", "req": ["out", 10]},
+            {"id": "hustler", "name": "Hustler", "tier": "uncommon", "art": "road", "icon": "person-running", "cat": "Going out", "how": "<b>25</b> logged out", "req": ["out", 25]},
+            {"id": "the-plug", "name": "The Plug", "tier": "rare", "art": "road", "icon": "bolt", "cat": "Going out", "how": "<b>50</b> logged out", "req": ["out", 50]},
+            {"id": "trap-star", "name": "Trap Star", "tier": "epic", "art": "road", "icon": "star", "cat": "Going out", "how": "<b>100</b> logged out", "req": ["out", 100]},
+            {"id": "trap-lord", "name": "Trap Lord", "tier": "legendary", "art": "road", "icon": "crown", "cat": "Going out", "how": "<b>250</b> logged out", "req": ["out", 250]},
+            {"id": "street-king", "name": "Street King", "tier": "mythic", "art": "road", "icon": "chess-king", "cat": "Going out", "how": "<b>500</b> logged out", "req": ["out", 500]},
+            {"id": "moving-weight", "name": "Moving Weight", "tier": "uncommon", "art": "road", "icon": "dumbbell", "cat": "Going out", "how": "<b>100</b> bricks, bins or coke out in total", "req": ["outUnits", 100]},
+            {"id": "wholesale", "name": "Wholesale", "tier": "rare", "art": "road", "icon": "cart-flatbed", "cat": "Going out", "how": "<b>250</b> out in total", "req": ["outUnits", 250]},
+            {"id": "heavy-hitter", "name": "Heavy Hitter", "tier": "epic", "art": "road", "icon": "hand-holding-dollar", "cat": "Going out", "how": "<b>500</b> out in total", "req": ["outUnits", 500]},
+            {"id": "cartel-connect", "name": "Cartel Connect", "tier": "legendary", "art": "road", "icon": "sack-dollar", "cat": "Going out", "how": "<b>1,000</b> out in total", "req": ["outUnits", 1000]},
+            {"id": "weight-man", "name": "Weight Man", "tier": "mythic", "art": "road", "icon": "dumbbell", "cat": "Going out", "how": "<b>2,500</b> out in total", "req": ["outUnits", 2500]},
+            {"id": "runner", "name": "Runner", "tier": "common", "art": "route", "icon": "person-running", "cat": "Moving stock", "how": "Make your <b>first move</b> between stashes", "req": ["moves", 1]},
+            {"id": "mule", "name": "Mule", "tier": "common", "art": "route", "icon": "route", "cat": "Moving stock", "how": "<b>10</b> moves", "req": ["moves", 10]},
+            {"id": "courier", "name": "Courier", "tier": "uncommon", "art": "route", "icon": "people-carry-box", "cat": "Moving stock", "how": "<b>25</b> moves", "req": ["moves", 25]},
+            {"id": "smuggler", "name": "Smuggler", "tier": "rare", "art": "route", "icon": "box-archive", "cat": "Moving stock", "how": "<b>50</b> moves", "req": ["moves", 50]},
+            {"id": "pack-rat", "name": "Pack Rat", "tier": "epic", "art": "route", "icon": "box-archive", "cat": "Moving stock", "how": "<b>200</b> moves", "req": ["moves", 200]},
+            {"id": "logistics", "name": "Logistics", "tier": "legendary", "art": "route", "icon": "map-location-dot", "cat": "Moving stock", "how": "<b>500</b> moves", "req": ["moves", 500]},
+            {"id": "starter", "name": "Starter", "tier": "common", "art": "clock", "icon": "play", "cat": "Grows & plans", "how": "Start your <b>first grow</b>", "req": ["starts", 1]},
+            {"id": "ignition", "name": "Ignition", "tier": "uncommon", "art": "clock", "icon": "play", "cat": "Grows & plans", "how": "Start <b>25</b> grows", "req": ["starts", 25]},
+            {"id": "engine", "name": "Engine", "tier": "rare", "art": "clock", "icon": "rocket", "cat": "Grows & plans", "how": "Start <b>100</b> grows", "req": ["starts", 100]},
+            {"id": "full-sweep", "name": "Full Sweep", "tier": "rare", "art": "clock", "icon": "broom", "cat": "Grows & plans", "how": "Harvest <b>3 or more ready grows</b> at once"},
+            {"id": "planner", "name": "Planner", "tier": "common", "art": "blueprint", "icon": "compass", "cat": "Grows & plans", "how": "Set your <b>first pot plan</b>", "req": ["plans", 1]},
+            {"id": "architect", "name": "Architect", "tier": "uncommon", "art": "blueprint", "icon": "compass", "cat": "Grows & plans", "how": "<b>25</b> pot plan changes", "req": ["plans", 25]},
+            {"id": "mastermind", "name": "Mastermind", "tier": "rare", "art": "blueprint", "icon": "chess-king", "cat": "Grows & plans", "how": "<b>100</b> pot plan changes", "req": ["plans", 100]},
+            {"id": "smart-balancer", "name": "Smart Balancer", "tier": "uncommon", "art": "blueprint", "icon": "chart-line", "cat": "Grows & plans", "how": "Use <b>Smart Balance 10 times</b>", "req": ["smart", 10]},
+            {"id": "on-the-clock", "name": "On The Clock", "tier": "rare", "art": "clock", "icon": "stopwatch", "cat": "Grows & plans", "how": "Harvest <b>10</b> grows within 5 minutes of them going ready", "req": ["quick", 10]},
+            {"id": "clockwork", "name": "Clockwork", "tier": "legendary", "art": "clock", "icon": "stopwatch", "cat": "Grows & plans", "how": "Harvest <b>50</b> grows within 5 minutes of them going ready", "req": ["quick", 50]},
+            {"id": "regular", "name": "Regular", "tier": "common", "art": "tally", "icon": "calendar-check", "cat": "Habits & streaks", "how": "Active <b>3 days in a row</b>", "req": ["best", 3]},
+            {"id": "grinder", "name": "Grinder", "tier": "rare", "art": "tally", "icon": "calendar-check", "cat": "Habits & streaks", "how": "Active <b>7 days in a row</b>", "req": ["best", 7]},
+            {"id": "two-weeks-notice", "name": "Two Weeks Notice", "tier": "epic", "art": "tally", "icon": "calendar-days", "cat": "Habits & streaks", "how": "Active <b>14 days in a row</b>", "req": ["best", 14]},
+            {"id": "no-days-off", "name": "No Days Off", "tier": "legendary", "art": "tally", "icon": "fire", "cat": "Habits & streaks", "how": "Active <b>30 days in a row</b>", "req": ["best", 30]},
+            {"id": "lifer", "name": "Lifer", "tier": "epic", "art": "tally", "icon": "calendar-check", "cat": "Habits & streaks", "how": "Active on <b>30 different days</b>", "req": ["days", 30]},
+            {"id": "hundred-club", "name": "Hundred Club", "tier": "legendary", "art": "tally", "icon": "trophy", "cat": "Habits & streaks", "how": "Active on <b>100 different days</b>", "req": ["days", 100]},
+            {"id": "weekend-warrior", "name": "Weekend Warrior", "tier": "rare", "art": "tally", "icon": "calendar-days", "cat": "Habits & streaks", "how": "Active on <b>10 different weekends</b>", "req": ["weekends", 10]},
+            {"id": "night-owl", "name": "Night Owl", "tier": "uncommon", "art": "night", "icon": "moon", "cat": "Habits & streaks", "how": "<b>25</b> things done between midnight and 5am", "req": ["night", 25]},
+            {"id": "vampire", "name": "Vampire", "tier": "epic", "art": "night", "icon": "moon", "cat": "Habits & streaks", "how": "<b>200</b> things done between midnight and 5am", "req": ["night", 200]},
+            {"id": "insomniac", "name": "Insomniac", "tier": "legendary", "art": "night", "icon": "cloud-moon", "cat": "Habits & streaks", "how": "<b>500</b> things done between midnight and 5am", "req": ["night", 500]},
+            {"id": "early-bird", "name": "Early Bird", "tier": "uncommon", "art": "dawn", "icon": "sun", "cat": "Habits & streaks", "how": "<b>25</b> things done between 5am and 8am", "req": ["morning", 25]},
+            {"id": "jack-of-all-trades", "name": "Jack Of All Trades", "tier": "epic", "art": "jack", "icon": "dice", "cat": "Habits & streaks", "how": "Harvest, press, log something out and move stock <b>all in one day</b>"},
+            {"id": "welcome-wagon", "name": "Welcome Wagon", "tier": "common", "art": "crew", "icon": "users", "cat": "Crew & profile", "how": "Be online with <b>3 or more</b> of the crew at once"},
+            {"id": "full-house", "name": "Full House", "tier": "rare", "art": "crew", "icon": "user-group", "cat": "Crew & profile", "how": "Be online with <b>6 or more</b> of the crew at once"},
+            {"id": "say-cheese", "name": "Say Cheese", "tier": "common", "art": "crew", "icon": "image", "cat": "Crew & profile", "how": "Add a <b>profile picture</b>"},
+            {"id": "fresh-paint", "name": "Fresh Paint", "tier": "common", "art": "crew", "icon": "paintbrush", "cat": "Crew & profile", "how": "Pick a <b>name color</b>"},
+            {"id": "collector", "name": "Collector", "tier": "rare", "art": "crew", "icon": "medal", "cat": "Crew & profile", "how": "Unlock <b>25 titles</b>", "req": ["titles", 25]},
+            {"id": "hoarder", "name": "Hoarder", "tier": "epic", "art": "crew", "icon": "trophy", "cat": "Crew & profile", "how": "Unlock <b>50 titles</b>", "req": ["titles", 50]},
+            {"id": "completionist", "name": "Completionist", "tier": "mythic", "art": "gold", "icon": "infinity", "cat": "Crew & profile", "how": "Unlock <b>90 titles</b>", "req": ["titles", 90]},
+            {"id": "blaze-it", "name": "Blaze It", "tier": "legendary", "art": "rasta", "icon": "joint", "cat": "Secret", "how": "Do anything at exactly <b>4:20</b> (am or pm)", "secret": 1, "quirk": "blaze"},
+            {"id": "four-twenty", "name": "Four Twenty", "tier": "mythic", "art": "rasta", "icon": "cannabis", "cat": "Secret", "how": "Do anything on <b>April 20</b>", "secret": 1, "quirk": "420"},
+            {"id": "graveyard-shift", "name": "Graveyard Shift", "tier": "epic", "art": "night", "icon": "skull", "cat": "Secret", "how": "Press a brick between <b>3:00 and 3:59am</b>", "secret": 1, "quirk": "graveyard"},
+            {"id": "witching-hour", "name": "Witching Hour", "tier": "epic", "art": "night", "icon": "spider", "cat": "Secret", "how": "Do anything at exactly <b>3:33am</b>", "secret": 1, "quirk": "graveyard"},
+            {"id": "midnight-run", "name": "Midnight Run", "tier": "epic", "art": "road", "icon": "moon", "cat": "Secret", "how": "Log something out in the <b>first minute after midnight</b>", "secret": 1, "quirk": "midnight"},
+            {"id": "lucky-sevens", "name": "Lucky Sevens", "tier": "rare", "art": "retro", "icon": "dice", "cat": "Secret", "how": "Do anything at <b>7:07</b>", "secret": 1, "quirk": "sevens"},
+            {"id": "make-a-wish", "name": "Make A Wish", "tier": "rare", "art": "night", "icon": "wand-magic-sparkles", "cat": "Secret", "how": "Do anything at <b>11:11</b>", "secret": 1},
+            {"id": "leet", "name": "Leet", "tier": "rare", "art": "retro", "icon": "keyboard", "cat": "Secret", "how": "Do anything at <b>1:37pm</b> (13:37)", "secret": 1, "quirk": "cheat"},
+            {"id": "high-noon", "name": "High Noon", "tier": "rare", "art": "dawn", "icon": "sun", "cat": "Secret", "how": "Harvest between <b>12:00 and 12:05pm</b>", "secret": 1},
+            {"id": "wake-n-bake", "name": "Wake N Bake", "tier": "uncommon", "art": "dawn", "icon": "mug-hot", "cat": "Secret", "how": "Press a brick <b>before 7am</b>", "secret": 1},
+            {"id": "sunday-funday", "name": "Sunday Funday", "tier": "uncommon", "art": "rasta", "icon": "champagne-glasses", "cat": "Secret", "how": "Press <b>10 bricks on a Sunday</b>", "secret": 1},
+            {"id": "new-year-blaze", "name": "New Year Blaze", "tier": "legendary", "art": "party", "icon": "champagne-glasses", "cat": "Secret", "how": "Do anything on <b>January 1</b>", "secret": 1},
+            {"id": "halloweed", "name": "Halloweed", "tier": "epic", "art": "pumpkin", "icon": "ghost", "cat": "Secret", "how": "Do anything on <b>October 31</b>", "secret": 1},
+            {"id": "christmas-tree", "name": "Christmas Tree", "tier": "epic", "art": "xmas", "icon": "tree", "cat": "Secret", "how": "Do anything on <b>December 25</b>", "secret": 1},
+            {"id": "unlucky-toke", "name": "Unlucky Toke", "tier": "rare", "art": "glitch", "icon": "bomb", "cat": "Secret", "how": "Do anything on a <b>Friday the 13th</b>", "secret": 1},
+            {"id": "snoop", "name": "Snoop", "tier": "rare", "art": "glitch", "icon": "eye", "cat": "Secret", "how": "Click the <b>NoelOps logo 50 times in a row</b>", "secret": 1, "quirk": "snoop"},
+            {"id": "secret-stash", "name": "Secret Stash", "tier": "epic", "art": "glitch", "icon": "user-secret", "cat": "Secret", "how": "Click <b>\"Custom Built 2026\"</b> in the footer <b>50 times in a row</b>", "secret": 1, "quirk": "stash"},
+            {"id": "time-bandit", "name": "Time Bandit", "tier": "epic", "art": "retro", "icon": "hourglass", "cat": "Secret", "how": "Click the <b>footer clock 50 times in a row</b>", "secret": 1},
+            {"id": "cheat-code", "name": "Cheat Code", "tier": "mythic", "art": "retro", "icon": "gamepad", "cat": "Secret", "how": "Type the <b>Konami code</b> (↑↑↓↓←→←→BA) anywhere", "secret": 1, "quirk": "cheat"},
+            {"id": "name-drop", "name": "Name Drop", "tier": "rare", "art": "glitch", "icon": "keyboard", "cat": "Secret", "how": "Type <b>noelops</b> anywhere on the site (not in a box)", "secret": 1, "quirk": "cheat"},
+            {"id": "puff-puff-pass", "name": "Puff Puff Pass", "tier": "rare", "art": "rasta", "icon": "joint", "cat": "Secret", "how": "Type <b>420</b> anywhere on the site (not in a box)", "secret": 1, "quirk": "puff"},
+            {"id": "roll-one-up", "name": "Roll One Up", "tier": "uncommon", "art": "rasta", "icon": "joint", "cat": "Secret", "how": "Type <b>roll one up</b> anywhere on the site (not in a box)", "secret": 1, "quirk": "puff"},
+            {"id": "taste-tester", "name": "Taste Tester", "tier": "uncommon", "art": "leaf", "icon": "cannabis", "cat": "Secret", "how": "Hover <b>every strain card</b> on the dashboard in one visit", "secret": 1, "quirk": "taste"},
+            {"id": "speedrunner", "name": "Speedrunner", "tier": "rare", "art": "retro", "icon": "person-running", "cat": "Secret", "how": "Visit <b>all four pages within 10 seconds</b>", "secret": 1},
+            {"id": "color-blind", "name": "Color Blind", "tier": "uncommon", "art": "glitch", "icon": "palette", "cat": "Secret", "how": "Change your <b>accent color 10 times</b>", "secret": 1, "quirk": "colorblind"},
+            {"id": "shape-shifter", "name": "Shape Shifter", "tier": "rare", "art": "glitch", "icon": "mask", "cat": "Secret", "how": "Change your <b>profile picture 5 times</b>", "secret": 1},
+            {"id": "hotboxer", "name": "Hotboxer", "tier": "legendary", "art": "glitch", "icon": "ghost", "cat": "Secret", "how": "Keep the site open for <b>4 hours 20 minutes</b> straight", "secret": 1, "quirk": "hotbox"},
+            {"id": "ghost", "name": "Ghost", "tier": "legendary", "art": "night", "icon": "ghost", "cat": "Secret", "how": "Be the <b>only one online for 2 hours</b> straight", "secret": 1}
+        ];
+        const TITLE_TIERS = ['common', 'uncommon', 'rare', 'epic', 'legendary', 'mythic'];
+        const TIER_LABELS = { common: 'Common', uncommon: 'Uncommon', rare: 'Rare', epic: 'Epic', legendary: 'Legendary', mythic: 'Mythic' };
+        const TITLE_BY_ID = Object.fromEntries(TITLES.map(t => [t.id, t]));
+        const STAT_FIELDS = ['harvests', 'bud', 'trimmed', 'bricks', 'coke', 'cokeLarge', 'meth', 'coca', 'out', 'outUnits', 'moves', 'starts', 'plans', 'smart', 'quick', 'night', 'morning', 'days', 'streak', 'best', 'weekends'];
+        const SHOWCASE_MAX = 10;
+        let titlesReady = false; // true once the shared data has loaded, so nothing unlocks from a stale cache
+        let knownMyTitles = null; // titles this device has already announced
+
+        function titlesOn() {
+            return fxSettings().titles !== false;
+        }
+
+        function titlesFor(key) {
+            const all = key ? (appState.titles || {})[statKey(key)] : null;
+            return isPlainObject(all) ? all : {};
+        }
+
+        function statsFor(key) {
+            const s = key ? (appState.stats || {})[statKey(key)] : null;
+            return isPlainObject(s) ? s : {};
+        }
+
+        function statValue(key, field) {
+            if (field === 'titles') return Object.keys(titlesFor(key)).length;
+            return toCount(statsFor(key)[field]);
+        }
+
+        // A secret only shows to others once someone in the crew has found it
+        function secretFound(id) {
+            return Object.values(appState.titles || {}).some(set => isPlainObject(set) && set[id]);
+        }
+
+        function wornTitleFor(name) {
+            if (!titlesOn()) return null;
+            const profile = publicProfileFor(name);
+            const t = profile && TITLE_BY_ID[profile.title];
+            return t && titlesFor(personKeyForName(name))[t.id] ? t : null;
+        }
+
+        function titleTagHtml(t, extra = '') {
+            return t ? `<span class="tt-tag tt-${t.tier} ${extra}" title="${escapeHtml(t.name)} · ${TIER_LABELS[t.tier]}">${escapeHtml(t.name)}</span>` : '';
+        }
+
+        function wornTagFor(name) {
+            return titleTagHtml(wornTitleFor(name));
+        }
+
+        // The calling card: themed art, two big icons and the title, with the rarity as the glow
+        function titleCardHtml(t, opts = {}) {
+            const anim = t.secret || t.tier === 'legendary' || t.tier === 'mythic';
+            const q = t.quirk || '';
+            const letters = s => [...s].map((ch, i) => ch === ' ' ? ' ' : `<span style="--i:${i}">${escapeHtml(ch)}</span>`).join('');
+            const text = ['puff', 'colorblind', 'taste'].includes(q) ? letters(t.name) : escapeHtml(t.name);
+            let extra = '';
+            if (t.art === 'rasta' || q === 'blaze') extra += '<span class="tc-smoke"></span>';
+            if (t.art === 'glitch' || q === 'cheat') extra += '<span class="tc-glitch"></span>';
+            if (q === 'sevens') extra += '<span class="tc-reels">777</span>';
+            if (q === '420') extra += '<span class="tc-big">4/20</span>';
+            const icons = q === 'snoop' ? `<i class="fa-solid fa-${t.icon} tc-emb c"></i>` : `<i class="fa-solid fa-${t.icon} tc-emb l"></i><i class="fa-solid fa-${t.icon} tc-emb r"></i>`;
+            return `<div class="tc tc-a-${t.art} tt-${t.tier} ${anim && !opts.still ? 'tc-anim' : ''} ${q ? 'tc-q-' + q : ''} ${opts.cls || ''}">${icons}<span class="tc-stripe t"></span><span class="tc-stripe b"></span>${anim && !opts.still ? '<span class="tc-shine"></span>' : ''}${extra}${opts.noTier ? '' : `<span class="tc-tier">${TIER_LABELS[t.tier]}</span>`}${opts.noName ? '' : `<span class="tc-name">${text}</span>`}</div>`;
+        }
+
+        // ---- counting what people do ----
+        function localDayKey(d) {
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        }
+
+        // Add to my counters, and keep a local copy so the next action sees it before the live update lands
+        function bumpMyStats(fields, sets = {}) {
+            const me = myPersonKey();
+            if (!me) return;
+            const key = statKey(me);
+            if (!isPlainObject(appState.stats[key])) appState.stats[key] = {};
+            const mine = appState.stats[key];
+            const changes = {};
+            Object.entries(fields).forEach(([f, n]) => { if (n > 0) { adjustShared(`stats/${key}/${f}`, n); mine[f] = toCount(mine[f]) + n; } });
+            Object.entries(sets).forEach(([f, v]) => { changes[`stats/${key}/${f}`] = v; mine[f] = v; });
+            if (Object.keys(changes).length) writeShared(changes);
+        }
+
+        // Every counted action: what it was, local-time habits, streaks and the time-based secrets
+        function trackAction(kind, counts = {}) {
+            const me = myPersonKey();
+            if (!me) return;
+            const now = new Date(), h = now.getHours(), m = now.getMinutes();
+            const fields = { ...counts };
+            if (h < 5) fields.night = 1; else if (h < 8) fields.morning = 1;
+            const s = statsFor(me), day = localDayKey(now), sets = {};
+            if (s.lastDay !== day) {
+                const streak = s.lastDay === localDayKey(new Date(now.getTime() - 86400e3)) ? toCount(s.streak) + 1 : 1;
+                Object.assign(sets, { lastDay: day, streak, best: Math.max(streak, toCount(s.best)) });
+                fields.days = 1;
+                const dow = now.getDay();
+                if (dow === 0 || dow === 6) {
+                    const sat = new Date(now.getTime() - (dow === 0 ? 86400e3 : 0));
+                    const weekend = localDayKey(sat);
+                    if (s.lastWeekend !== weekend) { sets.lastWeekend = weekend; fields.weekends = 1; }
+                }
+            }
+            bumpMyStats(fields, sets);
+            // secrets on your own clock
+            const unlock = id => unlockTitles([id]);
+            if (h % 12 === 4 && m === 20) unlock('blaze-it');
+            if (now.getMonth() === 3 && now.getDate() === 20) unlock('four-twenty');
+            if (h === 3 && m === 33) unlock('witching-hour');
+            if (h % 12 === 7 && m === 7) unlock('lucky-sevens');
+            if (h % 12 === 11 && m === 11) unlock('make-a-wish');
+            if (h === 13 && m === 37) unlock('leet');
+            if (now.getMonth() === 0 && now.getDate() === 1) unlock('new-year-blaze');
+            if (now.getMonth() === 9 && now.getDate() === 31) unlock('halloweed');
+            if (now.getMonth() === 11 && now.getDate() === 25) unlock('christmas-tree');
+            if (now.getDay() === 5 && now.getDate() === 13) unlock('unlucky-toke');
+            if (kind === 'press') {
+                if (h === 3) unlock('graveyard-shift');
+                if (h < 7) unlock('wake-n-bake');
+                if (now.getDay() === 0) {
+                    const sun = localGet('noelops_sunday', {});
+                    const n = (sun.day === day ? sun.n : 0) + (counts.bricks || 0) + (counts.coke || 0);
+                    localSet('noelops_sunday', { day, n });
+                    if (n >= 10) unlock('sunday-funday');
+                }
+            }
+            if (kind === 'sale' && h === 0 && m === 0) unlock('midnight-run');
+            if (kind === 'harvest' && h === 12 && m <= 5) unlock('high-noon');
+            if (['harvest', 'press', 'sale', 'move'].includes(kind)) {
+                const jack = localGet('noelops_jack', {});
+                const done = new Set(jack.day === day ? jack.done : []);
+                done.add(kind);
+                localSet('noelops_jack', { day, done: [...done] });
+                if (done.size === 4) unlock('jack-of-all-trades');
+            }
+        }
+
+        function localGet(key, fallback) {
+            try { const v = JSON.parse(localStorage.getItem(key)); return v === null ? fallback : v; } catch (e) { return fallback; }
+        }
+        function localSet(key, value) {
+            try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* optional */ }
+        }
+
+        // ---- unlocking ----
+        // Unlocks written but maybe not back from the database yet, so a live update in between can't unlock them twice
+        const recentUnlocks = new Map();
+        function unlockTitles(ids, key = myPersonKey()) {
+            if (!key || !titlesOn()) return;
+            const have = titlesFor(key);
+            const now = Date.now();
+            const fresh = [...new Set(ids)].filter(id => TITLE_BY_ID[id] && !have[id] && !(now - (recentUnlocks.get(`${key}|${id}`) || 0) < 15000));
+            if (!fresh.length) return;
+            fresh.forEach(id => recentUnlocks.set(`${key}|${id}`, now));
+            const changes = {};
+            fresh.forEach(id => { changes[`titles/${statKey(key)}/${id}`] = timestampValue(); });
+            if (!isPlainObject(appState.titles[statKey(key)])) appState.titles[statKey(key)] = {};
+            fresh.forEach(id => { appState.titles[statKey(key)][id] = syncNow(); });
+            writeShared(changes);
+            if (key === myPersonKey()) {
+                const first = TITLE_BY_ID[fresh[0]];
+                logActivity({ kind: 'title', hi: fresh.length === 1 ? first.name : `${fresh.length} titles` });
+            }
+        }
+
+        // Unlock whatever my counters and profile have earned (runs after every update)
+        function checkMyTitles() {
+            const me = myPersonKey();
+            if (!me || !titlesReady || !titlesOn()) return;
+            const have = titlesFor(me);
+            const earned = TITLES.filter(t => !have[t.id] && t.req && t.req[0] !== 'titles' && statValue(me, t.req[0]) >= t.req[1]).map(t => t.id);
+            const profile = myProfile();
+            if (profile.avatar && !have['say-cheese']) earned.push('say-cheese');
+            if (profile.nameColor && !have['fresh-paint']) earned.push('fresh-paint');
+            const others = [...onlineNames()].filter(n => n !== appState.crewName).length;
+            if (Sync.mode === 'cloud' && others >= 3 && !have['welcome-wagon']) earned.push('welcome-wagon');
+            if (Sync.mode === 'cloud' && others >= 6 && !have['full-house']) earned.push('full-house');
+            const count = Object.keys(have).length + earned.length;
+            TITLES.filter(t => t.req && t.req[0] === 'titles' && !have[t.id] && count >= t.req[1]).forEach(t => earned.push(t.id));
+            if (earned.length) unlockTitles(earned);
+        }
+
+        // New titles for me since last look (earned here, on another device, or given by an admin): show the pop-up
+        function announceMyTitles() {
+            const me = myPersonKey();
+            if (!me || !titlesReady) return;
+            const now = Object.keys(titlesFor(me));
+            if (knownMyTitles === null || knownMyTitles.key !== me) { knownMyTitles = { key: me, ids: new Set(now) }; return; }
+            const fresh = now.filter(id => !knownMyTitles.ids.has(id) && TITLE_BY_ID[id]);
+            fresh.forEach(id => knownMyTitles.ids.add(id));
+            if (fresh.length && titlesOn()) showTitleUnlock(fresh.map(id => TITLE_BY_ID[id]));
+        }
+
+        const unlockQueue = [];
+        function showTitleUnlock(list) {
+            unlockQueue.push(...list.sort((a, b) => TITLE_TIERS.indexOf(b.tier) - TITLE_TIERS.indexOf(a.tier)));
+            if (document.getElementById('tt-unlock')) return;
+            const next = () => {
+                const t = unlockQueue.shift();
+                if (!t) return;
+                const box = document.createElement('div');
+                box.id = 'tt-unlock';
+                box.className = `tt-${t.tier}`;
+                box.innerHTML = `<div class="hd">${t.secret ? 'Secret title unlocked' : 'Title unlocked'}</div>${titleCardHtml(t)}
+                    <div class="ft">${t.how}${unlockQueue.length ? ` · <b>${unlockQueue.length} more</b>` : ''}</div>
+                    <button type="button" onclick="this.parentNode.remove(); openProfile(); showProfileTab('titles')">Wear it</button>`;
+                box.addEventListener('click', e => { if (e.target.tagName !== 'BUTTON') { box.remove(); next(); } });
+                document.body.appendChild(box);
+                if (fxOn('celebrate')) celebrate('harvest', box);
+                setTimeout(() => { if (box.isConnected) { box.remove(); next(); } }, unlockQueue.length > 3 ? 2500 : 5000);
+            };
+            next();
+        }
+
+        // ---- secrets you have to find ----
+        const clickStreak = { target: null, n: 0 };
+        document.addEventListener('click', e => {
+            const target = e.target.closest('#master-logo-container') ? 'logo' : e.target.closest('#footer-built') ? 'built' : e.target.closest('#live-clock') ? 'clock' : null;
+            if (target !== clickStreak.target) { clickStreak.target = target; clickStreak.n = 0; }
+            if (!target) return;
+            clickStreak.n += 1;
+            if (clickStreak.n >= 50) {
+                unlockTitles([{ logo: 'snoop', built: 'secret-stash', clock: 'time-bandit' }[target]]);
+                clickStreak.n = 0;
+            }
+        }, true);
+        const typed = { keys: [], text: '' };
+        const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        document.addEventListener('keydown', e => {
+            if (e.target.closest && e.target.closest('input, textarea, select, [contenteditable]')) return;
+            typed.keys = [...typed.keys, e.key.length === 1 ? e.key.toLowerCase() : e.key].slice(-10);
+            if (KONAMI.every((k, i) => typed.keys[i] === k)) unlockTitles(['cheat-code']);
+            if (e.key.length === 1) {
+                typed.text = (typed.text + e.key.toLowerCase()).slice(-20);
+                if (typed.text.endsWith('420')) unlockTitles(['puff-puff-pass']);
+                if (typed.text.endsWith('noelops')) unlockTitles(['name-drop']);
+                if (typed.text.endsWith('roll one up')) unlockTitles(['roll-one-up']);
+            }
+        });
+        const tasted = new Set();
+        document.addEventListener('mouseover', e => {
+            const card = e.target.closest && e.target.closest('#dx-strains .dx-sc[data-strain]');
+            if (!card || tasted.has(card.dataset.strain)) return;
+            tasted.add(card.dataset.strain);
+            if (DEFAULT_STRAINS.every(s => tasted.has(s.id))) unlockTitles(['taste-tester']);
+        });
+        const pageVisits = [];
+        function notePageVisit(tab) {
+            const now = Date.now();
+            pageVisits.push({ tab, at: now });
+            while (pageVisits.length && now - pageVisits[0].at > 10000) pageVisits.shift();
+            if (['dashboard', 'timers', 'inventory', 'sales'].every(p => pageVisits.some(v => v.tab === p))) unlockTitles(['speedrunner']);
+        }
+        function noteProfileChange(fields) {
+            if ('accent' in fields) { const n = localGet('noelops_accent_changes', 0) + 1; localSet('noelops_accent_changes', n); if (n >= 10) unlockTitles(['color-blind']); }
+            if (fields.avatar) { const n = localGet('noelops_avatar_changes', 0) + 1; localSet('noelops_avatar_changes', n); if (n >= 5) unlockTitles(['shape-shifter']); }
+        }
+        const pageOpenedAt = Date.now();
+        let aloneSince = null;
+        setInterval(() => {
+            if (Date.now() - pageOpenedAt >= (4 * 60 + 20) * 60e3) unlockTitles(['hotboxer']);
+            const alone = Sync.mode === 'cloud' && [...onlineNames()].filter(n => n !== appState.crewName).length === 0;
+            aloneSince = alone ? (aloneSince || Date.now()) : null;
+            if (aloneSince && Date.now() - aloneSince >= 2 * 3600e3) unlockTitles(['ghost']);
+        }, 60e3);
+
+        // ---- profile pop-up: click a name anywhere ----
+        function showcaseFor(name) {
+            const key = personKeyForName(name);
+            const have = titlesFor(key);
+            const profile = publicProfileFor(name) || {};
+            const picked = Array.isArray(profile.titleShow) ? profile.titleShow.filter(id => have[id] && TITLE_BY_ID[id]) : [];
+            const all = Object.keys(have).filter(id => TITLE_BY_ID[id]).map(id => TITLE_BY_ID[id]);
+            const byRarity = list => list.sort((a, b) => TITLE_TIERS.indexOf(b.tier) - TITLE_TIERS.indexOf(a.tier) || a.name.localeCompare(b.name));
+            const shown = picked.length && profile.titleAuto === false ? picked.map(id => TITLE_BY_ID[id]) : byRarity(all).slice(0, SHOWCASE_MAX);
+            return { all, shown };
+        }
+
+        function openPersonPop(name, anchor) {
+            closePersonPop();
+            const key = personKeyForName(name);
+            const member = Object.values(appState.crew).find(m => m.name === name);
+            const worn = wornTitleFor(name);
+            const { all, shown } = titlesOn() ? showcaseFor(name) : { all: [], shown: [] };
+            const online = onlineNames().has(name);
+            const pop = document.createElement('div');
+            pop.id = 'person-pop';
+            pop.setAttribute('role', 'dialog');
+            pop.innerHTML = `
+                <div class="banner">${worn ? titleCardHtml(worn, { noName: true, noTier: true }) : '<div class="tc tc-plain"></div>'}</div>
+                <div class="body">
+                    <div class="avrow"><span class="big">${avatarHtml(name)}<i class="${online ? 'on' : ''}"></i></span>
+                        <div class="min-w-0"><div class="nm">${nameHtml(name)}</div>${worn ? titleTagHtml(worn) : ''}</div></div>
+                    <div class="facts"><span><b>${statValue(key, 'harvests').toLocaleString()}</b> harvests</span><span><b>${statValue(key, 'bricks').toLocaleString()}</b> bricks pressed</span><span>${escapeHtml(member ? roleLabel(member).replace(' (stats only)', '') : 'Crew')}</span><span>${online ? '<b style="color:#4ade80">Online</b>' : ''}</span></div>
+                    ${titlesOn() ? `<div class="sec"><h4>Titles · ${all.length}</h4>${shown.length ? `<div class="roles">${shown.map(t => `<button type="button" class="role tt-${t.tier}" data-how="${escapeHtml(t.secret ? 'Secret title' : t.how.replace(/<[^>]+>/g, ''))}"><span class="dot"></span>${escapeHtml(t.name)}</button>`).join('')}${all.length > shown.length ? `<span class="role more">+${all.length - shown.length} more</span>` : ''}</div><p class="how"></p>` : '<p class="how">No titles yet.</p>'}</div>` : ''}
+                    <div class="acts">${pageAllowed('crew') ? `<button type="button" class="dx-act" onclick="closePersonPop(); openCrewMember(${jsArg(name)})"><i class="fa-solid fa-users mr-1"></i>Crew page</button>` : ''}
+                        ${name === appState.crewName ? `<button type="button" class="dx-act" onclick="closePersonPop(); openProfile(); showProfileTab('titles')"><i class="fa-solid fa-medal mr-1"></i>My titles</button>` : ''}</div>
+                </div>`;
+            document.body.appendChild(pop);
+            pop.addEventListener('click', e => {
+                const role = e.target.closest('.role[data-how]');
+                if (role) pop.querySelector('.how').textContent = `${role.textContent.trim()}: ${role.dataset.how}`;
+            });
+            const r = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : null;
+            const w = pop.offsetWidth, h = pop.offsetHeight;
+            if (r && innerWidth > 640) {
+                pop.style.left = `${Math.max(12, Math.min(innerWidth - w - 12, r.left))}px`;
+                pop.style.top = `${r.bottom + 8 + h > innerHeight ? Math.max(12, r.top - h - 8) : r.bottom + 8}px`;
+            } else pop.classList.add('center');
+        }
+
+        function closePersonPop() {
+            const pop = document.getElementById('person-pop');
+            if (pop) pop.remove();
+        }
+        document.addEventListener('click', e => {
+            const pop = document.getElementById('person-pop');
+            if (pop && !pop.contains(e.target) && !(e.target.closest && e.target.closest('[data-person]'))) closePersonPop();
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePersonPop(); });
+
+        // ---- My Profile → Titles ----
+        function setWornTitle(id) {
+            saveMyProfile({ title: id || null });
+            registerPresence();
+            renderProfileTitles();
+        }
+
+        function toggleShowcase(id, on) {
+            const p = myProfile();
+            let list = (Array.isArray(p.titleShow) ? p.titleShow : []).filter(x => x !== id);
+            if (on) {
+                if (list.length >= SHOWCASE_MAX) { showAlert(`You can show up to ${SHOWCASE_MAX}. Untick one first.`, 'info'); renderProfileTitles(); return; }
+                list.push(id);
+            }
+            saveMyProfile({ titleShow: list, titleAuto: false });
+            registerPresence();
+            renderProfileTitles();
+        }
+
+        function setShowcaseAuto(on) {
+            saveMyProfile({ titleAuto: on });
+            registerPresence();
+            renderProfileTitles();
+        }
+
+        function renderProfileTitles() {
+            const box = document.getElementById('profile-titles');
+            if (!box) return;
+            if (box.closest('.hidden')) { const btn = document.querySelector('[data-pf-tab="titles"]'); if (btn) btn.classList.toggle('hidden', !titlesOn()); return; } // only drawn while open
+            const tabBtn = document.querySelector('[data-pf-tab="titles"]');
+            if (tabBtn) tabBtn.classList.toggle('hidden', !titlesOn());
+            const me = myPersonKey();
+            if (!me || !titlesOn()) { box.innerHTML = '<p class="text-xs text-slate-400">Titles are turned off.</p>'; return; }
+            const have = titlesFor(me);
+            const profile = myProfile();
+            const worn = TITLE_BY_ID[profile.title] && have[profile.title] ? TITLE_BY_ID[profile.title] : null;
+            const auto = profile.titleAuto !== false;
+            const picked = new Set(auto ? showcaseFor(appState.crewName).shown.map(t => t.id) : (profile.titleShow || []).filter(id => have[id]));
+            const mine = TITLES.filter(t => have[t.id]);
+            const regular = TITLES.filter(t => !t.secret);
+            const secretsLeft = TITLES.filter(t => t.secret && !have[t.id]).length;
+            const group = cat => TITLES.filter(t => t.cat === cat);
+            const cardFor = t => {
+                const got = have[t.id];
+                if (t.secret && !got && !secretFound(t.id)) return '';
+                return `<div class="tt-item ${got ? '' : 'locked'} ${worn && worn.id === t.id ? 'worn' : ''}">
+                    <button type="button" ${got ? `onclick="setWornTitle('${t.id}')" title="Wear this title"` : 'disabled'}>${titleCardHtml(t, { still: !got })}</button>
+                    <div class="how">${got ? (worn && worn.id === t.id ? '<b>Wearing</b>' : 'Tap to wear') : t.secret ? 'Found by someone in the crew' : t.how}</div></div>`;
+            };
+            box.innerHTML = `
+                <div class="dx-pf-sec space-y-3">
+                    <h3>Wearing</h3>
+                    ${worn ? titleCardHtml(worn) : '<p class="text-xs text-slate-400">Nothing yet. Tap any title you\'ve unlocked below to wear it.</p>'}
+                    ${worn ? `<button type="button" class="text-xs text-slate-400 hover:text-white" onclick="setWornTitle(null)">Take it off</button>` : ''}
+                    <p class="text-[11px] text-slate-500">${mine.filter(t => !t.secret).length} of ${regular.length} unlocked${mine.some(t => t.secret) ? ` · ${mine.filter(t => t.secret).length} secret found` : ''}${secretsLeft ? ` · ${secretsLeft} secrets still hidden` : ''}</p>
+                </div>
+                <div class="dx-pf-sec space-y-3">
+                    <h3>Show on my profile <span class="text-slate-500 font-normal normal-case tracking-normal">· ${picked.size} / ${SHOWCASE_MAX}</span></h3>
+                    <label class="dx-toggle"><input type="checkbox" id="profile-title-auto" ${auto ? 'checked' : ''} onchange="setShowcaseAuto(this.checked)"><span class="sw"></span>
+                        <span><b>Pick my ${SHOWCASE_MAX} rarest for me</b><small>Turn off to choose them yourself.</small></span></label>
+                    ${mine.length ? `<div class="tt-pick">${mine.map(t => `<label class="tt-${t.tier} ${auto ? 'auto' : ''}"><input type="checkbox" ${picked.has(t.id) ? 'checked' : ''} ${auto ? 'disabled' : ''} onchange="toggleShowcase('${t.id}', this.checked)">${titleTagHtml(t)}</label>`).join('')}</div>` : '<p class="text-xs text-slate-400">Unlock some titles first.</p>'}
+                </div>
+                ${TITLE_CATS.concat('Secret').map(cat => { const cards = group(cat).map(cardFor).join(''); return cards ? `<div class="dx-pf-sec space-y-3"><h3>${cat === 'Secret' ? 'Secrets found' : escapeHtml(cat)}</h3><div class="tt-grid">${cards}</div></div>` : ''; }).join('')}`;
+        }
+
+        // ---- Admin → Titles ----
+        function adminTitlePeople() {
+            const people = Object.entries(appState.crew).map(([id, m]) => ({ key: personKey(id), name: m.name }));
+            if (!crewMode()) crewPeople().forEach(p => { if (!people.some(x => x.name === p.name)) people.push({ key: p.key, name: p.name }); });
+            return people.sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        function renderAdminTitles() {
+            const box = document.getElementById('admin-titles');
+            if (!box || box.contains(document.activeElement) || box.closest('.hidden')) return;
+            const people = adminTitlePeople();
+            const sel = document.getElementById('admin-title-person');
+            const current = sel ? sel.value : '';
+            const options = TITLE_CATS.concat('Secret').map(cat => `<optgroup label="${cat}">${TITLES.filter(t => t.cat === cat).map(t => `<option value="${t.id}">${escapeHtml(t.name)} · ${TIER_LABELS[t.tier]}</option>`).join('')}</optgroup>`).join('');
+            const personKeyNow = people.some(p => p.key === current) ? current : (people[0] || {}).key;
+            const theirs = personKeyNow ? TITLES.filter(t => titlesFor(personKeyNow)[t.id]) : [];
+            box.innerHTML = `
+                <label class="dx-toggle"><input type="checkbox" id="admin-titles-on" ${titlesOn() ? 'checked' : ''} onchange="saveTitlesOn(this.checked)"><span class="sw"></span>
+                    <span><b>Titles on</b><small>Turn off to hide titles, calling cards and unlocks for everyone. Nothing is lost.</small></span></label>
+                ${people.length ? `<div class="grid gap-3 sm:grid-cols-3 items-end">
+                    <label class="block text-xs font-semibold text-slate-300">Person<select id="admin-title-person" class="dx-input mt-1 w-full" onchange="renderAdminTitles()">${people.map(p => `<option value="${escapeHtml(p.key)}" ${p.key === personKeyNow ? 'selected' : ''}>${escapeHtml(p.name)}</option>`).join('')}</select></label>
+                    <label class="block text-xs font-semibold text-slate-300">Title<select id="admin-title-pick" class="dx-input mt-1 w-full">${options}</select></label>
+                    <button type="button" class="dx-btn dx-btn-g" onclick="adminGiveTitle()"><i class="fa-solid fa-gift mr-1"></i>Give title</button>
+                </div>
+                <div><p class="text-xs text-slate-400 mb-2">${theirs.length} ${theirs.length === 1 ? 'title' : 'titles'}. Click × to take one back.</p>
+                    <div class="flex flex-wrap gap-2">${theirs.map(t => `<span class="tt-admin-chip">${titleTagHtml(t)}<button type="button" title="Take back" onclick="adminTakeTitle('${t.id}')">×</button></span>`).join('') || '<span class="text-xs text-slate-500">None yet.</span>'}</div></div>` : '<p class="text-xs text-slate-400">No crew yet.</p>'}`;
+        }
+
+        function saveTitlesOn(on) {
+            if (!allowed('admin')) return;
+            writeShared({ 'settings/fx/titles': on });
+            showAlert(on ? 'Titles turned on.' : 'Titles turned off for everyone.', 'success');
+        }
+
+        function adminGiveTitle() {
+            if (!allowed('admin')) return;
+            const key = document.getElementById('admin-title-person').value;
+            const id = document.getElementById('admin-title-pick').value;
+            if (!key || !TITLE_BY_ID[id]) return;
+            if (titlesFor(key)[id]) return showAlert('They already have that title.', 'info');
+            writeShared({ [`titles/${statKey(key)}/${id}`]: timestampValue() });
+            showAlert(`Gave ${TITLE_BY_ID[id].name} to ${nameForKey(key)}.`, 'success');
+            setTimeout(renderAdminTitles, 50);
+        }
+
+        function adminTakeTitle(id) {
+            if (!allowed('admin')) return;
+            const key = document.getElementById('admin-title-person').value;
+            if (!key) return;
+            writeShared({ [`titles/${statKey(key)}/${id}`]: null });
+            showAlert(`Took ${TITLE_BY_ID[id].name} back from ${nameForKey(key)}.`, 'info');
+            setTimeout(renderAdminTitles, 50);
+        }
+
         // ---- Effects: living plants, celebrations, smoke, rolling numbers, holo cards, strain glow, ranks ----
         const FX_KEYS = ['plants', 'celebrate', 'smoke', 'roll', 'holo', 'glow'];
         const FX_INFO = {
@@ -2935,6 +3892,7 @@
                 on: Object.fromEntries(FX_KEYS.map(k => [k, on[k] !== false])),
                 stamp: typeof x.stamp === 'string' && x.stamp.trim() ? x.stamp.trim().slice(0, 12) : FX_DEFAULTS.stamp,
                 ranks: x.ranks !== false,
+                titles: x.titles !== false,
                 rankNames: FX_DEFAULTS.rankNames.map((d, i) => typeof names[i] === 'string' && names[i].trim() ? names[i].trim().slice(0, 14) : d),
                 rankAt
             };
@@ -3140,17 +4098,7 @@
                 <div class="space-y-3">${FX_KEYS.map(k => `<label class="dx-toggle"><input type="checkbox" data-admin-fx="${k}" ${fx.on[k] ? 'checked' : ''}><span class="sw"></span>
                     <span><b>${FX_INFO[k][0]}</b><small>${FX_INFO[k][1]}</small></span></label>`).join('')}</div>
                 <label class="block text-xs font-semibold text-slate-300 max-w-xs">Stamp word <span class="font-normal text-slate-500">(lands when something is logged going out)</span>
-                    <input type="text" id="admin-fx-stamp" maxlength="12" value="${escapeHtml(fx.stamp)}" class="dx-input mt-1 w-full font-bold tracking-widest uppercase"></label>
-                <div class="space-y-2">
-                    <label class="dx-toggle"><input type="checkbox" id="admin-fx-ranks" ${fx.ranks ? 'checked' : ''}><span class="sw"></span>
-                        <span><b>Harvest ranks</b><small>A badge next to names in Who's online, the crew list and My Profile.</small></span></label>
-                    <div class="overflow-x-auto"><table class="dx-sales-table" style="max-width:420px">
-                        <thead><tr><th>Badge</th><th>Name</th><th class="r">From harvests</th></tr></thead>
-                        <tbody>${fx.rankNames.map((name, i) => `<tr><td><span class="fx-rank t${i + 1}"><i class="fa-solid fa-cannabis"></i>${escapeHtml(name)}</span></td>
-                            <td><input type="text" data-rank-name="${i}" maxlength="14" value="${escapeHtml(name)}" class="dx-input w-full"></td>
-                            <td class="r"><input type="number" data-rank-at="${i}" min="1" step="1" value="${fx.rankAt[i]}" class="dx-input w-24 text-right font-mono"></td></tr>`).join('')}</tbody>
-                    </table></div>
-                </div>`;
+                    <input type="text" id="admin-fx-stamp" maxlength="12" value="${escapeHtml(fx.stamp)}" class="dx-input mt-1 w-full font-bold tracking-widest uppercase"></label>`;
         }
 
         function saveAdminFx() {
@@ -3159,9 +4107,7 @@
             const fx = cleanFxSettings({
                 on: Object.fromEntries([...box.querySelectorAll('[data-admin-fx]')].map(i => [i.dataset.adminFx, i.checked])),
                 stamp: document.getElementById('admin-fx-stamp').value.toUpperCase(),
-                ranks: document.getElementById('admin-fx-ranks').checked,
-                rankNames: [...box.querySelectorAll('[data-rank-name]')].map(i => i.value),
-                rankAt: [...box.querySelectorAll('[data-rank-at]')].map(i => i.value)
+                ranks: fxSettings().ranks, rankNames: fxSettings().rankNames, rankAt: fxSettings().rankAt, titles: fxSettings().titles
             });
             writeShared({ 'settings/fx': fx });
             document.activeElement && document.activeElement.blur();
@@ -3169,13 +4115,14 @@
         }
 
         // ---- Admin page tabs ----
-        const ADMIN_TABS = ['crew', 'locations', 'discord', 'logos', 'products', 'sales', 'effects', 'data'];
+        const ADMIN_TABS = ['crew', 'locations', 'discord', 'logos', 'products', 'sales', 'effects', 'titles', 'data'];
 
         function showAdminTab(name) {
             if (!ADMIN_TABS.includes(name)) name = 'crew';
             document.querySelectorAll('[data-admin-panel]').forEach(p => p.classList.toggle('hidden', p.dataset.adminPanel !== name));
             document.querySelectorAll('[data-admin-tab]').forEach(t => t.classList.toggle('on', t.dataset.adminTab === name));
             try { localStorage.setItem('noelops_admin_tab', name); } catch (e) { /* remembering the tab is optional */ }
+            if (name === 'titles') renderAdminTitles();
         }
 
         function savedAdminTab() {
@@ -3223,7 +4170,7 @@
         const ACCENT_SWATCHES = [142, 172, 195, 215, 250, 280, 320, 350, 20, 45];
         const NAME_COLORS = ['#f87171', '#fb923c', '#fbbf24', '#a3e635', '#4ade80', '#2dd4bf', '#38bdf8', '#818cf8', '#c084fc', '#f472b6'];
         // Personal settings saved with the profile (besides picture and background hue)
-        const PROFILE_KEYS = ['avatar', 'hue', 'accent', 'nameColor', 'compact', 'calm', 'alertSound', 'alertVolume', 'alertNotify', 'fxOff'];
+        const PROFILE_KEYS = ['avatar', 'hue', 'accent', 'nameColor', 'compact', 'calm', 'alertSound', 'alertVolume', 'alertNotify', 'fxOff', 'title', 'titleShow', 'titleAuto'];
         let accentPreview = null;
 
         function safeNameColor(value) {
@@ -3240,6 +4187,9 @@
                 alertSound: Boolean(p.alertSound),
                 alertVolume: p.alertVolume !== null && p.alertVolume !== undefined && Number.isFinite(volume) ? Math.max(0, Math.min(100, Math.round(volume))) : null,
                 alertNotify: Boolean(p.alertNotify),
+                title: typeof p.title === 'string' && TITLE_BY_ID[p.title] ? p.title : null, // worn title
+                titleShow: Array.isArray(p.titleShow) ? p.titleShow.filter(id => TITLE_BY_ID[id]).slice(0, SHOWCASE_MAX) : [], // shown on my profile
+                titleAuto: p.titleAuto !== false, // show my rarest automatically
                 fxOff: Object.fromEntries(FX_KEYS.filter(k => isPlainObject(p.fxOff) && p.fxOff[k] === true).map(k => [k, true])) // effects this person turned off
             };
         }
@@ -3289,6 +4239,7 @@
 
         // Save part of my profile: to the crew list when signed in as a member, otherwise to this device
         function saveMyProfile(fields) {
+            noteProfileChange(fields);
             const memberId = myMemberId();
             if (memberId) {
                 const changes = {};
@@ -3335,6 +4286,7 @@
             document.querySelectorAll('[data-pf-panel]').forEach(p => p.classList.toggle('hidden', p.dataset.pfPanel !== name));
             document.querySelectorAll('[data-pf-tab]').forEach(t => t.classList.toggle('on', t.dataset.pfTab === name));
             if (name === 'look') renderHuePicker(huePreview !== null ? huePreview : myHue()); // the wheel needs to be visible to measure
+            if (name === 'titles') renderProfileTitles();
         }
 
         function closeProfile() {
@@ -3691,7 +4643,7 @@
             if (member) return member;
             if (name === appState.crewName && !currentMember()) return appState.profileLocal;
             const online = appState.presence.find(p => p.client !== CLIENT_ID && p.name === name);
-            return online ? { avatar: safeAvatar(online.avatar), nameColor: safeNameColor(online.nameColor) } : {};
+            return online ? { avatar: safeAvatar(online.avatar), nameColor: safeNameColor(online.nameColor), title: online.title, titleShow: online.titleShow, titleAuto: online.titleAuto } : {};
         }
 
         function avatarFor(name) {
@@ -3704,9 +4656,20 @@
 
         // A crew name in bold, in the color that person picked
         function nameHtml(name) {
-            const color = name === SYSTEM_NAME ? null : nameColorFor(name);
-            return `<b${color ? ` style="color:${color}"` : ''}>${escapeHtml(name)}</b>`;
+            if (name === SYSTEM_NAME) return `<b>${escapeHtml(name)}</b>`;
+            const color = nameColorFor(name);
+            return `<b class="dx-person-link" data-person="${escapeHtml(name)}" title="See ${escapeHtml(name)}'s profile"${color ? ` style="color:${color}"` : ''}>${escapeHtml(name)}</b>`;
         }
+
+        // Clicking a name anywhere opens that person on the Crew page
+        document.addEventListener('click', event => {
+            const link = event.target.closest && event.target.closest('[data-person]');
+            if (!link || link.closest('#person-pop')) return;
+            if (isStatsOnly() || (crewMode() && !currentMember() && !isAdminUnlocked())) return;
+            event.preventDefault();
+            event.stopPropagation();
+            openPersonPop(link.dataset.person, link);
+        });
 
         function avatarHtml(name, extraClass = '') {
             if (name === SYSTEM_NAME) {
@@ -3760,6 +4723,8 @@
             // Crew members' pictures and name colors come from the crew list; anyone else shares theirs while online
             if (!currentMember() && appState.profileLocal.avatar) record.avatar = appState.profileLocal.avatar;
             if (!currentMember() && appState.profileLocal.nameColor) record.nameColor = appState.profileLocal.nameColor;
+            if (!currentMember() && appState.profileLocal.title) record.title = appState.profileLocal.title;
+            if (!currentMember()) { record.titleShow = appState.profileLocal.titleShow || []; record.titleAuto = appState.profileLocal.titleAuto !== false; }
             presenceRef.set(record)
                 .catch(err => console.error('Presence update failed:', err));
         }
@@ -3799,6 +4764,7 @@
         // `loc`/`loc2` are kept (not shown) so location-limited crew only see entries for their locations.
         const ACTIVITY_KINDS = {
             buds: { pre: 'updated', hi: 'bud counts', post: 'in a location' },
+            title: { pre: 'unlocked', hi: 'a title', post: '' },
             coca: { pre: 'updated', hi: 'coke counts', post: 'in a location' },
             meth: { pre: 'updated', hi: 'meth counts', post: 'in a location' },
             move: { pre: 'moved', hi: 'stock', post: 'between locations' },
@@ -3835,7 +4801,7 @@
                     who,
                     client: CLIENT_ID,
                     pre: text.pre,
-                    hi: text.hi,
+                    hi: kind === 'title' && typeof entry.hi === 'string' ? entry.hi.slice(0, 40) : text.hi,
                     post: text.post,
                     loc: entry.loc || null,
                     loc2: entry.loc2 || null,
@@ -3968,6 +4934,7 @@
                 const focus = captureFocusedInput();
                 const previousActivity = new Map(appState.activity.map(a => [a.id, a.hi]));
                 applySharedTree(tree);
+                titlesReady = true;
                 announceRemoteActivity(previousActivity);
                 recordDailySnapshot();
                 saveState(); // cache so the next page load renders instantly
@@ -4129,7 +5096,9 @@
         function switchTab(tabId) {
             const navTabId = tabId === 'planner' ? 'timers' : tabId; // the pot plan lives under Grows
             if (tabId === 'admin' && !hasAdminAccess()) tabId = 'login';
-            if (isStatsOnly() && ['inventory', 'planner', 'timers'].includes(tabId)) tabId = 'dashboard';
+            if (tabId !== 'admin' && tabId !== 'login' && !pageAllowed(tabId)) tabId = 'dashboard';
+            if (tabId === 'crew') setTimeout(renderCrewPage);
+            notePageVisit(tabId);
             if (tabId === 'sales' && !can('sales')) tabId = 'dashboard';
             if (tabId === 'sales') salesShown = SALES_PAGE_SIZE;
 
@@ -4137,14 +5106,8 @@
             const target = document.getElementById(`tab-${tabId}`);
             if (target) target.classList.remove('hidden');
 
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = 'nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200';
-            });
-
-            const activeBtn = document.getElementById(`nav-${navTabId}`);
-            if (activeBtn) {
-                activeBtn.className = 'nav-btn gl-on flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200';
-            }
+            // Only the highlight changes here; which buttons show is up to applyPageAccess()
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('gl-on', btn.id === `nav-${navTabId}`));
 
             if (tabId === 'login') {
                 const input = document.getElementById('admin-password-input');
@@ -4152,6 +5115,24 @@
             }
             if (tabId === 'admin') showAdminTab(savedAdminTab());
             renderGrowbarVisibility();
+        }
+
+        // Which pages someone can open: menu buttons and links to a page only show once they have the permission
+        function pageAllowed(page) {
+            if (page === 'dashboard') return true;
+            if (page === 'admin') return isAdminUnlocked();
+            if (isStatsOnly()) return false;
+            if (page === 'inventory') return can('inventory');
+            if (page === 'timers' || page === 'planner') return can('timers') || can('planner');
+            if (page === 'sales') return can('sales');
+            return true; // crew
+        }
+
+        function applyPageAccess() {
+            document.querySelectorAll('[data-page]').forEach(el => el.classList.toggle('hidden', !pageAllowed(el.dataset.page)));
+            const openTab = document.querySelector('.tab-content:not(.hidden)');
+            const page = openTab ? openTab.id.replace('tab-', '') : 'dashboard';
+            if (page !== 'login' && page !== 'admin' && !pageAllowed(page)) switchTab('dashboard');
         }
 
         function toggleMobileMenu() {
@@ -4181,11 +5162,15 @@
             renderAdminProducts();
             renderProfileEarnings();
             renderAdminFx();
+            renderCrewPage();
+            if (Sync.mode !== 'cloud') titlesReady = true;
+            checkMyTitles();
+            announceMyTitles();
+            renderProfileTitles();
+            renderAdminTitles();
             document.querySelectorAll('[data-sales-only]').forEach(el => el.classList.toggle('hidden', !can('sales')));
             const salesTab = document.getElementById('tab-sales');
             if (salesTab && !salesTab.classList.contains('hidden') && !can('sales')) switchTab('dashboard');
-            const badge = document.getElementById('active-timers-badge');
-            if (badge) badge.innerText = visibleLocations().length;
             fxReadyPing();
             const postalList = document.getElementById('timers-postal-list');
             if (postalList) postalList.innerText = visibleLocations().map(l => l.id).join(', ') || '—';
@@ -4195,8 +5180,7 @@
             // Stats-only crew: hide everything location-specific and leave any page they can't use
             const statsOnly = isStatsOnly();
             document.querySelectorAll('[data-detail-only]').forEach(el => el.classList.toggle('hidden', statsOnly));
-            const openTab = document.querySelector('.tab-content:not(.hidden)');
-            if (statsOnly && openTab && ['tab-inventory', 'tab-planner', 'tab-timers'].includes(openTab.id)) switchTab('dashboard');
+            applyPageAccess();
             const layout = document.getElementById('dx-layout');
             if (layout) layout.classList.toggle('solo', statsOnly);
             renderGrowbarVisibility();
@@ -4528,7 +5512,7 @@
                 const potential = Math.floor(inv.trimmed / BRICK_SIZE);
                 const flash = dashFlashes[strain.id] && dashFlashes[strain.id].until > now ? dashFlashes[strain.id] : null;
                 return `
-                    <div class="dx-glass dx-sc dx-tint fx-holo ${flash ? 'flash' : ''}" style="--tint:${strain.tint}">${holoLayers}
+                    <div class="dx-glass dx-sc dx-tint fx-holo ${flash ? 'flash' : ''}" data-strain="${strain.id}" style="--tint:${strain.tint}">${holoLayers}
                         ${flash ? `<span class="dx-flashtag">${escapeHtml(flash.label)}</span>` : ''}
                         <div class="logo">${getStrainLogo(strain.id)}</div>
                         <div class="name ${strain.nameColor}">${escapeHtml(strain.name)}</div>
@@ -4577,7 +5561,7 @@
         }
 
         function activityTextHtml(entry) {
-            return `${nameHtml(entry.who)} ${escapeHtml(entry.pre || '')} <b class="g">${escapeHtml(entry.hi || '')}</b> ${escapeHtml(entry.post || '')}`;
+            return `${nameHtml(entry.who)}${wornTitleFor(entry.who) ? ` ${wornTagFor(entry.who)}` : ''} ${escapeHtml(entry.pre || '')} <b class="g">${escapeHtml(entry.hi || '')}</b> ${escapeHtml(entry.post || '')}`;
         }
 
         function renderActivityFeed() {
@@ -4850,6 +5834,7 @@
             }).then(result => {
                 if (!result) return;
                 logActivity({ kind: 'move', loc: from, loc2: to });
+                trackAction('move', { moves: 1 });
                 offerUndo({ perm: 'inventory', bucket: from, kind: 'move', loc: from, loc2: to, deltas, text: `Moved everything from ${bucketLabel(from)} to ${bucketLabel(to)}.` });
             });
         }
@@ -5084,6 +6069,7 @@
             const kind = field === 'meth' ? 'meth' : 'coca';
             const madeField = madeFieldFor(field);
             if (madeField) recordMade(madeField, applied);
+            if (field === 'meth' && applied > 0) trackAction('meth', { meth: applied });
             logActivity({ kind, loc: bucket });
             offerUndo({ key: `q|${bucket}|${field}`, bucket, kind, deltas: [{ bucket, strainId: 'root', field, delta: applied }], made: madeField ? { [madeField]: applied } : {} });
         }
@@ -5097,6 +6083,7 @@
             const kind = field === 'meth' ? 'meth' : 'coca';
             const madeField = madeFieldFor(field);
             if (madeField) recordMade(madeField, value - current);
+            if (field === 'meth' && value > current) trackAction('meth', { meth: value - current });
             logActivity({ kind, loc: bucket });
             offerUndo({ key: `q|${bucket}|${field}`, bucket, kind, deltas: [{ bucket, strainId: 'root', field, delta: value - current }], made: madeField ? { [madeField]: value - current } : {} });
         }
@@ -5119,6 +6106,7 @@
                 if (!result) return showAlert(`Not enough leaves for a ${size} brick here. It takes ${leaves.toLocaleString()} leaves.`, 'warning');
                 recordMade('cokeMade', result.n);
                 celebrate('press', null, 'COKE');
+                trackAction('press', { coke: result.n, cokeLarge: size === 'large' ? result.n : 0 });
                 logActivity({ kind: 'coca', loc: bucket });
                 offerUndo({ key: `press-coke|${bucket}|${size}`, bucket, kind: 'coca', made: { cokeMade: result.n },
                     deltas: [{ bucket, strainId: 'root', field: 'coca', delta: -result.n * leaves }, { bucket, strainId: 'root', field, delta: result.n }],
@@ -5131,6 +6119,7 @@
             const applied = Math.max(-(appState.stock[bucket] ? appState.stock[bucket].coca : 0), delta);
             adjustShared(`stock/${bucket}/coca`, delta);
             if (applied === 0) return;
+            if (applied > 0) trackAction('coca', { coca: applied });
             logActivity({ kind: 'coca', loc: bucket });
             offerUndo({ key: `q|${bucket}|coca`, bucket, kind: 'coca', deltas: [{ bucket, strainId: 'coca', field: 'coca', delta: applied }] });
         }
@@ -5141,6 +6130,7 @@
             const current = appState.stock[bucket] ? appState.stock[bucket].coca : 0;
             if (value === current) return;
             writeShared({ [`stock/${bucket}/coca`]: value });
+            if (value > current) trackAction('coca', { coca: value - current });
             logActivity({ kind: 'coca', loc: bucket });
             offerUndo({ key: `q|${bucket}|coca`, bucket, kind: 'coca', deltas: [{ bucket, strainId: 'coca', field: 'coca', delta: value - current }] });
         }
@@ -5158,6 +6148,7 @@
                 return { amount };
             }).then(result => {
                 if (!result) return showAlert(`No untrimmed ${strainName(strainId)} to trim here.`, 'warning');
+                trackAction('trim', { trimmed: result.amount });
                 logActivity({ kind: 'buds', loc: bucket });
                 offerUndo({ key: `trim|${bucket}|${strainId}`, bucket, kind: 'buds',
                     deltas: [{ bucket, strainId, field: 'untrimmed', delta: -result.amount }, { bucket, strainId, field: 'trimmed', delta: result.amount }],
@@ -5179,6 +6170,7 @@
                 if (!result) return showAlert(`Not enough trimmed ${strainName(strainId)} here (${BRICK_SIZE} per brick).`, 'warning');
                 recordBricksMade(result.bricks);
                 celebrate('press', null, strainName(strainId).replace(/[^A-Za-z]/g, ''));
+                trackAction('press', { bricks: result.bricks });
                 logActivity({ kind: 'buds', loc: bucket });
                 offerUndo({ key: `press|${bucket}|${strainId}`, bucket, kind: 'buds', bricksMade: result.bricks,
                     deltas: [{ bucket, strainId, field: 'trimmed', delta: -result.bricks * BRICK_SIZE }, { bucket, strainId, field: 'bricks', delta: result.bricks }],
@@ -5351,6 +6343,7 @@
                 const form = document.getElementById('sale-form');
                 form.classList.remove('flash'); void form.offsetWidth; form.classList.add('flash');
                 celebrate('stamp', document.getElementById('sale-submit') || form);
+                trackAction('sale', { out: 1, outUnits: bricks });
                 const id = newActivityId();
                 const seller = personFromKey(document.getElementById('sale-seller').value);
                 const record = { strain: strainId, bricks, bucket, who: seller.name, by: appState.crewName || 'Someone', cut: cutFor(seller.id, seller.name), ts: timestampValue(), note };
@@ -5807,13 +6800,13 @@
             box.classList.toggle('hidden', !key);
             if (!key) return;
             const s = personStats(key);
-            box.innerHTML = `<h3 class="flex items-center gap-2">My Stats ${rankBadge(s.harvests)}</h3>
+            box.innerHTML = `<h3 class="flex items-center gap-2">My Stats ${wornTagFor(appState.crewName)}</h3>
                 <div class="dx-earn">
                     <div><div class="l">Harvests</div><div class="v">${s.harvests.toLocaleString()}</div></div>
                     <div><div class="l">Bud harvested</div><div class="v">${s.bud.toLocaleString()}</div></div>
                     <div><div class="l">≈ Bricks</div><div class="v">${Math.floor(s.bud / BRICK_SIZE).toLocaleString()}</div></div>
                 </div>
-                <p class="text-[11px] text-slate-500 mt-2">${nextRankText(s.harvests) ? `${escapeHtml(nextRankText(s.harvests))}. ` : ''}Counts every harvest you log with bud entered (a bare timer restart doesn't count).</p>`;
+                <p class="text-[11px] text-slate-500 mt-2">${titlesOn() ? `${Object.keys(titlesFor(key)).length} titles unlocked. ` : ''}Counts every harvest you log with bud entered (a bare timer restart doesn't count).</p>`;
         }
 
         function openLedger(type, toKey) {
@@ -5965,6 +6958,7 @@
                 const what = rootMove ? `${amount.toLocaleString()} ${(ROOT_FIELDS[field] || field).toLowerCase()}`
                     : `${amount.toLocaleString()} ${field === 'bricks' ? (amount === 1 ? 'brick' : 'bricks') : field} ${strainName(strainId)}`;
                 logActivity({ kind: 'move', loc: from, loc2: to });
+                trackAction('move', { moves: 1 });
                 const cellStrain = rootMove ? 'root' : strainId;
                 offerUndo({ bucket: from, kind: 'move', loc: from, loc2: to, text: `Moved ${what} to ${bucketLabel(to)}.`,
                     deltas: [{ bucket: from, strainId: cellStrain, field, delta: -amount }, { bucket: to, strainId: cellStrain, field, delta: amount }] });
@@ -6315,6 +7309,7 @@
         }
 
         function offerPlanUndo(locId, restore, text) {
+            trackAction('plan', { plans: 1 });
             offerUndo({ key: `plan|${locId}`, perm: 'planner', bucket: locKey(locId), kind: 'plan', restore, text });
         }
 
@@ -6400,6 +7395,7 @@
             if (!loc) return;
             const totalPots = Math.max(1, toCount(loc.pots) || 10);
             const plan = smartBalancePlan(locId, totalPots);
+            trackAction('plan', { smart: 1 });
             const restore = planRestore(locId);
             writeShared({ [locPath(locId, 'strainPots')]: plan });
             logActivity({ kind: 'plan', loc: locKey(locId) });
@@ -6531,6 +7527,7 @@
                 if (!idle.length) return;
                 const restore = timerRestore(idle);
                 writeShared(timerChanges(idle, true));
+                trackAction('start', { starts: idle.length });
                 logActivity({ kind: 'timer' });
                 offerUndo({ perm: 'timers', kind: 'timer', restore, text: `Started ${idle.length} ${idle.length === 1 ? 'timer' : 'timers'}: ${idle.map(l => l.id).join(', ')}.` });
             } else if (action === 'stop') {
@@ -6557,6 +7554,7 @@
 
         function harvestLocations(ids) {
             if (!ids.length) return;
+            if (ids.length >= 3 && ids.every(id => readyLocationIds().includes(id))) unlockTitles(['full-sweep']);
             harvestQueue = ids.slice(1);
             harvestQueueTotal = ids.length;
             openHarvestModal(ids[0]);
@@ -6646,6 +7644,7 @@
             if (loc) {
                 const restore = timerRestore([loc]);
                 writeShared(timerChanges([loc], true));
+                trackAction('start', { starts: 1 });
                 logActivity({ kind: 'timer', loc: locKey(locId) });
                 offerUndo({ perm: 'timers', bucket: locKey(locId), kind: 'timer', restore, text: `Timer ${restore[locPath(locId, 'startTime')] ? 'restarted' : 'started'} for Postal ${locId} (${formatDuration(loc.durationHours)})` });
             }
@@ -6668,6 +7667,8 @@
             const valid = harvestDestinations(loc);
             const bucket = valid.some(b => b.key === dest) ? dest : defaultHarvestDest(loc, valid);
             const total = Object.values(amounts).reduce((sum, v) => sum + v, 0);
+            const before = timerState(loc);
+            const quick = before.status === 'ready' && loc.startTime && syncNow() - (loc.startTime + loc.durationHours * 3600e3) <= 5 * 60e3;
             const restore = timerRestore([loc]);
             learned.forEach(path => { restore[path] = null; });
             writeShared(timerChanges([loc], true));
@@ -6694,6 +7695,7 @@
             }).then(result => {
                 if (!result) return;
                 logIt();
+                trackAction('harvest', quick ? { quick: 1 } : {});
                 const card = [...document.querySelectorAll('[data-tc-loc], [data-dx-loc]')].find(el => (el.dataset.tcLoc || el.dataset.dxLoc) === locId && el.getClientRects().length);
                 celebrate('harvest', card);
             });
@@ -6717,6 +7719,7 @@
             if (!idle.length) return showAlert('Every grow is already running.', 'info');
             const restore = timerRestore(idle);
             writeShared(timerChanges(idle, true));
+            trackAction('start', { starts: idle.length });
             logActivity({ kind: 'timer' });
             offerUndo({ perm: 'timers', kind: 'timer', restore, text: `Started ${idle.length} ${idle.length === 1 ? 'timer' : 'timers'}: ${idle.map(l => l.id).join(', ')}.` });
         }
@@ -6733,10 +7736,15 @@
 
         let tickCount = 0;
 
-        // The Grows badge pings while any grow you can see is ready
+        // The Grows badge shows how many grows you can see are ready to harvest (hidden when none), and pings
         function fxReadyPing() {
             const badge = document.getElementById('active-timers-badge');
-            if (badge) badge.classList.toggle('fx-ping', readyLocationIds().length > 0);
+            if (!badge) return;
+            const ready = readyLocationIds().length;
+            if (badge.textContent !== String(ready)) badge.textContent = ready;
+            badge.classList.toggle('hidden', ready === 0);
+            badge.classList.toggle('fx-ping', ready > 0);
+            badge.title = `${ready} ready to harvest`;
         }
 
         function tickTimers() {

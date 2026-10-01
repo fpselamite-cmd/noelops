@@ -196,6 +196,27 @@ Little touches that make the site feel alive:
 
 Admins set what's on for everyone, the stamp word and the rank names and harvest counts in **Admin → Effects**. Each person can turn effects off for themselves in **My Profile → Look → Effects**, and **Reduce motion** turns them all off.
 
+## Crew page
+
+The **Crew** page shows everyone in the crew as cards or a list (switch with **Cards / List**; your choice is remembered). Each person shows their role, harvest rank, whether they're online or when they were last active, harvests, bud brought in, how much they've logged going out and the last thing they did. Search by name, and sort by online, harvests, gone out, last active or name.
+
+- Click anyone's name anywhere on the site (Who's online, Live Activity, the Log, pop-ups) to jump to them on the Crew page.
+- **Their log** opens the Log filtered to that person; **My Profile** is on your own card.
+- Admins also see what each person can access, who's waiting for review, and an **Edit** button.
+
+**Menu and permissions:** each menu button only shows once someone has the permission for it: **Grows** needs timers or the grow planner, **Stash** needs inventory, **Log** needs the log-things-out permission, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
+
+## Titles
+
+120 titles to earn by doing things on the site: 92 you can see and work toward (harvests, bud, trimming, pressing, coke, coca leaves, meth, things going out, moving stock, starting grows and pot plans, streaks and odd hours, crew and profile) and 28 secret ones that nobody sees until someone in the crew finds one. Each title is a calling card in the style of old MW2 multiplayer titles, and its glow color is its rarity: Common, Uncommon, Rare, Epic, Legendary and Mythic (Legendary, Mythic and secret cards move).
+
+- **Unlocking:** you get a "Title unlocked" pop-up, and Live Activity tells the crew. Harvest counts that were already tracked count, so people start with what they've earned. Time-based titles use each person's own local time. Click secrets need at least 50 clicks in a row with no other clicks in between.
+- **My Profile → Titles:** wear one title (its card shows behind your name in Who's online and on the Crew page, and its tag shows next to your name in Live Activity), and pick up to 10 to show on your profile, or let it pick your 10 rarest. Locked titles show how to earn them.
+- **Click anyone's name** anywhere on the site to see their profile: the card they're wearing, their stats and their titles shown like Discord roles. Click a title to see how it was earned.
+- **Admin → Titles:** give anyone a title (secret ones too) for a big RP moment, take one back, or turn titles off for everyone. The Seedling / Grower / Kingpin ranks are now harvest titles.
+
+The secret titles live in the site's code, which is public on GitHub, so someone who reads the code could find them.
+
 ## Hosting on GitHub Pages
 
 1. In the GitHub repo, open **Settings → Pages**.
@@ -210,6 +231,19 @@ Admins set what's on for everyone, the stamp word and the rank names and harvest
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 🏆 Oct 1, 2026: Titles
+- **120 titles** to unlock as calling cards, MW2 style: 92 to grind for and **28 secret ones** to find
+- Rarity glows: Common, Uncommon, Rare, Epic, Legendary, Mythic
+- Wear one in **My Profile → Titles** and pick up to 10 to show off
+- Click anyone's name to see their profile and titles
+- Time-based titles go by your own local time. Happy hunting 👀
+
+### 👥 Oct 1, 2026: Crew page
+- New **Crew** page: everyone as cards or a list, with who's online, harvests, bud, what's gone out and the last thing they did
+- Click any name on the site to jump to that person
+- The **Grows** badge now only shows (and pings) the number of grows ready to harvest
+- Menu buttons only show once you have permission for that page, and **Admin** only shows for the admin
 
 ### ✨ Oct 1, 2026: Effects
 - Grow timers come alive: leaves sway, ready grows pulse purple and the **Grows** badge pings
