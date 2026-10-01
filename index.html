@@ -975,7 +975,7 @@
                     </div>
                     <div class="qs-step"><span>4</span>Details</div>
                     <div class="qs-details">
-                        <label>Sold by <span>(gets the seller's cut)</span>
+                        <label>Sold by <span data-admin-only class="hidden">(gets the seller's cut)</span>
                             <select id="sale-seller" class="dx-input w-full" onchange="saleDraft.sellerPicked = true"></select>
                         </label>
                         <label id="sale-price-box">Total price <span>(fills in from the default)</span>
@@ -1517,6 +1517,7 @@
                 </div>
             </div>
 
+            <div id="profile-stats" class="dx-pf-sec hidden"></div>
             <div id="profile-earnings" class="dx-pf-sec hidden"></div>
 
             <form class="dx-pf-sec" onsubmit="saveProfileName(event)">
@@ -1922,6 +1923,7 @@
             salesSettings: { hidePrices: false, prices: {}, defaultCut: 20 }, // Shared: price per brick defaults, and whether only admins see prices
             activity: [], // Shared activity feed, newest first
             yields: {}, // Shared: real harvest yields per strain, used for estimates
+            stats: {}, // Shared per-person counters: { [statKey(person key)]: { harvests, bud } }
             sales: [], // Shared: bricks going out, newest first
             ledger: [], // Shared: budget entries (payouts to crew, expenses), newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
@@ -1994,6 +1996,8 @@
                 });
             });
             appState.yields = yields;
+            appState.stats = Object.fromEntries(Object.entries(isPlainObject(appState.stats) ? appState.stats : {})
+                .filter(([, v]) => isPlainObject(v)).map(([k, v]) => [k, { harvests: toCount(v.harvests), bud: toCount(v.bud) }]));
             // Bricks out: [{ id, strain, bricks, bucket, who, ts, price, note }], newest first
             appState.sales = (Array.isArray(appState.sales) ? appState.sales : [])
                 .filter(x => isPlainObject(x) && x.id && DEFAULT_STRAINS.concat(PRODUCTS).some(st => st.id === x.strain) && toCount(x.bricks) > 0)
@@ -2206,6 +2210,7 @@
                 history: JSON.parse(JSON.stringify(state.history || {})),
                 crew: JSON.parse(JSON.stringify(state.crew || {})),
                 yields: JSON.parse(JSON.stringify(state.yields || {})),
+                stats: JSON.parse(JSON.stringify(state.stats || {})),
                 sales: Object.fromEntries((state.sales || []).map(({ id, ...record }) => [id, record])),
                 ledger: Object.fromEntries((state.ledger || []).map(({ id, ...record }) => [id, record]))
             };
@@ -2236,6 +2241,7 @@
             appState.presence = Object.values(isPlainObject(tree.presence) ? tree.presence : {}).filter(isPlainObject);
             appState.crew = isPlainObject(tree.crew) ? tree.crew : {};
             appState.yields = isPlainObject(tree.yields) ? tree.yields : {};
+            appState.stats = isPlainObject(tree.stats) ? tree.stats : {};
             appState.sales = Object.entries(isPlainObject(tree.sales) ? tree.sales : {}).map(([id, record]) => ({ ...record, id }));
             normalizeState();
         }
@@ -2655,14 +2661,14 @@
             const onlineRows = [...online.values()].sort((a, b) => (b.you - a.you) || a.name.localeCompare(b.name)).map(r => `
                 <div class="dx-person">
                     <span class="av">${avatarHtml(r.name)}<i class="on"></i></span>
-                    <div class="who"><b>${nameHtml(r.name)}</b><span>${escapeHtml(roleText(r.name))}${r.since ? ` · joined ${relativeTime(r.since)}` : ''}${r.devices > 1 ? ` · ${r.devices} devices` : ''}</span></div>
+                    <div class="who"><b>${nameHtml(r.name)}</b><span>${escapeHtml(roleText(r.name))}${r.since ? ` · joined ${relativeTime(r.since)}` : ''}${r.devices > 1 ? ` · ${r.devices} devices` : ''}${harvestsTag(r.name)}</span></div>
                     ${r.you ? '<span class="tag you">You</span>' : ''}
                 </div>`).join('');
             const offline = crewMode() ? Object.values(appState.crew).filter(m => !online.has(m.name)).sort((a, b) => (b.pending - a.pending) || a.name.localeCompare(b.name)) : [];
             const offlineRows = offline.map(m => `
                 <div class="dx-person off">
                     <span class="av">${avatarHtml(m.name)}</span>
-                    <div class="who"><b>${nameHtml(m.name)}</b><span>${escapeHtml(roleLabel(m).replace(' (stats only)', ''))}</span></div>
+                    <div class="who"><b>${nameHtml(m.name)}</b><span>${escapeHtml(roleLabel(m).replace(' (stats only)', ''))}${harvestsTag(m.name)}</span></div>
                     ${m.pending && hasAdminAccess() ? '<span class="tag new">New</span>' : '<span class="tag">Offline</span>'}
                 </div>`).join('');
             document.querySelector('#online-count span:last-child').textContent = `${online.size} online`;
@@ -2670,6 +2676,11 @@
                 `<h4>Online now</h4>${onlineRows || '<p class="text-xs dx-muted px-2 py-2">Nobody else is here right now.</p>'}` +
                 (offlineRows ? `<h4>Offline</h4>${offlineRows}` : '') +
                 (Sync.mode !== 'cloud' ? '<p class="text-[11px] dx-muted px-2 pt-2">Live sync is off, so only this device shows.</p>' : '');
+        }
+
+        function harvestsTag(name) {
+            const n = personStats(personKeyForName(name)).harvests;
+            return n ? ` · <i class="fa-solid fa-seedling text-weed-500"></i> ${harvestsLabel(n)}` : '';
         }
 
         // ---- Admin: crew panel ----
@@ -2700,7 +2711,7 @@
                             <div class="flex items-center gap-2"><b class="text-white" style="${m.nameColor ? `color:${m.nameColor}` : ''}">${escapeHtml(m.name)}</b><span class="text-[11px] text-weed-400 font-semibold">${escapeHtml(roleLabel(m))}</span>${m.pending ? '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-black">New · needs review</span>' : ''}${m.pinHash ? '' : '<span class="text-[11px] text-amber-300 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i>No PIN: click Edit to set one</span>'}</div>
                             <div>${PERMISSIONS.map(p => `<span class="dx-pill ${m.perms[p.key] ? '' : 'off'}">${p.label}</span>`).join('')}</div>
                             <div class="mt-1">${where}</div>
-                            <div class="mt-1 text-[11px] text-slate-400">Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
+                            <div class="mt-1 text-[11px] text-slate-400"><i class="fa-solid fa-seedling text-weed-500"></i> <b class="text-slate-200">${harvestsLabel(personStats(personKey(id)).harvests)}</b> · Sales cut <b class="text-slate-200">${cutFor(id)}%</b>${m.cut === null || m.cut === undefined ? ' (default)' : ''} · Earned <b class="text-slate-200">${money(earningsFor(id).earned)}</b> · Owed <b class="${earningsFor(id).owed > 0 ? 'text-amber-300' : 'text-slate-200'}">${money(earningsFor(id).owed)}</b></div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <button onclick="openCrewEditor(${jsArg(id)})" class="px-2.5 py-1 rounded bg-weed-950 hover:bg-weed-900 text-weed-300 text-xs font-semibold border border-weed-700"><i class="fa-solid ${m.pending ? 'fa-user-check' : 'fa-pen'} mr-1"></i>${m.pending ? 'Review' : 'Edit'}</button>
@@ -5150,12 +5161,13 @@
             const onPage = !document.getElementById('tab-sales').classList.contains('hidden');
             const list = onPage ? filteredSales() : visibleSales();
             const prices = canSeePrices();
+            const cuts = prices && hasAdminAccess(); // cuts stay behind the scenes
             const cell = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
-            const lines = [['Date', 'Time', 'Sold by', 'Product', 'Qty', 'From', ...(prices ? ['Price', 'Cut %', 'Seller earned'] : []), 'Note', 'Logged by'].map(cell).join(',')];
+            const lines = [['Date', 'Time', 'Sold by', 'Product', 'Qty', 'From', ...(prices ? ['Price'] : []), ...(cuts ? ['Cut %', 'Seller earned'] : []), 'Note', 'Logged by'].map(cell).join(',')];
             list.forEach(x => {
                 const d = new Date(x.ts - Sync.serverOffset);
                 lines.push([dayKeyOf(d), d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), x.who, strainName(x.strain), x.bricks, bucketLabel(x.bucket),
-                    ...(prices ? [x.price ?? '', x.price === null ? '' : (x.cut !== null ? x.cut : cutFor(x.sellerId)), x.price === null ? '' : saleEarning(x)] : []), x.note, x.by].map(cell).join(','));
+                    ...(prices ? [x.price ?? ''] : []), ...(cuts ? [x.price === null ? '' : (x.cut !== null ? x.cut : cutFor(x.sellerId)), x.price === null ? '' : saleEarning(x)] : []), x.note, x.by].map(cell).join(','));
             });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv' }));
@@ -5267,6 +5279,26 @@
             return p.id && appState.crew[p.id] ? appState.crew[p.id].name : (fallback || p.name);
         }
 
+        // Database key for a person's counters (names can hold characters keys can't)
+        function statKey(key) {
+            return encodeURIComponent(key).replace(/\./g, '%2E');
+        }
+
+        function personStats(key) {
+            const s = key ? (appState.stats || {})[statKey(key)] : null;
+            return { harvests: s ? toCount(s.harvests) : 0, bud: s ? toCount(s.bud) : 0 };
+        }
+
+        // A crew member's person key from their name (falls back to a plain name)
+        function personKeyForName(name) {
+            const entry = Object.entries(appState.crew).find(([, m]) => m.name === name);
+            return entry ? personKey(entry[0]) : personKey(null, name);
+        }
+
+        function harvestsLabel(n) {
+            return `${n.toLocaleString()} ${n === 1 ? 'harvest' : 'harvests'}`;
+        }
+
         function myPersonKey() {
             return currentMember() ? personKey(appState.session.memberId) : (appState.crewName ? personKey(null, appState.crewName) : null);
         }
@@ -5334,10 +5366,9 @@
             const period = document.getElementById('sales-f-period').value;
             const since = period === 'all' ? 0 : syncNow() - Number(period) * 86400e3;
             const periodLabel = period === 'all' ? 'all time' : `last ${period} days`;
-            if (!canSeePrices()) {
-                // Prices hidden from crew: just your own earnings
-                const me = myPersonKey() ? budgetPeople(since).find(p => p.key === myPersonKey()) : null;
-                box.innerHTML = me ? `<div class="dx-glass dx-budget"><div class="dx-sec"><h2><i class="fa-solid fa-sack-dollar text-amber-400 mr-1"></i>Your Earnings</h2></div>${earningsHtml(me)}</div>` : '';
+            if (!hasAdminAccess()) {
+                // Cuts and payouts stay behind the scenes for now: admin only
+                box.innerHTML = '';
                 return;
             }
             const all = budgetTotals();
@@ -5403,8 +5434,10 @@
 
         // My Profile: your own sales and earnings (always visible to you)
         function renderProfileEarnings() {
+            renderProfileStats();
             const box = document.getElementById('profile-earnings');
             if (!box) return;
+            if (!hasAdminAccess()) { box.classList.add('hidden'); box.innerHTML = ''; return; } // cuts stay behind the scenes
             const key = myPersonKey();
             const me = key ? budgetPeople(syncNow() - 30 * 86400e3).find(p => p.key === key) : null;
             const member = currentMember();
@@ -5413,6 +5446,23 @@
             const cut = member ? cutFor(appState.session.memberId) : appState.salesSettings.defaultCut;
             box.innerHTML = `<h3>My Earnings</h3>${earningsHtml(me || { earnedAll: 0, paidAll: 0, owed: 0 })}
                 <p class="text-[11px] text-slate-500 mt-2">Your cut is <b class="text-slate-300">${cut}%</b> of what you sell.${me ? ` Last 30 days: ${me.bricks} bricks sold for ${money(me.sales)}.` : ''}</p>`;
+        }
+
+        // My Profile: your harvest count (and how much bud they brought in)
+        function renderProfileStats() {
+            const box = document.getElementById('profile-stats');
+            if (!box) return;
+            const key = myPersonKey();
+            box.classList.toggle('hidden', !key);
+            if (!key) return;
+            const s = personStats(key);
+            box.innerHTML = `<h3>My Stats</h3>
+                <div class="dx-earn">
+                    <div><div class="l">Harvests</div><div class="v">${s.harvests.toLocaleString()}</div></div>
+                    <div><div class="l">Bud harvested</div><div class="v">${s.bud.toLocaleString()}</div></div>
+                    <div><div class="l">≈ Bricks</div><div class="v">${Math.floor(s.bud / BRICK_SIZE).toLocaleString()}</div></div>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-2">Counts every grow you harvest from the Grow Timers page.</p>`;
         }
 
         function openLedger(type, toKey) {
@@ -6268,9 +6318,17 @@
             const restore = timerRestore([loc]);
             learned.forEach(path => { restore[path] = null; });
             writeShared(timerChanges([loc], true));
+            // Count it on the harvester's profile
+            const counters = {};
+            const me = myPersonKey();
+            if (me) {
+                counters[`stats/${statKey(me)}/harvests`] = 1;
+                if (total) counters[`stats/${statKey(me)}/bud`] = total;
+                Object.entries(counters).forEach(([path, n]) => adjustShared(path, n));
+            }
             const logIt = () => {
                 logActivity({ kind: 'harvest', loc: locKey(locId) });
-                offerUndo({ perm: 'timers', bucket: locKey(locId), kind: 'harvest', restore,
+                offerUndo({ perm: 'timers', bucket: locKey(locId), kind: 'harvest', restore, counters,
                     deltas: Object.entries(amounts).map(([strainId, amount]) => ({ bucket, strainId, field: 'untrimmed', delta: amount })),
                     text: total > 0
                         ? `Added ${total.toLocaleString()} untrimmed from Postal ${locId} to ${bucket === locKey(locId) ? 'its on-site storage' : bucketLabel(bucket)}. New ${formatDuration(loc.durationHours)} cycle started.`
@@ -7196,9 +7254,10 @@
                 entry.restore = { ...(opts.restore || {}), ...entry.restore }; // keep the oldest values
                 entry.bricksMade += opts.bricksMade || 0;
                 Object.entries(opts.made || {}).forEach(([f, n]) => { entry.made[f] = (entry.made[f] || 0) + n; });
+                Object.entries(opts.counters || {}).forEach(([p, n]) => { entry.counters[p] = (entry.counters[p] || 0) + n; });
             } else {
                 entry = { key: opts.key, perm: opts.perm || 'inventory', bucket: opts.bucket, kind: opts.kind, loc: opts.loc, loc2: opts.loc2, text: opts.text,
-                    deltas: mergeDeltas(opts.deltas || []), restore: { ...(opts.restore || {}) }, bricksMade: opts.bricksMade || 0, made: { ...(opts.made || {}) }, done: false };
+                    deltas: mergeDeltas(opts.deltas || []), restore: { ...(opts.restore || {}) }, bricksMade: opts.bricksMade || 0, made: { ...(opts.made || {}) }, counters: { ...(opts.counters || {}) }, done: false };
                 entry.toast = pushToast('', 'success', UNDO_MS);
                 if (!entry.toast) return;
                 lastUndo = entry;
@@ -7231,6 +7290,7 @@
             if (Object.keys(entry.restore).length) writeShared(entry.restore);
             if (entry.bricksMade) recordBricksMade(-entry.bricksMade);
             Object.entries(entry.made || {}).forEach(([f, n]) => { if (n) recordMade(f, -n); });
+            Object.entries(entry.counters || {}).forEach(([p, n]) => { if (n) adjustShared(p, -n); });
             if (entry.kind) logActivity({ kind: entry.kind, loc: entry.loc || entry.bucket, loc2: entry.loc2 });
             showAlert('Undone.', 'info');
         }

@@ -142,12 +142,13 @@ The **Sales** page (in the main menu) is the log of bricks going out:
 
 **Budget** (top of the Sales page):
 
+- The budget is **admin only** for now (behind the scenes): crew don't see cuts, earnings, payouts or the crew bank.
 - Every sale is credited to the person who sold it, and they earn their **cut** of the price (a %). The default cut is set in **Admin → Sales**; give someone a different cut when editing them in **Admin → Crew**. Each sale keeps the cut it had at the time.
 - **Crew bank** = all sales income, minus payouts and expenses. **Owed to crew** = what sellers have earned but haven't been paid yet.
 - **Payouts by person** ranks sellers by what they earned, with sold / earned / paid / owed. Admins click **Pay** to record paying someone (it fills in what they're owed), or **Record Expense** for crew spending. Both can be undone or removed.
-- Everyone sees their own earned / paid / owed in **My Profile**, and admins see each person's cut and what they're owed in the crew list.
+- Admins see each person's cut and what they're owed in the crew list.
 
-**Who can use it:** the **Sales / bricks out** permission on each person (Admin → Crew) controls the Sales page and logging. Managers have it by default; Growers and Viewers don't. In **Admin → Sales** you can also set default prices, turn on **Only admins see prices** (crew then only see their own earnings), export the log, or clear it.
+**Who can use it:** the **Sales / bricks out** permission on each person (Admin → Crew) controls the Sales page and logging. Managers have it by default; Growers and Viewers don't. In **Admin → Sales** you can also set default prices, turn on **Only admins see prices**, export the log, or clear it.
 
 ## Grow Planner
 
@@ -164,6 +165,7 @@ Plan which strains go in each location's pots.
 The button with your picture and name in the top right (or **My Profile** in the phone menu) opens your profile. It has three tabs.
 
 **Account**
+- **My Stats:** how many grows you've harvested, how much bud you brought in, and about how many bricks that makes. Your harvest count also shows next to your name in **Who's online** (and on the crew list for admins). Undoing a harvest takes it back off.
 - **Picture:** upload any image. It's cropped to a square, shrunk, and shown everywhere your initials used to be (header, who's online, activity feed, crew list).
 - **Name:** change the name you show up as. It has to be different from everyone else's on the crew.
 - **PIN:** type your current PIN, then the new one twice. You stay signed in on that device; your other devices ask for the new PIN.
@@ -196,6 +198,11 @@ For crew members, everything is saved to their profile and follows them to any d
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 🌱 Oct 1, 2026: Harvest counts on profiles
+- **My Profile** now has **My Stats**: how many grows you've harvested, total bud and about how many bricks that makes
+- Everyone's harvest count shows next to their name in **Who's online**
+- Seller cuts, earnings and the budget are admin only for now
 
 ### 🏠 Oct 1, 2026: Stash houses
 - Add stash houses in **Admin → Locations**. Most grow ops don't hold stock anymore, so harvests go straight to their stash house (pick where in the harvest form)
