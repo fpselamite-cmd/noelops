@@ -438,6 +438,76 @@
         .dx-inv .totline.mid b { font-size: 18px; color: hsl(var(--acc-h) 84% 85%); }
         .dx-inv .totline.minor { color: #64748b; font-size: 11px; }
         .dx-inv .totline.minor b { color: #94a3b8; font-weight: 600; }
+        /* Grow planner */
+        .dx-plan-head { padding: 18px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+        .dx-plan-head .pid { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 900; color: #f1f5f2; line-height: 1; }
+        .dx-plan-head .alias { font-size: 12px; color: #8a9a8e; margin-top: 4px; }
+        .dx-plan-pots { display: flex; align-items: center; gap: 6px; }
+        .dx-plan-pots .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #8a9a8e; font-weight: 800; margin-right: 4px; }
+        .dx-plan-pots input { width: 70px; text-align: center; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 16px; }
+        .dx-plan-pots .dx-step { width: 34px; }
+        .dx-plan-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+        .dx-plan-actions .dx-act { flex: none; padding: 8px 12px; }
+        .dx-meter { width: 100%; }
+        .dx-meter .bar { display: flex; height: 14px; border-radius: 99px; overflow: hidden; background: rgba(255, 255, 255, 0.06); }
+        .dx-meter .bar span { height: 100%; border-right: 1px solid rgba(0, 0, 0, 0.35); }
+        .dx-meter .bar span:last-child { border-right: 0; }
+        .dx-meter .bar .over { background: repeating-linear-gradient(-45deg, #ef4444 0 6px, #7f1d1d 6px 12px); }
+        .dx-meter .txt { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; margin-top: 6px; font-weight: 700; }
+        .dx-meter .ok { color: hsl(var(--acc-h) 69% 58%); }
+        .dx-meter .under { color: #fbbf24; }
+        .dx-meter .overtxt { color: #f87171; }
+        .dx-plan-totals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+        .dx-plan-totals > div { border-radius: 12px; padding: 10px 12px; background: rgba(6, 10, 7, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .dx-plan-totals .l { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #8a9a8e; font-weight: 800; }
+        .dx-plan-totals .v { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 800; color: #e6efe8; }
+        .dx-plan-totals .v.hot { color: hsl(var(--acc-h) 69% 58%); text-shadow: 0 0 14px hsl(var(--acc-h) 69% 58% / 0.4); }
+        .dx-plan-totals .s { font-size: 10px; color: #64748b; }
+        .dx-plan-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+        .dx-ps { padding: 12px; display: flex; flex-direction: column; gap: 8px; transition: opacity 0.2s; }
+        .dx-ps.zero { opacity: 0.55; }
+        .dx-ps.zero:hover, .dx-ps.zero:focus-within { opacity: 1; }
+        .dx-ps .head { display: flex; align-items: center; gap: 8px; min-width: 0; }
+        .dx-ps .logo { width: 44px; height: 44px; flex-shrink: 0; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)); display: flex; align-items: center; justify-content: center; }
+        .dx-ps .logo img { width: 100%; height: 100%; object-fit: contain; }
+        .dx-ps .nm { font-weight: 800; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-ps .stepper { display: grid; grid-template-columns: 30px 1fr 30px; gap: 5px; }
+        .dx-ps .stepper .dx-step { height: 30px; }
+        .dx-ps .stepper input { width: 100%; text-align: center; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 14px; padding: 4px; }
+        .dx-ps .est { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
+        .dx-ps .est b { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 800; color: hsl(var(--acc-h) 69% 58%); }
+        .dx-ps .est span { font-size: 10px; color: #8a9a8e; }
+        .dx-ps .src { font-size: 10px; color: #64748b; display: flex; justify-content: space-between; gap: 6px; }
+        .dx-ps .fill-rest { font-size: 10px; font-weight: 800; color: #fbbf24; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 8px; padding: 3px 6px; }
+        .dx-ps .fill-rest:hover { background: rgba(251, 191, 36, 0.2); }
+        .dx-overview .scroll { overflow-x: auto; padding: 10px 8px 6px; }
+        .dx-overview table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .dx-overview th, .dx-overview td { padding: 7px 10px; text-align: center; border-bottom: 1px solid hsl(var(--acc-h) 69% 58% / 0.08); white-space: nowrap; }
+        .dx-overview thead th { font-size: 11px; color: #8a9a8e; font-weight: 800; vertical-align: bottom; }
+        .dx-overview th.strain { text-align: left; font-weight: 800; }
+        .dx-overview th.strain .logo { display: inline-flex; width: 26px; height: 26px; vertical-align: middle; margin-right: 8px; }
+        .dx-overview th.strain .logo img { width: 100%; height: 100%; object-fit: contain; }
+        .dx-overview td { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #e6efe8; }
+        .dx-overview td.nil { color: #334155; }
+        .dx-overview tr.nil-row { opacity: 0.55; }
+        .dx-overview td.tot { color: #cbd5e1; background: rgba(255, 255, 255, 0.02); }
+        .dx-overview td.br { color: hsl(var(--acc-h) 69% 58%); font-weight: 800; }
+        .dx-overview td.br.big { font-size: 18px; text-shadow: 0 0 14px hsl(var(--acc-h) 69% 58% / 0.45); }
+        .dx-overview tfoot th, .dx-overview tfoot td { border-bottom: 0; border-top: 1px solid hsl(var(--acc-h) 69% 58% / 0.2); }
+        .dx-overview .alloc { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #64748b; }
+        .dx-overview .alloc.under { color: #fbbf24; }
+        .dx-overview .alloc.over { color: #f87171; }
+        .dx-tab .alloc { font-size: 10px; font-family: 'JetBrains Mono', monospace; padding: 1px 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.06); }
+        .dx-tab .alloc.under { color: #fbbf24; }
+        .dx-tab .alloc.over { color: #f87171; }
+        @media (max-width: 1180px) { .dx-plan-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        @media (max-width: 960px) { .dx-plan-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 640px) {
+            .dx-plan-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .dx-plan-totals .v { font-size: 16px; }
+        }
+        body.dx-compact .dx-ps .logo { width: 30px; height: 30px; }
+        body.dx-compact .dx-ps .est b { font-size: 18px; }
         .dx-where { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; padding: 5px 0; border-top: 1px solid hsl(var(--acc-h) 69% 58% / 0.08); }
         .dx-where b { font-family: 'JetBrains Mono', monospace; color: #e6efe8; }
 
@@ -598,85 +668,17 @@
                 <div id="inv-grid" class="dx-inv-grid"></div>
             </section>
 
-            <section id="tab-planner" class="tab-content hidden space-y-8">
-                
-                <!-- Grow Planner Header -->
-                <div class="glass-card p-6 rounded-2xl border-weed-900 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <section id="tab-planner" class="tab-content hidden">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-weed-950 text-weed-400 text-xs border border-weed-800 font-mono">Location-Based Strategy Engine</span>
-                            <h1 class="text-2xl font-black text-white">Location Grow Planner</h1>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-1">
-                            Configure individual grow plans for each postal location. 1 Pot = 4 Plants (~49.5 avg yield per plant per 36h cycle).
-                        </p>
+                        <h1 class="text-2xl font-black text-white">Grow Planner</h1>
+                        <p class="text-xs text-slate-400 mt-1">Plan which strains go in each location's pots. <span class="text-weed-400 font-semibold">1 pot = 4 plants, 750 bud = 1 brick.</span> <span id="planner-yield-note"></span></p>
                     </div>
-
-                    <div class="flex items-center space-x-2 bg-darkbg/80 px-4 py-2 rounded-xl border border-weed-900/80">
-                        <i class="fa-solid fa-calculator text-weed-400"></i>
-                        <span class="text-xs text-slate-300">Conversion Rate: <span class="text-weed-400 font-mono font-bold">750 Bud / Brick</span></span>
-                    </div>
+                    <button onclick="switchTab('admin')" data-admin-only class="dx-tab self-start md:self-auto"><i class="fa-solid fa-plus"></i>Add / Manage Locations</button>
                 </div>
-
-                <!-- Global Summary Metrics Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    
-                    <div class="glass-card rounded-2xl p-5 border-weed-900/60">
-                        <p class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">Global Active Pots</p>
-                        <div class="flex items-baseline space-x-2">
-                            <span id="planner-total-pots" class="text-3xl font-extrabold text-white font-mono">0</span>
-                            <span class="text-xs text-weed-400">Pots</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-2"><i class="fa-solid fa-leaf text-weed-500 mr-1"></i><span id="planner-total-plants" class="font-bold text-slate-300">0</span> Total Plants across all locations</p>
-                    </div>
-
-                    <div class="glass-card rounded-2xl p-5 border-weed-900/60">
-                        <p class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">36H Global Est. Bud</p>
-                        <div class="flex items-baseline space-x-2">
-                            <span id="planner-avg-yield" class="text-3xl font-extrabold text-weed-300 font-mono">0</span>
-                            <span class="text-xs text-slate-400">Buds</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-2">Range: <span id="planner-min-yield" class="font-mono text-slate-400">0</span> - <span id="planner-max-yield" class="font-mono text-slate-400">0</span></p>
-                    </div>
-
-                    <div class="glass-card rounded-2xl p-5 border-weed-500/40 bg-weed-950/20">
-                        <p class="text-xs uppercase font-bold tracking-wider text-weed-400 mb-1">36H Total Bricks Potential</p>
-                        <div class="flex items-baseline space-x-2">
-                            <span id="planner-total-bricks" class="text-3xl font-extrabold text-weed-400 font-mono neon-text-green">0.0</span>
-                            <span class="text-xs text-slate-400">Bricks / 36h</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-2">All locations combined output</p>
-                    </div>
-
-                    <div class="glass-card rounded-2xl p-5 border-weed-900/60">
-                        <p class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">Active Grow Locations</p>
-                        <div class="flex items-baseline space-x-2">
-                            <span id="planner-active-locations-count" class="text-3xl font-extrabold text-emerald-400 font-mono">0</span>
-                            <span class="text-xs text-slate-400">Locations</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-2">Individual operational plans active</p>
-                    </div>
-
-                </div>
-
-                <!-- Per Location Grow Plans View -->
-                <div class="space-y-6">
-                    <!-- Location Selector Navigation Tabs -->
-                    <div class="flex items-center justify-between border-b border-weed-900 pb-2 overflow-x-auto scrollbar-thin">
-                        <div id="planner-location-tabs" class="flex space-x-2">
-                            <!-- Dynamic location tab buttons injected via JS -->
-                        </div>
-                        <button onclick="switchTab('admin')" data-admin-only class="px-3 py-1.5 rounded-lg bg-darkbg border border-weed-900 hover:border-weed-600 text-xs text-slate-300 font-medium whitespace-nowrap ml-2">
-                            <i class="fa-solid fa-plus text-weed-400 mr-1"></i> Add / Manage Locations
-                        </button>
-                    </div>
-
-                    <!-- Selected Location Plan Container -->
-                    <div id="planner-selected-location-plan" class="space-y-6">
-                        <!-- Location Plan details populated dynamically via JS -->
-                    </div>
-                </div>
-
+                <div id="planner-stats" class="dx-stats"></div>
+                <div id="planner-location-tabs" class="dx-tabs mb-5"></div>
+                <div id="planner-selected-location-plan"></div>
             </section>
 
             <section id="tab-timers" class="tab-content hidden space-y-8">
@@ -1365,6 +1367,7 @@
             session: null, // This device's sign-in: { memberId, pinHash }
             signupSettings: { allowSignup: true }, // Shared: can new people create their own (Viewer) profile
             activity: [], // Shared activity feed, newest first
+            yields: {}, // Shared: real harvest yields per strain, used for estimates
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
             presence: [] // Who's online right now (live mode only, never saved)
         };
@@ -1424,6 +1427,17 @@
                 if (!/^\d{4}-\d{2}-\d{2}$/.test(key) || !isPlainObject(appState.history[key])) delete appState.history[key];
             });
             if (!Array.isArray(appState.presence)) appState.presence = [];
+            // Learned yields: { strainId: { sampleId: { buds, pots, ts } } }
+            const yields = {};
+            Object.entries(isPlainObject(appState.yields) ? appState.yields : {}).forEach(([strainId, samples]) => {
+                if (!DEFAULT_STRAINS.some(s => s.id === strainId) || !isPlainObject(samples)) return;
+                Object.entries(samples).forEach(([id, x]) => {
+                    if (isPlainObject(x) && toCount(x.buds) > 0 && toCount(x.pots) > 0) {
+                        (yields[strainId] = yields[strainId] || {})[id] = { buds: toCount(x.buds), pots: toCount(x.pots), ts: Number(x.ts) || 0 };
+                    }
+                });
+            });
+            appState.yields = yields;
 
             if (!Array.isArray(appState.locations)) {
                 appState.locations = JSON.parse(JSON.stringify(DEFAULT_LOCATIONS));
@@ -1442,7 +1456,7 @@
                     order: Number.isFinite(Number(loc.order)) ? Number(loc.order) : idx
                 }));
 
-            if (!appState.locations.some(l => l.id === appState.selectedPlannerLocId)) {
+            if (appState.selectedPlannerLocId !== 'all' && !appState.locations.some(l => l.id === appState.selectedPlannerLocId)) {
                 appState.selectedPlannerLocId = appState.locations.length > 0 ? appState.locations[0].id : null;
             }
 
@@ -1577,7 +1591,8 @@
                 },
                 activity,
                 history: JSON.parse(JSON.stringify(state.history || {})),
-                crew: JSON.parse(JSON.stringify(state.crew || {}))
+                crew: JSON.parse(JSON.stringify(state.crew || {})),
+                yields: JSON.parse(JSON.stringify(state.yields || {}))
             };
         }
 
@@ -1599,6 +1614,7 @@
             appState.history = isPlainObject(tree.history) ? tree.history : {};
             appState.presence = Object.values(isPlainObject(tree.presence) ? tree.presence : {}).filter(isPlainObject);
             appState.crew = isPlainObject(tree.crew) ? tree.crew : {};
+            appState.yields = isPlainObject(tree.yields) ? tree.yields : {};
             normalizeState();
         }
 
@@ -3814,7 +3830,7 @@
                         <span class="block text-sm font-bold ${strain.nameColor} truncate">${escapeHtml(strain.name)}</span>
                         <span class="block text-[10px] text-slate-500">${pots ? `${pots} pots planned` : 'Not in pot plan'}</span>
                     </span>
-                    <input type="number" min="0" step="1" data-harvest-strain="${strain.id}" value="${Math.round(pots * PLANTS_PER_POT * AVG_BUD_PER_PLANT)}" oninput="updateHarvestTotal()"
+                    <input type="number" min="0" step="1" data-harvest-strain="${strain.id}" data-prefill="${Math.round(pots * strainYield(strain.id).avg)}" value="${Math.round(pots * strainYield(strain.id).avg)}" oninput="updateHarvestTotal()"
                         class="w-28 bg-darkbg border border-weed-900 rounded-lg px-2 py-1.5 text-right font-mono text-sm text-white focus:outline-none focus:border-weed-400">
                 </label>`).join('');
             updateHarvestTotal();
@@ -3842,133 +3858,252 @@
         function saveHarvest(event, skipStock) {
             if (event) event.preventDefault();
             const locId = document.getElementById('harvest-loc').value;
+            const amounts = skipStock ? {} : harvestAmounts();
+            const prefilled = {};
+            document.querySelectorAll('#harvest-rows [data-harvest-strain]').forEach(input => { prefilled[input.dataset.harvestStrain] = toCount(input.dataset.prefill); });
+            const loc = appState.locations.find(l => l.id === locId);
             closeHarvestModal();
-            harvestAndRestart(locId, skipStock ? {} : harvestAmounts());
+            // Learn real yields from the numbers people typed in (before the restart changes anything)
+            if (loc && !skipStock && can('timers')) recordHarvestYields(loc, amounts, prefilled);
+            harvestAndRestart(locId, amounts);
+        }
+
+        // ---- Yields learned from real harvests ----
+        const DEFAULT_BUD_PER_POT = PLANTS_PER_POT * AVG_BUD_PER_PLANT; // 198
+        const DEFAULT_POT_RANGE = [PLANTS_PER_POT * 38, PLANTS_PER_POT * 61];
+        const YIELD_SAMPLES_KEEP = 10;
+
+        // { avg, min, max, samples } bud per pot for a strain, from the last few harvests (or the defaults)
+        function strainYield(strainId) {
+            const samples = Object.values((appState.yields || {})[strainId] || {})
+                .sort((a, b) => b.ts - a.ts).slice(0, YIELD_SAMPLES_KEEP);
+            if (!samples.length) return { avg: DEFAULT_BUD_PER_POT, min: DEFAULT_POT_RANGE[0], max: DEFAULT_POT_RANGE[1], samples: 0 };
+            const perPot = samples.map(x => x.buds / x.pots);
+            const buds = samples.reduce((sum, x) => sum + x.buds, 0);
+            const pots = samples.reduce((sum, x) => sum + x.pots, 0);
+            return { avg: buds / pots, min: Math.min(...perPot), max: Math.max(...perPot), samples: samples.length };
+        }
+
+        function learnedStrainCount() {
+            return DEFAULT_STRAINS.filter(strain => strainYield(strain.id).samples > 0).length;
+        }
+
+        // Harvest form: store what each planned strain really gave (only numbers someone actually typed)
+        function recordHarvestYields(loc, amounts, prefilled) {
+            const changes = {};
+            Object.entries(amounts).forEach(([strainId, buds]) => {
+                const pots = toCount((loc.strainPots || {})[strainId]);
+                if (!pots || buds === prefilled[strainId]) return;
+                const perPot = buds / pots;
+                if (perPot < 20 || perPot > 2000) return; // ignore obvious typos
+                changes[`yields/${strainId}/${newActivityId()}`] = { buds, pots, ts: timestampValue() };
+                // keep only the newest samples
+                Object.entries((appState.yields || {})[strainId] || {})
+                    .sort((x, y) => y[1].ts - x[1].ts).slice(YIELD_SAMPLES_KEEP - 1)
+                    .forEach(([id]) => { changes[`yields/${strainId}/${id}`] = null; });
+            });
+            if (Object.keys(changes).length) writeShared(changes);
+        }
+
+        function resetLearnedYields() {
+            if (!allowed('admin')) return;
+            if (!confirm('Forget the learned yields and go back to the default estimate (198 bud per pot)?')) return;
+            writeShared({ yields: null });
+            logActivity({ kind: 'plan' });
+            showAlert('Learned yields cleared. Estimates are back to the defaults.', 'info');
+        }
+
+        // ---- Planner math ----
+        function plannedPots(loc) {
+            return DEFAULT_STRAINS.reduce((sum, strain) => sum + toCount((loc.strainPots || {})[strain.id]), 0);
+        }
+
+        function planEstimate(loc) {
+            let buds = 0, min = 0, max = 0;
+            DEFAULT_STRAINS.forEach(strain => {
+                const pots = toCount((loc.strainPots || {})[strain.id]);
+                if (!pots) return;
+                const y = strainYield(strain.id);
+                buds += pots * y.avg; min += pots * y.min; max += pots * y.max;
+            });
+            return { buds, min, max, bricks: buds / BRICK_SIZE };
+        }
+
+        function allocState(loc) {
+            const total = Math.max(1, toCount(loc.pots) || 10);
+            const planned = plannedPots(loc);
+            return { total, planned, cls: planned > total ? 'over' : planned < total ? 'under' : 'ok' };
+        }
+
+        function potsText(n) {
+            return `${n.toLocaleString()} ${n === 1 ? 'pot' : 'pots'}`;
+        }
+
+        function fmtBricks(value) {
+            return value >= 10 ? value.toFixed(0) : value.toFixed(1);
         }
 
         function renderGrowPlanner() {
             const locations = visibleLocations();
             const canPlan = can('planner');
-            let totalGlobalPots = 0;
+            const isAll = appState.selectedPlannerLocId === 'all';
+
+            // Summary across the locations this person can see
+            let pots = 0, planned = 0, est = { buds: 0, min: 0, max: 0, bricks: 0 };
             locations.forEach(loc => {
-                totalGlobalPots += Number(loc.pots || 0);
+                pots += Math.max(1, toCount(loc.pots) || 10);
+                planned += plannedPots(loc);
+                const e = planEstimate(loc);
+                est.buds += e.buds; est.min += e.min; est.max += e.max; est.bricks += e.bricks;
             });
+            const learned = learnedStrainCount();
+            document.getElementById('planner-yield-note').innerHTML = learned
+                ? `<i class="fa-solid fa-chart-line text-weed-400 ml-1 mr-1"></i>Estimates use your real harvests for ${learned} of 10 strains.${hasAdminAccess() ? ` <button class="text-slate-500 hover:text-red-300 underline" onclick="resetLearnedYields()">Reset</button>` : ''}`
+                : '<i class="fa-solid fa-chart-line text-slate-500 ml-1 mr-1"></i>Estimates start at ~198 bud per pot and learn from your harvests.';
+            const tiles = [
+                ['Pots planned', `${planned.toLocaleString()}<span class="text-base text-slate-500"> / ${pots.toLocaleString()}</span>`, planned === pots ? 'All pots assigned' : planned < pots ? `${potsText(pots - planned)} unassigned` : `${potsText(planned - pots)} over`, planned === pots ? '' : planned < pots ? 'color:#fbbf24' : 'color:#f87171'],
+                ['Est. bud per cycle', Math.round(est.buds).toLocaleString(), `Range ${Math.round(est.min).toLocaleString()} – ${Math.round(est.max).toLocaleString()}`, ''],
+                ['Est. bricks per cycle', fmtBricks(est.bricks), 'All locations combined', '', true],
+                ['Locations', locations.length, `${locations.filter(l => timerState(l).status === 'running').length} growing right now`, '']
+            ];
+            document.getElementById('planner-stats').innerHTML = tiles.map(([label, value, sub, subStyle, hot]) => `
+                <div class="dx-glass dx-stat ${hot ? 'hot' : ''}" style="min-height:96px">
+                    <div class="lbl">${label}</div>
+                    <div class="num dx-mono">${value}</div>
+                    <div class="delta dx-muted" style="${subStyle}">${sub}</div>
+                </div>`).join('');
 
-            const totalPlants = totalGlobalPots * 4;
-            const avgYield = totalPlants * 49.5;
-            const minYield = totalPlants * 38;
-            const maxYield = totalPlants * 61;
-            const totalBricksPotential = (avgYield / 750).toFixed(1);
-
-            document.getElementById('planner-total-pots').innerText = totalGlobalPots.toLocaleString();
-            document.getElementById('planner-total-plants').innerText = totalPlants.toLocaleString();
-            document.getElementById('planner-avg-yield').innerText = Math.round(avgYield).toLocaleString();
-            document.getElementById('planner-min-yield').innerText = Math.round(minYield).toLocaleString();
-            document.getElementById('planner-max-yield').innerText = Math.round(maxYield).toLocaleString();
-            document.getElementById('planner-total-bricks').innerText = totalBricksPotential;
-            document.getElementById('planner-active-locations-count').innerText = locations.length;
-
-            // Render Location Selector Tabs
-            const tabsContainer = document.getElementById('planner-location-tabs');
-            if (tabsContainer) {
-                tabsContainer.innerHTML = locations.map(loc => {
-                    const isActive = appState.selectedPlannerLocId === loc.id;
-                    const btnClass = isActive
-                        ? 'bg-weed-600 text-white font-bold border-weed-500 shadow-md'
-                        : 'bg-darkbg text-slate-400 hover:text-white border-weed-900';
-
-                    return `
-                        <button onclick="selectPlannerLocation(${jsArg(loc.id)})" class="px-4 py-2 rounded-xl border text-xs transition-all font-mono whitespace-nowrap ${btnClass}">
-                            <span>${escapeHtml(loc.id)}</span>
-                            <span class="text-[10px] opacity-75 ml-1">(${loc.pots || 10} Pots)</span>
-                        </button>
-                    `;
+            // Tabs: All, then each location with its allocation status
+            document.getElementById('planner-location-tabs').innerHTML = (locations.length > 1
+                ? `<button class="dx-tab ${isAll ? 'on' : ''}" onclick="selectPlannerLocation('all')"><i class="fa-solid fa-table-cells"></i>All Locations</button>` : '') +
+                locations.map(loc => {
+                    const a = allocState(loc);
+                    const st = timerState(loc).status;
+                    const dot = st === 'ready' ? 'background:#4ade80' : st === 'running' ? 'background:#fbbf24' : 'background:#475569';
+                    return `<button class="dx-tab ${!isAll && appState.selectedPlannerLocId === loc.id ? 'on' : ''}" onclick="selectPlannerLocation(${jsArg(loc.id)})" title="${escapeHtml(loc.alias || '')}">
+                        <span class="font-mono">${escapeHtml(loc.id)}</span>${loc.alias ? `<span class="sub">${escapeHtml(loc.alias)}</span>` : ''}
+                        <span class="alloc ${a.cls}">${a.planned}/${a.total}</span><span class="w-1.5 h-1.5 rounded-full" style="${dot}" title="${st}"></span>
+                    </button>`;
                 }).join('');
-            }
 
-            // Render Selected Location Plan
-            const locPlanContainer = document.getElementById('planner-selected-location-plan');
-            if (!locPlanContainer) return;
-
-            const loc = locations.find(l => l.id === appState.selectedPlannerLocId) || locations[0];
-            if (!loc) {
-                locPlanContainer.innerHTML = `<div class="p-8 text-center text-slate-500">No grow locations available. Add locations in Admin.</div>`;
+            const box = document.getElementById('planner-selected-location-plan');
+            if (!box) return;
+            if (locations.length === 0) {
+                box.innerHTML = `<div class="dx-glass p-8 text-center text-slate-500">No grow locations available. Add locations in Admin.</div>`;
                 return;
             }
+            if (isAll && locations.length > 1) {
+                box.innerHTML = renderPlannerOverview(locations);
+                return;
+            }
+            const loc = locations.find(l => l.id === appState.selectedPlannerLocId) || locations[0];
+            box.innerHTML = renderPlannerLocation(loc, canPlan);
+            if (!canPlan) box.querySelectorAll('button, input').forEach(el => { el.disabled = true; });
+        }
 
-            const locPots = Number(loc.pots || 10);
-            const locPlants = locPots * 4;
-            const locAvgYield = locPlants * 49.5;
-            const locBricks = (locAvgYield / 750).toFixed(1);
+        // One location: pots, allocation meter, totals and a card per strain
+        function renderPlannerLocation(loc, canPlan) {
+            const id = jsArg(loc.id);
+            const a = allocState(loc);
+            const est = planEstimate(loc);
+            const free = Math.max(0, a.total - a.planned);
+            const scale = Math.max(a.total, a.planned);
+            const segments = DEFAULT_STRAINS.map(strain => {
+                const pots = toCount((loc.strainPots || {})[strain.id]);
+                return pots ? `<span style="width:${(Math.min(pots, scale) / scale * 100).toFixed(2)}%;background:rgb(${strain.tint})" title="${escapeHtml(strain.name)}: ${pots} pots"></span>` : '';
+            }).join('');
+            const status = a.cls === 'ok'
+                ? `<span class="ok"><i class="fa-solid fa-circle-check mr-1"></i>All ${a.total} pots planned</span>`
+                : a.cls === 'under'
+                    ? `<span class="under"><i class="fa-solid fa-circle-exclamation mr-1"></i>${free} of ${potsText(a.total)} unassigned</span>`
+                    : `<span class="overtxt"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${potsText(a.planned - a.total)} over: planned ${a.planned}, location has ${a.total}</span>`;
 
-            locPlanContainer.innerHTML = `
-                <div class="glass-card rounded-2xl p-6 border-weed-900 space-y-6">
-                    
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-weed-900/60 pb-4">
-                        <div>
-                            <div class="flex items-center space-x-3">
-                                <span class="text-2xl font-black text-white font-mono">${escapeHtml(loc.id)}</span>
-                                <span class="text-xs px-2.5 py-0.5 rounded-full bg-weed-950 text-weed-400 border border-weed-800">${escapeHtml(loc.alias || 'Location Strategy')}</span>
-                            </div>
-                            <p class="text-xs text-slate-400 mt-1">Configure pot allocations per strain for Postal ${escapeHtml(loc.id)}</p>
+            const cards = DEFAULT_STRAINS.map(strain => {
+                const pots = toCount((loc.strainPots || {})[strain.id]);
+                const y = strainYield(strain.id);
+                const s = jsArg(strain.id);
+                return `
+                    <div class="dx-glass dx-ps dx-tint ${pots ? '' : 'zero'}" style="--tint:${strain.tint}">
+                        <div class="head"><div class="logo">${getStrainLogo(strain.id)}</div><div class="nm ${strain.nameColor}">${escapeHtml(strain.name)}</div></div>
+                        <div class="stepper">
+                            <button class="dx-step" onclick="stepStrainPots(${id}, ${s}, -1)" ${pots ? '' : 'disabled'} title="−1 pot">−</button>
+                            <input type="number" min="0" class="dx-input" aria-label="${escapeHtml(strain.name)} pots" data-focus-key="sp-${escapeHtml(loc.id)}-${strain.id}" value="${pots}" onchange="updateLocationStrainPots(${id}, ${s}, this.value)">
+                            <button class="dx-step" onclick="stepStrainPots(${id}, ${s}, 1)" title="+1 pot">+</button>
                         </div>
+                        <div class="est"><b>${fmtBricks(pots * y.avg / BRICK_SIZE)}</b><span>bricks · ~${Math.round(pots * y.avg).toLocaleString()} bud</span></div>
+                        <div class="src"><span title="${y.samples ? `Average of the last ${y.samples} harvests` : 'Default estimate until this strain is harvested'}">${Math.round(y.avg)}/pot · ${y.samples ? `${y.samples} harvest${y.samples === 1 ? '' : 's'}` : 'default'}</span>
+                            ${free ? `<button class="fill-rest" onclick="fillRestStrainPots(${id}, ${s})" title="Give this strain the ${free} unassigned pots">+${free}</button>` : ''}</div>
+                    </div>`;
+            }).join('');
 
-                        <div class="flex items-center space-x-4">
-                            <div class="text-right">
-                                <label class="block text-[10px] uppercase font-bold text-slate-400">Location Pots</label>
-                                <input type="number" min="1" data-focus-key="pots-${escapeHtml(loc.id)}" value="${locPots}" ${canPlan ? '' : 'disabled'} onchange="updateLocationTotalPots(${jsArg(loc.id)}, this.value)" class="w-20 bg-darkbg border border-weed-800 rounded-xl px-3 py-1 text-center font-bold font-mono text-weed-300 focus:outline-none focus:border-weed-400">
-                            </div>
-                            <button onclick="autoBalanceLocationPots(${jsArg(loc.id)})" class="${canPlan ? '' : 'hidden'} px-3 py-2 rounded-xl bg-weed-950 border border-weed-800 hover:bg-weed-900 text-weed-300 text-xs font-semibold transition-all">
-                                <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Auto-Balance 10 Strains
-                            </button>
+            return `
+                <div class="dx-glass dx-plan-head">
+                    <div>
+                        <div class="pid">${escapeHtml(loc.id)}</div>
+                        <div class="alias">${escapeHtml(loc.alias || 'Grow location')} · ${escapeHtml(timerState(loc).status === 'running' ? readyAtLabel(loc) : timerState(loc).status === 'ready' ? 'Ready to harvest' : 'Not growing')}</div>
+                    </div>
+                    <div class="dx-plan-pots">
+                        <span class="lbl">Location pots</span>
+                        <button class="dx-step" onclick="stepLocationPots(${id}, -1)" ${a.total > 1 ? '' : 'disabled'} title="−1 pot">−</button>
+                        <input type="number" min="1" class="dx-input" aria-label="Location pots" data-focus-key="pots-${escapeHtml(loc.id)}" value="${a.total}" onchange="updateLocationTotalPots(${id}, this.value)">
+                        <button class="dx-step" onclick="stepLocationPots(${id}, 1)" title="+1 pot">+</button>
+                    </div>
+                    <div class="dx-plan-actions">
+                        <button class="dx-act solid" onclick="smartBalanceLocationPots(${id})" title="More pots for the strains you're lowest on"><i class="fa-solid fa-brain mr-1"></i>Smart Balance</button>
+                        <button class="dx-act" onclick="autoBalanceLocationPots(${id})" title="Split the pots evenly across all 10 strains"><i class="fa-solid fa-scale-balanced mr-1"></i>Even Split</button>
+                        <button class="dx-act" onclick="clearLocationPlan(${id})" ${a.planned ? '' : 'disabled'} title="Set every strain to 0 pots"><i class="fa-solid fa-eraser mr-1"></i>Clear</button>
+                    </div>
+                    <div class="dx-meter">
+                        <div class="bar">${segments}${a.planned > a.total ? `<span class="over" style="width:${((a.planned - a.total) / scale * 100).toFixed(2)}%"></span>` : ''}</div>
+                        <div class="txt">${status}<span class="dx-muted">${a.planned} / ${a.total}</span></div>
+                        <div class="dx-plan-totals">
+                            <div><div class="l">Plants</div><div class="v">${(a.planned * PLANTS_PER_POT).toLocaleString()}</div><div class="s">${PLANTS_PER_POT} per pot</div></div>
+                            <div><div class="l">Est. bud</div><div class="v">${Math.round(est.buds).toLocaleString()}</div><div class="s">${Math.round(est.min).toLocaleString()} – ${Math.round(est.max).toLocaleString()}</div></div>
+                            <div><div class="l">Est. bricks</div><div class="v hot">${fmtBricks(est.bricks)}</div><div class="s">per ${formatDuration(loc.durationHours)} cycle</div></div>
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
-                        <div class="p-3 rounded-xl bg-darkbg border border-weed-900/60">
-                            <span class="text-slate-400 text-[10px] block uppercase">Plants Capacity</span>
-                            <span class="text-lg font-bold text-slate-100">${locPlants} Plants</span>
-                        </div>
-                        <div class="p-3 rounded-xl bg-darkbg border border-weed-900/60">
-                            <span class="text-slate-400 text-[10px] block uppercase">Est. 36H Bud Yield</span>
-                            <span class="text-lg font-bold text-weed-300">${Math.round(locAvgYield).toLocaleString()} Buds</span>
-                        </div>
-                        <div class="p-3 rounded-xl bg-darkbg border border-weed-900/60">
-                            <span class="text-slate-400 text-[10px] block uppercase">36H Brick Yield</span>
-                            <span class="text-lg font-extrabold text-weed-400">${locBricks} Bricks</span>
-                        </div>
-                    </div>
-
-                    <!-- Per Strain Pot Input Grid -->
-                    <div class="space-y-3">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">Strain Pot Allocation (${escapeHtml(loc.id)})</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-                            ${DEFAULT_STRAINS.map(strain => {
-                                const potsAllocated = Number((loc.strainPots && loc.strainPots[strain.id]) || 0);
-                                const strainPlants = potsAllocated * 4;
-                                const strainBuds = strainPlants * 49.5;
-
-                                return `
-                                    <div class="p-3 rounded-xl bg-darkbg/90 border border-weed-900 flex flex-col justify-between space-y-2">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-xs font-bold ${strain.nameColor} truncate">${strain.name}</span>
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-slate-500 uppercase">Pots</label>
-                                            <input type="number" min="0" data-focus-key="sp-${escapeHtml(loc.id)}-${strain.id}" value="${potsAllocated}" ${canPlan ? '' : 'disabled'} onchange="updateLocationStrainPots(${jsArg(loc.id)}, ${jsArg(strain.id)}, this.value)" class="w-full bg-darkcard border border-weed-900 rounded-lg px-2 py-1 text-xs font-mono font-bold text-center text-white focus:outline-none focus:border-weed-500">
-                                        </div>
-                                        <div class="text-[10px] text-slate-400 font-mono flex justify-between">
-                                            <span>~${Math.round(strainBuds)} Bud</span>
-                                            <span class="text-weed-400 font-bold">${(strainBuds / 750).toFixed(1)} Bricks</span>
-                                        </div>
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                    </div>
-
                 </div>
-            `;
+                <div class="dx-plan-grid">${cards}</div>`;
+        }
+
+        // Every location side by side: pots per strain and expected bricks for the whole op
+        function renderPlannerOverview(locations) {
+            const head = locations.map(loc => {
+                const a = allocState(loc);
+                return `<th><button class="font-mono font-bold text-white hover:text-weed-300" onclick="selectPlannerLocation(${jsArg(loc.id)})">${escapeHtml(loc.id)}</button><div class="alloc ${a.cls}">${a.planned}/${a.total}</div></th>`;
+            }).join('');
+            let grandPots = 0, grandBricks = 0;
+            const rows = DEFAULT_STRAINS.map(strain => {
+                const y = strainYield(strain.id);
+                let total = 0;
+                const cells = locations.map(loc => {
+                    const pots = toCount((loc.strainPots || {})[strain.id]);
+                    total += pots;
+                    return `<td class="${pots ? '' : 'nil'}">${pots || '·'}</td>`;
+                }).join('');
+                const bricks = total * y.avg / BRICK_SIZE;
+                grandPots += total; grandBricks += bricks;
+                return `<tr class="${total ? '' : 'nil-row'}">
+                    <th class="strain"><span class="logo">${getStrainLogo(strain.id)}</span><span class="${strain.nameColor}">${escapeHtml(strain.name)}</span></th>
+                    ${cells}<td class="tot">${total}</td><td class="br">${fmtBricks(bricks)}</td></tr>`;
+            }).join('');
+            const locTotals = locations.map(loc => `<td>${plannedPots(loc)}</td>`).join('');
+            const locBricks = locations.map(loc => `<td class="br">${fmtBricks(planEstimate(loc).bricks)}</td>`).join('');
+            return `
+                <div class="dx-glass dx-overview">
+                    <div class="dx-sec" style="padding:16px 18px 0"><h2>All Locations</h2><span class="text-xs dx-muted">Pots per strain · expected bricks each cycle</span></div>
+                    <div class="scroll">
+                        <table>
+                            <thead><tr><th class="strain">Strain</th>${head}<th>Pots</th><th>Bricks</th></tr></thead>
+                            <tbody>${rows}</tbody>
+                            <tfoot>
+                                <tr><th class="strain">Pots planned</th>${locTotals}<td class="tot">${grandPots}</td><td></td></tr>
+                                <tr><th class="strain">Est. bricks</th>${locBricks}<td></td><td class="br big">${fmtBricks(grandBricks)}</td></tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <p class="text-[11px] dx-muted" style="padding:0 18px 14px">Click a postal to edit its plan.</p>
+                </div>`;
         }
 
         function selectPlannerLocation(locId) {
@@ -3985,11 +4120,37 @@
             logActivity({ kind: 'plan', loc: locKey(locId) });
         }
 
+        function stepLocationPots(locId, delta) {
+            const loc = appState.locations.find(l => l.id === locId);
+            if (loc) updateLocationTotalPots(locId, Math.max(1, (toCount(loc.pots) || 10) + delta));
+        }
+
         function updateLocationStrainPots(locId, strainId, pots) {
             if (!allowed('planner', locKey(locId))) return renderGrowPlanner();
             if (!appState.locations.some(l => l.id === locId)) return;
             const count = toCount(parseInt(pots, 10));
             writeShared({ [locPath(locId, `strainPots/${strainId}`)]: count });
+            logActivity({ kind: 'plan', loc: locKey(locId) });
+        }
+
+        function stepStrainPots(locId, strainId, delta) {
+            const loc = appState.locations.find(l => l.id === locId);
+            if (loc) updateLocationStrainPots(locId, strainId, Math.max(0, toCount((loc.strainPots || {})[strainId]) + delta));
+        }
+
+        // Give one strain all the pots nobody has been assigned yet
+        function fillRestStrainPots(locId, strainId) {
+            const loc = appState.locations.find(l => l.id === locId);
+            if (!loc) return;
+            const a = allocState(loc);
+            if (a.planned >= a.total) return;
+            updateLocationStrainPots(locId, strainId, toCount((loc.strainPots || {})[strainId]) + (a.total - a.planned));
+        }
+
+        function clearLocationPlan(locId) {
+            if (!allowed('planner', locKey(locId))) return;
+            if (!confirm(`Set every strain at Postal ${locId} to 0 pots?`)) return;
+            writeShared({ [locPath(locId, 'strainPots')]: Object.fromEntries(DEFAULT_STRAINS.map(s => [s.id, 0])) });
             logActivity({ kind: 'plan', loc: locKey(locId) });
         }
 
@@ -4008,8 +4169,44 @@
 
                 writeShared({ [locPath(locId, 'strainPots')]: strainPots });
                 logActivity({ kind: 'plan', loc: locKey(locId) });
-                showAlert(`Auto-balanced ${totalPots} pots across 10 strains for Postal ${locId}`, 'success');
+                showAlert(`Split ${totalPots} pots evenly across 10 strains for Postal ${locId}`, 'success');
             }
+        }
+
+        // Smart balance: hand out pots one at a time to whichever strain will have the least
+        // (bricks in stock + trimmed/untrimmed bud + what other locations are already planned to grow)
+        function smartBalancePlan(locId, totalPots) {
+            const projected = {};
+            DEFAULT_STRAINS.forEach(strain => {
+                let bud = 0;
+                Object.values(appState.stock).forEach(bucket => {
+                    const c = bucket[strain.id];
+                    if (c) bud += c.bricks * BRICK_SIZE + c.trimmed + c.untrimmed;
+                });
+                appState.locations.forEach(other => {
+                    if (other.id !== locId) bud += toCount((other.strainPots || {})[strain.id]) * strainYield(strain.id).avg;
+                });
+                projected[strain.id] = bud;
+            });
+            const plan = Object.fromEntries(DEFAULT_STRAINS.map(s => [s.id, 0]));
+            for (let i = 0; i < totalPots; i++) {
+                const lowest = DEFAULT_STRAINS.reduce((best, s) => (projected[s.id] < projected[best.id] ? s : best), DEFAULT_STRAINS[0]);
+                plan[lowest.id] += 1;
+                projected[lowest.id] += strainYield(lowest.id).avg;
+            }
+            return plan;
+        }
+
+        function smartBalanceLocationPots(locId) {
+            if (!allowed('planner', locKey(locId))) return;
+            const loc = appState.locations.find(l => l.id === locId);
+            if (!loc) return;
+            const totalPots = Math.max(1, toCount(loc.pots) || 10);
+            const plan = smartBalancePlan(locId, totalPots);
+            writeShared({ [locPath(locId, 'strainPots')]: plan });
+            logActivity({ kind: 'plan', loc: locKey(locId) });
+            const top = Object.entries(plan).filter(([, n]) => n > 0).sort((x, y) => y[1] - x[1]).slice(0, 3).map(([id, n]) => `${strainName(id)} ${n}`);
+            showAlert(`Smart balance for Postal ${locId}: most pots to the strains you're lowest on (${top.join(', ')}).`, 'success');
         }
 
         function renderTimersPage() {
