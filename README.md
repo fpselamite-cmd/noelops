@@ -111,13 +111,22 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 - **Bricks out:** the truck button on a strain (Inventory, by location) or **Log Bricks Out** on the Sales page records bricks leaving. It removes them from stock and adds them to the sales log (see **Sales & budget** below).
 - **Dashboard charts:** headline tiles for bricks on hand, potential bricks, bricks out this week and bricks coming in over the next 24 hours; a **Bricks In & Out** chart (pressed vs out per day, last 14 days) and **Stock by Strain** (on hand + potential). Hover a bar for details, or click **Table** to see the numbers.
 
+## Coke and meth
+
+Each location also tracks:
+
+- **Coke Bricks:** coca leaves are the raw stage (like untrimmed bud). On the Coke Bricks card, **Press small** or **Press large** turns leaves into one brick. By default a small brick takes 100 leaves and a large one 500; change that in **Admin → Products**. The card shows how many small and large bricks the leaves can make, with − / + and a truck button for each size.
+- **Meth Bins:** a finished product, counted in bins, with − / + and a truck button.
+
+Both can be moved between locations, logged going out on the Sales page (with their own default prices in Admin → Sales), and show on the dashboard next to the strains. Their logos are `logos/coke.png` and `logos/meth.png` (replaceable in Admin → Logos like the strain logos).
+
 ## Sales & budget
 
 The **Sales** page (in the main menu) is the log of bricks going out:
 
 - **Totals:** today, last 7 days, last 30 days and all time, in bricks (and dollars when prices are entered).
 - **Filters** by period, strain, person and location, with **By Strain** and **By Person** charts and the full log underneath. **Export CSV** downloads it as a spreadsheet.
-- **Logging bricks out:** pick the strain, where they come from, who sold them, how many, and optionally the total price and a note. If an admin has set a default price per brick, the price fills in by itself.
+- **Logging something out:** the **Log Bricks Out** panel at the top walks through it: tap a big button for the strain (or Small / Large Coke Brick, or Meth Bin), pick where it comes from, set how many (− / +, or 1 / 2 / 5 / 10 / All), check who sold it and the price, and hit the big submit button. If an admin has set a default price, the price fills in by itself. The truck button on an Inventory card jumps here with that item and location picked.
 
 **Budget** (top of the Sales page):
 
