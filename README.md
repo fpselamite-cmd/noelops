@@ -196,6 +196,16 @@ Little touches that make the site feel alive:
 
 Admins set what's on for everyone, the stamp word and the rank names and harvest counts in **Admin → Effects**. Each person can turn effects off for themselves in **My Profile → Look → Effects**, and **Reduce motion** turns them all off.
 
+## Crew page
+
+The **Crew** page shows everyone in the crew as cards or a list (switch with **Cards / List**; your choice is remembered). Each person shows their role, harvest rank, whether they're online or when they were last active, harvests, bud brought in, how much they've logged going out and the last thing they did. Search by name, and sort by online, harvests, gone out, last active or name.
+
+- Click anyone's name anywhere on the site (Who's online, Live Activity, the Log, pop-ups) to jump to them on the Crew page.
+- **Their log** opens the Log filtered to that person; **My Profile** is on your own card.
+- Admins also see what each person can access, who's waiting for review, and an **Edit** button.
+
+**Menu and permissions:** each menu button only shows once someone has the permission for it: **Grows** needs timers or the grow planner, **Stash** needs inventory, **Log** needs the log-things-out permission, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
+
 ## Hosting on GitHub Pages
 
 1. In the GitHub repo, open **Settings → Pages**.
@@ -210,6 +220,12 @@ Admins set what's on for everyone, the stamp word and the rank names and harvest
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 👥 Oct 1, 2026: Crew page
+- New **Crew** page: everyone as cards or a list, with who's online, harvests, bud, what's gone out and the last thing they did
+- Click any name on the site to jump to that person
+- The **Grows** badge now only shows (and pings) the number of grows ready to harvest
+- Menu buttons only show once you have permission for that page, and **Admin** only shows for the admin
 
 ### ✨ Oct 1, 2026: Effects
 - Grow timers come alive: leaves sway, ready grows pulse purple and the **Grows** badge pings

@@ -357,6 +357,53 @@
         .dx-person .tag.new { background: #fbbf24; color: #000; }
         .dx-person.off { opacity: 0.55; }
         .dx-person.off .dx-av { filter: grayscale(0.7); }
+        .dx-online-foots { display: flex; gap: 8px; margin: 0 12px 12px; }
+        .dx-online-foots .dx-online-foot { margin: 0; flex: 1; }
+        .dx-person-link { cursor: pointer; }
+        .dx-person-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+        /* ---------- Crew page ---------- */
+        .dx-crew-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+        .dx-crew-tools .dx-input { width: auto; min-width: 0; font-size: 13px; padding: 8px 10px; }
+        .dx-crew-table .dx-act { flex: none; padding: 5px 10px; }
+        #crew-search { width: 170px; }
+        .dx-seg { display: inline-flex; padding: 3px; border-radius: 10px; background: rgba(6, 10, 7, 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.2); }
+        .dx-seg button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #8a9a8e; }
+        .dx-seg button.on { color: #fff; background: hsl(var(--gl) / 0.18); box-shadow: inset 0 0 0 1px hsl(var(--gl) / 0.45); }
+        .dx-seg button.on i { color: hsl(var(--acc-h) 69% 62%); }
+        .dx-crew-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+        .dx-crew-stats > div { padding: 12px 14px; border-radius: 14px; background: rgba(10, 18, 12, 0.85); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.15); }
+        .dx-crew-stats .l { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #8a9a8e; }
+        .dx-crew-stats .v { font: 800 26px/1.2 'JetBrains Mono', monospace; color: #f1f5f2; }
+        .dx-crew-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+        .dx-mate { position: relative; padding: 16px; border-radius: 18px; display: grid; gap: 12px; align-content: start; background: linear-gradient(180deg, hsl(var(--gl) / 0.08), rgba(10, 18, 12, 0.9) 40%); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.16); transition: border-color 0.3s, box-shadow 0.3s; }
+        .dx-mate:hover { border-color: hsl(var(--gl) / 0.5); }
+        .dx-mate.focus { border-color: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 0 1px hsl(var(--acc-h) 69% 58%), 0 0 30px hsl(var(--acc-h) 71% 45% / 0.35); }
+        .dx-mate.off { opacity: 0.86; }
+        .dx-mate .top { display: flex; gap: 12px; align-items: center; min-width: 0; }
+        .dx-mate .top .dx-av { width: 54px; height: 54px; font-size: 18px; flex-shrink: 0; }
+        .dx-mate .avw { position: relative; flex-shrink: 0; }
+        .dx-mate .avw .dot { position: absolute; right: 1px; bottom: 1px; width: 14px; height: 14px; border-radius: 50%; background: #475569; border: 3px solid #0b120d; }
+        .dx-mate .avw .dot.on { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+        .dx-mate .nm { font-size: 17px; font-weight: 800; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-mate .rl { font-size: 11px; color: #8a9a8e; font-weight: 700; }
+        .dx-mate .status { font-size: 11px; color: #8a9a8e; margin-top: 2px; }
+        .dx-mate .status.on { color: hsl(var(--acc-h) 69% 62%); font-weight: 700; }
+        .dx-mate .nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+        .dx-mate .nums div { padding: 8px 6px 6px; border-radius: 10px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); text-align: center; }
+        .dx-mate .nums b { display: block; font: 800 18px/1.1 'JetBrains Mono', monospace; color: #f1f5f2; }
+        .dx-mate .nums span { font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #8a9a8e; }
+        .dx-mate .last { font-size: 12px; color: #94a3b8; line-height: 1.45; }
+        .dx-mate .last b { color: hsl(var(--acc-h) 69% 62%); font-weight: 700; }
+        .dx-mate .pills { display: flex; flex-wrap: wrap; gap: 4px; }
+        .dx-mate .acts { display: flex; gap: 8px; }
+        .dx-mate .acts .dx-act { flex: none; padding: 6px 12px; }
+        .dx-mate .flags { position: absolute; top: 12px; right: 12px; display: flex; gap: 4px; }
+        .dx-crew-table td .dx-av { width: 28px; height: 28px; font-size: 11px; }
+        .dx-crew-table .who { display: flex; align-items: center; gap: 8px; }
+        .dx-crew-table .ondot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #475569; margin-right: 6px; }
+        .dx-crew-table .ondot.on { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+        .dx-crew-table tr.focus td { background: hsl(var(--acc-h) 71% 45% / 0.12); }
+        @media (max-width: 640px) { .dx-seg button span { display: none; } #crew-search { width: 130px; } }
         .dx-online-foot { margin: 0 12px 12px; padding: 9px; border-radius: 12px; font-size: 12px; font-weight: 700; color: hsl(var(--acc-h) 69% 58%); background: hsl(var(--acc-h) 71% 45% / 0.1); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.2); }
         .dx-online-foot:hover { background: hsl(var(--acc-h) 71% 45% / 0.2); }
         @media (max-width: 640px) { .dx-online { top: 76px; right: 12px; left: 12px; width: auto; } }
@@ -518,7 +565,7 @@
         @keyframes dxToastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
         .dx-modal { position: fixed; inset: 0; z-index: 200; background: rgba(2, 5, 3, 0.75); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px; }
-        .dx-modal.hidden, [data-admin-panel].hidden, #signin-create.hidden, [data-admin-only].hidden, [data-sales-only].hidden { display: none; }
+        [data-page].hidden, .nav-btn.hidden, .dx-modal.hidden, [data-admin-panel].hidden, #signin-create.hidden, [data-admin-only].hidden, [data-sales-only].hidden { display: none; }
         .dx-footer-admin { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: #334155; transition: color 0.2s; }
         .dx-footer-admin:hover { color: #94a3b8; }
         .dt-preview { background: #313338; border-radius: 12px; padding: 14px 16px; color: #dbdee1; font-size: 14px; }
@@ -884,14 +931,18 @@
                             <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
                         </button>
-                        <button onclick="switchTab('timers')" id="nav-timers" title="Grows: timers and pot plans" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('timers')" id="nav-timers" title="Grows: timers and pot plans" data-page="timers" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-cannabis"></i>
                             <span>Grows</span>
-                            <span id="active-timers-badge" class="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700">4</span>
+                            <span id="active-timers-badge" class="hidden ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700" title="Ready to harvest">0</span>
                         </button>
-                        <button onclick="switchTab('inventory')" id="nav-inventory" title="Stash: what's in each stash house" data-detail-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                        <button onclick="switchTab('inventory')" id="nav-inventory" title="Stash: what's in each stash house" data-page="inventory" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-warehouse"></i>
                             <span>Stash</span>
+                        </button>
+                        <button onclick="switchTab('crew')" id="nav-crew" title="Crew: everyone and what they've been up to" data-page="crew" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Crew</span>
                         </button>
                         <button onclick="switchTab('sales')" id="nav-sales" title="Log: what went out" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-truck-fast"></i>
@@ -930,8 +981,9 @@
             <!-- Mobile Menu Dropdown -->
             <div id="mobile-menu" class="hidden md:hidden border-t border-weed-900/60 bg-darkbg px-4 pt-2 pb-4 space-y-2">
                 <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Dashboard</button>
-                <button onclick="switchTab('timers'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grows</button>
-                <button onclick="switchTab('inventory'); toggleMobileMenu()" data-detail-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
+                <button onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Grows</button>
+                <button onclick="switchTab('inventory'); toggleMobileMenu()" data-page="inventory" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
+                <button onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Crew</button>
                 <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Log</button>
                 <button onclick="switchTab('admin'); toggleMobileMenu()" data-admin-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
                 <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
@@ -952,7 +1004,7 @@
             <section id="tab-dashboard" class="tab-content">
                 <div id="dx-layout" class="dx-layout">
                     <div class="dx-main min-w-0">
-                        <div class="dx-sec"><h2>Stash</h2><button data-detail-only onclick="switchTab('inventory')">Open stash →</button></div>
+                        <div class="dx-sec"><h2>Stash</h2><button data-page="inventory" onclick="switchTab('inventory')">Open stash →</button></div>
                         <div id="dx-strains" class="dx-strains" style="margin-bottom:26px"></div>
 
                         <div class="dx-sec"><h2>Totals &amp; Trends</h2></div>
@@ -1084,7 +1136,7 @@
             </section>
 
             <section id="tab-timers" class="tab-content hidden">
-                <div class="dx-tabs mb-4"><button class="dx-tab on"><i class="fa-solid fa-clock"></i>Timers</button><button class="dx-tab" data-planner-link onclick="switchTab('planner')"><i class="fa-solid fa-table-cells"></i>Pot Plan</button></div>
+                <div class="dx-tabs mb-4"><button class="dx-tab on"><i class="fa-solid fa-clock"></i>Timers</button><button class="dx-tab" data-page="planner" onclick="switchTab('planner')"><i class="fa-solid fa-table-cells"></i>Pot Plan</button></div>
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
                         <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-cannabis text-weed-400 mr-2"></i>Grows</h1>
@@ -1095,6 +1147,32 @@
                 <div id="timers-upcoming" class="dx-glass dx-upc"></div>
                 <div id="timers-bulk" class="dx-bulk hidden"></div>
                 <div id="timers-grid" class="dx-tc-grid"></div>
+            </section>
+
+            <section id="tab-crew" class="tab-content hidden">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
+                    <div>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-users text-weed-400 mr-2"></i>Crew</h1>
+                        <p class="text-xs text-slate-400 mt-1">Everyone in the crew: who's on now and what they've been up to.</p>
+                    </div>
+                    <div class="dx-crew-tools">
+                        <input id="crew-search" type="search" placeholder="Find someone" aria-label="Find someone" oninput="renderCrewPage()" class="dx-input">
+                        <select id="crew-sort" aria-label="Sort by" onchange="renderCrewPage()" class="dx-input">
+                            <option value="online">Online first</option>
+                            <option value="harvests">Most harvests</option>
+                            <option value="out">Most gone out</option>
+                            <option value="recent">Last active</option>
+                            <option value="name">Name</option>
+                        </select>
+                        <div class="dx-seg" role="group" aria-label="View">
+                            <button type="button" id="crew-view-cards" onclick="setCrewView('cards')" title="Card view"><i class="fa-solid fa-grip"></i><span>Cards</span></button>
+                            <button type="button" id="crew-view-list" onclick="setCrewView('list')" title="List view"><i class="fa-solid fa-list"></i><span>List</span></button>
+                        </div>
+                        <button type="button" data-admin-only onclick="switchTab('admin'); showAdminTab('crew')" class="dx-act" style="flex:none;padding:8px 12px"><i class="fa-solid fa-user-gear mr-1"></i>Manage crew</button>
+                    </div>
+                </div>
+                <div id="crew-stats" class="dx-crew-stats mb-5"></div>
+                <div id="crew-body"></div>
             </section>
 
             <section id="tab-login" class="tab-content hidden">
@@ -1543,7 +1621,10 @@
             <button type="button" onclick="closeOnlinePanel()" class="text-slate-400 hover:text-white" title="Close"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div id="online-list" class="dx-online-list"></div>
-        <button type="button" onclick="closeOnlinePanel(); openProfile()" class="dx-online-foot"><i class="fa-solid fa-user-gear mr-1"></i>My Profile</button>
+        <div class="dx-online-foots">
+            <button type="button" data-page="crew" onclick="closeOnlinePanel(); switchTab('crew')" class="dx-online-foot"><i class="fa-solid fa-users mr-1"></i>Crew page</button>
+            <button type="button" onclick="closeOnlinePanel(); openProfile()" class="dx-online-foot"><i class="fa-solid fa-user-gear mr-1"></i>My Profile</button>
+        </div>
     </div>
 
     <div id="dx-tip" class="hidden" role="tooltip"></div>
@@ -2773,6 +2854,131 @@
             return n ? ` · <i class="fa-solid fa-cannabis text-weed-500"></i> ${harvestsLabel(n)} ${rankBadge(n)}` : '';
         }
 
+        // ---- Crew page: everyone, who's on and what they've been up to ----
+        let crewFocus = null;
+        function crewView() {
+            try { return localStorage.getItem('noelops_crew_view') === 'list' ? 'list' : 'cards'; } catch (e) { return 'cards'; }
+        }
+
+        function setCrewView(view) {
+            try { localStorage.setItem('noelops_crew_view', view); } catch (e) { /* remembering the view is optional */ }
+            renderCrewPage();
+        }
+
+        function onlineNames() {
+            const names = new Set(appState.presence.map(p => p.name).filter(n => typeof n === 'string' && n));
+            if (appState.crewName) names.add(appState.crewName);
+            return names;
+        }
+
+        // Members (or, without crew sign-in, everyone who has shown up), with their numbers
+        function crewPeople() {
+            const online = onlineNames();
+            const people = Object.entries(appState.crew).map(([id, m]) => ({ id, name: m.name, member: m, key: personKey(id) }));
+            if (!crewMode()) {
+                const seen = new Set(people.map(p => p.name));
+                [...online, ...appState.activity.map(a => a.who), ...appState.sales.map(s => s.who)].forEach(name => {
+                    if (typeof name === 'string' && name && name !== SYSTEM_NAME && !seen.has(name)) { seen.add(name); people.push({ id: null, name, member: null, key: personKey(null, name) }); }
+                });
+            }
+            return people.map(p => {
+                const acts = appState.activity.filter(a => a.who === p.name);
+                const last = acts.reduce((best, a) => (!best || a.ts > best.ts ? a : best), null);
+                const sales = appState.sales.filter(s => saleOwnerKey(s) === p.key || (!s.sellerId && s.who === p.name));
+                const stats = personStats(p.key);
+                return { ...p, online: online.has(p.name), you: p.name === appState.crewName, last, lastTs: online.has(p.name) ? syncNow() : last ? last.ts : 0,
+                    harvests: stats.harvests, bud: stats.bud, outCount: sales.length, outUnits: sales.reduce((n, s) => n + s.bricks, 0),
+                    role: p.member ? roleLabel(p.member).replace(' (stats only)', '') : 'Crew' };
+            });
+        }
+
+        function openCrewMember(name) {
+            crewFocus = name;
+            switchTab('crew');
+            setTimeout(() => {
+                const el = document.querySelector(`#crew-body [data-crew="${CSS.escape(name)}"]`);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 60);
+            setTimeout(() => { if (crewFocus === name) { crewFocus = null; renderCrewPage(); } }, 4000);
+        }
+
+        function renderCrewPage() {
+            const body = document.getElementById('crew-body');
+            const tab = document.getElementById('tab-crew');
+            if (!body || !tab || tab.classList.contains('hidden')) return;
+            const view = crewView();
+            document.getElementById('crew-view-cards').classList.toggle('on', view === 'cards');
+            document.getElementById('crew-view-list').classList.toggle('on', view === 'list');
+            const admin = hasAdminAccess();
+            const q = (document.getElementById('crew-search').value || '').trim().toLowerCase();
+            const sort = document.getElementById('crew-sort').value;
+            const all = crewPeople();
+            const people = all.filter(p => !q || p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q));
+            const by = {
+                online: (a, b) => (b.online - a.online) || (b.you - a.you) || a.name.localeCompare(b.name),
+                harvests: (a, b) => (b.harvests - a.harvests) || a.name.localeCompare(b.name),
+                out: (a, b) => (b.outUnits - a.outUnits) || a.name.localeCompare(b.name),
+                recent: (a, b) => (b.lastTs - a.lastTs) || a.name.localeCompare(b.name),
+                name: (a, b) => a.name.localeCompare(b.name)
+            };
+            people.sort(by[sort] || by.online);
+            const pending = all.filter(p => p.member && p.member.pending).length;
+            document.getElementById('crew-stats').innerHTML = `
+                <div><div class="l">Crew</div><div class="v">${all.length}</div></div>
+                <div><div class="l">Online now</div><div class="v" style="color:#4ade80">${all.filter(p => p.online).length}</div></div>
+                <div><div class="l">Harvests logged</div><div class="v">${all.reduce((n, p) => n + p.harvests, 0).toLocaleString()}</div></div>
+                <div><div class="l">Gone out (in the log)</div><div class="v">${all.reduce((n, p) => n + p.outUnits, 0).toLocaleString()}</div></div>
+                ${admin && pending ? `<div style="border-color:rgba(251,191,36,.5)"><div class="l">Waiting for review</div><div class="v" style="color:#fbbf24">${pending}</div></div>` : ''}`;
+            if (!all.length) {
+                body.innerHTML = emptyState('No crew yet', admin ? 'Add the first person in Admin → Crew, or wait for people to sign up.' : 'People show up here once they join.',
+                    admin ? `<button class="dx-btn dx-btn-g" onclick="switchTab('admin'); showAdminTab('crew')"><i class="fa-solid fa-user-plus mr-1"></i>Add crew</button>` : '');
+                return;
+            }
+            if (!people.length) { body.innerHTML = emptyState('Nobody by that name', 'Try a different name or clear the search.'); return; }
+            const status = p => p.online ? 'Online now' : p.last ? `Last active ${relativeTime(p.last.ts)}` : 'Not seen lately';
+            const lastLine = p => p.last ? `${escapeHtml(p.last.pre || '')} <b>${escapeHtml(p.last.hi || '')}</b> ${escapeHtml(p.last.post || '')} · ${relativeTime(p.last.ts)}` : 'Nothing logged yet';
+            const where = m => !m ? '' : m.locations === 'all' ? '<span class="dx-pill">All stashes & grows</span>'
+                : Object.keys(m.locations).filter(k => m.locations[k]).map(k => `<span class="dx-pill">${escapeHtml(bucketLabel(k))}</span>`).join('') || '<span class="dx-pill off">No access yet</span>';
+            const actions = p => [
+                p.you ? `<button class="dx-act" onclick="openProfile()"><i class="fa-solid fa-user-gear mr-1"></i>My Profile</button>` : '',
+                admin && p.id ? `<button class="dx-act" onclick="openCrewEditor(${jsArg(p.id)})"><i class="fa-solid fa-pen mr-1"></i>Edit</button>` : '',
+                can('sales') && p.outCount ? `<button class="dx-act" onclick="crewShowLog(${jsArg(p.name)})"><i class="fa-solid fa-truck-fast mr-1"></i>Their log</button>` : ''
+            ].filter(Boolean).join('');
+            const flags = p => [p.you ? '<span class="dx-pill">You</span>' : '', admin && p.member && p.member.pending ? '<span class="dx-pill" style="background:#fbbf24;color:#000">New</span>' : ''].join('');
+            if (view === 'list') {
+                body.innerHTML = `<div class="dx-glass dx-sales"><div class="overflow-x-auto"><table class="dx-sales-table dx-crew-table">
+                    <thead><tr><th>Name</th><th>Role</th><th>Status</th><th class="r">Harvests</th><th class="r">Bud</th><th class="r">Gone out</th><th>Last did</th>${admin ? '<th>Access</th>' : ''}<th></th></tr></thead>
+                    <tbody>${people.map(p => `<tr data-crew="${escapeHtml(p.name)}" class="${crewFocus === p.name ? 'focus' : ''}">
+                        <td><span class="who">${avatarHtml(p.name)}${nameHtml(p.name)} ${rankBadge(p.harvests)} ${flags(p)}</span></td>
+                        <td class="m">${escapeHtml(p.role)}</td>
+                        <td class="m"><span class="ondot ${p.online ? 'on' : ''}"></span>${escapeHtml(status(p))}</td>
+                        <td class="r">${p.harvests.toLocaleString()}</td><td class="r">${p.bud.toLocaleString()}</td><td class="r">${p.outUnits.toLocaleString()}</td>
+                        <td class="m">${lastLine(p)}</td>
+                        ${admin ? `<td><div class="flex flex-wrap gap-1">${where(p.member)}</div></td>` : ''}
+                        <td class="r whitespace-nowrap"><div class="flex gap-1 justify-end">${actions(p)}</div></td></tr>`).join('')}</tbody></table></div></div>`;
+                return;
+            }
+            body.innerHTML = `<div class="dx-crew-grid">${people.map(p => `
+                <div class="dx-mate ${p.online ? '' : 'off'} ${crewFocus === p.name ? 'focus' : ''}" data-crew="${escapeHtml(p.name)}">
+                    <div class="flags">${flags(p)}</div>
+                    <div class="top"><span class="avw">${avatarHtml(p.name)}<i class="dot ${p.online ? 'on' : ''}"></i></span>
+                        <div class="min-w-0"><div class="nm">${nameHtml(p.name)}</div><div class="rl">${escapeHtml(p.role)} ${rankBadge(p.harvests)}</div><div class="status ${p.online ? 'on' : ''}">${escapeHtml(status(p))}</div></div></div>
+                    <div class="nums"><div><b>${p.harvests.toLocaleString()}</b><span>Harvests</span></div><div><b>${p.bud >= 10000 ? `${Math.round(p.bud / 1000)}k` : p.bud.toLocaleString()}</b><span>Bud in</span></div><div><b>${p.outUnits.toLocaleString()}</b><span>Gone out</span></div></div>
+                    <div class="last"><i class="fa-solid fa-clock-rotate-left mr-1 text-slate-500"></i>${lastLine(p)}</div>
+                    ${admin ? `<div class="pills">${where(p.member)}</div>` : ''}
+                    ${actions(p) ? `<div class="acts">${actions(p)}</div>` : ''}
+                </div>`).join('')}</div>`;
+        }
+
+        // "Their log": the Log page filtered to that person
+        function crewShowLog(name) {
+            switchTab('sales');
+            const sel = document.getElementById('sales-f-who');
+            if (!sel) return;
+            const opt = [...sel.options].find(o => o.textContent === name);
+            if (opt) { sel.value = opt.value; sel.dispatchEvent(new Event('change')); }
+        }
+
         // ---- Admin: crew panel ----
         function roleLabel(member) {
             const preset = ROLE_PRESETS[member.role] || ROLE_PRESETS.viewer;
@@ -3704,9 +3910,19 @@
 
         // A crew name in bold, in the color that person picked
         function nameHtml(name) {
-            const color = name === SYSTEM_NAME ? null : nameColorFor(name);
-            return `<b${color ? ` style="color:${color}"` : ''}>${escapeHtml(name)}</b>`;
+            if (name === SYSTEM_NAME) return `<b>${escapeHtml(name)}</b>`;
+            const color = nameColorFor(name);
+            return `<b class="dx-person-link" data-person="${escapeHtml(name)}" title="See ${escapeHtml(name)} on the Crew page"${color ? ` style="color:${color}"` : ''}>${escapeHtml(name)}</b>`;
         }
+
+        // Clicking a name anywhere opens that person on the Crew page
+        document.addEventListener('click', event => {
+            const link = event.target.closest && event.target.closest('[data-person]');
+            if (!link || link.closest('#crew-body') || link.closest('.dx-modal')) return;
+            if (isStatsOnly() || (crewMode() && !currentMember() && !isAdminUnlocked())) return;
+            event.preventDefault();
+            openCrewMember(link.dataset.person);
+        });
 
         function avatarHtml(name, extraClass = '') {
             if (name === SYSTEM_NAME) {
@@ -4129,7 +4345,8 @@
         function switchTab(tabId) {
             const navTabId = tabId === 'planner' ? 'timers' : tabId; // the pot plan lives under Grows
             if (tabId === 'admin' && !hasAdminAccess()) tabId = 'login';
-            if (isStatsOnly() && ['inventory', 'planner', 'timers'].includes(tabId)) tabId = 'dashboard';
+            if (tabId !== 'admin' && tabId !== 'login' && !pageAllowed(tabId)) tabId = 'dashboard';
+            if (tabId === 'crew') setTimeout(renderCrewPage);
             if (tabId === 'sales' && !can('sales')) tabId = 'dashboard';
             if (tabId === 'sales') salesShown = SALES_PAGE_SIZE;
 
@@ -4137,14 +4354,8 @@
             const target = document.getElementById(`tab-${tabId}`);
             if (target) target.classList.remove('hidden');
 
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = 'nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200';
-            });
-
-            const activeBtn = document.getElementById(`nav-${navTabId}`);
-            if (activeBtn) {
-                activeBtn.className = 'nav-btn gl-on flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200';
-            }
+            // Only the highlight changes here; which buttons show is up to applyPageAccess()
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('gl-on', btn.id === `nav-${navTabId}`));
 
             if (tabId === 'login') {
                 const input = document.getElementById('admin-password-input');
@@ -4152,6 +4363,24 @@
             }
             if (tabId === 'admin') showAdminTab(savedAdminTab());
             renderGrowbarVisibility();
+        }
+
+        // Which pages someone can open: menu buttons and links to a page only show once they have the permission
+        function pageAllowed(page) {
+            if (page === 'dashboard') return true;
+            if (page === 'admin') return isAdminUnlocked();
+            if (isStatsOnly()) return false;
+            if (page === 'inventory') return can('inventory');
+            if (page === 'timers' || page === 'planner') return can('timers') || can('planner');
+            if (page === 'sales') return can('sales');
+            return true; // crew
+        }
+
+        function applyPageAccess() {
+            document.querySelectorAll('[data-page]').forEach(el => el.classList.toggle('hidden', !pageAllowed(el.dataset.page)));
+            const openTab = document.querySelector('.tab-content:not(.hidden)');
+            const page = openTab ? openTab.id.replace('tab-', '') : 'dashboard';
+            if (page !== 'login' && page !== 'admin' && !pageAllowed(page)) switchTab('dashboard');
         }
 
         function toggleMobileMenu() {
@@ -4181,11 +4410,10 @@
             renderAdminProducts();
             renderProfileEarnings();
             renderAdminFx();
+            renderCrewPage();
             document.querySelectorAll('[data-sales-only]').forEach(el => el.classList.toggle('hidden', !can('sales')));
             const salesTab = document.getElementById('tab-sales');
             if (salesTab && !salesTab.classList.contains('hidden') && !can('sales')) switchTab('dashboard');
-            const badge = document.getElementById('active-timers-badge');
-            if (badge) badge.innerText = visibleLocations().length;
             fxReadyPing();
             const postalList = document.getElementById('timers-postal-list');
             if (postalList) postalList.innerText = visibleLocations().map(l => l.id).join(', ') || '—';
@@ -4195,8 +4423,7 @@
             // Stats-only crew: hide everything location-specific and leave any page they can't use
             const statsOnly = isStatsOnly();
             document.querySelectorAll('[data-detail-only]').forEach(el => el.classList.toggle('hidden', statsOnly));
-            const openTab = document.querySelector('.tab-content:not(.hidden)');
-            if (statsOnly && openTab && ['tab-inventory', 'tab-planner', 'tab-timers'].includes(openTab.id)) switchTab('dashboard');
+            applyPageAccess();
             const layout = document.getElementById('dx-layout');
             if (layout) layout.classList.toggle('solo', statsOnly);
             renderGrowbarVisibility();
@@ -6733,10 +6960,15 @@
 
         let tickCount = 0;
 
-        // The Grows badge pings while any grow you can see is ready
+        // The Grows badge shows how many grows you can see are ready to harvest (hidden when none), and pings
         function fxReadyPing() {
             const badge = document.getElementById('active-timers-badge');
-            if (badge) badge.classList.toggle('fx-ping', readyLocationIds().length > 0);
+            if (!badge) return;
+            const ready = readyLocationIds().length;
+            if (badge.textContent !== String(ready)) badge.textContent = ready;
+            badge.classList.toggle('hidden', ready === 0);
+            badge.classList.toggle('fx-ping', ready > 0);
+            badge.title = `${ready} ready to harvest`;
         }
 
         function tickTimers() {
