@@ -192,3 +192,40 @@ For crew members, everything is saved to their profile and follows them to any d
 
 - Header logo: `NoelOpsLogo.png` (the full-size original). The site shows `NoelOpsLogo-web.jpg`, a 480×320 copy that loads much faster; if you change the logo, replace both (or re-export the small one).
 - Strain logos: `logos/<strain id>.png` (see `logos/README.md`)
+
+## Change notes
+
+Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 🏠 Oct 1, 2026: Stash houses
+- Add stash houses in **Admin → Locations**. Most grow ops don't hold stock anymore, so harvests go straight to their stash house (pick where in the harvest form)
+- Grow ops that do keep stock can switch on **On-site storage**
+- Any stash or grow op can be **left out of the totals**. Its stock still shows on its own tab
+- Fixed the Meth Bin logo still showing the old picture
+- Deleting a grow location now moves its coke, meth and supplies too, not just bud
+
+### 🌿 Sept 30 – Oct 1, 2026: Big update
+**❄️ Coke & Meth**
+- New **Meth Bins** and **Coke Bricks** (small + large) cards with the new sticker logos
+- Pressing coke uses leaves, oil, cement and battery acid (small: 2000 / 10 / 40 / 25, large: double). The card shows what you can make or what you're short on
+
+**🚚 Sales & Budget**
+- New **Sales** page: tap a product, pick where it's from, how many and who sold it, then submit
+- Crew bank with seller cuts, payouts and expenses. Earnings show on profiles
+
+**📊 Dashboard**
+- New charts: **Made & Out** (filter weed / coke / meth), **Stock by Product**, and what went out this week
+- Click the avatars up top to see who's online
+- Live Sync + clock moved to the footer
+
+**⏱️ Growing**
+- New **Grow Timers** page with an upcoming harvests timeline and bulk start / stop / harvest
+- Grow Planner rework: Smart Balance, yields learned from real harvests, and an All Locations view
+
+**👤 Profiles**
+- Sign yourself up, then set your picture, PIN, colors and harvest alerts in **My Profile**
+
+**✨ Other**
+- **Undo** button on most changes
+- Times show in your own time zone
+- Inventory reworked around bricks and potential bricks
