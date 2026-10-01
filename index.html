@@ -147,7 +147,58 @@
         .dx-glass { background: rgba(16, 26, 19, 0.72); border: 1px solid rgba(74, 222, 128, 0.14); border-radius: 18px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04); }
         .dx-muted { color: #8a9a8e; }
         .dx-mono { font-family: 'JetBrains Mono', monospace; }
-        .dx-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 22px; align-items: start; }
+        .dx-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 22px; align-items: stretch; }
+        .dx-layout.solo { grid-template-columns: minmax(0, 1fr); }
+        .dx-layout > .dx-main > .dx-panel:last-child { margin-bottom: 0; }
+        /* Live Activity runs the full height of the main column and scrolls inside */
+        .dx-aside { position: relative; min-height: 420px; }
+        .dx-aside.hidden { display: none; }
+        .dx-feed-panel { position: absolute; inset: 0; margin: 0; display: flex; flex-direction: column; }
+        .dx-feed-panel .dx-feed { flex: 1; min-height: 0; overflow-y: auto; margin-right: -8px; padding-right: 8px; scrollbar-width: thin; }
+
+        /* Grow timers sub-bar under the header (dashboard only) */
+        .dx-growbar { border-top: 1px solid rgba(74, 222, 128, 0.12); background: linear-gradient(180deg, rgba(4, 9, 6, 0.55), rgba(4, 9, 6, 0.85)); }
+        .dx-growbar.hidden { display: none; }
+        .dx-growbar-in { max-width: 1440px; margin: 0 auto; padding: 10px 32px; display: flex; gap: 14px; align-items: center; }
+        .dx-growbar .gb-label { flex-shrink: 0; display: flex; flex-direction: column; gap: 3px; }
+        .dx-growbar .gb-label b { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a9a8e; font-weight: 800; }
+        .dx-growbar .gb-label button { font-size: 11px; color: #4ade80; font-weight: 700; text-align: left; }
+        .dx-growbar .gb-label button:hover { color: #86efac; }
+        #dx-timers { flex: 1; min-width: 0; display: flex; gap: 10px; overflow-x: auto; padding: 2px 2px 4px; scrollbar-width: thin; }
+        .dx-gb { position: relative; flex: 1 0 236px; max-width: 330px; border-radius: 14px; padding: 8px 12px 9px 8px; background: rgba(10, 18, 12, 0.9); border: 1px solid rgba(74, 222, 128, 0.16); overflow: hidden;
+            display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; column-gap: 10px; row-gap: 6px; align-items: center; }
+        .dx-gb .pot { grid-row: 1 / span 2; width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative;
+            background: radial-gradient(circle at 50% 120%, rgba(120, 72, 32, 0.55), rgba(20, 30, 22, 0.9) 70%); border: 1px solid rgba(255, 255, 255, 0.06); }
+        .dx-gb .pot i { color: #4ade80; font-size: 20px; transform: scale(var(--grow, 0.7)); transform-origin: 50% 90%; transition: transform 0.8s ease; filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.45)); }
+        .dx-gb .pot::after { content: ''; position: absolute; left: 9px; right: 9px; bottom: 5px; height: 4px; border-radius: 2px; background: #7c4a1e; opacity: 0.8; }
+        .dx-gb .who { min-width: 0; line-height: 1.15; }
+        .dx-gb .pid { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 15px; color: #f1f5f2; }
+        .dx-gb .alias { display: block; font-size: 11px; color: #8a9a8e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-gb .time { text-align: right; line-height: 1.1; }
+        .dx-gb .time .t { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 15px; color: #fde68a; }
+        .dx-gb .time .s { display: block; font-size: 10px; color: #8a9a8e; font-weight: 700; letter-spacing: 0.05em; }
+        .dx-gb .low { grid-column: 2 / 4; min-width: 0; }
+        .dx-gb .track { position: relative; height: 9px; border-radius: 99px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+        .dx-gb .fill { position: absolute; inset: 0 auto 0 0; border-radius: 99px; transition: width 0.9s linear;
+            background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.16) 0 6px, transparent 6px 12px), linear-gradient(90deg, #15803d, #4ade80);
+            background-size: 17px 17px, 100% 100%; animation: dxGrowStripes 1.2s linear infinite; box-shadow: 0 0 10px rgba(74, 222, 128, 0.45); }
+        .dx-gb .fill::after { content: ''; position: absolute; right: -1px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; background: #dcfce7; box-shadow: 0 0 8px 2px rgba(187, 247, 208, 0.8); }
+        @keyframes dxGrowStripes { from { background-position: 0 0, 0 0; } to { background-position: 17px 0, 0 0; } }
+        .dx-gb .low .dx-btn { padding: 5px 8px; font-size: 11px; }
+        .dx-gb .note { font-size: 11px; color: #8a9a8e; }
+        .dx-gb .eta { margin-top: 4px; font-size: 10px; color: #8a9a8e; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .dx-gb.idle { border-style: dashed; border-color: rgba(148, 163, 184, 0.25); background: rgba(10, 16, 12, 0.7); }
+        .dx-gb.idle .pot i { color: #64748b; filter: none; }
+        .dx-gb.idle .time .t { color: #64748b; }
+        .dx-gb.ready { border-color: rgba(74, 222, 128, 0.7); animation: dxReadyPulse 1.8s ease-in-out infinite; background: radial-gradient(circle at 10% 50%, rgba(34, 197, 94, 0.22), rgba(10, 18, 12, 0.92) 60%); }
+        .dx-gb.ready .pot i { animation: dxBudBounce 1.1s ease-in-out infinite; color: #86efac; filter: drop-shadow(0 0 10px rgba(134, 239, 172, 0.9)); }
+        .dx-gb.ready .time .t { color: #4ade80; text-shadow: 0 0 12px rgba(74, 222, 128, 0.8); }
+        .dx-gb.ready .pot::before { content: '✦'; position: absolute; top: 1px; right: 4px; font-size: 10px; color: #fde68a; animation: dxSparkle 1.4s ease-in-out infinite; }
+        @keyframes dxReadyPulse { 0%, 100% { box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.25), 0 0 14px rgba(34, 197, 94, 0.2); } 50% { box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.6), 0 0 28px rgba(34, 197, 94, 0.5); } }
+        @keyframes dxBudBounce { 0%, 100% { transform: scale(1.15) translateY(0); } 50% { transform: scale(1.25) translateY(-3px); } }
+        @keyframes dxSparkle { 0%, 100% { opacity: 0.2; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1.2); } }
+        .dx-gb-empty { font-size: 12px; color: #8a9a8e; padding: 10px 0; }
+        @media (prefers-reduced-motion: reduce) { .dx-gb .fill, .dx-gb.ready, .dx-gb.ready .pot i, .dx-gb.ready .pot::before { animation: none; } }
         .dx-sec { display: flex; align-items: center; justify-content: space-between; margin: 0 0 12px; }
         .dx-sec h2 { font-size: 15px; font-weight: 700; letter-spacing: 0.02em; color: #e6efe8; }
         .dx-sec button { font-size: 12px; color: #4ade80; font-weight: 600; }
@@ -168,20 +219,6 @@
         .dx-stat.hot { border-color: rgba(74, 222, 128, 0.45); box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.25), 0 0 40px rgba(34, 197, 94, 0.18); }
         .dx-stat.hot .num { color: #4ade80; text-shadow: 0 0 18px rgba(74, 222, 128, 0.55); }
 
-        .dx-timers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
-        .dx-tm { padding: 18px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .dx-tm .top { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; gap: 8px; }
-        .dx-tm .pid { font-size: 20px; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .dx-tm .alias { font-size: 12px; color: #8a9a8e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
-        .dx-ring { position: relative; width: 140px; height: 140px; margin: 8px 0 12px; }
-        .dx-ring .c { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .dx-ring .t { font-size: 20px; font-weight: 800; }
-        .dx-ring .s { font-size: 10px; color: #8a9a8e; letter-spacing: 0.1em; margin-top: 2px; text-transform: uppercase; }
-        .dx-ring-fg { transition: stroke-dashoffset 0.8s ease; }
-        .dx-tm.ready { border-color: rgba(74, 222, 128, 0.55); box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.3), 0 0 50px rgba(34, 197, 94, 0.28); }
-        .dx-tm.ready .dx-ring { border-radius: 50%; box-shadow: 0 0 34px rgba(74, 222, 128, 0.35), inset 0 0 24px rgba(74, 222, 128, 0.25); }
-        .dx-tm.ready .t { color: #4ade80; text-shadow: 0 0 16px rgba(74, 222, 128, 0.8); }
-        .dx-tm .foot { font-size: 11px; color: #8a9a8e; min-height: 34px; display: flex; align-items: center; }
         .dx-status { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 99px; letter-spacing: 0.06em; white-space: nowrap; }
         .dx-status.run { background: rgba(251, 191, 36, 0.12); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.35); }
         .dx-status.rdy { background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.6); }
@@ -372,18 +409,21 @@
 
         @media (max-width: 1180px) {
             .dx-layout { grid-template-columns: minmax(0, 1fr); }
+            .dx-aside { min-height: 0; }
+            .dx-feed-panel { position: static; max-height: 520px; margin-top: 22px; }
             .dx-strains { grid-template-columns: repeat(4, minmax(0, 1fr)); }
         }
         @media (max-width: 960px) {
             .dx-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .dx-timers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .dx-strains { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
         @media (max-width: 640px) {
             .dx-stat .num { font-size: 26px; }
             .dx-stat svg { display: none; }
-            .dx-timers { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
-            .dx-tm { min-width: 220px; scroll-snap-align: start; }
+            .dx-growbar-in { padding: 8px 16px; }
+            .dx-growbar .gb-label { display: none; }
+            #dx-timers { scroll-snap-type: x mandatory; }
+            .dx-gb { flex: 0 0 82%; max-width: none; scroll-snap-align: start; }
             .dx-strains { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .dx-sc .logo { width: 92px; height: 92px; }
             .dx-sc-nums .l { font-size: 8px; letter-spacing: 0.03em; }
@@ -472,32 +512,36 @@
                 <button onclick="switchTab('admin'); toggleMobileMenu()" data-admin-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
                 <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
             </div>
+
+            <!-- Grow timers sub-bar (dashboard only) -->
+            <div id="dx-growbar" class="dx-growbar hidden">
+                <div class="dx-growbar-in">
+                    <div class="gb-label"><b><i class="fa-solid fa-seedling mr-1 text-weed-500"></i>Grows</b><button onclick="switchTab('timers')">Manage →</button></div>
+                    <div id="dx-timers"></div>
+                </div>
+            </div>
         </header>
 
         <main class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
             <section id="tab-dashboard" class="tab-content">
-                <div class="dx-layout">
-                    <div class="min-w-0">
-                        <div id="dx-stats" class="dx-stats"></div>
-
-                        <div data-detail-only>
-                            <div class="dx-sec"><h2>Grow Operations</h2><button onclick="switchTab('timers')">Manage timers →</button></div>
-                            <div id="dx-timers" class="dx-timers"></div>
-                        </div>
-
+                <div id="dx-layout" class="dx-layout">
+                    <div class="dx-main min-w-0">
                         <div class="dx-sec"><h2>Strain Vault</h2><button data-detail-only onclick="switchTab('inventory')">Open vault →</button></div>
-                        <div id="dx-strains" class="dx-strains"></div>
-                    </div>
+                        <div id="dx-strains" class="dx-strains" style="margin-bottom:26px"></div>
 
-                    <aside class="min-w-0">
-                        <div class="dx-glass dx-panel" data-detail-only>
-                            <div class="dx-sec"><h2>Live Activity</h2><span class="dx-chip"><span class="dx-dot"></span>LIVE</span></div>
-                            <ul id="dx-feed" class="dx-feed"></ul>
-                        </div>
+                        <div class="dx-sec"><h2>Totals &amp; Trends</h2></div>
+                        <div id="dx-stats" class="dx-stats"></div>
                         <div class="dx-glass dx-panel">
                             <div class="dx-sec"><h2>Bricks this week</h2><span id="dx-week-total" class="dx-mono dx-muted text-xs"></span></div>
                             <div id="dx-chart" class="dx-chart"></div>
+                        </div>
+                    </div>
+
+                    <aside id="dx-aside" class="dx-aside min-w-0" data-detail-only>
+                        <div class="dx-glass dx-panel dx-feed-panel">
+                            <div class="dx-sec"><h2>Live Activity</h2><span class="dx-chip"><span class="dx-dot"></span>LIVE</span></div>
+                            <ul id="dx-feed" class="dx-feed"></ul>
                         </div>
                     </aside>
                 </div>
@@ -2714,6 +2758,7 @@
                 if (input) input.focus();
             }
             if (tabId === 'admin') showAdminTab(savedAdminTab());
+            renderGrowbarVisibility();
         }
 
         function toggleMobileMenu() {
@@ -2750,6 +2795,9 @@
             document.querySelectorAll('[data-detail-only]').forEach(el => el.classList.toggle('hidden', statsOnly));
             const openTab = document.querySelector('.tab-content:not(.hidden)');
             if (statsOnly && openTab && ['tab-inventory', 'tab-planner', 'tab-timers'].includes(openTab.id)) switchTab('dashboard');
+            const layout = document.getElementById('dx-layout');
+            if (layout) layout.classList.toggle('solo', statsOnly);
+            renderGrowbarVisibility();
             checkAccessGate();
         }
 
@@ -2836,8 +2884,6 @@
         // Dashboard
         // ---------------------------------------------------------------------
         const BRICK_SIZE = 750;
-        const RING_RADIUS = 60;
-        const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
         // Strain cards that just changed on someone else's device: { strainId: { label, until } }
         const dashFlashes = {};
@@ -2963,62 +3009,56 @@
             return `Ready ~ ${readyAt.toLocaleDateString([], { weekday: 'short' })} ${time}`;
         }
 
+        // Plant icon and size for how far along a grow is
+        function growStage(st) {
+            if (st.status === 'ready') return { icon: 'fa-cannabis', scale: 1.15, key: 'ready' };
+            if (st.status === 'idle') return { icon: 'fa-seedling', scale: 0.7, key: 'idle' };
+            const icon = st.pct < 33 ? 'fa-seedling' : st.pct < 66 ? 'fa-leaf' : 'fa-cannabis';
+            return { icon, scale: 0.7 + (st.pct / 100) * 0.45, key: icon };
+        }
+
+        // Grow timers live in the sub-bar under the header, shown on the dashboard
         function renderDashTimers() {
             const box = document.getElementById('dx-timers');
             if (!box) return;
             const locations = visibleLocations();
             if (locations.length === 0) {
-                box.innerHTML = `<div class="dx-glass dx-tm" style="grid-column:1/-1"><p class="dx-muted text-sm py-6">${appState.locations.length ? 'No grow locations assigned to you.' : 'No grow locations yet. Add one in Admin.'}</p></div>`;
+                box.innerHTML = `<div class="dx-gb-empty">${appState.locations.length ? 'No grow locations assigned to you.' : 'No grow locations yet. Add one in Admin.'}</div>`;
                 dashTimerSignature = '';
                 return;
             }
             const canTime = can('timers');
 
             const states = locations.map(loc => [loc, timerState(loc)]);
-            dashTimerSignature = states.map(([loc, st]) => `${loc.id}:${st.status}:${loc.startTime}`).join('|');
+            dashTimerSignature = states.map(([loc, st]) => `${loc.id}:${st.status}:${loc.startTime}:${growStage(st).key}`).join('|');
 
             box.innerHTML = states.map(([loc, st]) => {
                 const ready = st.status === 'ready', idle = st.status === 'idle';
-                const statusChip = ready ? '<span class="dx-status rdy">READY</span>'
-                    : idle ? '<span class="dx-status idle">IDLE</span>' : '<span class="dx-status run">RUNNING</span>';
-                const offset = RING_CIRCUMFERENCE * (1 - (ready ? 100 : st.pct) / 100);
-                const ring = idle
-                    ? `<circle cx="70" cy="70" r="${RING_RADIUS}" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none" stroke-dasharray="6 8"/>`
-                    : `<circle cx="70" cy="70" r="${RING_RADIUS}" stroke="rgba(255,255,255,.06)" stroke-width="10" fill="none"/>
-                       <circle class="dx-ring-fg" cx="70" cy="70" r="${RING_RADIUS}" stroke="${ready ? '#4ade80' : 'url(#dx-ring-grad)'}" stroke-width="10" fill="none" stroke-linecap="round"
-                           stroke-dasharray="${RING_CIRCUMFERENCE.toFixed(1)}" stroke-dashoffset="${offset.toFixed(1)}" transform="rotate(-90 70 70)"/>`;
-                const center = ready
-                    ? `<div class="t">READY</div><div class="s">Harvest now</div>`
+                const stage = growStage(st);
+                const time = ready
+                    ? `<span class="t">READY</span><span class="s">Harvest now</span>`
                     : idle
-                        ? `<div class="t dx-mono dx-muted">${formatTime(Math.round(st.totalSecs))}</div><div class="s">Not started</div>`
-                        : `<div class="t dx-mono dx-ring-t">${formatTime(st.remainingSecs)}</div><div class="s dx-ring-s">${Math.floor(st.pct)}% grown</div>`;
-                const foot = !canTime
-                    ? (ready ? 'Ready to harvest' : idle ? 'Not running' : escapeHtml(readyAtLabel(loc)))
-                    : ready
-                    ? `<button onclick="openHarvestModal(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-seedling mr-1"></i> Harvest &amp; Restart</button>`
+                        ? `<span class="t">${formatTime(Math.round(st.totalSecs))}</span><span class="s">Not started</span>`
+                        : `<span class="t dx-ring-t">${formatTime(st.remainingSecs)}</span><span class="s dx-ring-s">${Math.floor(st.pct)}% grown</span>`;
+                const low = ready
+                    ? (canTime ? `<button onclick="openHarvestModal(${jsArg(loc.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-seedling mr-1"></i> Harvest &amp; Restart</button>` : `<span class="note">Ready to harvest</span>`)
                     : idle
-                        ? `<button onclick="startTimer(${jsArg(loc.id)})" class="dx-btn dx-btn-o"><i class="fa-solid fa-play mr-1"></i> Start ${formatDuration(loc.durationHours)} cycle</button>`
-                        : escapeHtml(readyAtLabel(loc));
-
+                        ? (canTime ? `<button onclick="startTimer(${jsArg(loc.id)})" class="dx-btn dx-btn-o"><i class="fa-solid fa-play mr-1"></i> Start ${formatDuration(loc.durationHours)} cycle</button>` : `<span class="note">Not running</span>`)
+                        : `<div class="track"><div class="fill" style="width:${st.pct.toFixed(2)}%"></div></div><div class="eta">${escapeHtml(readyAtLabel(loc))}</div>`;
+                const tip = ready ? 'Ready to harvest' : idle ? 'Not started' : readyAtLabel(loc);
                 return `
-                    <div class="dx-glass dx-tm ${ready ? 'ready' : ''}" data-dx-loc="${escapeHtml(loc.id)}">
-                        <div class="top"><span class="pid dx-mono">${escapeHtml(loc.id)}</span>${statusChip}</div>
-                        <div class="alias">${escapeHtml(loc.alias || 'Grow Operation')}</div>
-                        <div class="dx-ring">
-                            <svg width="140" height="140" aria-hidden="true">
-                                <defs><linearGradient id="dx-ring-grad"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#86efac"/></linearGradient></defs>
-                                ${ring}
-                            </svg>
-                            <div class="c">${center}</div>
-                        </div>
-                        <div class="foot w-full justify-center">${foot}</div>
+                    <div class="dx-gb ${st.status} ${ready ? 'ready' : ''}" data-dx-loc="${escapeHtml(loc.id)}" title="Postal ${escapeHtml(loc.id)} · ${escapeHtml(tip)}">
+                        <div class="pot"><i class="fa-solid ${stage.icon}" style="--grow:${stage.scale.toFixed(2)}"></i></div>
+                        <div class="who"><span class="pid">${escapeHtml(loc.id)}</span><span class="alias">${escapeHtml(loc.alias || 'Grow Operation')}</span></div>
+                        <div class="time">${time}</div>
+                        <div class="low">${low}</div>
                     </div>`;
             }).join('');
         }
 
         // Every second: update the running countdowns in place, or re-render when a timer changes state
         function tickDashTimers() {
-            const signature = visibleLocations().map(loc => `${loc.id}:${timerState(loc).status}:${loc.startTime}`).join('|');
+            const signature = visibleLocations().map(loc => { const st = timerState(loc); return `${loc.id}:${st.status}:${loc.startTime}:${growStage(st).key}`; }).join('|');
             if (signature !== dashTimerSignature) {
                 renderDashTimers();
                 return;
@@ -3030,11 +3070,21 @@
                 if (st.status !== 'running') return;
                 const t = card.querySelector('.dx-ring-t');
                 const sub = card.querySelector('.dx-ring-s');
-                const fg = card.querySelector('.dx-ring-fg');
+                const fill = card.querySelector('.fill');
+                const plant = card.querySelector('.pot i');
                 if (t) t.textContent = formatTime(st.remainingSecs);
                 if (sub) sub.textContent = `${Math.floor(st.pct)}% grown`;
-                if (fg) fg.setAttribute('stroke-dashoffset', (RING_CIRCUMFERENCE * (1 - st.pct / 100)).toFixed(1));
+                if (fill) fill.style.width = `${st.pct.toFixed(2)}%`;
+                if (plant) plant.style.setProperty('--grow', growStage(st).scale.toFixed(2));
             });
+        }
+
+        // The grow sub-bar shows on the dashboard, for people who can see locations
+        function renderGrowbarVisibility() {
+            const bar = document.getElementById('dx-growbar');
+            const dash = document.getElementById('tab-dashboard');
+            if (!bar || !dash) return;
+            bar.classList.toggle('hidden', dash.classList.contains('hidden') || isStatsOnly());
         }
 
         function renderDashStrains() {
@@ -3078,7 +3128,7 @@
         function renderActivityFeed() {
             const list = document.getElementById('dx-feed');
             if (!list) return;
-            const entries = appState.activity.filter(activityVisible).slice(0, 8);
+            const entries = appState.activity.filter(activityVisible).slice(0, ACTIVITY_KEEP);
             list.innerHTML = entries.length === 0
                 ? `<li class="dx-muted">No activity yet. Changes the crew makes show up here live.</li>`
                 : entries.map(entry => `
