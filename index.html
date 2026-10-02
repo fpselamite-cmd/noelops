@@ -731,8 +731,19 @@
         body.raid :is(.dx-mono, .num, .big, .v, .count, .n, .alloc, td.r, td.n, .bm-dirty, .postal-hide, .dx-hbars b, #wash-preview b, .mx-where b, .dx-where b, .totline b, .row b, .me-nums b, input[type=number]) { filter: blur(7px); }
         body.raid .price-svg .pa, body.raid .price-svg .pl, body.raid #price-table td.r { filter: blur(6px); }
         body.raid .dx-tc .clock .t, body.raid .dx-gb .time .t, body.raid .mx-tc .t, body.raid #live-clock, body.raid .rn-t, body.raid .ck-t { filter: none; }
-        .hdr-ico#nav-raid.gl-on { color: #fca5a5; }
-        .hdr-ico#nav-raid.gl-on .ic { border-color: #ef4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.55); }
+        /* Raid mode switch in the footer */
+        .dx-raid-btn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #94a3b8; background: #0f172a; border: 1px solid #1e293b; transition: all 0.2s; }
+        .dx-raid-btn:hover { color: #fff; border-color: hsl(var(--acc-h) 69% 58% / 0.5); }
+        .dx-raid-btn.gl-on { color: #fca5a5; border-color: #ef4444; background: rgba(127, 29, 29, 0.35); box-shadow: 0 0 12px rgba(239, 68, 68, 0.45); }
+        /* Phone menu */
+        .mnav-btn { width: 100%; display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #cbd5d0; text-align: left; border: 1px solid transparent; transition: background 0.2s, color 0.2s; }
+        .mnav-btn > i, .mnav-btn .mn-svg { width: 18px; text-align: center; color: #8a9a8e; flex-shrink: 0; display: inline-flex; justify-content: center; }
+        .mnav-btn .mn-svg svg { width: 18px; height: 18px; }
+        .mnav-btn:hover { background: hsl(var(--acc-h) 61% 20% / 0.4); color: #fff; }
+        .mnav-btn.on { color: #fff; background: hsl(var(--acc-h) 71% 45% / 0.14); border-color: hsl(var(--acc-h) 69% 58% / 0.35); }
+        .mnav-btn.on > i, .mnav-btn.on .mn-svg { color: hsl(var(--acc-h) 69% 58%); }
+        .mn-badge { margin-left: auto; min-width: 22px; padding: 1px 7px; border-radius: 999px; font-size: 12px; font-weight: 800; text-align: center; background: hsl(var(--acc-h) 71% 45%); color: #04140a; }
+        .mnav-btn[data-tab="meth"] .mn-badge { background: #22d3ee; color: #042f2e; }
         .dx-panel.show-table #price-chart, .dx-panel:not(.show-table) #price-table { display: none; }
         .price-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
         .price-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; color: #8a9a8e; background: rgba(6, 10, 7, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); }
@@ -992,6 +1003,10 @@
             header nav .nav-btn > span:not([id]) { display: none; }   /* icon-only menu… */
             header nav .nav-btn.gl-on > span:not([id]) { display: inline; } /* …except the page you're on */
         }
+        @media (max-width: 1023px) {
+            #presence-stack { display: none; }
+            #presence-count { display: inline-flex; }
+        }
         @media (max-width: 1100px) {
             #profile-btn-name { display: none !important; }
             #profile-btn { padding-right: 4px; }
@@ -1016,8 +1031,6 @@
         .dx-feed b.g, .dx-toast b.g { color: hsl(var(--acc-h) 69% 58%); }
         /* Dashboard charts. Series colors are fixed (validated on the dark card surface), not the accent */
         :root { --viz-onhand: #c98500; --viz-made: #199e70; --viz-out: #3987e5; --viz-grid: rgba(255, 255, 255, 0.07); }
-        .dx-stats-extra { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: #8a9a8e; margin: -10px 2px 18px; }
-        .dx-stats-extra b { color: #e6efe8; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
         .dx-charts { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 16px; }
         .dx-charts .dx-panel { margin-bottom: 0; }
         .dx-seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: rgba(6, 10, 7, 0.7); border: 1px solid rgba(255, 255, 255, 0.07); margin: -4px 0 10px; }
@@ -1488,11 +1501,10 @@
                     <!-- Who's online + my profile in one pill (sync status and the clock live in the footer) -->
                     <div class="hdr-icos shrink-0">
                         <button onclick="switchTab('map')" id="nav-map" data-page="map" class="nav-btn hdr-ico" title="Map: grows, stash houses and spots"><span class="ic"><i class="fa-solid fa-map-location-dot"></i></span><span class="cap">Map</span></button>
-                        <button onclick="setRaidMode(!document.body.classList.contains('raid'))" id="nav-raid" class="hdr-ico" title="Raid mode: hide all numbers on your screen (Shift+R)"><span class="ic"><i class="fa-solid fa-eye-slash"></i></span><span class="cap">Hide</span></button>
                         <button onclick="switchTab('calendar')" id="nav-calendar" data-page="calendar" class="nav-btn hdr-ico" title="Calendar: what's on this week"><span class="ic"><i class="fa-solid fa-calendar-days"></i><span id="hdr-cal-dot" class="hidden" title="Events today"></span></span><span class="cap">Calendar</span></button>
                     </div>
                     <div class="dx-me-pill shrink-0">
-                        <div id="presence-box" class="hidden lg:flex" onclick="onPresenceClick(event)" title="See who's online" role="button" aria-haspopup="true" aria-expanded="false">
+                        <div id="presence-box" class="flex" onclick="onPresenceClick(event)" title="See who's online" role="button" aria-haspopup="true" aria-expanded="false">
                             <div id="presence-stack" class="dx-stack"></div>
                             <span id="presence-count"></span>
                         </div>
@@ -1513,18 +1525,15 @@
             </div>
 
             <!-- Mobile Menu Dropdown -->
-            <div id="mobile-menu" class="hidden md:hidden border-t border-weed-900/60 bg-darkbg px-4 pt-2 pb-4 space-y-2">
-                <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Dashboard</button>
-                <button onclick="switchTab('inventory'); toggleMobileMenu()" data-page="inventory" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
-                <button onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Timers</button>
-                <button onclick="switchTab('meth'); toggleMobileMenu()" data-page="meth" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Meth</button>
-                <button onclick="switchTab('coke'); toggleMobileMenu()" data-page="coke" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Coke</button>
-                <button onclick="switchTab('map'); toggleMobileMenu()" data-page="map" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Map</button>
-                <button onclick="switchTab('calendar'); toggleMobileMenu()" data-page="calendar" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Calendar</button>
-                <button onclick="switchTab('sales'); toggleMobileMenu()" data-page="sales" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">BlackMarket</button>
-                <button onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Crew</button>
-                <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
-                <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
+            <div id="mobile-menu" class="hidden md:hidden border-t border-weed-900/60 bg-darkbg px-4 pt-2 pb-4 space-y-1">
+                <button type="button" onclick="switchTab('dashboard'); toggleMobileMenu()" data-tab="dashboard" class="mnav-btn on"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></button>
+                <button type="button" onclick="switchTab('inventory'); toggleMobileMenu()" data-page="inventory" data-tab="inventory" class="mnav-btn"><i class="fa-solid fa-warehouse"></i><span>Stash</span></button>
+                <button type="button" onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" data-tab="timers" class="mnav-btn"><span class="mn-svg"><svg class="bk" viewBox="0 0 40 48" aria-hidden="true"><defs><clipPath id="bk-mnav"><path d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/></clipPath></defs><g clip-path="url(#bk-mnav)"><rect class="bk-liq" x="0" y="29" width="40" height="20"/><circle class="bk-b" cx="15" cy="41" r="2"/><circle class="bk-b b2" cx="22" cy="42" r="1.6"/><circle class="bk-b b3" cx="26" cy="40" r="1.8"/></g><path class="bk-glass" d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/><path class="bk-rim" d="M13.5 5.5h13"/></svg></span><span>Timers</span><span class="mn-badge hidden" data-mirror="active-timers-badge"></span></button>
+                <button type="button" onclick="switchTab('meth'); toggleMobileMenu()" data-page="meth" data-tab="meth" class="mnav-btn"><i class="fa-solid fa-flask"></i><span>Meth</span><span class="mn-badge hidden" data-mirror="meth-ready-badge"></span></button>
+                <button type="button" onclick="switchTab('coke'); toggleMobileMenu()" data-page="coke" data-tab="coke" class="mnav-btn"><i class="fa-solid fa-snowflake"></i><span>Coke</span></button>
+                <button type="button" onclick="switchTab('sales'); toggleMobileMenu()" data-page="sales" data-tab="sales" class="mnav-btn"><i class="fa-solid fa-mask"></i><span>BlackMarket</span></button>
+                <button type="button" onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" data-tab="crew" class="mnav-btn"><i class="fa-solid fa-users"></i><span>Crew</span></button>
+                <button type="button" onclick="openProfile(); toggleMobileMenu()" class="mnav-btn"><i class="fa-solid fa-user-gear"></i><span>My Profile</span></button>
             </div>
 
             <!-- Grow timers sub-bar (dashboard only) -->
@@ -1563,7 +1572,6 @@
 
                         <div class="dx-sec"><h2>Totals &amp; Trends</h2></div>
                         <div id="dx-stats" class="dx-stats"></div>
-                        <div id="dx-stats-extra" class="dx-stats-extra"></div>
                         <div class="dx-charts">
                             <div class="dx-glass dx-panel">
                                 <div class="dx-sec"><h2>Made &amp; Out <span class="dx-muted text-xs font-semibold">· last 14 days</span></h2><button type="button" class="dx-tbl-btn" onclick="toggleChartTable(this)">Table</button></div>
@@ -2479,6 +2487,7 @@
                     <span id="sync-status-text">Local Only</span>
                 </div>
                 <div id="live-clock" class="text-xs font-mono font-bold text-weed-400">--:--:--</div>
+                <button type="button" id="nav-raid" onclick="setRaidMode(!document.body.classList.contains('raid'))" class="dx-raid-btn" title="Raid mode: hide all numbers on your screen (Shift+R)"><i class="fa-solid fa-eye-slash"></i><span>Hide numbers</span></button>
             </div>
             <div class="flex items-center gap-3">
                 <span id="footer-built">Custom Built 2026</span>
@@ -7270,6 +7279,7 @@
 
             // Only the highlight changes here; which buttons show is up to applyPageAccess()
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('gl-on', btn.id === `nav-${navTabId}`));
+            document.querySelectorAll('.mnav-btn').forEach(btn => btn.classList.toggle('on', btn.dataset.tab === navTabId));
 
             if (tabId === 'login') {
                 const input = document.getElementById('admin-password-input');
@@ -7302,7 +7312,14 @@
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
-            if (menu) menu.classList.toggle('hidden');
+            if (!menu) return;
+            menu.classList.toggle('hidden');
+            // the ready counts mirror the badges in the desktop menu
+            menu.querySelectorAll('[data-mirror]').forEach(el => {
+                const src = document.getElementById(el.dataset.mirror);
+                el.textContent = src ? src.textContent : '';
+                el.classList.toggle('hidden', !src || src.classList.contains('hidden'));
+            });
         }
 
         function renderAll() {
@@ -7552,9 +7569,6 @@
                 statsOnly ? null : { key: 'next', label: 'Coming in · next 24h', value: next.bricks, display: `~${fmtBricks(next.bricks)}`, sub: next.count ? `est. bricks from ${next.count} ${next.count === 1 ? 'harvest' : 'harvests'}` : 'No harvests due', fixedSub: true, series: [] }
             ].filter(Boolean);
             box.classList.toggle('n3', tiles.length === 3);
-            const extra = document.getElementById('dx-stats-extra');
-            if (extra) extra.innerHTML = `<span>Untrimmed <b>${t.untrimmed.toLocaleString()}</b></span><span>Coca leaves <b>${t.coca.toLocaleString()}</b></span>` +
-                `<span>Coke bricks <b>${t.cokeSmall}</b> small · <b>${t.cokeLarge}</b> large</span><span>Meth bins <b>${t.meth}</b></span>`;
             const showTrends = seesAllLocations();
             box.innerHTML = tiles.map(tile => {
                 const series = tile.series || (showTrends ? dailySeries(tile.key, tile.value) : [tile.value]);
