@@ -698,6 +698,65 @@
         .bm-ring { animation: bmFlash 1.4s ease-out 1; }
         @keyframes bmFlash { 0% { box-shadow: 0 0 0 2px #ef4444, 0 0 40px rgba(239, 68, 68, 0.7); } 100% { box-shadow: 0 0 0 0 transparent; } }
         .bm-page .dx-tab.on { background: linear-gradient(180deg, #dc2626, #7f1d1d); border-color: transparent; }
+        .ck-tc .bk-box.ck-box { color: #7dd3fc; font-size: 30px; background: radial-gradient(circle at 50% 60%, rgba(56, 189, 248, 0.18), rgba(6, 10, 7, 0.6) 70%); border-color: rgba(125, 211, 252, 0.25); }
+        .ck-tc .clock .t, .ck-gb .time .t { color: #7dd3fc; }
+        .ck-tc .fill, .ck-gb .fill { background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.16) 0 6px, transparent 6px 12px), linear-gradient(90deg, #0369a1, #38bdf8) !important; }
+        .ck-tc .acts .rn-to { width: auto; flex: 1; font-size: 12px; padding: 6px 8px; }
+        .ck-tc .acts .dx-stop { flex: 0 0 auto; width: auto; background: rgba(127, 29, 29, 0.35); color: #fecaca; border: 1px solid rgba(248, 113, 113, 0.35); }
+        .ck-gb .pot { color: #7dd3fc; font-size: 18px; }
+        .ck-bar { border-left-color: rgba(125, 211, 252, 0.25); }
+        #dx-runs { display: flex; gap: 10px; overflow-x: auto; min-width: 0; padding: 2px 2px 4px; scrollbar-width: thin; }
+        .hdr-icos { display: flex; gap: 4px; margin-right: 6px; }
+        .hdr-ico { position: relative; width: 34px; height: 34px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; color: #8a9a8e; background: rgba(6, 10, 7, 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.22); font-size: 14px; }
+        .hdr-ico:hover, .hdr-ico.gl-on { color: #fff; border-color: hsl(var(--acc-h) 69% 58%); }
+        .hdr-ico.hidden { display: none; }
+        #hdr-cal-dot { position: absolute; top: -4px; right: -4px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 999px; font-size: 10px; font-weight: 800; line-height: 16px; color: #04140a; background: hsl(var(--acc-h) 69% 58%); }
+        #hdr-cal-dot.hidden { display: none; }
+        .map-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; }
+        .map-tools.hidden { display: none; }
+        .map-tools .dx-input { width: auto; font-size: 13px; padding: 7px 9px; }
+        .map-box { padding: 8px; }
+        .map-scroll { overflow: auto; max-height: 78vh; border-radius: 12px; }
+        .map-inner { position: relative; min-width: 100%; }
+        .map-inner img { display: block; width: 100%; height: auto; user-select: none; }
+        .map-inner.placing { cursor: crosshair; }
+        .map-pin { position: absolute; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; gap: 2px; z-index: 2; }
+        .map-pin .dot { width: 16px; height: 16px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--pc, #fff); border: 2px solid #0b0f0c; box-shadow: 0 0 10px var(--pc, #fff); order: 2; }
+        .map-pin .lb { font-size: 10px; font-weight: 800; color: #fff; background: rgba(0, 0, 0, 0.75); padding: 1px 6px; border-radius: 6px; white-space: nowrap; order: 1; }
+        .map-pin.k-grow { --pc: #4ade80; } .map-pin.k-stash { --pc: #fbbf24; } .map-pin.k-meth { --pc: #22d3ee; } .map-pin.k-coke { --pc: #38bdf8; } .map-pin.k-custom { --pc: #f472b6; }
+        #pin-pop { position: absolute; transform: translate(-50%, 8px); z-index: 5; min-width: 200px; padding: 10px 12px; display: grid; gap: 4px; font-size: 12px; text-align: center; }
+        #pin-pop .info { color: #cbd5d0; } #pin-pop .by { color: #6b7a70; font-size: 11px; }
+        #pin-pop .acts { display: flex; gap: 6px; justify-content: center; margin-top: 4px; }
+        .cal-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+        @media (max-width: 900px) { .cal-week { grid-template-columns: 1fr; } }
+        .cal-day { min-height: 130px; padding: 10px; border-radius: 14px; background: rgba(10, 18, 12, 0.85); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.14); display: flex; flex-direction: column; gap: 6px; }
+        .cal-day.today { border-color: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 18px -6px hsl(var(--acc-h) 69% 58% / 0.6); }
+        .cal-day.past { opacity: 0.6; }
+        .cal-head { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #8a9a8e; }
+        .cal-head span { color: hsl(var(--acc-h) 69% 62%); }
+        .cal-ev { display: flex; gap: 6px; align-items: flex-start; text-align: left; font-size: 12px; padding: 6px 8px; border-radius: 9px; color: #e2e8f0; background: color-mix(in srgb, var(--ec) 10%, transparent); border: 1px solid color-mix(in srgb, var(--ec) 40%, transparent); }
+        .cal-ev i { color: var(--ec); margin-top: 2px; }
+        .cal-ev b { display: block; font-weight: 700; }
+        .cal-ev em { font-style: normal; font-size: 10px; color: #8a9a8e; margin-right: 6px; }
+        .cal-none { color: #3f4b43; font-size: 12px; }
+        .ev-weekly { align-self: end; }
+        .tk-ev b { color: #fde68a !important; }
+        .sup-grid { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        .sup { display: grid; gap: 4px; justify-items: center; padding: 10px 8px; border-radius: 12px; background: rgba(6, 10, 7, 0.6); border: 1px solid rgba(103, 232, 249, 0.16); }
+        .sup.low { border-color: rgba(248, 113, 113, 0.6); box-shadow: inset 0 0 0 1px rgba(248, 113, 113, 0.25); }
+        .sup .lbl { font-size: 11px; color: #8a9a8e; font-weight: 700; }
+        .sup .lbl i { color: #67e8f9; margin-right: 4px; }
+        .ck-page .sup .lbl i { color: #7dd3fc; }
+        .sup .n { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.1; }
+        .sup.low .n { color: #fca5a5; }
+        .sup .btns { display: flex; gap: 4px; }
+        .sup .btns button { font-size: 11px; font-weight: 800; padding: 3px 7px; border-radius: 7px; color: #cbd5d0; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .sup .btns button:disabled { opacity: 0.35; }
+        .sup .lowat { font-size: 10px; color: #6b7a70; display: flex; align-items: center; gap: 4px; }
+        .sup .lowat .dx-input { width: 54px; padding: 2px 4px; font-size: 11px; text-align: center; }
+        .sup-warn { margin-bottom: 10px; font-size: 12px; color: #fecaca; background: rgba(127, 29, 29, 0.35); border: 1px solid rgba(248, 113, 113, 0.4); border-radius: 10px; padding: 7px 10px; }
+        .sup-short { color: #fca5a5; }
+        .sup-ok { color: #86efac; }
         .wish-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin: 10px 0 14px; }
         .wish-grid .contents { display: contents; }
         .wish-grid label { display: grid; gap: 4px; font-size: 12px; font-weight: 700; color: #cbd5d0; }
@@ -1347,7 +1406,7 @@
                             <i class="fa-solid fa-snowflake"></i>
                             <span>Coke</span>
                         </button>
-                                                <button onclick="switchTab('sales')" id="nav-sales" title="BlackMarket: sell product for dirty money" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                                                <button onclick="switchTab('sales')" id="nav-sales" title="BlackMarket: sell product, the crew wish list, washing" data-page="sales" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-mask"></i>
                             <span>BlackMarket</span>
                         </button>
@@ -1358,6 +1417,10 @@
                     </nav>
 
                     <!-- Who's online + my profile in one pill (sync status and the clock live in the footer) -->
+                    <div class="hdr-icos shrink-0">
+                        <button onclick="switchTab('map')" id="nav-map" data-page="map" class="nav-btn hdr-ico" title="Map: grows, stash houses and spots"><i class="fa-solid fa-map-location-dot"></i></button>
+                        <button onclick="switchTab('calendar')" id="nav-calendar" data-page="calendar" class="nav-btn hdr-ico" title="Calendar: what's on this week"><i class="fa-solid fa-calendar-days"></i><span id="hdr-cal-dot" class="hidden" title="Events today"></span></button>
+                    </div>
                     <div class="dx-me-pill shrink-0">
                         <div id="presence-box" class="hidden lg:flex" onclick="onPresenceClick(event)" title="See who's online" role="button" aria-haspopup="true" aria-expanded="false">
                             <div id="presence-stack" class="dx-stack"></div>
@@ -1386,7 +1449,9 @@
                 <button onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Timers</button>
                 <button onclick="switchTab('meth'); toggleMobileMenu()" data-page="meth" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Meth</button>
                 <button onclick="switchTab('coke'); toggleMobileMenu()" data-page="coke" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Coke</button>
-                <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">BlackMarket</button>
+                <button onclick="switchTab('map'); toggleMobileMenu()" data-page="map" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Map</button>
+                <button onclick="switchTab('calendar'); toggleMobileMenu()" data-page="calendar" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Calendar</button>
+                <button onclick="switchTab('sales'); toggleMobileMenu()" data-page="sales" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">BlackMarket</button>
                 <button onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Crew</button>
                 <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
                 <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
@@ -1400,6 +1465,10 @@
                     <div id="dx-cookbar" class="dx-cookbar hidden">
                         <div class="gb-label"><b><i class="fa-solid fa-flask mr-1 text-cyan-300"></i>Meth</b><button onclick="switchTab('timers'); setTimersView('meth')">Manage →</button></div>
                         <div id="dx-cooks"></div>
+                    </div>
+                    <div id="dx-runbar" class="dx-cookbar ck-bar hidden">
+                        <div class="gb-label"><b><i class="fa-solid fa-snowflake mr-1 text-sky-300"></i>Coke</b><button onclick="switchTab('timers'); setTimersView('coke')">Manage →</button></div>
+                        <div id="dx-runs"></div>
                     </div>
                 </div>
                 <div id="dx-ticker" class="dx-ticker">
@@ -1467,15 +1536,15 @@
                         <h1 class="dx-title bm-title text-2xl font-black text-white"><i class="fa-solid fa-mask mr-2"></i>BlackMarket</h1>
                         <p class="text-xs text-slate-400 mt-1">Product sells for <b class="bm-dirty">dirty money</b> at the BlackMarket, usually from a Narco call. Selling takes it out of the stash.</p>
                     </div>
-                    <div class="dx-plan-actions">
+                    <div class="dx-plan-actions" data-sales-only>
                         <button class="bm-narco" onclick="narcoCall()" title="Got a Narco call? Start a sale"><i class="fa-solid fa-phone-volume mr-1"></i>Narco call</button>
                         <button class="dx-act" onclick="exportSalesCsv()"><i class="fa-solid fa-file-csv mr-1"></i>Export CSV</button>
                     </div>
                 </div>
                 <div class="dx-tabs bm-tabs mb-4">
-                    <button id="bm-tab-sell" class="dx-tab on" onclick="setBmView('sell')"><i class="fa-solid fa-sack-dollar"></i>Sell</button>
+                    <button id="bm-tab-sell" class="dx-tab on" data-sales-only onclick="setBmView('sell')"><i class="fa-solid fa-sack-dollar"></i>Sell</button>
                     <button id="bm-tab-wish" class="dx-tab" onclick="setBmView('wish')"><i class="fa-solid fa-list-check"></i>Wish list <span id="bm-wish-count" class="count hidden"></span></button>
-                    <button id="bm-tab-wash" class="dx-tab" onclick="setBmView('wash')"><i class="fa-solid fa-soap"></i>Wash</button>
+                    <button id="bm-tab-wash" class="dx-tab" data-sales-only onclick="setBmView('wash')"><i class="fa-solid fa-soap"></i>Wash</button>
                 </div>
                 <div id="bm-sell">
 
@@ -1573,7 +1642,7 @@
 
             <section id="tab-timers" class="tab-content hidden">
                 <h1 class="dx-title text-2xl font-black text-white mb-4"><span class="text-cyan-300 mr-2"><svg class="bk" viewBox="0 0 40 48" aria-hidden="true"><defs><clipPath id="bk-h1"><path d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/></clipPath></defs><g clip-path="url(#bk-h1)"><rect class="bk-liq" x="0" y="29" width="40" height="20"/><circle class="bk-b" cx="15" cy="41" r="2"/><circle class="bk-b b2" cx="22" cy="42" r="1.6"/><circle class="bk-b b3" cx="26" cy="40" r="1.8"/></g><path class="bk-glass" d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/><path class="bk-rim" d="M13.5 5.5h13"/></svg></span>Timers</h1>
-                <div class="dx-tabs mb-4"><button id="timers-tab-grows" class="dx-tab on" data-page="grows" onclick="setTimersView('grows')"><i class="fa-solid fa-cannabis"></i>Grows</button><button id="timers-tab-meth" class="dx-tab" data-page="meth" onclick="setTimersView('meth')"><i class="fa-solid fa-flask"></i>Meth cooks <span id="timers-meth-count" class="count hidden"></span></button></div>
+                <div class="dx-tabs mb-4"><button id="timers-tab-grows" class="dx-tab on" data-page="grows" onclick="setTimersView('grows')"><i class="fa-solid fa-cannabis"></i>Grows</button><button id="timers-tab-meth" class="dx-tab" data-page="meth" onclick="setTimersView('meth')"><i class="fa-solid fa-flask"></i>Meth cooks <span id="timers-meth-count" class="count hidden"></span></button><button id="timers-tab-coke" class="dx-tab" data-page="coke" onclick="setTimersView('coke')"><i class="fa-solid fa-snowflake"></i>Coke runs <span id="timers-coke-count" class="count hidden"></span></button></div>
                 <div id="timers-grows">
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                         <p class="text-xs text-slate-400">Postals: <span id="timers-postal-list" class="text-weed-300 font-bold font-mono">&mdash;</span>. Discord gets a message when a grow is ready. Pot plans are on the <b>Stash</b> page under each grow.</p>
@@ -1591,6 +1660,20 @@
                         <div class="mx-binit" data-binit="timers"></div>
                     </div>
                     <div id="timers-cooks" class="mx-cook-grid"></div>
+                </div>
+                <div id="timers-coke" class="hidden ck-page">
+                    <div class="dx-glass mx-card">
+                        <h2><i class="fa-solid fa-ship"></i>Coke runs</h2>
+                        <p class="mx-sub">Heading out to make bricks? Start a run so the crew knows when they'll be done. About <b>2 hours</b> a small brick, <b>4</b> a large.</p>
+                        <form id="run-add" class="mx-add" onsubmit="startRun(event)">
+                            <select id="run-size" class="dx-input" aria-label="Brick size" onchange="runTimeDefault()"><option value="small">Small bricks</option><option value="large">Large bricks</option></select>
+                            <select id="run-n" class="dx-input" aria-label="How many" onchange="runTimeDefault()"><option value="1">×1</option><option value="2">×2</option><option value="3">×3</option><option value="4">×4</option></select>
+                            <input id="run-crew" maxlength="60" placeholder="Who's on it" class="dx-input" aria-label="Who's on it">
+                            <span class="mx-time" title="How long the run takes"><input id="run-h" type="number" min="0" max="168" value="2" class="dx-input dx-mono" aria-label="Hours" oninput="this.dataset.touched = '1'">h<input id="run-m" type="number" min="0" max="59" value="0" class="dx-input dx-mono" aria-label="Minutes" oninput="document.getElementById('run-h').dataset.touched = '1'">m</span>
+                            <button type="submit" class="dx-btn dx-btn-g" style="width:auto;padding:8px 14px"><i class="fa-solid fa-play mr-1"></i>Start run</button>
+                        </form>
+                    </div>
+                    <div id="timers-runs" class="mx-cook-grid"></div>
                 </div>
             </section>
 
@@ -1621,6 +1704,47 @@
                 <div id="crew-body"></div>
             </section>
 
+            <section id="tab-map" class="tab-content hidden space-y-4">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-map-location-dot text-weed-400 mr-2"></i>Map</h1>
+                        <p class="text-xs text-slate-400 mt-1">Where everything is. Anyone can drop, move or remove a pin; click a pin for its timer or stock.</p>
+                    </div>
+                    <label id="map-upload" class="dx-act hidden cursor-pointer" style="flex:none"><i class="fa-solid fa-image mr-1"></i>Change map image<input type="file" accept="image/*" class="hidden" onchange="uploadMapImage(this)"></label>
+                </div>
+                <div id="map-tools" class="dx-glass map-tools hidden">
+                    <select id="map-pin-kind" class="dx-input" aria-label="What to pin"></select>
+                    <button class="dx-btn dx-btn-g" style="width:auto;padding:8px 14px" onclick="startPlacingPin()"><i class="fa-solid fa-location-dot mr-1"></i>Add pin</button>
+                    <button id="map-cancel" class="dx-act hidden" style="flex:none" onclick="cancelPlacing()">Cancel</button>
+                    <span id="map-hint" class="text-xs dx-muted"></span>
+                    <span class="ml-auto dx-seg"><button onclick="setMapZoom(mapZoom - 0.5)" aria-label="Zoom out"><i class="fa-solid fa-minus"></i></button><button onclick="setMapZoom(1)">Fit</button><button onclick="setMapZoom(mapZoom + 0.5)" aria-label="Zoom in"><i class="fa-solid fa-plus"></i></button></span>
+                </div>
+                <div id="map-box" class="dx-glass map-box"></div>
+            </section>
+
+            <section id="tab-calendar" class="tab-content hidden space-y-4">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-calendar-days text-weed-400 mr-2"></i>Calendar</h1>
+                        <p class="text-xs text-slate-400 mt-1">What's on this week (US Eastern). Anyone can add an event; weekly ones repeat on the same day.</p>
+                    </div>
+                    <div class="flex items-center gap-2"><button class="dx-act" style="flex:none" onclick="setCalWeek(calWeekOffset - 1)" aria-label="Previous week"><i class="fa-solid fa-chevron-left"></i></button><button class="dx-act" style="flex:none" onclick="setCalWeek(0)">This week</button><button class="dx-act" style="flex:none" onclick="setCalWeek(calWeekOffset + 1)" aria-label="Next week"><i class="fa-solid fa-chevron-right"></i></button><b id="cal-range" class="text-sm text-white ml-2"></b></div>
+                </div>
+                <div id="cal-week" class="cal-week"></div>
+                <form class="dx-glass dx-qs" onsubmit="addEvent(event)">
+                    <div class="dx-sec"><h2><i class="fa-solid fa-calendar-plus text-weed-400 mr-1"></i>Add an event</h2></div>
+                    <div class="wish-grid">
+                        <label class="wide">What<input id="ev-title" maxlength="50" required placeholder="e.g. Coca leaves harvest, Crew meeting" class="dx-input w-full"></label>
+                        <label>Kind<select id="ev-type" class="dx-input w-full"><option value="harvest">Harvest</option><option value="cook">Meth cook</option><option value="run">Coke run</option><option value="meeting">Meeting</option><option value="other" selected>Other</option></select></label>
+                        <label>Day<input id="ev-date" type="date" class="dx-input w-full"></label>
+                        <label>Time (ET) <span>(optional)</span><input id="ev-time" type="time" class="dx-input w-full"></label>
+                        <label class="wide">Notes <span>(optional)</span><input id="ev-notes" maxlength="120" placeholder="Where, who's coming…" class="dx-input w-full"></label>
+                        <label class="ev-weekly"><span><input id="ev-weekly" type="checkbox" class="accent-green-500 mr-1">Repeat every week</span></label>
+                    </div>
+                    <button type="submit" class="qs-submit"><i class="fa-solid fa-plus mr-2"></i>Add to the calendar</button>
+                </form>
+            </section>
+
             <section id="tab-coke" class="tab-content hidden space-y-5 ck-page">
                 <div>
                     <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-snowflake text-sky-300 mr-2"></i>Coke</h1>
@@ -1648,6 +1772,12 @@
                         <div class="mx-out" id="coke-calc-out"></div>
                         <p class="mx-plan" id="coke-calc-plan"></p>
                     </div>
+                </div>
+
+                <div class="dx-glass mx-card">
+                    <h2><i class="fa-solid fa-boxes-stacked"></i>Warehouse supplies</h2>
+                    <p class="mx-sub">Oil, cement and battery acid on hand for the next bricks.</p>
+                    <div data-supplies="coke"></div>
                 </div>
 
                 <div>
@@ -1726,6 +1856,12 @@
                         <div class="mx-out" id="meth-calc-out"></div>
                         <p class="mx-plan" id="meth-calc-plan"></p>
                     </div>
+                </div>
+
+                <div class="dx-glass mx-card">
+                    <h2><i class="fa-solid fa-boxes-stacked"></i>Lab supplies</h2>
+                    <p class="mx-sub">At the Blue Container, 9359. Putting a cook down takes its sodium and ammonia from here.</p>
+                    <div data-supplies="meth"></div>
                 </div>
 
                 <div class="dx-glass mx-card">
@@ -1999,9 +2135,9 @@
                         <div class="w-8 h-8 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center"><i class="fa-brands fa-discord text-lg"></i></div>
                         <div>
                             <h2 class="font-bold text-white text-base">Discord Messages</h2>
-                            <p class="text-xs text-slate-400">Grows send the grow message when they're ready to harvest; meth cooks send the meth message when their time is up. Click a tag to insert it where your cursor is.</p>
+                            <p class="text-xs text-slate-400">Grows send the grow message when they're ready to harvest, meth cooks the meth message and coke runs the coke message when their time is up. Click a tag to insert it where your cursor is.</p>
                         </div>
-                        <div id="dt-kind" class="dx-seg ml-auto shrink-0"><button type="button" data-kind="grow" class="on" onclick="setDiscordKind('grow')"><i class="fa-solid fa-cannabis"></i>Grows</button><button type="button" data-kind="meth" onclick="setDiscordKind('meth')"><i class="fa-solid fa-flask"></i>Meth cooks</button></div>
+                        <div id="dt-kind" class="dx-seg ml-auto shrink-0"><button type="button" data-kind="grow" class="on" onclick="setDiscordKind('grow')"><i class="fa-solid fa-cannabis"></i>Grows</button><button type="button" data-kind="meth" onclick="setDiscordKind('meth')"><i class="fa-solid fa-flask"></i>Meth cooks</button><button type="button" data-kind="coke" onclick="setDiscordKind('coke')"><i class="fa-solid fa-snowflake"></i>Coke runs</button></div>
                     </div>
                     <form id="dt-form" onsubmit="saveDiscordTemplate(event)" oninput="renderDiscordPreview()" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="space-y-3">
@@ -2762,6 +2898,13 @@
             washes: [], // Shared: dirty money washed [{ id, who, whoKey, dirty, pct, clean, note, by, ts }]
             wishFields: [], // Shared: extra fields on wish list requests (admin)
             washPct: 20, // Shared: default wash cut %
+            pins: [], // Shared: map pins [{ id, kind, ref, label, x, y, by, ts }]
+            events: [], // Shared: calendar [{ id, title, type, date, time, weekly, notes, by, ts }]
+            mapImage: null, // Shared: the map picture (JPEG data URL, admin uploads)
+            runs: [], // Shared: coke runs [{ id, who, crew, size, n, mins, ts, told }]
+            discordCokeTemplate: null, // Coke run done message wording (shared); null = defaults
+            supplies: {}, // Shared: lab supply counts { sodium, ammonia, soda, water, bags, hammers, oil, cement, acid }
+            supplyLow: {}, // Shared: "running low" line per supply (admin)
             audit: [], // Shared: detailed history for admins [{ id, who, kind, text, loc, ts, undone }], newest first
             ledger: [], // Shared: budget entries (payouts to crew, expenses), newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
@@ -3087,6 +3230,9 @@
                     discordMethTemplate: normalizeDiscordTemplate(state.discordMethTemplate, DEFAULT_METH_DISCORD_TEMPLATE),
                     wishFields: Array.isArray(state.wishFields) && state.wishFields.length ? state.wishFields : null,
                     washPct: Number.isFinite(Number(state.washPct)) ? Number(state.washPct) : 20,
+                    supplyLow: { ...(state.supplyLow || {}) },
+                    discordCokeTemplate: normalizeDiscordTemplate(state.discordCokeTemplate, DEFAULT_COKE_DISCORD_TEMPLATE),
+                    mapImage: typeof state.mapImage === 'string' && state.mapImage.startsWith('data:image/') ? state.mapImage : null,
                     allowSignup: !(isPlainObject(state.signupSettings) && state.signupSettings.allowSignup === false),
                     hidePrices: Boolean(state.salesSettings && state.salesSettings.hidePrices),
                     salePrices: { ...((state.salesSettings && state.salesSettings.prices) || {}) },
@@ -3103,6 +3249,10 @@
                 audit: Object.fromEntries((state.audit || []).map(({ id, ...record }) => [id, record])),
                 cooks: Object.fromEntries((state.cooks || []).map(({ id, ...record }) => [id, record])),
                 wishes: Object.fromEntries((state.wishes || []).map(({ id, ...record }) => [id, record])),
+                supplies: { ...(state.supplies || {}) },
+                runs: Object.fromEntries((state.runs || []).map(({ id, ...record }) => [id, record])),
+                pins: Object.fromEntries((state.pins || []).map(({ id, ...record }) => [id, record])),
+                events: Object.fromEntries((state.events || []).map(({ id, ...record }) => [id, record])),
                 washes: Object.fromEntries((state.washes || []).map(({ id, ...record }) => [id, record])),
                 ledger: Object.fromEntries((state.ledger || []).map(({ id, ...record }) => [id, record]))
             };
@@ -3121,6 +3271,13 @@
             appState.discordTemplate = isPlainObject(tree.settings) ? tree.settings.discordTemplate : null;
             appState.discordMethTemplate = isPlainObject(tree.settings) ? tree.settings.discordMethTemplate : null;
             appState.wishFields = isPlainObject(tree.settings) && Array.isArray(tree.settings.wishFields) ? tree.settings.wishFields : [];
+            appState.supplyLow = isPlainObject(tree.settings) && isPlainObject(tree.settings.supplyLow) ? tree.settings.supplyLow : {};
+            appState.supplies = isPlainObject(tree.supplies) ? tree.supplies : {};
+            appState.discordCokeTemplate = isPlainObject(tree.settings) ? tree.settings.discordCokeTemplate : null;
+            appState.mapImage = isPlainObject(tree.settings) && typeof tree.settings.mapImage === 'string' && tree.settings.mapImage.startsWith('data:image/') ? tree.settings.mapImage : null;
+            appState.pins = Object.entries(isPlainObject(tree.pins) ? tree.pins : {}).filter(([, x]) => isPlainObject(x) && Number.isFinite(Number(x.x)) && Number.isFinite(Number(x.y)) && x.label).map(([id, record]) => ({ ...record, id }));
+            appState.events = Object.entries(isPlainObject(tree.events) ? tree.events : {}).filter(([, x]) => isPlainObject(x) && x.title && /^\d{4}-\d{2}-\d{2}$/.test(x.date)).map(([id, record]) => ({ ...record, id }));
+            appState.runs = Object.entries(isPlainObject(tree.runs) ? tree.runs : {}).filter(([, x]) => isPlainObject(x) && Number(x.ts) > 0).map(([id, record]) => ({ ...record, id }));
             appState.washPct = isPlainObject(tree.settings) && tree.settings.washPct !== undefined ? tree.settings.washPct : 20;
             appState.signupSettings = { allowSignup: !(isPlainObject(tree.settings) && tree.settings.allowSignup === false) };
             appState.salesSettings = { hidePrices: isPlainObject(tree.settings) && tree.settings.hidePrices === true, prices: isPlainObject(tree.settings) && isPlainObject(tree.settings.salePrices) ? tree.settings.salePrices : {},
@@ -3647,7 +3804,7 @@
 
         // ---- Detailed history (Admin → History): who did exactly what, where and when ----
         const AUDIT_KEEP = 500;
-        const AUDIT_KINDS = { buds: 'Bud & bricks', coca: 'Coke', meth: 'Meth', move: 'Moves', harvest: 'Harvests', timer: 'Timers', plan: 'Pot plans', sale: 'BlackMarket', wish: 'Wish list', wash: 'Wash', budget: 'Budget', titles: 'Titles', locations: 'Places' };
+        const AUDIT_KINDS = { buds: 'Bud & bricks', coca: 'Coke', meth: 'Meth', move: 'Moves', harvest: 'Harvests', timer: 'Timers', plan: 'Pot plans', sale: 'BlackMarket', wish: 'Wish list', wash: 'Wash', supply: 'Supplies', map: 'Map', calendar: 'Calendar', budget: 'Budget', titles: 'Titles', locations: 'Places' };
         let auditShown = 100;
 
         function auditLog({ kind, loc, text }) {
@@ -3758,6 +3915,351 @@
             setTimeout(() => { if (crewFocus === name) { crewFocus = null; renderCrewPage(); } }, 4000);
         }
 
+        // ---- Map: a picture of the city (uploaded by an admin) with pins anyone can place ----
+        const MAP_FIXED = [
+            { kind: 'meth', ref: 'lab', label: 'Meth Lab · 10102' },
+            { kind: 'meth', ref: 'container', label: 'Blue Container · 9359' },
+            { kind: 'coke', ref: 'warehouse', label: 'Coke Warehouse · 10060' },
+            { kind: 'coke', ref: 'island', label: 'Coke Island (red zone)' }
+        ];
+        let mapPlacing = null; // { kind, ref, label } while choosing a spot, or { move: id }
+        let mapZoom = 1;
+
+        function mapPinChoices() {
+            const grows = visibleLocations().map(l => ({ kind: 'grow', ref: l.id, label: `Grow · ${l.id}${l.alias ? ` (${l.alias})` : ''}` }));
+            const stashes = inventoryBuckets().filter(b => b.kind === 'stash').map(b => ({ kind: 'stash', ref: b.key, label: `Stash · ${b.short}` }));
+            return [...grows, ...stashes, ...MAP_FIXED, { kind: 'custom', ref: '', label: 'Custom label…' }];
+        }
+
+        function pinInfo(p) {
+            if (p.kind === 'grow') {
+                const loc = appState.locations.find(l => l.id === p.ref);
+                if (!loc) return 'Grow (removed)';
+                const st = timerState(loc);
+                return st.status === 'ready' ? 'Ready to harvest!' : st.status === 'idle' ? 'Not growing' : readyAtLabel(loc);
+            }
+            if (p.kind === 'stash') {
+                const t = bucketTotals(appState.stock[p.ref]);
+                return `${t.bricks.toLocaleString()} bricks · ${t.cokeSmall + t.cokeLarge} coke · ${t.meth} meth bins`;
+            }
+            if (p.kind === 'meth' && p.ref === 'lab') return `${(appState.cooks || []).length} cook${(appState.cooks || []).length === 1 ? '' : 's'} down`;
+            if (p.kind === 'coke' && p.ref === 'island') return 'Red zone: shoot on sight';
+            return p.note || '';
+        }
+
+        function renderMapPage() {
+            const page = document.getElementById('tab-map');
+            if (!page || page.classList.contains('hidden')) return;
+            const img = appState.mapImage;
+            const admin = hasAdminAccess();
+            document.getElementById('map-upload').classList.toggle('hidden', !admin);
+            const sel = document.getElementById('map-pin-kind');
+            if (sel !== document.activeElement) {
+                const keep = sel.value;
+                sel.innerHTML = mapPinChoices().map((c, i) => `<option value="${i}">${escapeHtml(c.label)}</option>`).join('');
+                if ([...sel.options].some(o => o.value === keep)) sel.value = keep;
+            }
+            document.getElementById('map-tools').classList.toggle('hidden', !img);
+            const box = document.getElementById('map-box');
+            if (!img) {
+                box.innerHTML = emptyState('No map yet', admin ? 'Upload a picture of the map (your server\'s postal map works great) with <b>Change map image</b> above.' : 'Ask an admin to upload a map picture.');
+                return;
+            }
+            const pins = (appState.pins || []).map(p => `<button type="button" class="map-pin k-${escapeHtml(p.kind)}" style="left:${Number(p.x).toFixed(2)}%;top:${Number(p.y).toFixed(2)}%" data-pin="${escapeHtml(p.id)}" onclick="event.stopPropagation(); openPin(${jsArg(p.id)})" title="${escapeHtml(p.label)}">
+                    <span class="dot"></span><span class="lb">${escapeHtml(p.label)}</span></button>`).join('');
+            box.innerHTML = `<div class="map-scroll"><div class="map-inner ${mapPlacing ? 'placing' : ''}" style="width:${mapZoom * 100}%" onclick="mapClick(event)"><img src="${img}" alt="Map" draggable="false">${pins}</div></div>`;
+            document.getElementById('map-hint').textContent = mapPlacing ? (mapPlacing.move ? 'Click the new spot for the pin.' : `Click the map to drop "${mapPlacing.label}".`) : `${(appState.pins || []).length} pins. Click one for details.`;
+            document.getElementById('map-cancel').classList.toggle('hidden', !mapPlacing);
+        }
+
+        function setMapZoom(z) {
+            mapZoom = Math.max(1, Math.min(3, z));
+            renderMapPage();
+        }
+
+        function startPlacingPin() {
+            if (isStatsOnly()) return;
+            const choice = mapPinChoices()[Number(document.getElementById('map-pin-kind').value) || 0];
+            if (!choice) return;
+            let label = choice.label;
+            if (choice.kind === 'custom') {
+                label = (prompt('Pin label (e.g. Lucas, Meet spot, Chop shop):') || '').trim().slice(0, 40);
+                if (!label) return;
+            }
+            mapPlacing = { ...choice, label };
+            closePin();
+            renderMapPage();
+        }
+
+        function cancelPlacing() {
+            mapPlacing = null;
+            renderMapPage();
+        }
+
+        function mapClick(event) {
+            if (!mapPlacing) return;
+            const r = event.currentTarget.getBoundingClientRect();
+            const x = Math.max(0, Math.min(100, (event.clientX - r.left) / r.width * 100));
+            const y = Math.max(0, Math.min(100, (event.clientY - r.top) / r.height * 100));
+            if (mapPlacing.move) {
+                const id = mapPlacing.move;
+                writeShared({ [`pins/${id}/x`]: +x.toFixed(2), [`pins/${id}/y`]: +y.toFixed(2) });
+                const p = appState.pins.find(q => q.id === id);
+                if (p) { p.x = x; p.y = y; auditLog({ kind: 'map', text: `Moved the ${p.label} pin` }); }
+            } else {
+                const id = newActivityId();
+                const record = { kind: mapPlacing.kind, ref: mapPlacing.ref || null, label: mapPlacing.label, x: +x.toFixed(2), y: +y.toFixed(2), by: appState.crewName || 'Someone', ts: timestampValue() };
+                appState.pins.push({ ...record, id, ts: syncNow() });
+                writeShared({ [`pins/${id}`]: record });
+                auditLog({ kind: 'map', text: `Added a ${record.label} pin to the map` });
+            }
+            mapPlacing = null;
+            renderMapPage();
+        }
+
+        function openPin(id) {
+            const p = (appState.pins || []).find(x => x.id === id);
+            if (!p) return;
+            closePin();
+            const el = document.querySelector(`[data-pin="${CSS.escape(id)}"]`);
+            const pop = document.createElement('div');
+            pop.id = 'pin-pop';
+            pop.className = 'dx-glass';
+            pop.innerHTML = `<b>${escapeHtml(p.label)}</b><span class="info">${escapeHtml(pinInfo(p))}</span><span class="by">Pinned by ${escapeHtml(p.by || 'Someone')}</span>
+                ${isStatsOnly() ? '' : `<div class="acts"><button class="dx-act" onclick="mapPlacing = { move: ${jsArg(id)} }; closePin(); renderMapPage()"><i class="fa-solid fa-up-down-left-right mr-1"></i>Move</button><button class="dx-act" onclick="removePin(${jsArg(id)})"><i class="fa-solid fa-trash-can mr-1"></i>Remove</button></div>`}`;
+            pop.addEventListener('click', e => e.stopPropagation()); // its buttons aren't clicks on the map
+            el.parentElement.appendChild(pop);
+            pop.style.left = el.style.left;
+            pop.style.top = el.style.top;
+        }
+
+        function closePin() {
+            const pop = document.getElementById('pin-pop');
+            if (pop) pop.remove();
+        }
+
+        function removePin(id) {
+            const p = (appState.pins || []).find(x => x.id === id);
+            if (!p || !confirm(`Remove the ${p.label} pin?`)) return;
+            appState.pins = appState.pins.filter(x => x.id !== id);
+            writeShared({ [`pins/${id}`]: null });
+            auditLog({ kind: 'map', text: `Removed the ${p.label} pin` });
+            closePin();
+            renderMapPage();
+        }
+
+        // Shrink the picture so it fits in the shared database (about 1600px wide, JPEG)
+        function uploadMapImage(input) {
+            const file = input.files && input.files[0];
+            input.value = '';
+            if (!file || !allowed('admin')) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                const img = new Image();
+                img.onload = () => {
+                    const scale = Math.min(1, 1600 / img.width);
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.round(img.width * scale);
+                    canvas.height = Math.round(img.height * scale);
+                    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                    let quality = 0.82, data = canvas.toDataURL('image/jpeg', quality);
+                    while (data.length > 900000 && quality > 0.4) { quality -= 0.1; data = canvas.toDataURL('image/jpeg', quality); }
+                    writeShared({ 'settings/mapImage': data });
+                    appState.mapImage = data;
+                    auditLog({ kind: 'map', text: 'Changed the map image' });
+                    showAlert('Map image saved for everyone.', 'success');
+                    renderMapPage();
+                };
+                img.onerror = () => showAlert("That file doesn't look like a picture.", 'warning');
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ---- Ops calendar: a week at a time (US Eastern), anyone adds events, some repeat weekly ----
+        const EVENT_TYPES = {
+            harvest: { label: 'Harvest', icon: 'leaf', color: '#4ade80' },
+            cook: { label: 'Meth cook', icon: 'flask', color: '#22d3ee' },
+            run: { label: 'Coke run', icon: 'snowflake', color: '#38bdf8' },
+            meeting: { label: 'Meeting', icon: 'users', color: '#c084fc' },
+            other: { label: 'Other', icon: 'star', color: '#fbbf24' }
+        };
+        let calWeekOffset = 0;
+
+        // Monday of the week `offset` weeks from this one, as 'YYYY-MM-DD'
+        function calWeekStart(offset = calWeekOffset) {
+            const p = etParts(syncNow() - Sync.serverOffset);
+            const today = Date.UTC(p.y, p.mo - 1, p.d);
+            const dow = (p.dow + 6) % 7; // Monday = 0
+            return new Date(today - dow * 86400e3 + offset * 7 * 86400e3).toISOString().slice(0, 10);
+        }
+
+        function addDays(key, n) {
+            return new Date(Date.parse(key + 'T12:00:00Z') + n * 86400e3).toISOString().slice(0, 10);
+        }
+
+        // Events on a day, including weekly ones that started on or before it
+        function eventsOn(day) {
+            const dow = new Date(day + 'T12:00:00Z').getUTCDay();
+            return (appState.events || []).filter(e => e.date === day || (e.weekly && e.date <= day && new Date(e.date + 'T12:00:00Z').getUTCDay() === dow))
+                .sort((a, b) => (a.time || '99').localeCompare(b.time || '99') || a.title.localeCompare(b.title));
+        }
+
+        function fmtEventTime(t) {
+            if (!t) return '';
+            const [h, m] = t.split(':').map(Number);
+            return `${((h + 11) % 12) + 1}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
+        }
+
+        function renderCalendar() {
+            const today = dayKey(0);
+            const todayCount = eventsOn(today).length;
+            const dot = document.getElementById('hdr-cal-dot');
+            if (dot) { dot.textContent = todayCount; dot.classList.toggle('hidden', !todayCount); }
+            const page = document.getElementById('tab-calendar');
+            if (!page || page.classList.contains('hidden')) return;
+            const start = calWeekStart();
+            const days = [...Array(7)].map((_, i) => addDays(start, i));
+            const fmt = d => new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' });
+            document.getElementById('cal-range').textContent = `${fmt(days[0])} – ${fmt(days[6])}`;
+            document.getElementById('cal-week').innerHTML = days.map(d => {
+                const list = eventsOn(d);
+                return `<div class="cal-day ${d === today ? 'today' : ''} ${d < today ? 'past' : ''}">
+                        <div class="cal-head">${escapeHtml(fmt(d))}${d === today ? ' <span>Today</span>' : ''}</div>
+                        ${list.map(e => { const t = EVENT_TYPES[e.type] || EVENT_TYPES.other; return `<button type="button" class="cal-ev" style="--ec:${t.color}" onclick="openEvent(${jsArg(e.id)})" title="${escapeHtml(e.notes || t.label)}">
+                            <i class="fa-solid fa-${t.icon}"></i><span><b>${escapeHtml(e.title)}</b>${e.time ? `<em>${fmtEventTime(e.time)}</em>` : ''}${e.weekly ? '<em>weekly</em>' : ''}</span></button>`; }).join('') || '<span class="cal-none">—</span>'}
+                    </div>`;
+            }).join('');
+            const dateInput = document.getElementById('ev-date');
+            if (dateInput && !dateInput.value) dateInput.value = today;
+        }
+
+        function setCalWeek(offset) {
+            calWeekOffset = offset;
+            renderCalendar();
+        }
+
+        function addEvent(event) {
+            event.preventDefault();
+            if (isStatsOnly()) return;
+            const title = document.getElementById('ev-title').value.trim().replace(/\s+/g, ' ').slice(0, 50);
+            const date = document.getElementById('ev-date').value;
+            if (!title || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return showAlert('Give the event a name and a day.', 'warning');
+            const time = /^\d{2}:\d{2}$/.test(document.getElementById('ev-time').value) ? document.getElementById('ev-time').value : '';
+            const record = { title, date, time, type: EVENT_TYPES[document.getElementById('ev-type').value] ? document.getElementById('ev-type').value : 'other',
+                weekly: document.getElementById('ev-weekly').checked, notes: document.getElementById('ev-notes').value.trim().slice(0, 120), by: appState.crewName || 'Someone', ts: timestampValue() };
+            const id = newActivityId();
+            appState.events.push({ ...record, id, ts: syncNow() });
+            writeShared({ [`events/${id}`]: record });
+            logActivity({ kind: 'event' });
+            auditLog({ kind: 'calendar', text: `Added ${record.weekly ? 'a weekly' : 'an'} event: ${title} (${date}${time ? ` ${fmtEventTime(time)}` : ''})` });
+            ['ev-title', 'ev-time', 'ev-notes'].forEach(k => { document.getElementById(k).value = ''; });
+            document.getElementById('ev-weekly').checked = false;
+            const start = calWeekStart(0);
+            calWeekOffset = Math.floor((Date.parse(date) - Date.parse(start)) / (7 * 86400e3));
+            showAlert('Added to the calendar.', 'success');
+            renderCalendar();
+        }
+
+        function openEvent(id) {
+            const e = (appState.events || []).find(x => x.id === id);
+            if (!e) return;
+            const t = EVENT_TYPES[e.type] || EVENT_TYPES.other;
+            const canDelete = hasAdminAccess() || e.by === appState.crewName;
+            const msg = `${t.label}: ${e.title}\n${e.date}${e.time ? ` at ${fmtEventTime(e.time)} ET` : ''}${e.weekly ? ' (every week)' : ''}\nAdded by ${e.by || 'Someone'}${e.notes ? `\n\n${e.notes}` : ''}`;
+            if (!canDelete) return alert(msg);
+            if (confirm(`${msg}\n\nDelete this event${e.weekly ? ' (every week)' : ''}?`)) {
+                appState.events = appState.events.filter(x => x.id !== id);
+                writeShared({ [`events/${id}`]: null });
+                auditLog({ kind: 'calendar', text: `Deleted the event: ${e.title}` });
+                renderCalendar();
+            }
+        }
+
+        // Today's events, for the Live ticker
+        function todayEventItems() {
+            if (isStatsOnly()) return [];
+            return eventsOn(dayKey(0)).map(e => { const t = EVENT_TYPES[e.type] || EVENT_TYPES.other; return `<span class="tk-item tk-ev"><i class="fa-solid fa-calendar-day" style="color:${t.color}"></i><span><b>Today:</b> ${escapeHtml(e.title)}${e.time ? ` at ${fmtEventTime(e.time)} ET` : ''}</span></span>`; });
+        }
+
+        // Lab supplies: counts the crew keeps up to date, with a "low" line an admin sets per item
+        const SUPPLIES = {
+            meth: [
+                { key: 'sodium', label: 'Sodium', icon: 'droplet' }, { key: 'ammonia', label: 'Ammonia', icon: 'flask' },
+                { key: 'soda', label: 'Baking soda', icon: 'cube' }, { key: 'water', label: 'Water', icon: 'bottle-water' },
+                { key: 'bags', label: 'Plastic bags', icon: 'bag-shopping' }, { key: 'hammers', label: 'Hammers', icon: 'hammer' }
+            ],
+            coke: [
+                { key: 'oil', label: 'Oil barrels', icon: 'oil-can' }, { key: 'cement', label: 'Cement bags', icon: 'sack-xmark' },
+                { key: 'acid', label: 'Battery acid', icon: 'car-battery' }
+            ]
+        };
+        const SUPPLY_BY_KEY = Object.fromEntries(Object.entries(SUPPLIES).flatMap(([group, items]) => items.map(i => [i.key, { ...i, group }])));
+
+        function supplyCount(key) {
+            return toCount((appState.supplies || {})[key]);
+        }
+
+        function supplyLow(key) {
+            const v = (appState.supplyLow || {})[key];
+            return v === null || v === undefined || v === '' || !Number.isFinite(Number(v)) ? null : toCount(v);
+        }
+
+        function isSupplyLow(key) {
+            const low = supplyLow(key);
+            return low !== null && supplyCount(key) <= low;
+        }
+
+        // "Lab supplies: enough" or "short of 4 sodium, 2 water"
+        function supplyShortText(need) {
+            const short = Object.entries(need).filter(([k, n]) => n > supplyCount(k)).map(([k, n]) => `<b>${(n - supplyCount(k)).toLocaleString()}</b> ${SUPPLY_BY_KEY[k].label.toLowerCase()}`);
+            return short.length ? `<span class="sup-short">Supplies short: ${short.join(', ')}.</span>` : '<span class="sup-ok">Supplies on hand cover it.</span>';
+        }
+
+        function renderSupplies() {
+            document.querySelectorAll('[data-supplies]').forEach(box => {
+                const focused = document.activeElement;
+                if ((focused && focused.tagName === 'INPUT' && box.contains(focused)) || box.closest('.hidden')) return; // don't wipe a box someone is typing in
+                const group = box.dataset.supplies, canEdit = can(group), admin = hasAdminAccess();
+                const items = SUPPLIES[group];
+                const low = items.filter(i => isSupplyLow(i.key));
+                box.innerHTML = (low.length ? `<div class="sup-warn"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Running low: <b>${low.map(i => escapeHtml(i.label)).join(', ')}</b></div>` : '') +
+                    `<div class="sup-grid">${items.map(i => {
+                        const n = supplyCount(i.key), lowAt = supplyLow(i.key);
+                        return `<div class="sup ${isSupplyLow(i.key) ? 'low' : ''}" data-supply="${i.key}">
+                            <span class="lbl"><i class="fa-solid fa-${i.icon}"></i>${escapeHtml(i.label)}</span>
+                            <span class="n dx-mono">${n.toLocaleString()}</span>
+                            ${canEdit ? `<div class="btns"><button onclick="adjustSupply('${i.key}', -10)" ${n ? '' : 'disabled'}>−10</button><button onclick="adjustSupply('${i.key}', -1)" ${n ? '' : 'disabled'}>−</button><button onclick="adjustSupply('${i.key}', 1)">+</button><button onclick="adjustSupply('${i.key}', 10)">+10</button></div>` : ''}
+                            ${admin ? `<label class="lowat">Low at <input type="number" min="0" value="${lowAt === null ? '' : lowAt}" placeholder="off" onchange="setSupplyLow('${i.key}', this.value)" class="dx-input dx-mono"></label>` : lowAt !== null ? `<span class="lowat">low at ${lowAt}</span>` : ''}
+                        </div>`;
+                    }).join('')}</div>`;
+            });
+        }
+
+        function adjustSupply(key, delta) {
+            const item = SUPPLY_BY_KEY[key];
+            if (!item || !allowed(item.group)) return;
+            const applied = Math.max(-supplyCount(key), delta);
+            if (!applied) return;
+            adjustShared(`supplies/${key}`, applied);
+            if (!isPlainObject(appState.supplies)) appState.supplies = {};
+            appState.supplies[key] = supplyCount(key) + applied;
+            logActivity({ kind: 'supply' });
+            offerUndo({ key: `sup|${key}`, perm: item.group, kind: 'supply', counters: { [`supplies/${key}`]: applied },
+                text: e => { const n = e.counters[`supplies/${key}`] || 0; return `${item.label} ${n > 0 ? '+' : '−'}${Math.abs(n)}`; } });
+            renderSupplies();
+        }
+
+        function setSupplyLow(key, value) {
+            if (!allowed('admin')) return;
+            const v = String(value).trim() === '' ? null : toCount(value);
+            writeShared({ [`settings/supplyLow/${key}`]: v });
+            if (!isPlainObject(appState.supplyLow)) appState.supplyLow = {};
+            appState.supplyLow[key] = v;
+            if (document.activeElement) document.activeElement.blur();
+            renderSupplies();
+        }
+
         // Coke page: what to bring for N bricks, what's in the stash, and the guide
         const COKE_PURE = { small: 25, large: 50 };
         const COKE_KG = { small: 220, large: 440 };
@@ -3790,7 +4292,7 @@
             const batches = Math.ceil(need.coca / 200);
             const have = (appState.products && appState.products.coca) || 0;
             document.getElementById('coke-calc-plan').innerHTML = n
-                ? `That's <b>${batches}</b> batches of 200 leaves → <b>${(COKE_PURE[cokeSize] * n).toLocaleString()}</b> pure cocaine. Supplies are worth <b>${money(supplyCost)}</b> at Lucas's prices. ${have >= need.coca ? `The stash has enough leaves (<b>${have.toLocaleString()}</b>).` : `The stash has <b>${have.toLocaleString()}</b> leaves, <b>${(need.coca - have).toLocaleString()}</b> short.`}`
+                ? `That's <b>${batches}</b> batches of 200 leaves → <b>${(COKE_PURE[cokeSize] * n).toLocaleString()}</b> pure cocaine. Supplies are worth <b>${money(supplyCost)}</b> at Lucas's prices. ${have >= need.coca ? `The stash has enough leaves (<b>${have.toLocaleString()}</b>).` : `The stash has <b>${have.toLocaleString()}</b> leaves, <b>${(need.coca - have).toLocaleString()}</b> short.`} ${supplyShortText({ oil: need.oil, cement: need.cement, acid: need.acid })}`
                 : 'Pick how many bricks.';
         }
 
@@ -3845,7 +4347,7 @@
             const parts = [[y.high, 'high'], [y.medium, 'medium'], [y.low, 'low']].filter(([c]) => c).map(([c, s]) => `<b>${c}</b> ${s} yield${c === 1 ? '' : 's'}`);
             const makes = methUnit === 'bins' ? `${m.bags} bags` : m.bags >= 10 ? `${Math.floor(m.bins)} bin${Math.floor(m.bins) === 1 ? '' : 's'}${m.bags % 10 ? ` + ${m.bags % 10} bags` : ''}` : `${m.bags} bag${m.bags === 1 ? '' : 's'}`;
             document.getElementById('meth-calc-plan').innerHTML = m.bags
-                ? `Put down ${parts.join(' + ')} (${makes}). Hammers come back after each smash, so 5 is plenty.`
+                ? `Put down ${parts.join(' + ')} (${makes}). Hammers come back after each smash, so 5 is plenty. ${supplyShortText({ sodium: m.sodium, ammonia: m.ammonia, soda: m.soda, water: m.water, bags: m.plastic, hammers: m.hammers })}`
                 : 'Pick how many to make.';
         }
 
@@ -4037,7 +4539,204 @@
             setTimeout(renderMethPage, 400);
         }
 
-        // Timers page: Grows | Meth cooks
+        // ---- Coke runs: a timer per run (small 2h / large 4h by default), then the bricks go into a stash ----
+        const RUN_SIZES = { small: 'Small', large: 'Large' };
+        function runMins(r) {
+            const m = Math.round(Number(r.mins));
+            return m >= 1 && m <= 7 * 1440 ? m : COKE_HOURS[r.size === 'large' ? 'large' : 'small'] * 60 * Math.max(1, toCount(r.n) || 1);
+        }
+        function runSize(r) { return r.size === 'large' ? 'large' : 'small'; }
+        function runCount(r) { return Math.max(1, Math.min(10, toCount(r.n) || 1)); }
+        function runLabel(r) { const n = runCount(r); return `${n} ${RUN_SIZES[runSize(r)].toLowerCase()} brick${n === 1 ? '' : 's'}`; }
+        function runState(r, now = syncNow()) {
+            const ts = Number(r.ts) || now, total = runMins(r) * 60000;
+            const pct = Math.max(0, Math.min(1, (now - ts) / total));
+            const left = Math.max(0, Math.ceil((ts + total - now) / 1000));
+            return now - ts >= total ? { cls: 'ready', text: 'Done', ready: true, pct, left } : { cls: 'cooking', text: 'Running', ready: false, pct, left };
+        }
+        function runReadyAt(r) { return (Number(r.ts) || syncNow()) + runMins(r) * 60000; }
+        function sortedRuns() { return (appState.runs || []).slice().sort((a, b) => (Number(a.ts) || 0) - (Number(b.ts) || 0)); }
+
+        function runCardHtml(r, now) {
+            const st = runState(r, now);
+            const ts = Number(r.ts) || now;
+            const targets = can('inventory') ? binTargets() : [];
+            const clock = st.ready ? '<div class="t">Done!</div><div class="s">Press the bricks</div>'
+                : `<div class="t rn-t">${formatTime(st.left)}</div><div class="s">until done</div>`;
+            const acts = !can('coke') ? '' : `<div class="acts">${st.ready && targets.length
+                ? `<select class="dx-input rn-to" aria-label="Which stash">${targets.map(b => `<option value="${escapeHtml(b.key)}">${escapeHtml(b.kind === 'grow' ? b.label : b.short)}</option>`).join('')}</select><button class="dx-btn dx-btn-g" onclick="finishRun(${jsArg(r.id)}, this)"><i class="fa-solid fa-box mr-1"></i>Bricks in</button>`
+                : ''}<button class="dx-btn dx-stop" onclick="cancelRun(${jsArg(r.id)})" title="${st.ready ? 'Done without adding bricks' : 'Cancel this run'}"><i class="fa-solid fa-xmark"></i></button></div>`;
+            return `<div class="dx-glass dx-tc mx-tc ck-tc ${st.cls}" data-run="${escapeHtml(r.id)}">
+                    <div class="top"><div class="min-w-0"><h2>${escapeHtml(runLabel(r))}</h2><div class="alias">${escapeHtml(r.crew || r.who || 'Someone')} · ${minsLabel(runMins(r))} run</div></div><span class="mx-pill ${st.cls}">${st.text}</span></div>
+                    <div class="mid"><div class="bk-box ck-box"><i class="fa-solid fa-snowflake"></i></div><div class="clock">${clock}</div></div>
+                    ${st.ready ? '' : `<div class="track"><div class="fill" style="width:${(st.pct * 100).toFixed(2)}%"></div></div>`}
+                    <div class="eta"><span>Started ${escapeHtml(cookTimeLabel(ts))}</span><span>Done ${escapeHtml(cookTimeLabel(runReadyAt(r)))}</span></div>
+                    ${acts}
+                </div>`;
+        }
+
+        function runMiniHtml(r, now) {
+            const st = runState(r, now);
+            const time = st.ready ? '<span class="t">Done!</span><span class="s">Press</span>' : `<span class="t rn-t">${formatTime(st.left)}</span><span class="s">running</span>`;
+            return `<div class="dx-gb mx-gb ck-gb ${st.ready ? 'ready' : 'running'}" data-run="${escapeHtml(r.id)}" title="${escapeHtml(runLabel(r))} · ${escapeHtml(r.crew || r.who || '')}">
+                    <div class="pot"><i class="fa-solid fa-snowflake"></i></div>
+                    <div class="who"><span class="pid">${escapeHtml(runLabel(r))}</span><span class="alias">${escapeHtml(r.crew || r.who || 'Someone')}</span></div>
+                    <div class="time">${time}</div>
+                    <div class="low">${st.ready ? '<span class="note">Bricks should be ready</span>' : `<div class="track"><div class="fill" style="width:${(st.pct * 100).toFixed(2)}%"></div></div><div class="eta">Done ${escapeHtml(cookTimeLabel(runReadyAt(r)))}</div>`}</div>
+                </div>`;
+        }
+
+        let runSignature = '';
+        function runStatesSignature(now = syncNow()) {
+            return sortedRuns().map(r => `${r.id}:${runState(r, now).cls}`).join('|') + `|${can('coke')}|${can('inventory')}`;
+        }
+
+        function renderRuns() {
+            const now = syncNow();
+            const runs = sortedRuns();
+            runSignature = runStatesSignature(now);
+            const box = document.getElementById('timers-runs');
+            if (box && !box.closest('.hidden')) box.innerHTML = runs.length ? runs.map(r => runCardHtml(r, now)).join('') : `<div style="grid-column:1/-1">${emptyState('No coke runs going', 'Heading out to make bricks? Start a run so the crew knows when they\'ll be done.')}</div>`;
+            const bar = document.getElementById('dx-runbar'), dash = document.getElementById('dx-runs');
+            if (bar && dash) {
+                const show = can('coke') && runs.length > 0;
+                bar.classList.toggle('hidden', !show);
+                dash.innerHTML = show ? runs.map(r => runMiniHtml(r, now)).join('') : '';
+            }
+            const form = document.getElementById('run-add');
+            if (form) form.classList.toggle('hidden', !can('coke'));
+            const count = document.getElementById('timers-coke-count');
+            if (count) { count.textContent = runs.length; count.classList.toggle('hidden', !runs.length); }
+        }
+
+        function tickRuns() {
+            const cards = document.querySelectorAll('[data-run]');
+            if (!cards.length && !(appState.runs || []).length) return;
+            const now = syncNow();
+            if (runStatesSignature(now) !== runSignature) return renderRuns();
+            cards.forEach(card => {
+                const r = appState.runs.find(x => x.id === card.dataset.run);
+                if (!r) return;
+                const st = runState(r, now);
+                const t = card.querySelector('.rn-t'), fill = card.querySelector('.fill');
+                if (t) t.textContent = formatTime(st.left);
+                if (fill) fill.style.width = `${(st.pct * 100).toFixed(2)}%`;
+            });
+        }
+
+        // Default run time follows the size and count until someone types their own
+        function runTimeDefault() {
+            const h = document.getElementById('run-h'), m = document.getElementById('run-m');
+            if (!h || h.dataset.touched) return;
+            const size = document.getElementById('run-size').value === 'large' ? 'large' : 'small';
+            const n = Math.max(1, toCount(document.getElementById('run-n').value) || 1);
+            h.value = COKE_HOURS[size] * n; m.value = 0;
+        }
+
+        function startRun(event) {
+            event.preventDefault();
+            if (!can('coke')) return;
+            const size = document.getElementById('run-size').value === 'large' ? 'large' : 'small';
+            const n = Math.max(1, Math.min(10, toCount(document.getElementById('run-n').value) || 1));
+            const time = readCookMins(document.getElementById('run-h'), document.getElementById('run-m'));
+            if (!time.mins) return showAlert('Enter how long the run takes.', 'warning');
+            const crew = document.getElementById('run-crew').value.trim().replace(/\s+/g, ' ').slice(0, 60) || appState.crewName || 'Someone';
+            const id = newActivityId();
+            const record = { who: appState.crewName || 'Someone', crew, size, n, mins: time.mins, ts: timestampValue() };
+            appState.runs.push({ ...record, id, ts: syncNow() });
+            writeShared({ [`runs/${id}`]: record });
+            logActivity({ kind: 'run' });
+            auditLog({ kind: 'coca', text: `Started a coke run: ${runLabel(record)} (${crew})` });
+            showAlert(`Coke run started: ${runLabel(record)}. Done in ${minsLabel(time.mins)}.`, 'success');
+            document.getElementById('run-crew').value = '';
+            delete document.getElementById('run-h').dataset.touched;
+            renderRuns();
+        }
+
+        function finishRun(id, btn) {
+            const r = (appState.runs || []).find(x => x.id === id);
+            const to = btn && btn.parentElement.querySelector('.rn-to') ? btn.parentElement.querySelector('.rn-to').value : null;
+            if (!r || !to || !allowed('inventory', to) || !can('coke')) return;
+            adjustRoot(runSize(r) === 'large' ? 'cokeLarge' : 'cokeSmall', runCount(r), to);
+            appState.runs = appState.runs.filter(x => x.id !== id);
+            writeShared({ [`runs/${id}`]: null });
+            auditLog({ kind: 'coca', text: `Finished a coke run: ${runLabel(r)} into ${bucketLabel(to)}` });
+            renderRuns();
+        }
+
+        function cancelRun(id) {
+            if (!can('coke')) return;
+            const r = (appState.runs || []).find(x => x.id === id);
+            if (!r || !confirm(`Remove the run (${runLabel(r)})?`)) return;
+            appState.runs = appState.runs.filter(x => x.id !== id);
+            writeShared({ [`runs/${id}`]: null });
+            auditLog({ kind: 'coca', text: `Removed a coke run: ${runLabel(r)}` });
+            renderRuns();
+        }
+
+        // One "coke run is done" line + Discord message per run, whoever's page sees it first
+        const runClaims = new Set();
+        function checkRunReady() {
+            const now = syncNow();
+            (appState.runs || []).forEach(r => {
+                if (r.told || runClaims.has(r.id) || !runState(r, now).ready) return;
+                runClaims.add(r.id);
+                const claim = Sync.mode === 'cloud'
+                    ? Sync.root.child(`runs/${r.id}`).transaction(cur => (isPlainObject(cur) && !cur.told ? { ...cur, told: true } : undefined)).then(x => x.committed).catch(() => false)
+                    : Promise.resolve((r.told = true, writeShared({ [`runs/${r.id}/told`]: true }), true));
+                claim.then(won => { if (won) { logActivity({ who: SYSTEM_NAME, kind: 'runReady' }); sendRunWebhook(r); } });
+            });
+        }
+
+        const DEFAULT_COKE_DISCORD_TEMPLATE = {
+            username: 'NoelOps Operations Command',
+            avatarUrl: '',
+            title: '❄️ Coke Run Done: {n} {size} brick(s)',
+            description: "{crew}'s coke run should be done: {n} {size} brick(s) ready to press at the warehouse.",
+            footer: 'NoelOps FiveM RP Operations',
+            color: '#38bdf8',
+            showFields: true
+        };
+        const DISCORD_COKE_TAGS = [
+            ['{n}', 'How many bricks', '2'],
+            ['{size}', 'Brick size', 'Small'],
+            ['{crew}', "Who's on it", 'Jay, Alice'],
+            ['{who}', 'Who started it', 'Jay'],
+            ['{duration}', 'Run time', '4h'],
+            ['{readyAt}', 'Done time (US Eastern)', 'Fri, Oct 2, 3:14 PM ET']
+        ];
+
+        function runTagValues(r) {
+            const readyMs = runReadyAt(r) - Sync.serverOffset;
+            return { '{n}': String(runCount(r)), '{size}': RUN_SIZES[runSize(r)], '{crew}': r.crew || r.who || 'Someone', '{who}': r.who || 'Someone',
+                '{duration}': minsLabel(runMins(r)), '{readyAt}': etStamp(readyMs), '{readyLocal}': etStamp(readyMs) };
+        }
+
+        function buildRunPayload(r, template = appState.discordCokeTemplate) {
+            const t = normalizeDiscordTemplate(template, DEFAULT_COKE_DISCORD_TEMPLATE);
+            const values = runTagValues(r);
+            const embed = { title: fillTags(t.title, values) || undefined, description: fillTags(t.description, values) || undefined, color: parseInt(t.color.slice(1), 16) };
+            if (t.showFields) embed.fields = [
+                { name: 'Bricks', value: `${values['{n}']} × ${values['{size}']}`, inline: true },
+                { name: "Who's on it", value: values['{crew}'], inline: true },
+                { name: 'Done At', value: values['{readyAt}'], inline: false }
+            ];
+            if (t.footer) embed.footer = { text: fillTags(t.footer, values) };
+            const payload = { username: fillTags(t.username, values) || DEFAULT_COKE_DISCORD_TEMPLATE.username, embeds: [embed] };
+            if (t.avatarUrl) payload.avatar_url = t.avatarUrl;
+            return payload;
+        }
+
+        function sendRunWebhook(r) {
+            if (!appState.webhookUrl) return;
+            postDiscordWebhook(buildRunPayload(r)).then(ok => { if (!ok) showAlert('Coke run webhook failed to send.', 'warning'); });
+        }
+
+        function sampleRun() {
+            return { who: appState.crewName || 'Jay', crew: appState.crewName || 'Jay', size: 'small', n: 2, mins: 240, ts: syncNow() - 240 * 60000 };
+        }
+
+        // Timers page: Grows | Meth cooks | Coke runs
         let timersView = localGet('noelops_timers_view', 'grows');
         function setTimersView(view) {
             timersView = view;
@@ -4046,15 +4745,15 @@
         }
 
         function renderTimersView() {
-            const grows = pageAllowed('grows'), meth = pageAllowed('meth');
-            const view = timersView === 'meth' ? (meth ? 'meth' : 'grows') : (grows ? 'grows' : 'meth');
-            const g = document.getElementById('timers-grows'), m = document.getElementById('timers-meth');
-            if (!g || !m) return;
-            g.classList.toggle('hidden', view !== 'grows');
-            m.classList.toggle('hidden', view !== 'meth');
-            document.getElementById('timers-tab-grows').classList.toggle('on', view === 'grows');
-            document.getElementById('timers-tab-meth').classList.toggle('on', view === 'meth');
+            const ok = { grows: pageAllowed('grows'), meth: pageAllowed('meth'), coke: pageAllowed('coke') };
+            const view = ok[timersView] ? timersView : ['grows', 'meth', 'coke'].find(v => ok[v]) || 'grows';
+            if (!document.getElementById('timers-grows')) return;
+            ['grows', 'meth', 'coke'].forEach(v => {
+                document.getElementById(`timers-${v}`).classList.toggle('hidden', view !== v);
+                document.getElementById(`timers-tab-${v}`).classList.toggle('on', view === v);
+            });
             renderCooks();
+            renderRuns();
         }
 
         function renderMethPage() {
@@ -4113,11 +4812,24 @@
                 appState.cooks.push({ ...record, id, ts: syncNow() });
             }
             writeShared(changes);
+            const used = {};
+            ['sodium', 'ammonia'].forEach(k => {
+                const take = Math.min(supplyCount(k), size * count);
+                if (!take) return;
+                adjustShared(`supplies/${k}`, -take);
+                if (!isPlainObject(appState.supplies)) appState.supplies = {};
+                appState.supplies[k] = supplyCount(k) - take;
+                used[`supplies/${k}`] = -take;
+            });
             logActivity({ kind: 'cook' });
             trackAction('cook', { cooks: count });
-            auditLog({ kind: 'meth', text: `Put down ${count > 1 ? `${count} ` : 'a '}${METH_SIZES[size].toLowerCase()} yield${count > 1 ? 's' : ''}` });
-            showAlert(`${count > 1 ? `${count} ${METH_SIZES[size].toLowerCase()} yields` : `${METH_SIZES[size]} yield`} down. Ready in ${minsLabel(time.mins)}.`, 'success');
+            const what = `${count > 1 ? `${count} ${METH_SIZES[size].toLowerCase()} yields` : `${METH_SIZES[size]} yield`}`;
+            const took = Object.keys(used).length ? ` Took ${Object.entries(used).map(([p, n]) => `${-n} ${p.split('/')[1]}`).join(' + ')} from the lab.` : '';
+            offerUndo({ key: `cook|${Date.now()}`, perm: 'meth', kind: 'meth', counters: used,
+                restore: Object.fromEntries(Object.keys(changes).map(p => [p, null])),
+                text: `Put down ${what}. Ready in ${minsLabel(time.mins)}.${took}` });
             renderCooks();
+            renderSupplies();
         }
 
         function collectMethCook(id) {
@@ -5833,6 +6545,10 @@
             wish: { pre: 'added to', hi: 'the wish list', post: '' },
             wishDone: { pre: 'got', hi: 'something on the wish list', post: '' },
             wash: { pre: 'washed', hi: 'some dirty money', post: '' },
+            supply: { pre: 'updated', hi: 'the lab supplies', post: '' },
+            run: { pre: 'started', hi: 'a coke run', post: '' },
+            event: { pre: 'added', hi: 'a calendar event', post: '' },
+            runReady: { pre: '', hi: 'A coke run', post: 'should be done' },
             cookReady: { pre: '', hi: 'A meth cook', post: 'is ready to collect' },
             cookDone: { pre: 'collected', hi: 'a meth cook', post: '' },
             move: { pre: 'moved', hi: 'stock', post: 'between locations' },
@@ -6169,10 +6885,13 @@
             if (tabId === 'crew') setTimeout(renderCrewPage);
             if (tabId === 'meth') setTimeout(renderMethPage);
             if (tabId === 'coke') setTimeout(renderCokePage);
+            if (tabId === 'coke' || tabId === 'meth') setTimeout(renderSupplies);
+            if (tabId === 'map') setTimeout(renderMapPage);
+            if (tabId === 'calendar') setTimeout(renderCalendar);
+            if (tabId !== 'map') { mapPlacing = null; closePin(); }
             if (tabId === 'sales') setTimeout(renderBmView);
             if (tabId === 'timers') setTimeout(renderTimersView);
             notePageVisit(tabId);
-            if (tabId === 'sales' && !can('sales')) tabId = 'dashboard';
             if (tabId === 'sales') salesShown = SALES_PAGE_SIZE;
 
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -6197,10 +6916,10 @@
             if (isStatsOnly()) return false;
             if (page === 'inventory' || page === 'planner') return can('inventory') || can('planner'); // the pot plan lives on Stash
             if (page === 'grows') return can('timers') || can('planner');
-            if (page === 'timers') return pageAllowed('grows') || can('meth');
+            if (page === 'timers') return pageAllowed('grows') || can('meth') || can('coke');
             if (page === 'meth') return can('meth');
             if (page === 'coke') return can('coke');
-            if (page === 'sales') return can('sales');
+            if (page === 'sales') return true; // the wish list is for all crew; Sell and Wash need the sell permission
             return true; // crew
         }
 
@@ -6241,6 +6960,9 @@
             renderCrewPage();
             renderMethPage();
             renderCokePage();
+            renderSupplies();
+            renderMapPage();
+            renderCalendar();
             renderTimersView();
             renderBmView();
             renderAdminWishFields();
@@ -6251,8 +6973,7 @@
             renderAdminTitles();
             renderAdminHistory();
             document.querySelectorAll('[data-sales-only]').forEach(el => el.classList.toggle('hidden', !can('sales')));
-            const salesTab = document.getElementById('tab-sales');
-            if (salesTab && !salesTab.classList.contains('hidden') && !can('sales')) switchTab('dashboard');
+            renderBmView();
             fxReadyPing();
             const postalList = document.getElementById('timers-postal-list');
             if (postalList) postalList.innerText = visibleLocations().map(l => l.id).join(', ') || '—';
@@ -6651,7 +7372,7 @@
         function renderTicker(entries) {
             const track = document.getElementById('dx-ticker-track');
             if (!track) return;
-            const items = entries.slice(0, 12).map(e => `<span class="tk-item">${avatarHtml(e.who)}<span>${activityTextHtml(e)}</span><span class="when">${relativeTime(e.ts)}</span></span>`);
+            const items = [...todayEventItems(), ...entries.slice(0, 12).map(e => `<span class="tk-item">${avatarHtml(e.who)}<span>${activityTextHtml(e)}</span><span class="when">${relativeTime(e.ts)}</span></span>`)];
             const sig = items.join('');
             if (sig === tickerSignature) return;
             tickerSignature = sig;
@@ -7374,17 +8095,18 @@
         }
 
         function renderBmView() {
+            const view = can('sales') ? bmView : 'wish';
             ['sell', 'wish', 'wash'].forEach(v => {
                 const pane = document.getElementById(`bm-${v}`);
-                if (pane) pane.classList.toggle('hidden', v !== bmView);
+                if (pane) pane.classList.toggle('hidden', v !== view);
                 const tab = document.getElementById(`bm-tab-${v}`);
-                if (tab) tab.classList.toggle('on', v === bmView);
+                if (tab) tab.classList.toggle('on', v === view);
             });
             const open = (appState.wishes || []).filter(w => w.status === 'open' || w.status === 'claimed').length;
             const count = document.getElementById('bm-wish-count');
             if (count) { count.textContent = open; count.classList.toggle('hidden', !open); }
-            if (bmView === 'wish') renderWishList();
-            if (bmView === 'wash') renderWash();
+            if (view === 'wish') renderWishList();
+            if (view === 'wash') renderWash();
         }
 
         // ---- Crew wish list: things the crew needs got, with fields the admin sets up ----
@@ -7436,7 +8158,7 @@
 
         function postWish(event) {
             event.preventDefault();
-            if (!can('sales')) return;
+            if (isStatsOnly()) return;
             const title = document.getElementById('wish-title').value.trim().replace(/\s+/g, ' ').slice(0, 60);
             if (!title) return showAlert('Say what\'s needed.', 'warning');
             const qty = Math.max(1, Math.min(999, toCount(document.getElementById('wish-qty').value) || 1));
@@ -7458,7 +8180,7 @@
         }
 
         function wishAction(id, action) {
-            if (!can('sales')) return;
+            if (isStatsOnly()) return;
             const w = (appState.wishes || []).find(x => x.id === id);
             if (!w) return;
             const me = appState.crewName || 'Someone';
@@ -9137,6 +9859,8 @@
             }
             tickCookCards();
             checkCookReady();
+            tickRuns();
+            checkRunReady();
         }
 
         // Harvests this page is already claiming, so the 1s tick doesn't claim the same one twice
@@ -9190,8 +9914,11 @@
             ['{readyLocal}', 'Ready time (same as {readyAt})', 'Fri, Oct 2, 3:14 PM ET']
         ];
         let discordKind = 'grow'; // which message the Admin editor is showing
-        const discordDefaults = kind => (kind === 'meth' ? DEFAULT_METH_DISCORD_TEMPLATE : DEFAULT_DISCORD_TEMPLATE);
-        const discordSaved = kind => (kind === 'meth' ? appState.discordMethTemplate : appState.discordTemplate);
+        const discordDefaults = kind => (kind === 'meth' ? DEFAULT_METH_DISCORD_TEMPLATE : kind === 'coke' ? DEFAULT_COKE_DISCORD_TEMPLATE : DEFAULT_DISCORD_TEMPLATE);
+        const discordSaved = kind => (kind === 'meth' ? appState.discordMethTemplate : kind === 'coke' ? appState.discordCokeTemplate : appState.discordTemplate);
+        const discordSettingKey = kind => (kind === 'meth' ? 'settings/discordMethTemplate' : kind === 'coke' ? 'settings/discordCokeTemplate' : 'settings/discordTemplate');
+        const discordWhat = kind => (kind === 'meth' ? 'meth cook' : kind === 'coke' ? 'coke run' : 'harvest');
+        const discordSamplePayload = (kind, template) => (kind === 'meth' ? buildCookPayload(sampleCook(), template) : kind === 'coke' ? buildRunPayload(sampleRun(), template) : buildHarvestPayload(sampleHarvestLocation(), template));
 
         function cookTagValues(c) {
             const readyMs = cookReadyAt(c) - Sync.serverOffset;
@@ -9340,8 +10067,8 @@
             document.getElementById('dt-footer').value = t.footer;
             document.getElementById('dt-color').value = t.color;
             document.getElementById('dt-fields').checked = t.showFields;
-            document.getElementById('dt-fields-hint').textContent = discordKind === 'meth' ? '(Yield, Put down by, Ready At)' : '(Postal, Pots, Ready At)';
-            document.getElementById('dt-tags').innerHTML = (discordKind === 'meth' ? DISCORD_METH_TAGS : DISCORD_TAGS).map(([tag, label]) =>
+            document.getElementById('dt-fields-hint').textContent = { meth: '(Yield, Put down by, Ready At)', coke: "(Bricks, Who's on it, Done At)" }[discordKind] || '(Postal, Pots, Ready At)';
+            document.getElementById('dt-tags').innerHTML = ({ meth: DISCORD_METH_TAGS, coke: DISCORD_COKE_TAGS }[discordKind] || DISCORD_TAGS).map(([tag, label]) =>
                 `<button type="button" class="dx-pill" title="${escapeHtml(label)}" onclick="insertDiscordTag(${jsArg(tag)})">${escapeHtml(tag)}</button>`).join('');
             renderDiscordPreview();
         }
@@ -9362,7 +10089,7 @@
         function renderDiscordPreview() {
             const box = document.getElementById('dt-preview');
             if (!box) return;
-            const payload = discordKind === 'meth' ? buildCookPayload(sampleCook(), discordFormTemplate()) : buildHarvestPayload(sampleHarvestLocation(), discordFormTemplate());
+            const payload = discordSamplePayload(discordKind, discordFormTemplate());
             const e = payload.embeds[0];
             // Show {readyLocal} the way Discord displays it
             const shown = text => escapeHtml(text || '').replace(/&lt;t:(\d+):f&gt;/g, (m, secs) =>
@@ -9392,17 +10119,17 @@
             if (/discord/i.test(template.username)) return showAlert('Discord won\'t accept a bot name containing "discord". Pick another name.', 'warning');
             if (template.avatarUrl && !/^https:\/\/\S+$/i.test(template.avatarUrl)) return showAlert('The avatar must be an https:// image link.', 'warning');
             if (!template.title.trim() && !template.description.trim()) return showAlert('Add a title or a message.', 'warning');
-            writeShared({ [discordKind === 'meth' ? 'settings/discordMethTemplate' : 'settings/discordTemplate']: template });
+            writeShared({ [discordSettingKey(discordKind)]: template });
             document.activeElement && document.activeElement.blur();
             logActivity({ kind: 'discord' });
-            showAlert(`Discord ${discordKind === 'meth' ? 'meth cook' : 'harvest'} message saved.`, 'success');
+            showAlert(`Discord ${discordWhat(discordKind)} message saved.`, 'success');
         }
 
         function resetDiscordTemplate() {
             if (!allowed('admin')) return;
-            const what = discordKind === 'meth' ? 'meth cook' : 'harvest';
+            const what = discordWhat(discordKind);
             if (!confirm(`Reset the Discord ${what} message to the original wording?`)) return;
-            writeShared({ [discordKind === 'meth' ? 'settings/discordMethTemplate' : 'settings/discordTemplate']: { ...discordDefaults(discordKind) } });
+            writeShared({ [discordSettingKey(discordKind)]: { ...discordDefaults(discordKind) } });
             if (document.activeElement) document.activeElement.blur();
             renderDiscordEditor(true, discordDefaults(discordKind));
             showAlert(`Discord ${what} message reset to the original.`, 'info');
@@ -9411,9 +10138,9 @@
         function sendTestHarvestMessage() {
             if (!allowed('admin')) return;
             if (!appState.webhookUrl) return showAlert('Save a Discord Webhook URL first.', 'warning');
-            const payload = discordKind === 'meth' ? buildCookPayload(sampleCook(), discordFormTemplate()) : buildHarvestPayload(sampleHarvestLocation(), discordFormTemplate());
+            const payload = discordSamplePayload(discordKind, discordFormTemplate());
             postDiscordWebhook(payload).then(ok => showAlert(ok
-                ? `Test ${discordKind === 'meth' ? 'meth cook' : 'harvest'} message sent to Discord (using what's in the editor, even if not saved).`
+                ? `Test ${discordWhat(discordKind)} message sent to Discord (using what's in the editor, even if not saved).`
                 : 'Discord didn\'t accept the message. Check the webhook URL and the avatar link.', ok ? 'success' : 'warning'));
         }
 

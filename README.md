@@ -74,7 +74,7 @@ GitHub pauses scheduled workflows in repos with no activity for 60 days and emai
 
 ## Discord messages
 
-**Admin → Discord** → **Discord Messages** has a **Grows | Meth cooks** switch. Grows send the grow message when they're ready to harvest; meth cooks send the meth message when their time is up (once per cook, even with many pages open). Both go to the same webhook. For each you can change the bot name and picture, title, message, footer, side color, and whether the details boxes are shown. Grow message tags are filled in per harvest:
+**Admin → Discord** → **Discord Messages** has a **Grows | Meth cooks | Coke runs** switch. Grows send the grow message when they're ready to harvest; meth cooks and coke runs send theirs when their time is up (once per cook, even with many pages open). Both go to the same webhook. For each you can change the bot name and picture, title, message, footer, side color, and whether the details boxes are shown. Grow message tags are filled in per harvest:
 
 | Tag | Becomes |
 |---|---|
@@ -86,6 +86,8 @@ GitHub pauses scheduled workflows in repos with no activity for 60 days and emai
 | `{readyLocal}` | Same as `{readyAt}` (kept so older messages still work) |
 
 Meth cook message tags: `{size}` (High / Medium / Low), `{bags}`, `{who}` (who put it down), `{duration}` (cook time), `{readyAt}` and `{readyLocal}`.
+
+Coke run message tags: `{n}` (how many bricks), `{size}` (Small / Large), `{crew}` (who's on it), `{who}` (who started it), `{duration}` and `{readyAt}`.
 
 The preview updates as you type, **Send Test** posts what's in the editor to your channel (even before saving), and **Reset to Default** brings back the original wording.
 
@@ -143,7 +145,7 @@ Both can be moved between stashes (the leaves too), sold on the **BlackMarket** 
 The **BlackMarket** page (in the main menu, red and black) is where product sells for dirty money, usually from a Narco call:
 
 - **Narco call:** the ringing red button at the top opens the sell form and tags the sale as a Narco call (shown in the ledger).
-- **Tabs:** **Sell** (below), **Wish list** and **Wash**.
+- **Tabs:** **Sell** (below), **Wish list** and **Wash**. Everyone in the crew (not Viewers) can open the BlackMarket to use the **Wish list**; **Sell** and **Wash** need the sell permission.
 - **Wish list:** things the crew needs got (supplies, guns, a boat…). Post what's needed, how many and any notes, plus the extra boxes an admin sets up in **Admin → BlackMarket → Wish List Fields** (up to 8, e.g. Meet spot). Someone taps **I'll get it** to claim it, then **Got it** when it's done; the poster or an admin can cancel. Done ones fold into a history list.
 - **Wash:** every sale with a price adds that amount to the **seller's dirty money**. Washing moves some of it to clean, minus the launderer's cut: the default % is set in **Admin → BlackMarket**, and it can be changed on each wash. Crew wash their own money; admins can wash for anyone and undo a wash. Shows each person's dirty money held, washed, clean out and lost to washing, plus the wash log. When prices are hidden from crew, they only see their own numbers.
 
@@ -229,6 +231,8 @@ The **Coke** page is the crew's coke guide, built from The Chosen's Cocaine Crea
 - **In the stash:** small and large coke bricks and coca leaves, where they are, and how many bricks the leaves can make.
 - **What to bring:** pick small or large and how many. It works out the coca leaves, oil barrels, cement and battery acid (from the recipe in Admin → Products), the weight to carry (220kg a small brick, 440kg a large), the rough time (2h / 4h), how many batches of 200 leaves, the pure cocaine it makes (25 / 50 per brick), what the supplies are worth at Lucas's prices, and whether the stash has enough leaves.
 - **How it's made:** the 5 steps (cut, walk it off, paste, cook it pure, press the brick), **Rules & info** (Coke Island is a red zone, the 30% family / 70% makers split, leaves once a week, where supplies come from, what Lucas pays) and **Places** (the warehouse at 10060 with its boat garage, Coke Island east of the Ron Alternates Wind Farm, refuel at the Vespucci Canals dock).
+- **Warehouse supplies:** oil barrels, cement bags and battery acid on hand, with − / + buttons (Undo works). Admins set a **Low at** line per item; anything at or under it turns red with a **Running low** warning. The calculator says if the supplies cover what you picked.
+- **Coke runs** (on **Timers → Coke runs**): start a run with the size, how many bricks, who's on it and how long (defaults to 2 hours a small brick, 4 a large). It counts down, shows in the dashboard timer bar, says so in Live Activity and sends the coke Discord message when it's done. **Bricks in** adds the bricks to the stash house you pick.
 - The coke cards on the Dashboard and Stash link here. Each person has a **Coke** toggle in Admin → Crew (on for Managers and Growers).
 
 ## Meth page
@@ -236,12 +240,20 @@ The **Coke** page is the crew's coke guide, built from The Chosen's Cocaine Crea
 The **Meth** page is the crew's meth guide, built from Karma's Meth Guide (accurate as of 9/27/2026):
 
 - **In the stash:** how many meth bins the crew has and where, with a link to the Stash. **Bins made** adds finished bins straight into the stash house you pick (with Undo).
+- **Lab supplies:** sodium, ammonia, baking soda, water, plastic bags and hammers at 9359, with − / + buttons and a **Low at** line admins set per item (red warning when low). **Putting a cook down takes its sodium and ammonia** automatically; Undo puts them back.
 - **What to grab:** pick a number of bins or bags and it works out the sodium, ammonia, hammers, baking soda, water and plastic bags, plus which yields to put down (high = 5, medium = 3, low = 1; 2 high yields make a bin).
 - **Cooks down:** when you put a yield down, add it here or on **Timers → Meth cooks** with the time it takes (hours and minutes, whatever the game shows; it remembers your last one). Each cook gets a countdown card with a beaker that fills up: **Cooking**, then **Might be ready** once 75% of its time has passed, then **Ready**, which also sends the Discord meth message. **Edit** on a card changes its time left. Active cooks also show in the dashboard's timer bar (for people with Meth access). The Meth button shows how many are ready, and Live Activity says when one is. Press **Collected** to take it off. Admins see these in History.
 - Meth shows up around the site too: a **Meth guide** link on the meth cards (Dashboard and Stash), cooks on profiles, a **Most meth cooks** leaderboard and four cook titles.
 - **How it's made** (the 5 steps, including the 1 · 3 · 3 mix), **Rules in the lab**, and **Places** (the Lab at 10102, the Blue Container at 9359 and Sodium at 10101).
 
 To update the guide text, edit the `tab-meth` section in `index.html`.
+
+## Map and Calendar
+
+Two small buttons in the header (next to Who's online) open these. Everyone in the crew sees them (not Viewers).
+
+- **Map:** an admin uploads a map picture once (**Change map image**; it's shrunk to fit the shared database). Anyone can **Add pin** for a grow, a stash house, the meth lab, the Blue Container, the coke warehouse, Coke Island or a custom label, then click the map to drop it. Click a pin to see its live info (a grow's timer, a stash house's stock, how many cooks are down) and to **Move** or **Remove** it. Zoom with − / Fit / +.
+- **Calendar:** a week at a time, Monday to Sunday, in US Eastern time. Anyone adds an event (what, kind, day, optional time and notes) and can make it **repeat every week** (like the coca leaves harvest). Click an event for details; whoever added it or an admin can delete it. Today's events show in the **Live** ticker on the dashboard, and the Calendar button shows how many are on today.
 
 ## Titles
 
@@ -277,6 +289,13 @@ Newest first. Every merge adds an entry here, written so it can be pasted straig
 - New **Coke** toggle in each person's crew settings
 - Phone fixes: the dashboard timer bar, buttons and headings fit better on small screens
 - Checked that backups and restores include everything new
+
+### 🗺️ Oct 2, 2026: Map, calendar, coke runs and supplies
+- New **Map** and **Calendar** buttons in the header. Admins upload a map picture; anyone drops pins for grows, stash houses and spots, and clicks a pin for its timer or stock
+- **Calendar:** a week view in ET. Anyone adds events (weekly ones repeat), and today's show in the Live ticker
+- **Coke runs** on **Timers**: start a run, watch it count down, and get a Discord message when it's done. **Bricks in** puts them in the stash
+- **Lab supplies** on the Meth and Coke pages with **Running low** warnings. A meth cook takes its sodium and ammonia automatically
+- Everyone in the crew can now use the **Wish list** on the BlackMarket
 
 ### 🐢 Oct 2, 2026: Slower Live ticker
 - The **Live Activity** ticker under the timer bar now drifts by slowly (about a third of the old speed) so it's easy to read
