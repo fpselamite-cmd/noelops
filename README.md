@@ -296,7 +296,6 @@ Newest first. Every merge adds an entry here, written so it can be pasted straig
 
 ### 🎨 Oct 2, 2026: Style pass and labelled header buttons
 - The **Map**, **Hide** (raid mode) and **Calendar** buttons in the header now have a small label under each icon
-- Card headings on the **Meth**, **Coke** and **Timers** pages now match the rest of the site
 - The big buttons (like **Add to the calendar**) use the green Grow Light style; the BlackMarket keeps its red
 - **Timers** gets a short line under its heading like the other pages
 - On phones, meth cooks and coke runs in the dashboard timer bar have room for their names and times, and the calendar's empty days take less space
