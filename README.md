@@ -97,7 +97,7 @@ In **Admin → Crew** you can add crew members, each with a name and a 4-8 digit
 
 - Until the first crew member is added, anyone with the link can use everything.
 - Once there's at least one, everyone signs in with their name and PIN, and stays signed in on that device until they sign out (from **My Profile**).
-- Pick a role (Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, pot plans, sales / bricks out and **Meth** (the Meth page and meth cook timers). Managers and Growers start with Meth on; untick it to hide meth from someone. You can also set their sales cut %. You can also limit which grow locations and stash houses they see.
+- Pick a role (Manager, Grower, Viewer) to start from, then tick their **operations** (tags) and exactly what each person can do. The tags are **Grower** (turns on timers, pot plans and edit inventory), **Cook** (Meth), **Runner** (Coke) and **Seller** (selling at the BlackMarket); ticking one turns its permissions on, unticking turns them off unless another tag still needs them, and you can still fine-tune the boxes. Tags show on Crew cards and rows (with a filter by tag) and in the profile pop-up. The permissions are: edit inventory, timers & harvests, pot plans, sales / bricks out and **Meth** (the Meth page and meth cook timers). Managers and Growers start with Meth on; untick it to hide meth from someone. You can also set their sales cut %. You can also limit which grow locations and stash houses they see.
 - **The Admin page isn't a crew permission.** It only opens with the admin password, through the small **Admin** link at the bottom right of every page. There's no Admin button in the header: while it's unlocked, a glowing **Admin** button (with the new-signups count) shows next to that link at the bottom of every page, and the link turns into **Lock**; click **Lock** in the same spot (or Logout on the Admin page) to hide it again. Unlocking lasts until that browser tab is closed. Anyone who had the old Admin role is now a Manager.
 - People with no permissions (Viewer) only see the dashboard stats: no locations, timers or activity.
 - **New people can sign themselves up:** on the sign-in screen they type a new name and PIN (twice) and get a profile as a **Viewer**, marked **New · needs review**. Admins see a badge on the Admin page; click **Review**, pick a role and save. Turn this off with **Let new people create their own profile** on the Crew tab.
@@ -110,6 +110,7 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 
 - **Who's online:** click the avatars in the header (or **Who's Online** in the phone menu) to see everyone online now, with their role and how long they've been on, plus the rest of the crew who are offline.
 - **Your status:** in the same panel, pick **At the lab**, **Growing**, **Selling**, **On a run**, **Busy** or **AFK**, or type your own (up to 20 letters). It shows by your name in Who's online and on the Crew page, and clears when you close the site.
+- **Raid mode:** the eye button in the header (or **Shift+R**) blurs every stock number, price and amount on your own screen until you turn it off. Timers stay visible. Handy when streaming.
 - **Live Activity** is a slim ticker under the timer bar on the dashboard. Click it (or the arrow) to open the full list.
 - **Eastern time:** every clock and time on the site is US Eastern (ET), whatever your own time zone, and so are the Discord messages. Day totals, charts and the time-based titles go by the Eastern day too.
 - **Undo:** most changes show a pop-up with an **Undo** button for about 8 seconds: stock changes, trimming, pressing, moving stock, logging bricks out, harvests, timer starts/stops and plan changes. Repeated presses on the same thing (+100, +100) merge into one Undo. Undo reverses just your change, so anything someone else changed in the meantime is kept.
@@ -144,6 +145,7 @@ Both can be moved between stashes (the leaves too), sold on the **BlackMarket** 
 
 The **BlackMarket** page (in the main menu, red and black) is where product sells for dirty money, usually from a Narco call:
 
+- **Price history** (Sell tab): the average price per brick / bin each week (ET) for the last 12 weeks, up to 3 products at once (tap the product chips). Hover a week for the average, range and number of sales, or click **Table**. Hidden from crew when prices are admin-only.
 - **Narco call:** the ringing red button at the top opens the sell form and tags the sale as a Narco call (shown in the ledger).
 - **Tabs:** **Sell** (below), **Wish list** and **Wash**. Everyone in the crew (not Viewers) can open the BlackMarket to use the **Wish list**; **Sell** and **Wash** need the sell permission.
 - **Wish list:** things the crew needs got (supplies, guns, a boat…). Post what's needed, how many and any notes, plus the extra boxes an admin sets up in **Admin → BlackMarket → Wish List Fields** (up to 8, e.g. Meet spot). Someone taps **I'll get it** to claim it, then **Got it** when it's done; the poster or an admin can cancel. Done ones fold into a history list.
@@ -220,6 +222,8 @@ The **Crew** page shows everyone in the crew as cards or a list (switch with **C
 - **Leaderboards** (next to Cards and List): top 5 for harvests, bud brought in, bricks pressed, things gone out, moves, longest streak, most titles and rarest collection.
 - Each card shows that person's top 3 titles; the **+N** opens their full profile.
 
+**MVPs of the week:** every Monday (ET) the site crowns last week's **Top grower** (harvests), **Top seller** (sold), **Top cook** (meth cooks) and **Top runner** (coke runs finished), only for the ones that had activity. MVPs get a gold crown next to their name everywhere and a temporary **MVP** title badge for the week; the Crew page shows them (and the past few weeks), and Live Activity announces it once.
+
 **History (admins only):** **Admin → History** keeps the full story the Live Activity feed leaves out on purpose: who changed what, how much, where and when (the newest 500 actions). Search for a strain, postal or amount, or filter by person or kind of action. Undone actions stay in the list, crossed out. Note that this is hidden in the site only: like everything else, it's stored in the shared database.
 
 **Menu and permissions:** each menu button only shows once someone has the permission for it: **Timers** needs timers, pot plans or Meth (each tab inside only shows if you have it), **Stash** needs inventory or pot plans, **Meth** needs Meth, **BlackMarket** needs the sell permission, **Crew** shows for every crew member, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
@@ -289,6 +293,12 @@ Newest first. Every merge adds an entry here, written so it can be pasted straig
 - New **Coke** toggle in each person's crew settings
 - Phone fixes: the dashboard timer bar, buttons and headings fit better on small screens
 - Checked that backups and restores include everything new
+
+### 👑 Oct 2, 2026: MVPs, crew tags, price history and raid mode
+- **MVPs of the week:** every Monday the top grower, seller, cook and runner from last week get a crown by their name and an MVP badge for the week (only if there was activity)
+- **Crew tags:** Grower, Cook, Runner and Seller in each person's crew settings. Ticking one turns that operation's permissions on. Tags show on the Crew page (with a filter) and profiles
+- **Price history** on the BlackMarket: the average price per brick each week, up to 3 products at once
+- **Raid mode:** the eye button in the header (or Shift+R) blurs every number on your screen
 
 ### 🗺️ Oct 2, 2026: Map, calendar, coke runs and supplies
 - New **Map** and **Calendar** buttons in the header. Admins upload a map picture; anyone drops pins for grows, stash houses and spots, and clicks a pin for its timer or stock
