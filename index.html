@@ -325,6 +325,9 @@
         .dx-mate.has-banner { padding-top: 0; overflow: hidden; }
         .dx-mate .mate-banner { margin: 0 -16px; }
         .dx-mate .mate-banner .tc { border-radius: 0; border: 0; }
+        .dx-me.has-banner { padding-top: 0; overflow: hidden; }
+        .dx-me .mate-banner { margin: 0 -18px; }
+        .dx-me .mate-banner .tc { border-radius: 0; border: 0; }
         .dx-mate.has-banner .flags { top: 8px; left: 10px; right: auto; z-index: 5; }
         /* profile pop-up */
         #person-pop { position: fixed; z-index: 140; width: 340px; max-width: calc(100vw - 24px); border-radius: 14px; overflow: hidden; background: #0d0f14; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.95), 0 0 0 1px hsl(var(--gl) / 0.25); }
@@ -725,7 +728,7 @@
         .mvp-card .n { font-size: 11px; color: #8a9a8e; }
         .mvp-past { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 11px; color: #8a9a8e; }
         .mvp-past b { color: #cbd5d0; }
-        body.raid :is(.dx-mono, .num, .big, .v, .count, .n, .alloc, td.r, td.n, .bm-dirty, .postal-hide, .dx-hbars b, #wash-preview b, .mx-where b, .dx-where b, .totline b, .row b, input[type=number]) { filter: blur(7px); }
+        body.raid :is(.dx-mono, .num, .big, .v, .count, .n, .alloc, td.r, td.n, .bm-dirty, .postal-hide, .dx-hbars b, #wash-preview b, .mx-where b, .dx-where b, .totline b, .row b, .me-nums b, input[type=number]) { filter: blur(7px); }
         body.raid .price-svg .pa, body.raid .price-svg .pl, body.raid #price-table td.r { filter: blur(6px); }
         body.raid .dx-tc .clock .t, body.raid .dx-gb .time .t, body.raid .mx-tc .t, body.raid #live-clock, body.raid .rn-t, body.raid .ck-t { filter: none; }
         .hdr-ico#nav-raid.gl-on { color: #fca5a5; }
@@ -862,6 +865,28 @@
         .dx-crew-stats .l { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #8a9a8e; }
         .dx-crew-stats .v { font: 800 26px/1.2 'JetBrains Mono', monospace; color: #f1f5f2; }
         .dx-crew-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+        /* Crew page: your own card at the top */
+        .dx-me { padding: 16px 18px; display: grid; gap: 14px; }
+        .dx-me .me-top { display: flex; gap: 14px; align-items: center; min-width: 0; }
+        .dx-me .me-av { position: relative; flex-shrink: 0; border-radius: 50%; }
+        .dx-me .me-av .dx-av { width: 64px; height: 64px; font-size: 22px; }
+        .dx-me .me-av .cam { position: absolute; right: -2px; bottom: -2px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; color: #fff; background: hsl(var(--acc-h) 71% 40%); border: 2px solid #0b120d; }
+        .dx-me .me-av:hover .dx-av { box-shadow: 0 0 0 2px hsl(var(--acc-h) 69% 58%), 0 0 18px hsl(var(--acc-h) 71% 45% / 0.5); }
+        .dx-me .me-who { min-width: 0; flex: 1; display: grid; gap: 4px; justify-items: start; }
+        .dx-me .me-nm { font-size: 20px; font-weight: 800; line-height: 1.15; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dx-me .me-rl { font-size: 11px; color: #8a9a8e; font-weight: 700; }
+        .dx-me .me-rl .tt-tag { margin-left: 4px; font-size: 13px; }
+        .dx-me .me-kicker { font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: hsl(var(--acc-h) 69% 58%); }
+        .dx-me .me-nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
+        .dx-me .me-nums div { padding: 8px 6px 6px; border-radius: 10px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); text-align: center; }
+        .dx-me .me-nums b { display: block; font: 800 17px/1.15 'JetBrains Mono', monospace; color: #f1f5f2; }
+        .dx-me .me-nums b span { font: inherit; letter-spacing: 0; text-transform: none; color: inherit; }
+        .dx-me .me-nums b .bm-dirty { color: #4ade80; }
+        .dx-me .me-nums b .text-amber-300 { color: #fcd34d; }
+        .dx-me .me-nums span { font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #8a9a8e; }
+        .dx-me .me-acts { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .dx-me .me-acts .dx-act { flex: none; padding: 7px 12px; }
+        @media (max-width: 640px) { .dx-me .me-acts .dx-act { flex: 1 1 30%; } }
         .dx-mate { position: relative; padding: 16px; border-radius: 18px; display: grid; gap: 12px; align-content: start; background: linear-gradient(180deg, hsl(var(--gl) / 0.08), rgba(10, 18, 12, 0.9) 40%); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.16); transition: border-color 0.3s, box-shadow 0.3s; }
         .dx-mate:hover { border-color: hsl(var(--gl) / 0.5); }
         .dx-mate.focus { border-color: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 0 1px hsl(var(--acc-h) 69% 58%), 0 0 30px hsl(var(--acc-h) 71% 45% / 0.35); }
@@ -1730,6 +1755,7 @@
             </section>
 
             <section id="tab-crew" class="tab-content hidden">
+                <div id="crew-me" class="mb-5"></div>
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
                         <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-users text-weed-400 mr-2"></i>Crew</h1>
@@ -2955,7 +2981,7 @@
             wishes: [], // Shared: crew wish list [{ id, title, qty, fields, notes, by, ts, status, claimer, doneTs }]
             washes: [], // Shared: dirty money washed [{ id, who, whoKey, dirty, pct, clean, note, by, ts }]
             wishFields: [], // Shared: extra fields on wish list requests (admin)
-            washPct: 20, // Shared: default wash cut %
+            washPct: 50, // Shared: default wash cut % (half the dirty money comes out clean)
             weekly: {}, // Shared: { 'YYYY-MM-DD' (Monday ET): { statKey: { name, harvests, sold, cooks, runs }, announced } } for MVPs
             pins: [], // Shared: map pins [{ id, kind, ref, label, x, y, by, ts }]
             events: [], // Shared: calendar [{ id, title, type, date, time, weekly, notes, by, ts }]
@@ -3290,7 +3316,7 @@
                     discordTemplate: normalizeDiscordTemplate(state.discordTemplate),
                     discordMethTemplate: normalizeDiscordTemplate(state.discordMethTemplate, DEFAULT_METH_DISCORD_TEMPLATE),
                     wishFields: Array.isArray(state.wishFields) && state.wishFields.length ? state.wishFields : null,
-                    washPct: Number.isFinite(Number(state.washPct)) ? Number(state.washPct) : 20,
+                    washPct: Number.isFinite(Number(state.washPct)) ? Number(state.washPct) : 50,
                     supplyLow: { ...(state.supplyLow || {}) },
                     discordCokeTemplate: normalizeDiscordTemplate(state.discordCokeTemplate, DEFAULT_COKE_DISCORD_TEMPLATE),
                     mapImage: typeof state.mapImage === 'string' && state.mapImage.startsWith('data:image/') ? state.mapImage : null,
@@ -3341,7 +3367,7 @@
             appState.pins = Object.entries(isPlainObject(tree.pins) ? tree.pins : {}).filter(([, x]) => isPlainObject(x) && Number.isFinite(Number(x.x)) && Number.isFinite(Number(x.y)) && x.label).map(([id, record]) => ({ ...record, id }));
             appState.events = Object.entries(isPlainObject(tree.events) ? tree.events : {}).filter(([, x]) => isPlainObject(x) && x.title && /^\d{4}-\d{2}-\d{2}$/.test(x.date)).map(([id, record]) => ({ ...record, id }));
             appState.runs = Object.entries(isPlainObject(tree.runs) ? tree.runs : {}).filter(([, x]) => isPlainObject(x) && Number(x.ts) > 0).map(([id, record]) => ({ ...record, id }));
-            appState.washPct = isPlainObject(tree.settings) && tree.settings.washPct !== undefined ? tree.settings.washPct : 20;
+            appState.washPct = isPlainObject(tree.settings) && tree.settings.washPct !== undefined ? tree.settings.washPct : 50;
             appState.signupSettings = { allowSignup: !(isPlainObject(tree.settings) && tree.settings.allowSignup === false) };
             appState.salesSettings = { hidePrices: isPlainObject(tree.settings) && tree.settings.hidePrices === true, prices: isPlainObject(tree.settings) && isPlainObject(tree.settings.salePrices) ? tree.settings.salePrices : {},
                 defaultCut: isPlainObject(tree.settings) ? tree.settings.defaultCut : undefined };
@@ -5124,6 +5150,7 @@
             const body = document.getElementById('crew-body');
             const tab = document.getElementById('tab-crew');
             if (!body || !tab || tab.classList.contains('hidden')) return;
+            renderCrewMe();
             renderMvpStrip();
             const view = crewView();
             document.getElementById('crew-view-cards').classList.toggle('on', view === 'cards');
@@ -5193,6 +5220,61 @@
                     ${admin ? `<div class="pills">${where(p.member)}</div>` : ''}
                     ${actions(p) ? `<div class="acts">${actions(p)}</div>` : ''}
                 </div>`).join('')}</div>`;
+        }
+
+        // Crew page: your own card at the top, with quick ways into My Profile
+        function renderCrewMe() {
+            const box = document.getElementById('crew-me');
+            if (!box) return;
+            const name = appState.crewName;
+            if (crewMode() && !currentMember() && !isAdminUnlocked()) { box.innerHTML = ''; return; }
+            if (!name) {
+                box.innerHTML = `<div class="dx-glass dx-me text-center"><p class="text-sm text-slate-300">Set your name to get your own profile here.</p>
+                    <div class="me-acts"><button type="button" class="dx-act" onclick="openProfile()"><i class="fa-solid fa-user-plus mr-1"></i>Create My Profile</button></div></div>`;
+                return;
+            }
+            const key = myPersonKey();
+            const member = currentMember();
+            const stat = f => (key ? statValue(key, f) : 0);
+            const short = n => (n >= 10000 ? `${Math.round(n / 1000)}k` : n.toLocaleString());
+            const sales = (appState.sales || []).filter(s => saleOwnerKey(s) === key || (!s.sellerId && s.who === name));
+            const sold = sales.reduce((n, s) => n + s.bricks, 0);
+            const wash = washPeople().find(p => p.key === key) || { held: 0 };
+            const admin = hasAdminAccess();
+            const earn = admin ? budgetPeople().find(p => p.key === key) : null;
+            const nums = [
+                ['Harvests', stat('harvests').toLocaleString()],
+                ['Bud in', short(stat('bud'))],
+                stat('cooks') || pageAllowed('meth') ? ['Meth cooks', stat('cooks').toLocaleString()] : null,
+                stat('runs') || pageAllowed('coke') ? ['Coke runs', stat('runs').toLocaleString()] : null,
+                ['Sold', sold.toLocaleString()],
+                ['Dirty money', `<span class="bm-dirty">${money(wash.held)}</span>`],
+                earn ? ['Owed to you', `<span class="${earn.owed ? 'text-amber-300' : ''}">${money(earn.owed)}</span>`] : null
+            ].filter(Boolean);
+            const btn = (icon, label, js) => `<button type="button" class="dx-act" onclick="${js}"><i class="fa-solid fa-${icon} mr-1"></i>${label}</button>`;
+            const banner = wornTitleFor(name);
+            box.innerHTML = `<div class="dx-glass dx-me ${banner ? 'has-banner' : ''}">
+                ${banner ? `<div class="mate-banner">${titleCardHtml(banner, { noTier: true })}</div>` : ''}
+                <div class="me-top">
+                    <button type="button" class="me-av" title="Change your picture" onclick="document.getElementById('profile-file-input').click()">${avatarHtml(name)}<i class="cam fa-solid fa-camera"></i></button>
+                    <div class="me-who">
+                        <span class="me-kicker">You</span>
+                        <div class="me-nm">${nameHtml(name)}</div>
+                        <div class="me-rl">${escapeHtml(member ? roleLabel(member).replace(' (stats only)', '') : admin ? 'Admin' : 'Crew')} ${wornTagFor(name)}</div>
+                        ${opTagsHtml(member)}
+                        ${titlesOn() ? crewRoles(name) : mvpBadgesHtml(name) ? `<div class="mate-roles">${mvpBadgesHtml(name)}</div>` : ''}
+                    </div>
+                </div>
+                <div class="me-nums">${nums.map(([l, v]) => `<div><b>${v}</b><span>${l}</span></div>`).join('')}</div>
+                <div class="me-acts">
+                    ${btn('camera', 'Picture', "document.getElementById('profile-file-input').click()")}
+                    ${btn('pen', 'Name', "openProfile(); setTimeout(() => document.getElementById('profile-name').select(), 60)")}
+                    ${member ? btn('key', 'PIN', "openProfile(); setTimeout(() => document.getElementById('profile-pin-current').focus(), 60)") : ''}
+                    ${titlesOn() ? btn('medal', 'Titles', "openProfile(); showProfileTab('titles')") : ''}
+                    ${btn('palette', 'Look', "openProfile(); showProfileTab('look')")}
+                    ${btn('bell', 'Alerts', "openProfile(); showProfileTab('alerts')")}
+                </div>
+            </div>`;
         }
 
         // "Their sales": the BlackMarket page filtered to that person
@@ -8517,7 +8599,7 @@
         // ---- Money wash: each seller holds the dirty money from their sales until they wash it ----
         function washPct() {
             const p = Number(appState.washPct);
-            return Number.isFinite(p) && p >= 0 && p <= 100 ? p : 20;
+            return Number.isFinite(p) && p >= 0 && p <= 100 ? p : 50;
         }
 
         function washPeople() {
@@ -8993,7 +9075,7 @@
             });
             const cut = safeCut(document.getElementById('admin-default-cut').value);
             const wash = Math.round(Number(document.getElementById('admin-wash-pct').value));
-            writeShared({ 'settings/salePrices': prices, 'settings/defaultCut': cut === null ? 20 : cut, 'settings/washPct': Number.isFinite(wash) ? Math.max(0, Math.min(100, wash)) : 20 });
+            writeShared({ 'settings/salePrices': prices, 'settings/defaultCut': cut === null ? 20 : cut, 'settings/washPct': Number.isFinite(wash) ? Math.max(0, Math.min(100, wash)) : 50 });
             showAlert('Prices, seller cut and wash % saved.', 'success');
         }
 
