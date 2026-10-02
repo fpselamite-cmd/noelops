@@ -299,6 +299,7 @@ Newest first. Every merge adds an entry here, written so it can be pasted straig
 - Quick buttons on it for **Picture**, **Name**, **PIN**, **Titles**, **Look** and **Alerts** jump straight to that part of **My Profile**
 - Tap your picture to change it
 - Raid mode blurs the numbers on it too
+- The **Wash** cut now starts at **50%** (half the dirty money comes out clean). Admins can still change it in **Admin → BlackMarket**, and it can be changed on each wash
 
 ### 🎨 Oct 2, 2026: Style pass and labelled header buttons
 - The **Map**, **Hide** (raid mode) and **Calendar** buttons in the header now have a small label under each icon
