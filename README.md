@@ -143,6 +143,9 @@ Both can be moved between stashes (the leaves too), sold on the **BlackMarket** 
 The **BlackMarket** page (in the main menu, red and black) is where product sells for dirty money, usually from a Narco call:
 
 - **Narco call:** the ringing red button at the top opens the sell form and tags the sale as a Narco call (shown in the ledger).
+- **Tabs:** **Sell** (below), **Wish list** and **Wash**.
+- **Wish list:** things the crew needs got (supplies, guns, a boat…). Post what's needed, how many and any notes, plus the extra boxes an admin sets up in **Admin → BlackMarket → Wish List Fields** (up to 8, e.g. Meet spot). Someone taps **I'll get it** to claim it, then **Got it** when it's done; the poster or an admin can cancel. Done ones fold into a history list.
+- **Wash:** every sale with a price adds that amount to the **seller's dirty money**. Washing moves some of it to clean, minus the launderer's cut: the default % is set in **Admin → BlackMarket**, and it can be changed on each wash. Crew wash their own money; admins can wash for anyone and undo a wash. Shows each person's dirty money held, washed, clean out and lost to washing, plus the wash log. When prices are hidden from crew, they only see their own numbers.
 
 - **Totals:** today, last 7 days, last 30 days and all time, in bricks (and dollars when prices are entered).
 - **Filters** by period, strain, person and location, with **By Strain** and **By Person** charts and the full log underneath. **Export CSV** downloads it as a spreadsheet.
@@ -219,6 +222,15 @@ The **Crew** page shows everyone in the crew as cards or a list (switch with **C
 
 **Menu and permissions:** each menu button only shows once someone has the permission for it: **Timers** needs timers, pot plans or Meth (each tab inside only shows if you have it), **Stash** needs inventory or pot plans, **Meth** needs Meth, **BlackMarket** needs the sell permission, **Crew** shows for every crew member, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
 
+## Coke page
+
+The **Coke** page is the crew's coke guide, built from The Chosen's Cocaine Creation Guide:
+
+- **In the stash:** small and large coke bricks and coca leaves, where they are, and how many bricks the leaves can make.
+- **What to bring:** pick small or large and how many. It works out the coca leaves, oil barrels, cement and battery acid (from the recipe in Admin → Products), the weight to carry (220kg a small brick, 440kg a large), the rough time (2h / 4h), how many batches of 200 leaves, the pure cocaine it makes (25 / 50 per brick), what the supplies are worth at Lucas's prices, and whether the stash has enough leaves.
+- **How it's made:** the 5 steps (cut, walk it off, paste, cook it pure, press the brick), **Rules & info** (Coke Island is a red zone, the 30% family / 70% makers split, leaves once a week, where supplies come from, what Lucas pays) and **Places** (the warehouse at 10060 with its boat garage, Coke Island east of the Ron Alternates Wind Farm, refuel at the Vespucci Canals dock).
+- The coke cards on the Dashboard and Stash link here. Each person has a **Coke** toggle in Admin → Crew (on for Managers and Growers).
+
 ## Meth page
 
 The **Meth** page is the crew's meth guide, built from Karma's Meth Guide (accurate as of 9/27/2026):
@@ -256,6 +268,15 @@ The secret titles live in the site's code, which is public on GitHub, so someone
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### ❄️ Oct 2, 2026: Coke page, wish list and money wash
+- New **Coke** page with the whole Cocaine Creation Guide: the 5 steps, the red zone, the 30/70 split, the places and a **What to bring** calculator for small or large bricks
+- The **BlackMarket** now has tabs: **Sell**, **Wish list** and **Wash**
+- **Wish list:** post what the crew needs; someone claims it with **I'll get it** and marks it **Got it**. Admins can add extra boxes like Meet spot
+- **Wash:** your sales add to your **dirty money**; wash it into clean money minus the launderer's cut
+- New **Coke** toggle in each person's crew settings
+- Phone fixes: the dashboard timer bar, buttons and headings fit better on small screens
+- Checked that backups and restores include everything new
 
 ### 🐢 Oct 2, 2026: Slower Live ticker
 - The **Live Activity** ticker under the timer bar now drifts by slowly (about a third of the old speed) so it's easy to read

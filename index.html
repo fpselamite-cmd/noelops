@@ -433,7 +433,7 @@
         .mx-gb .pot::after { display: none; }
         .mx-gb .pot .bk { width: 26px; height: 30px; }
         .mx-gb .time .t { color: #67e8f9; }
-        .mx-gb .pid { font-family: inherit; font-size: 13px; }
+        .mx-gb .pid { font-family: inherit; font-size: 13px; white-space: nowrap; }
         .mx-gb .fill { background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.16) 0 6px, transparent 6px 12px), linear-gradient(90deg, #0e7490, #22d3ee) !important; box-shadow: 0 0 10px rgba(34, 211, 238, 0.45) !important; }
         .mx-gb .fill::after { background: #cffafe !important; box-shadow: 0 0 8px 2px rgba(103, 232, 249, 0.8) !important; }
         @media (max-width: 1023px) { .dx-cookbar { max-width: none; } .dx-cookbar .gb-label { display: none; } }
@@ -621,8 +621,8 @@
         .mx-grid { display: grid; gap: 14px; }
         @media (min-width: 900px) { .mx-top { grid-template-columns: 1fr 2fr; } }
         .mx-card { padding: 18px; text-align: center; }
-        .mx-card h2 { font-family: 'Teko', sans-serif; font-size: 24px; line-height: 1; letter-spacing: .04em; color: #fff; text-transform: uppercase; margin-bottom: 4px; }
-        .mx-card h2 i { color: #67e8f9; margin-right: 6px; font-size: 18px; }
+        .mx-card > h2 { font-family: 'Teko', sans-serif; font-size: 24px; line-height: 1; letter-spacing: .04em; color: #fff; text-transform: uppercase; margin-bottom: 4px; }
+        .mx-card > h2 i { color: #67e8f9; margin-right: 6px; font-size: 18px; }
         .mx-sub { font-size: 12px; color: #8a9a8e; margin-bottom: 12px; }
         .mx-stock .logo { width: 84px; height: 84px; margin: 4px auto 6px; }
         .mx-stock .big { font-family: 'JetBrains Mono', monospace; font-size: 46px; font-weight: 800; color: #67e8f9; line-height: 1; text-shadow: 0 0 22px rgba(34, 211, 238, .35); }
@@ -687,7 +687,7 @@
         .bm-page .dx-title.bm-title::after { color: #ef4444; text-shadow: 0 0 8px #b91c1c; background: linear-gradient(90deg, #b91c1c, #450a0a) left center / 60px 2px no-repeat; }
         .bm-page .dx-sec h2 { color: #fecaca; }
         .bm-page .qs-step span { background: #7f1d1d; color: #fff; }
-        .bm-page .qs-submit:not(:disabled) { background: linear-gradient(180deg, #dc2626, #7f1d1d); box-shadow: 0 8px 24px rgba(220, 38, 38, 0.35); }
+        .bm-page .qs-submit:not(:disabled) { color: #fff; background: linear-gradient(180deg, #dc2626, #7f1d1d); box-shadow: 0 8px 24px rgba(220, 38, 38, 0.35); }
         .bm-dirty { color: #4ade80; text-shadow: 0 0 8px rgba(74, 222, 128, 0.35); }
         .bm-narco { display: inline-flex; align-items: center; font-size: 12px; font-weight: 800; padding: 8px 14px; border-radius: 10px; color: #fff; background: linear-gradient(180deg, #dc2626, #991b1b); box-shadow: 0 0 0 1px rgba(254, 202, 202, 0.25), 0 6px 18px rgba(220, 38, 38, 0.4); }
         .bm-narco:hover { filter: brightness(1.12); }
@@ -697,6 +697,44 @@
         .bm-tag.hidden { display: none; }
         .bm-ring { animation: bmFlash 1.4s ease-out 1; }
         @keyframes bmFlash { 0% { box-shadow: 0 0 0 2px #ef4444, 0 0 40px rgba(239, 68, 68, 0.7); } 100% { box-shadow: 0 0 0 0 transparent; } }
+        .bm-page .dx-tab.on { background: linear-gradient(180deg, #dc2626, #7f1d1d); border-color: transparent; }
+        .wish-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin: 10px 0 14px; }
+        .wish-grid .contents { display: contents; }
+        .wish-grid label { display: grid; gap: 4px; font-size: 12px; font-weight: 700; color: #cbd5d0; }
+        .wish-grid label span { font-weight: 500; color: #6b7a70; }
+        .wish-grid .wide { grid-column: span 2; }
+        @media (max-width: 640px) { .wish-grid .wide { grid-column: auto; } }
+        .wish-list { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); margin-top: 14px; }
+        .wish { padding: 14px; display: grid; gap: 8px; }
+        .wish .top { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+        .wish h3 { font-weight: 800; color: #fff; font-size: 15px; }
+        .wish h3 .qty { color: #fca5a5; font-family: 'JetBrains Mono', monospace; }
+        .wish .by { font-size: 11px; color: #8a9a8e; }
+        .wish .fields { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: #cbd5d0; }
+        .wish .fields b { color: #8a9a8e; font-weight: 600; }
+        .wish .notes { font-size: 12px; color: #a3b1a7; }
+        .wish .acts { display: flex; gap: 6px; }
+        .wish .acts .dx-btn { width: auto; padding: 7px 12px; font-size: 12px; }
+        .wish .acts .dx-stop { background: rgba(127, 29, 29, 0.35); color: #fecaca; border: 1px solid rgba(248, 113, 113, 0.35); }
+        .wish.claimed { border-color: rgba(251, 191, 36, 0.35); }
+        .wish-pill { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 999px; white-space: nowrap; color: #fecaca; background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(248, 113, 113, 0.4); }
+        .wish-pill.claimed { color: #fde68a; background: rgba(245, 158, 11, 0.14); border-color: rgba(251, 191, 36, 0.4); }
+        .wish-pill.done { color: #86efac; background: rgba(34, 197, 94, 0.12); border-color: rgba(74, 222, 128, 0.4); }
+        .wish-pill.cancelled { color: #94a3b8; background: rgba(100, 116, 139, 0.12); border-color: rgba(148, 163, 184, 0.3); }
+        .wish-done { margin-top: 14px; font-size: 12px; color: #cbd5d0; }
+        .wish-done summary { cursor: pointer; color: #8a9a8e; font-weight: 700; }
+        .wish-done ul { margin-top: 8px; display: grid; gap: 6px; }
+        .ck-page .mx-card h2 i, .ck-page .mx-out .l i, .ck-page .mx-rule > i { color: #7dd3fc; }
+        .ck-page .mx-step .num { background: linear-gradient(180deg, #e0f2fe, #38bdf8); }
+        .ck-page .mx-133 span b, .ck-page .mx-place .postal, .ck-page .mx-plan b { color: #7dd3fc; }
+        .ck-page .mx-133 span { background: rgba(56, 189, 248, 0.1); border-color: rgba(125, 211, 252, 0.35); }
+        .ck-logo { width: auto !important; display: flex; justify-content: center; }
+        .ck-logo img { width: 64px; height: 64px; object-fit: contain; }
+        .ck-nums { display: flex; justify-content: center; gap: 22px; }
+        .ck-nums .big { display: block; font-family: 'JetBrains Mono', monospace; font-size: 40px; font-weight: 800; color: #7dd3fc; line-height: 1; }
+        .ck-red { border-color: rgba(239, 68, 68, 0.5) !important; background: rgba(60, 8, 8, 0.6) !important; }
+        .ck-page .ck-red > i, .ck-red-text { color: #f87171 !important; }
+        .mx-link.ck-link { color: #7dd3fc !important; border-color: rgba(125, 211, 252, 0.35) !important; }
         .inv-rows { display: grid; gap: 8px; }
         .inv-row { display: flex; align-items: center; gap: 12px; min-width: 0; }
         .inv-row .dx-tabs { flex: 1; min-width: 0; padding-bottom: 2px; }
@@ -1252,6 +1290,10 @@
             .dx-stat svg { display: none; }
             .dx-growbar-in { padding: 8px 16px; }
             .dx-ticker { padding: 0 16px 8px; }
+            .dx-growbar-in { flex-wrap: wrap; }
+            #dx-timers { flex: 1 0 100%; }
+            .dx-cookbar { flex: 1 0 100%; padding: 8px 0 0; border-left: 0; border-top: 1px solid rgba(103, 232, 249, 0.2); }
+            .mx-gb { flex: 0 0 82%; }
             .dx-feed-drop { right: 16px; }
             .dx-growbar .gb-label { display: none; }
             #dx-timers { scroll-snap-type: x mandatory; }
@@ -1301,6 +1343,10 @@
                             <span>Meth</span>
                             <span id="meth-ready-badge" class="hidden ml-1 px-1.5 py-0.5 text-xs rounded-full bg-cyan-950 text-cyan-300 border border-cyan-700" title="Cooks ready to collect">0</span>
                         </button>
+                        <button onclick="switchTab('coke')" id="nav-coke" title="Coke: leaves to bricks, start to finish" data-page="coke" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <i class="fa-solid fa-snowflake"></i>
+                            <span>Coke</span>
+                        </button>
                                                 <button onclick="switchTab('sales')" id="nav-sales" title="BlackMarket: sell product for dirty money" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-mask"></i>
                             <span>BlackMarket</span>
@@ -1339,6 +1385,7 @@
                 <button onclick="switchTab('inventory'); toggleMobileMenu()" data-page="inventory" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
                 <button onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Timers</button>
                 <button onclick="switchTab('meth'); toggleMobileMenu()" data-page="meth" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Meth</button>
+                <button onclick="switchTab('coke'); toggleMobileMenu()" data-page="coke" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Coke</button>
                 <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">BlackMarket</button>
                 <button onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Crew</button>
                 <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
@@ -1425,6 +1472,12 @@
                         <button class="dx-act" onclick="exportSalesCsv()"><i class="fa-solid fa-file-csv mr-1"></i>Export CSV</button>
                     </div>
                 </div>
+                <div class="dx-tabs bm-tabs mb-4">
+                    <button id="bm-tab-sell" class="dx-tab on" onclick="setBmView('sell')"><i class="fa-solid fa-sack-dollar"></i>Sell</button>
+                    <button id="bm-tab-wish" class="dx-tab" onclick="setBmView('wish')"><i class="fa-solid fa-list-check"></i>Wish list <span id="bm-wish-count" class="count hidden"></span></button>
+                    <button id="bm-tab-wash" class="dx-tab" onclick="setBmView('wash')"><i class="fa-solid fa-soap"></i>Wash</button>
+                </div>
+                <div id="bm-sell">
 
                 <!-- Log bricks out: pick a strain, where from, how many, submit -->
                 <form id="sale-form" class="dx-glass dx-qs" onsubmit="saveSale(event)">
@@ -1483,6 +1536,38 @@
                     <div class="overflow-x-auto"><table id="sales-table" class="dx-sales-table"></table></div>
                     <div id="sales-more" class="text-center mt-3"></div>
                 </div>
+                </div>
+
+                <div id="bm-wish" class="hidden">
+                    <form id="wish-form" class="dx-glass dx-qs" onsubmit="postWish(event)">
+                        <div class="dx-sec"><h2><i class="fa-solid fa-list-check bm-dirty mr-1"></i>Crew wish list</h2><span class="text-xs dx-muted hidden sm:inline">Something the crew needs got? Post it, someone claims it, then marks it got.</span></div>
+                        <div class="wish-grid">
+                            <label class="wide">What's needed<input id="wish-title" maxlength="60" required placeholder="e.g. Battery acid, a boat, 2 pistols" class="dx-input w-full"></label>
+                            <label>How many<input id="wish-qty" type="number" min="1" max="999" value="1" class="dx-input w-full dx-mono"></label>
+                            <div id="wish-form-fields" class="contents"></div>
+                            <label class="wide">Notes <span>(optional)</span><input id="wish-notes" maxlength="200" placeholder="Where, by when, who to give it to…" class="dx-input w-full"></label>
+                        </div>
+                        <button type="submit" class="qs-submit"><i class="fa-solid fa-plus mr-2"></i>Add to the wish list</button>
+                    </form>
+                    <div id="wish-list" class="wish-list"></div>
+                    <div id="wish-done" class="wish-done"></div>
+                </div>
+
+                <div id="bm-wash" class="hidden">
+                    <div id="wash-tiles" class="dx-stats"></div>
+                    <form id="wash-form" class="dx-glass dx-qs" onsubmit="saveWash(event)">
+                        <div class="dx-sec"><h2><i class="fa-solid fa-soap bm-dirty mr-1"></i>Wash dirty money</h2><span class="text-xs dx-muted hidden sm:inline">Each seller holds the dirty money from their sales until they wash it.</span></div>
+                        <div class="wish-grid">
+                            <label>Whose money<select id="wash-who" class="dx-input w-full"></select></label>
+                            <label>Dirty money in<div class="flex gap-2"><input id="wash-amount" type="number" min="1" step="1" placeholder="$" oninput="updateWashPreview()" class="dx-input w-full dx-mono"><button type="button" class="dx-act" style="flex:none" onclick="washAll()">All</button></div></label>
+                            <label>Wash cut %<input id="wash-pct" type="number" min="0" max="100" step="1" oninput="this.dataset.touched = '1'; updateWashPreview()" class="dx-input w-full dx-mono"></label>
+                            <label>Note <span>(optional)</span><input id="wash-note" maxlength="60" placeholder="Launderer, where…" class="dx-input w-full"></label>
+                        </div>
+                        <p id="wash-preview" class="text-sm text-slate-300 mt-3"></p>
+                        <button type="submit" class="qs-submit"><i class="fa-solid fa-soap mr-2"></i>Wash it</button>
+                    </form>
+                    <div id="wash-body" class="mt-4"></div>
+                </div>
             </section>
 
 
@@ -1534,6 +1619,83 @@
                 </div>
                 <div id="crew-stats" class="dx-crew-stats mb-5"></div>
                 <div id="crew-body"></div>
+            </section>
+
+            <section id="tab-coke" class="tab-content hidden space-y-5 ck-page">
+                <div>
+                    <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-snowflake text-sky-300 mr-2"></i>Coke</h1>
+                    <p class="text-xs text-slate-400 mt-1">Coca leaves to bricks: what to bring, the steps at the warehouse and the rules on the island.</p>
+                </div>
+
+                <div class="mx-grid mx-top">
+                    <div class="dx-glass mx-card mx-stock">
+                        <h2><i class="fa-solid fa-box"></i>In the stash</h2>
+                        <div class="logo ck-logo" id="coke-stock-logo"></div>
+                        <div class="ck-nums"><div><span class="big" id="coke-stock-small">0</span><span class="mx-sub">small</span></div><div><span class="big" id="coke-stock-large">0</span><span class="mx-sub">large</span></div></div>
+                        <div class="mx-sub" id="coke-stock-leaves"></div>
+                        <div class="mx-where" id="coke-stock-where"></div>
+                        <button class="dx-btn dx-btn-g" style="width:auto;padding:8px 14px" data-page="inventory" onclick="switchTab('inventory')"><i class="fa-solid fa-warehouse mr-1"></i>Open stash</button>
+                    </div>
+                    <div class="dx-glass mx-card">
+                        <h2><i class="fa-solid fa-calculator"></i>What to bring</h2>
+                        <p class="mx-sub">Pick how many bricks. A large brick takes double everything.</p>
+                        <div class="mx-calc-in">
+                            <button class="dx-step px-3" onclick="cokeCalcStep(-1)" aria-label="Less"><i class="fa-solid fa-minus"></i></button>
+                            <input id="coke-calc-n" type="number" min="1" max="50" value="1" class="dx-input dx-mono" aria-label="How many" oninput="renderCokeCalc()">
+                            <button class="dx-step px-3" onclick="cokeCalcStep(1)" aria-label="More"><i class="fa-solid fa-plus"></i></button>
+                            <div class="dx-seg"><button id="coke-size-small" class="on" onclick="setCokeSize('small')">Small</button><button id="coke-size-large" onclick="setCokeSize('large')">Large</button></div>
+                        </div>
+                        <div class="mx-out" id="coke-calc-out"></div>
+                        <p class="mx-plan" id="coke-calc-plan"></p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="dx-sec"><h2>How it's made</h2><span class="text-xs dx-muted">per batch of 200 leaves</span></div>
+                    <div class="mx-steps">
+                        <div class="dx-glass mx-step"><div class="num">1</div><h3>Cut it</h3>
+                            <p>Put <b>200 coca leaves + 4 cement</b> into the bin / box.</p></div>
+                        <div class="dx-glass mx-step"><div class="num">2</div><h3>Walk it off</h3>
+                            <p>Walk around until you get <b>50 cut cocaine</b>. Takes <b>5 to 10 minutes</b>.</p></div>
+                        <div class="dx-glass mx-step"><div class="num">3</div><h3>Make paste</h3>
+                            <p><b>50 cut cocaine + 1 barrel of oil</b> into the blue barrels gives <b>5 coca paste</b>. About <b>10 minutes</b>.</p></div>
+                        <div class="dx-glass mx-step"><div class="num">4</div><h3>Cook it pure</h3>
+                            <div class="mx-133"><span><b>2</b>paste</span><span><b>1</b>acid</span><span><b>1</b>pure</span></div>
+                            <p>Per pot, <b>2 pots</b> at a time. About <b>5 minutes</b> a cook.</p></div>
+                        <div class="dx-glass mx-step"><div class="num">5</div><h3>Press the brick</h3>
+                            <p>Use the <b>coke table at the warehouse</b>. <b>25 pure = 1 small brick</b>, <b>50 pure = 1 large</b>.</p></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="dx-sec"><h2>Rules &amp; info</h2></div>
+                    <div class="mx-rules">
+                        <div class="dx-glass mx-rule ck-red"><i class="fa-solid fa-skull-crossbones"></i><b>Coke Island is a RED ZONE</b><p>Shoot on sight, no interaction. Go armed and go together.</p></div>
+                        <div class="dx-glass mx-rule"><i class="fa-solid fa-scale-balanced"></i><b>The split</b><p><b>30%</b> to the family, <b>70%</b> split between the people who made the brick(s).</p></div>
+                        <div class="dx-glass mx-rule"><i class="fa-solid fa-leaf"></i><b>Leaves once a week</b><p>The coca leaves are harvested once per week.</p></div>
+                        <div class="dx-glass mx-rule"><i class="fa-solid fa-truck-ramp-box"></i><b>Where supplies come from</b><p>Cement from <b>Construction</b>, oil barrels from <b>Oil Rigging</b>, battery acid from <b>chopping cars</b> for the batteries.</p></div>
+                        <div class="dx-glass mx-rule"><i class="fa-solid fa-hand-holding-dollar"></i><b>Lucas pays for supplies</b><p><b>$2k</b> per battery, <b>$1k</b> per oil barrel, <b>$750</b> per cement.</p></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="dx-sec"><h2>Places</h2></div>
+                    <div class="mx-rules">
+                        <div class="dx-glass mx-card mx-place"><h2><i class="fa-solid fa-warehouse"></i>Coke Warehouse</h2><div class="postal">10060</div>
+                            <p class="mx-sub" style="margin:4px 0 0">Has a boat garage: pretty much the closest dock to the island, so use it if you can.</p></div>
+                        <div class="dx-glass mx-card mx-place"><h2><i class="fa-solid fa-water"></i>Coke Island</h2><div class="postal ck-red-text">East coast</div>
+                            <p class="mx-sub" style="margin:4px 0 0">Directly east of the Ron Alternates Wind Farm. Red zone.</p></div>
+                        <div class="dx-glass mx-card mx-place"><h2><i class="fa-solid fa-gas-pump"></i>Refuel</h2><div class="postal" style="font-size:22px">Vespucci Canals</div>
+                            <p class="mx-sub" style="margin:4px 0 0">Refuel the boats at the Vespucci Canals dock.</p></div>
+                    </div>
+                </div>
+
+                <div class="mx-rules">
+                    <div class="dx-glass mx-rule"><i class="fa-solid fa-ship"></i><b>Save time next trip</b><p><b>Pre-load your boats</b> for the next trip before you head out.</p></div>
+                    <div class="dx-glass mx-rule"><i class="fa-solid fa-calculator"></i><b>Materials calculator</b><p>The one above uses the crew's recipe from Admin → Products. There's also one in Discord / Emails.</p></div>
+                </div>
+
+                <p class="mx-credit">From The Chosen's Cocaine Creation Guide.</p>
             </section>
 
             <section id="tab-meth" class="tab-content hidden space-y-5">
@@ -1661,7 +1823,7 @@
                     <button class="dx-tab" data-admin-tab="discord" onclick="showAdminTab('discord')"><i class="fa-brands fa-discord"></i>Discord</button>
                     <button class="dx-tab" data-admin-tab="logos" onclick="showAdminTab('logos')"><i class="fa-solid fa-image"></i>Logos</button>
                     <button class="dx-tab" data-admin-tab="products" onclick="showAdminTab('products')"><i class="fa-solid fa-flask"></i>Products</button>
-                    <button class="dx-tab" data-admin-tab="sales" onclick="showAdminTab('sales')"><i class="fa-solid fa-truck-fast"></i>Sales</button>
+                    <button class="dx-tab" data-admin-tab="sales" onclick="showAdminTab('sales')"><i class="fa-solid fa-mask"></i>BlackMarket</button>
                     <button class="dx-tab" data-admin-tab="effects" onclick="showAdminTab('effects')"><i class="fa-solid fa-wand-magic-sparkles"></i>Effects</button>
                     <button class="dx-tab" data-admin-tab="titles" onclick="showAdminTab('titles')"><i class="fa-solid fa-medal"></i>Titles</button>
                     <button class="dx-tab" data-admin-tab="history" onclick="showAdminTab('history')"><i class="fa-solid fa-clock-rotate-left"></i>History</button>
@@ -1972,7 +2134,21 @@
                         <input type="number" id="admin-default-cut" min="0" max="100" step="1" class="mt-1 w-full px-3 py-2 text-sm font-mono">
                         <span class="block font-normal text-[11px] text-slate-500 mt-1">The seller's share of each sale's price. Override it per person in the Crew tab.</span>
                     </label>
-                    <button onclick="saveSalePrices()" class="dx-btn dx-btn-g" style="width:auto;padding:9px 18px"><i class="fa-solid fa-floppy-disk mr-1"></i> Save Prices &amp; Cut</button>
+                    <label class="block text-xs font-semibold text-slate-300 max-w-xs">Default wash cut %
+                        <input type="number" id="admin-wash-pct" min="0" max="100" step="1" class="mt-1 w-full px-3 py-2 text-sm font-mono">
+                        <span class="block font-normal text-[11px] text-slate-500 mt-1">What a launderer takes when dirty money is washed. It can be changed on each wash.</span>
+                    </label>
+                    <button onclick="saveSalePrices()" class="dx-btn dx-btn-g" style="width:auto;padding:9px 18px"><i class="fa-solid fa-floppy-disk mr-1"></i> Save Prices, Cut &amp; Wash %</button>
+                </div>
+                <div class="dx-glass dx-admin-card space-y-3">
+                    <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
+                        <div class="w-8 h-8 rounded-lg bg-red-950 text-red-400 flex items-center justify-center"><i class="fa-solid fa-list-check"></i></div>
+                        <div><h2 class="font-bold text-white text-base">Wish List Fields</h2>
+                            <p class="text-xs text-slate-400">Extra boxes everyone fills in when they post to the wish list (up to 8), on top of what's needed, how many and notes.</p></div>
+                    </div>
+                    <div id="admin-wish-fields" class="space-y-2 max-w-md"></div>
+                    <div class="flex gap-2"><button type="button" onclick="addAdminWishField()" class="dx-act" style="flex:none"><i class="fa-solid fa-plus mr-1"></i>Add a field</button>
+                        <button type="button" onclick="saveAdminWishFields()" class="dx-btn dx-btn-g" style="width:auto;padding:9px 18px"><i class="fa-solid fa-floppy-disk mr-1"></i>Save fields</button></div>
                 </div>
                 <div class="dx-glass dx-admin-card space-y-3">
                     <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
@@ -2582,6 +2758,10 @@
             fxSettings: null, // Shared: which effects are on for everyone, the stamp word and harvest ranks (see FX_DEFAULTS)
             sales: [], // Shared: bricks going out, newest first
             cooks: [], // Shared: meth yields put down [{ id, who, size, ts }]
+            wishes: [], // Shared: crew wish list [{ id, title, qty, fields, notes, by, ts, status, claimer, doneTs }]
+            washes: [], // Shared: dirty money washed [{ id, who, whoKey, dirty, pct, clean, note, by, ts }]
+            wishFields: [], // Shared: extra fields on wish list requests (admin)
+            washPct: 20, // Shared: default wash cut %
             audit: [], // Shared: detailed history for admins [{ id, who, kind, text, loc, ts, undone }], newest first
             ledger: [], // Shared: budget entries (payouts to crew, expenses), newest first
             history: {}, // Shared daily totals: { 'YYYY-MM-DD': { bricks, potential, trimmed, untrimmed, coca, bricksMade } }
@@ -2905,6 +3085,8 @@
                     webhookUrl: state.webhookUrl || '',
                     discordTemplate: normalizeDiscordTemplate(state.discordTemplate),
                     discordMethTemplate: normalizeDiscordTemplate(state.discordMethTemplate, DEFAULT_METH_DISCORD_TEMPLATE),
+                    wishFields: Array.isArray(state.wishFields) && state.wishFields.length ? state.wishFields : null,
+                    washPct: Number.isFinite(Number(state.washPct)) ? Number(state.washPct) : 20,
                     allowSignup: !(isPlainObject(state.signupSettings) && state.signupSettings.allowSignup === false),
                     hidePrices: Boolean(state.salesSettings && state.salesSettings.hidePrices),
                     salePrices: { ...((state.salesSettings && state.salesSettings.prices) || {}) },
@@ -2920,6 +3102,8 @@
                 sales: Object.fromEntries((state.sales || []).map(({ id, ...record }) => [id, record])),
                 audit: Object.fromEntries((state.audit || []).map(({ id, ...record }) => [id, record])),
                 cooks: Object.fromEntries((state.cooks || []).map(({ id, ...record }) => [id, record])),
+                wishes: Object.fromEntries((state.wishes || []).map(({ id, ...record }) => [id, record])),
+                washes: Object.fromEntries((state.washes || []).map(({ id, ...record }) => [id, record])),
                 ledger: Object.fromEntries((state.ledger || []).map(({ id, ...record }) => [id, record]))
             };
         }
@@ -2936,6 +3120,8 @@
             appState.webhookUrl = isPlainObject(tree.settings) && typeof tree.settings.webhookUrl === 'string' ? tree.settings.webhookUrl : '';
             appState.discordTemplate = isPlainObject(tree.settings) ? tree.settings.discordTemplate : null;
             appState.discordMethTemplate = isPlainObject(tree.settings) ? tree.settings.discordMethTemplate : null;
+            appState.wishFields = isPlainObject(tree.settings) && Array.isArray(tree.settings.wishFields) ? tree.settings.wishFields : [];
+            appState.washPct = isPlainObject(tree.settings) && tree.settings.washPct !== undefined ? tree.settings.washPct : 20;
             appState.signupSettings = { allowSignup: !(isPlainObject(tree.settings) && tree.settings.allowSignup === false) };
             appState.salesSettings = { hidePrices: isPlainObject(tree.settings) && tree.settings.hidePrices === true, prices: isPlainObject(tree.settings) && isPlainObject(tree.settings.salePrices) ? tree.settings.salePrices : {},
                 defaultCut: isPlainObject(tree.settings) ? tree.settings.defaultCut : undefined };
@@ -2962,6 +3148,8 @@
             });
             appState.sales = Object.entries(isPlainObject(tree.sales) ? tree.sales : {}).map(([id, record]) => ({ ...record, id }));
             appState.audit = Object.entries(isPlainObject(tree.audit) ? tree.audit : {}).map(([id, record]) => ({ ...record, id }));
+            appState.wishes = Object.entries(isPlainObject(tree.wishes) ? tree.wishes : {}).filter(([, x]) => isPlainObject(x) && x.title).map(([id, record]) => ({ ...record, id }));
+            appState.washes = Object.entries(isPlainObject(tree.washes) ? tree.washes : {}).filter(([, x]) => isPlainObject(x) && x.dirty).map(([id, record]) => ({ ...record, id }));
             appState.cooks = Object.entries(isPlainObject(tree.cooks) ? tree.cooks : {}).filter(([, x]) => isPlainObject(x) && Number(x.ts) > 0).map(([id, record]) => ({ ...record, id }));
             normalizeState();
         }
@@ -3119,13 +3307,14 @@
             { key: 'timers', label: 'Timers & harvests', hint: 'Start, stop, restart, harvest' },
             { key: 'planner', label: 'Pot plans', hint: 'Change pots and what gets planted' },
             { key: 'sales', label: 'Sell at the BlackMarket', hint: 'See the BlackMarket page and sell product for dirty money' },
-            { key: 'meth', label: 'Meth', hint: 'See the Meth page and meth cook timers, put down and collect cooks' }
+            { key: 'meth', label: 'Meth', hint: 'See the Meth page and meth cook timers, put down and collect cooks' },
+            { key: 'coke', label: 'Coke', hint: 'See the Coke page (the guide and materials calculator)' }
         ];
         // The Admin page isn't a crew permission: it only opens with the admin password (link in the footer)
         const ROLE_PRESETS = {
-            manager: { label: 'Manager', perms: { inventory: true, timers: true, planner: true, sales: true, meth: true } },
-            grower: { label: 'Grower', perms: { inventory: true, timers: true, planner: false, sales: false, meth: true } },
-            viewer: { label: 'Viewer (stats only)', perms: { inventory: false, timers: false, planner: false, sales: false, meth: false } }
+            manager: { label: 'Manager', perms: { inventory: true, timers: true, planner: true, sales: true, meth: true, coke: true } },
+            grower: { label: 'Grower', perms: { inventory: true, timers: true, planner: false, sales: false, meth: true, coke: true } },
+            viewer: { label: 'Viewer (stats only)', perms: { inventory: false, timers: false, planner: false, sales: false, meth: false, coke: false } }
         };
 
         function crewMode() {
@@ -3458,7 +3647,7 @@
 
         // ---- Detailed history (Admin → History): who did exactly what, where and when ----
         const AUDIT_KEEP = 500;
-        const AUDIT_KINDS = { buds: 'Bud & bricks', coca: 'Coke', meth: 'Meth', move: 'Moves', harvest: 'Harvests', timer: 'Timers', plan: 'Pot plans', sale: 'Going out', budget: 'Budget', titles: 'Titles', locations: 'Places' };
+        const AUDIT_KINDS = { buds: 'Bud & bricks', coca: 'Coke', meth: 'Meth', move: 'Moves', harvest: 'Harvests', timer: 'Timers', plan: 'Pot plans', sale: 'BlackMarket', wish: 'Wish list', wash: 'Wash', budget: 'Budget', titles: 'Titles', locations: 'Places' };
         let auditShown = 100;
 
         function auditLog({ kind, loc, text }) {
@@ -3567,6 +3756,55 @@
                 if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 60);
             setTimeout(() => { if (crewFocus === name) { crewFocus = null; renderCrewPage(); } }, 4000);
+        }
+
+        // Coke page: what to bring for N bricks, what's in the stash, and the guide
+        const COKE_PURE = { small: 25, large: 50 };
+        const COKE_KG = { small: 220, large: 440 };
+        const COKE_HOURS = { small: 2, large: 4 };
+        const LUCAS_PAYS = { acid: 2000, oil: 1000, cement: 750 };
+        let cokeSize = 'small';
+
+        function setCokeSize(size) {
+            cokeSize = size;
+            ['small', 'large'].forEach(x => document.getElementById(`coke-size-${x}`).classList.toggle('on', x === size));
+            renderCokeCalc();
+        }
+
+        function cokeCalcStep(d) {
+            const input = document.getElementById('coke-calc-n');
+            input.value = Math.max(1, Math.min(50, (parseInt(input.value, 10) || 0) + d));
+            renderCokeCalc();
+        }
+
+        function renderCokeCalc() {
+            const out = document.getElementById('coke-calc-out');
+            if (!out) return;
+            const n = Math.max(0, Math.min(50, parseInt(document.getElementById('coke-calc-n').value, 10) || 0));
+            const r = cokeRecipe()[cokeSize];
+            const need = Object.fromEntries(COKE_INGREDIENTS.map(i => [i.key, toCount(r[i.key]) * n]));
+            const cell = (num, label, icon) => `<div><span class="n">${num}</span><span class="l"><i class="fa-solid fa-${icon}"></i>${label}</span></div>`;
+            out.innerHTML = COKE_INGREDIENTS.map(i => cell(need[i.key].toLocaleString(), i.label, i.icon.replace('fa-', ''))).join('') +
+                cell(`${(COKE_KG[cokeSize] * n).toLocaleString()}kg`, 'Weight to carry', 'weight-hanging') + cell(`${COKE_HOURS[cokeSize] * n}h`, 'Rough time', 'clock');
+            const supplyCost = need.acid * LUCAS_PAYS.acid + need.oil * LUCAS_PAYS.oil + need.cement * LUCAS_PAYS.cement;
+            const batches = Math.ceil(need.coca / 200);
+            const have = (appState.products && appState.products.coca) || 0;
+            document.getElementById('coke-calc-plan').innerHTML = n
+                ? `That's <b>${batches}</b> batches of 200 leaves → <b>${(COKE_PURE[cokeSize] * n).toLocaleString()}</b> pure cocaine. Supplies are worth <b>${money(supplyCost)}</b> at Lucas's prices. ${have >= need.coca ? `The stash has enough leaves (<b>${have.toLocaleString()}</b>).` : `The stash has <b>${have.toLocaleString()}</b> leaves, <b>${(need.coca - have).toLocaleString()}</b> short.`}`
+                : 'Pick how many bricks.';
+        }
+
+        function renderCokePage() {
+            const page = document.getElementById('tab-coke');
+            if (!page || page.classList.contains('hidden')) return;
+            const p = appState.products || { cokeSmall: 0, cokeLarge: 0, coca: 0 };
+            document.getElementById('coke-stock-logo').innerHTML = cokeLogoPair();
+            document.getElementById('coke-stock-small').textContent = p.cokeSmall.toLocaleString();
+            document.getElementById('coke-stock-large').textContent = p.cokeLarge.toLocaleString();
+            document.getElementById('coke-stock-leaves').innerHTML = `<b>${p.coca.toLocaleString()}</b> coca leaves · enough for ${cokeCanMake(p, 'small')} small or ${cokeCanMake(p, 'large')} large`;
+            document.getElementById('coke-stock-where').innerHTML = storageBuckets().filter(b => !b.excluded && appState.stock[b.key] && (appState.stock[b.key].cokeSmall || appState.stock[b.key].cokeLarge))
+                .map(b => { const x = appState.stock[b.key]; return `<span>${escapeHtml(b.kind === 'grow' ? b.label : b.short)} <b>${[x.cokeSmall ? `${x.cokeSmall} S` : '', x.cokeLarge ? `${x.cokeLarge} L` : ''].filter(Boolean).join(' · ')}</b></span>`; }).join('');
+            renderCokeCalc();
         }
 
         // Meth page: what to grab for a cook, yields that are down, and the guide
@@ -3921,7 +4159,7 @@
                 <div><div class="l">Crew</div><div class="v">${all.length}</div></div>
                 <div><div class="l">Online now</div><div class="v" style="color:#4ade80">${all.filter(p => p.online).length}</div></div>
                 <div><div class="l">Harvests logged</div><div class="v">${all.reduce((n, p) => n + p.harvests, 0).toLocaleString()}</div></div>
-                <div><div class="l">Gone out (in the log)</div><div class="v">${all.reduce((n, p) => n + p.outUnits, 0).toLocaleString()}</div></div>
+                <div><div class="l">Sold (BlackMarket)</div><div class="v">${all.reduce((n, p) => n + p.outUnits, 0).toLocaleString()}</div></div>
                 ${admin && pending ? `<div style="border-color:rgba(251,191,36,.5)"><div class="l">Waiting for review</div><div class="v" style="color:#fbbf24">${pending}</div></div>` : ''}`;
             if (!all.length) {
                 body.innerHTML = emptyState('No crew yet', admin ? 'Add the first person in Admin → Crew, or wait for people to sign up.' : 'People show up here once they join.',
@@ -5592,6 +5830,9 @@
             coca: { pre: 'updated', hi: 'coke counts', post: 'in a location' },
             meth: { pre: 'updated', hi: 'meth counts', post: 'in a location' },
             cook: { pre: 'put', hi: 'a meth cook', post: 'down' },
+            wish: { pre: 'added to', hi: 'the wish list', post: '' },
+            wishDone: { pre: 'got', hi: 'something on the wish list', post: '' },
+            wash: { pre: 'washed', hi: 'some dirty money', post: '' },
             cookReady: { pre: '', hi: 'A meth cook', post: 'is ready to collect' },
             cookDone: { pre: 'collected', hi: 'a meth cook', post: '' },
             move: { pre: 'moved', hi: 'stock', post: 'between locations' },
@@ -5927,6 +6168,8 @@
             if (tabId !== 'admin' && tabId !== 'login' && !pageAllowed(tabId)) tabId = 'dashboard';
             if (tabId === 'crew') setTimeout(renderCrewPage);
             if (tabId === 'meth') setTimeout(renderMethPage);
+            if (tabId === 'coke') setTimeout(renderCokePage);
+            if (tabId === 'sales') setTimeout(renderBmView);
             if (tabId === 'timers') setTimeout(renderTimersView);
             notePageVisit(tabId);
             if (tabId === 'sales' && !can('sales')) tabId = 'dashboard';
@@ -5956,6 +6199,7 @@
             if (page === 'grows') return can('timers') || can('planner');
             if (page === 'timers') return pageAllowed('grows') || can('meth');
             if (page === 'meth') return can('meth');
+            if (page === 'coke') return can('coke');
             if (page === 'sales') return can('sales');
             return true; // crew
         }
@@ -5996,7 +6240,10 @@
             renderAdminFx();
             renderCrewPage();
             renderMethPage();
+            renderCokePage();
             renderTimersView();
+            renderBmView();
+            renderAdminWishFields();
             if (Sync.mode !== 'cloud') titlesReady = true;
             checkMyTitles();
             announceMyTitles();
@@ -6376,6 +6623,7 @@
                     </div>
                     <div class="row"><span class="dx-muted">Coca leaves</span><b class="dx-mono text-sky-200">${p.coca.toLocaleString()}</b></div>
                     <div class="row minor"><span>Leaves make</span><b class="dx-mono">${cokeCanMake(p, 'small')} S · ${cokeCanMake(p, 'large')} L</b></div>
+                    ${pageAllowed('coke') ? `<button type="button" class="dx-chip-btn mx-link ck-link" onclick="event.stopPropagation(); switchTab('coke')"><i class="fa-solid fa-snowflake mr-1"></i>Coke guide</button>` : ''}
                 </div>
                 <div class="dx-glass dx-sc dx-tint fx-holo" style="--tint:34,211,238">${holoLayers}
                     <div class="logo">${getStrainLogo('meth')}</div>
@@ -6759,7 +7007,7 @@
             const coca = `
                 <div class="dx-glass dx-inv dx-tint" style="--tint:56,189,248">
                     <div class="head"><div class="logo">${cokeLogoPair()}</div>
-                        <div class="min-w-0"><div class="font-extrabold text-base text-sky-300">Coke Bricks</div></div></div>
+                        <div class="flex-1 min-w-0"><div class="font-extrabold text-base text-sky-300">Coke Bricks</div></div>${pageAllowed('coke') ? `<button type="button" class="dx-chip-btn mx-link ck-link" onclick="event.stopPropagation(); switchTab('coke')"><i class="fa-solid fa-snowflake mr-1"></i>Coke guide</button>` : ''}</div>
                     <div class="dx-inv-top">
                         <div class="cell gold"><span class="lbl">Small</span><span class="big ${p.cokeSmall ? '' : 'zero'}">${p.cokeSmall.toLocaleString()}</span></div>
                         <div class="cell gold"><span class="lbl">Large</span><span class="big ${p.cokeLarge ? '' : 'zero'}">${p.cokeLarge.toLocaleString()}</span></div>
@@ -6824,6 +7072,7 @@
                 <div class="dx-glass dx-inv dx-tint" style="--tint:56,189,248">
                     <div class="head"><div class="logo">${cokeLogoPair()}</div>
                         <div class="flex-1 min-w-0"><div class="font-extrabold text-base text-sky-300">Coke Bricks</div><div class="text-[11px] dx-muted">Coca leaves → bricks</div></div>
+                        ${pageAllowed('coke') ? `<button type="button" class="dx-chip-btn mx-link ck-link" onclick="event.stopPropagation(); switchTab('coke')"><i class="fa-solid fa-snowflake mr-1"></i>Coke guide</button>` : ''}
                         <button class="dx-step px-3" onclick="openTransfer(${k}, 'coke')" ${['coca', 'cokeSmall', 'cokeLarge'].some(f => bucket[f]) ? '' : 'disabled'} title="Move to another location"><i class="fa-solid fa-right-left"></i></button></div>
                     <div class="dx-inv-top">
                         <div class="cell gold"><span class="lbl">Small</span>${bigInput('cokeSmall', 'Small coke bricks')}
@@ -7116,9 +7365,253 @@
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+        // ---- BlackMarket tabs: Sell | Wish list | Wash ----
+        let bmView = localGet('noelops_bm_view', 'sell');
+        function setBmView(view) {
+            bmView = ['sell', 'wish', 'wash'].includes(view) ? view : 'sell';
+            localSet('noelops_bm_view', bmView);
+            renderBmView();
+        }
+
+        function renderBmView() {
+            ['sell', 'wish', 'wash'].forEach(v => {
+                const pane = document.getElementById(`bm-${v}`);
+                if (pane) pane.classList.toggle('hidden', v !== bmView);
+                const tab = document.getElementById(`bm-tab-${v}`);
+                if (tab) tab.classList.toggle('on', v === bmView);
+            });
+            const open = (appState.wishes || []).filter(w => w.status === 'open' || w.status === 'claimed').length;
+            const count = document.getElementById('bm-wish-count');
+            if (count) { count.textContent = open; count.classList.toggle('hidden', !open); }
+            if (bmView === 'wish') renderWishList();
+            if (bmView === 'wash') renderWash();
+        }
+
+        // ---- Crew wish list: things the crew needs got, with fields the admin sets up ----
+        const WISH_KEEP_DONE = 30;
+        function wishFields() {
+            return (Array.isArray(appState.wishFields) ? appState.wishFields : []).filter(f => isPlainObject(f) && f.id && f.label).slice(0, 8);
+        }
+
+        function renderWishForm() {
+            const box = document.getElementById('wish-form-fields');
+            if (!box || box.contains(document.activeElement)) return;
+            const sig = JSON.stringify(wishFields());
+            if (box.dataset.sig === sig) return;
+            box.dataset.sig = sig;
+            box.innerHTML = wishFields().map(f => `<label>${escapeHtml(f.label)}<input data-wish-field="${escapeHtml(f.id)}" maxlength="60" class="dx-input w-full"></label>`).join('');
+        }
+
+        function renderWishList() {
+            renderWishForm();
+            const list = document.getElementById('wish-list');
+            if (!list) return;
+            const me = appState.crewName;
+            const fields = wishFields();
+            const active = (appState.wishes || []).filter(w => w.status === 'open' || w.status === 'claimed').sort((a, b) => (a.status === 'claimed') - (b.status === 'claimed') || (Number(b.ts) || 0) - (Number(a.ts) || 0));
+            const done = (appState.wishes || []).filter(w => w.status === 'done' || w.status === 'cancelled').sort((a, b) => (Number(b.doneTs) || 0) - (Number(a.doneTs) || 0));
+            const canManage = w => hasAdminAccess() || w.by === me;
+            const card = w => {
+                const extra = fields.filter(f => w.fields && w.fields[f.id]).map(f => `<span><b>${escapeHtml(f.label)}:</b> ${escapeHtml(w.fields[f.id])}</span>`).join('');
+                const claimed = w.status === 'claimed';
+                const acts = [
+                    w.status === 'open' ? `<button class="dx-btn dx-btn-g" onclick="wishAction(${jsArg(w.id)}, 'claim')"><i class="fa-solid fa-hand mr-1"></i>I'll get it</button>` : '',
+                    claimed && (w.claimer === me || hasAdminAccess()) ? `<button class="dx-btn dx-btn-g" onclick="wishAction(${jsArg(w.id)}, 'done')"><i class="fa-solid fa-check mr-1"></i>Got it</button>` : '',
+                    claimed && w.claimer === me ? `<button class="dx-btn dx-btn-o" onclick="wishAction(${jsArg(w.id)}, 'unclaim')">Let it go</button>` : '',
+                    canManage(w) ? `<button class="dx-btn dx-stop" onclick="wishAction(${jsArg(w.id)}, 'cancel')" title="Cancel this request"><i class="fa-solid fa-xmark"></i></button>` : ''
+                ].join('');
+                return `<div class="dx-glass wish ${w.status}">
+                        <div class="top"><div class="min-w-0"><h3>${escapeHtml(w.title)}${w.qty > 1 ? ` <span class="qty">×${w.qty}</span>` : ''}</h3>
+                            <div class="by">Asked by ${nameHtml(w.by || 'Someone')} · ${relativeTime(w.ts)}</div></div>
+                            <span class="wish-pill ${w.status}">${claimed ? `${escapeHtml(w.claimer || 'Someone')} is on it` : 'Open'}</span></div>
+                        ${extra ? `<div class="fields">${extra}</div>` : ''}
+                        ${w.notes ? `<p class="notes">${escapeHtml(w.notes)}</p>` : ''}
+                        ${acts ? `<div class="acts">${acts}</div>` : ''}
+                    </div>`;
+            };
+            list.innerHTML = active.length ? active.map(card).join('') : `<div style="grid-column:1/-1">${emptyState('Nothing on the list', 'Need something sourced? Post it above and someone can claim it.')}</div>`;
+            document.getElementById('wish-done').innerHTML = done.length ? `<details><summary>Done &amp; cancelled (${done.length})</summary><ul>${done.slice(0, WISH_KEEP_DONE).map(w =>
+                `<li><span class="wish-pill ${w.status}">${w.status === 'done' ? 'Got it' : 'Cancelled'}</span> <b>${escapeHtml(w.title)}</b>${w.qty > 1 ? ` ×${w.qty}` : ''} <span class="dx-muted">· ${w.status === 'done' ? `by ${escapeHtml(w.claimer || 'Someone')}` : ''} ${relativeTime(w.doneTs || w.ts)}</span></li>`).join('')}</ul></details>` : '';
+        }
+
+        function postWish(event) {
+            event.preventDefault();
+            if (!can('sales')) return;
+            const title = document.getElementById('wish-title').value.trim().replace(/\s+/g, ' ').slice(0, 60);
+            if (!title) return showAlert('Say what\'s needed.', 'warning');
+            const qty = Math.max(1, Math.min(999, toCount(document.getElementById('wish-qty').value) || 1));
+            const fields = {};
+            document.querySelectorAll('#wish-form-fields [data-wish-field]').forEach(input => { const v = input.value.trim().slice(0, 60); if (v) fields[input.dataset.wishField] = v; });
+            const notes = document.getElementById('wish-notes').value.trim().slice(0, 200);
+            const id = newActivityId();
+            const record = { title, qty, fields, notes, by: appState.crewName || 'Someone', ts: timestampValue(), status: 'open' };
+            appState.wishes.push({ ...record, id, ts: syncNow() });
+            const changes = { [`wishes/${id}`]: record };
+            // keep the done pile short
+            (appState.wishes || []).filter(w => w.status === 'done' || w.status === 'cancelled').sort((a, b) => (Number(b.doneTs) || 0) - (Number(a.doneTs) || 0)).slice(WISH_KEEP_DONE).forEach(w => { changes[`wishes/${w.id}`] = null; });
+            writeShared(changes);
+            logActivity({ kind: 'wish' });
+            auditLog({ kind: 'wish', text: `Asked for ${qty > 1 ? `${qty} × ` : ''}${title}` });
+            event.target.reset();
+            showAlert('Added to the wish list.', 'success');
+            renderWishList();
+        }
+
+        function wishAction(id, action) {
+            if (!can('sales')) return;
+            const w = (appState.wishes || []).find(x => x.id === id);
+            if (!w) return;
+            const me = appState.crewName || 'Someone';
+            let changes = {};
+            if (action === 'claim' && w.status === 'open') changes = { status: 'claimed', claimer: me };
+            if (action === 'unclaim' && w.claimer === me) changes = { status: 'open', claimer: null };
+            if (action === 'done' && w.status === 'claimed' && (w.claimer === me || hasAdminAccess())) changes = { status: 'done', doneTs: timestampValue() };
+            if (action === 'cancel' && (hasAdminAccess() || w.by === me)) {
+                if (!confirm(`Cancel "${w.title}"?`)) return;
+                changes = { status: 'cancelled', doneTs: timestampValue() };
+            }
+            if (!Object.keys(changes).length) return;
+            Object.assign(w, changes, changes.doneTs ? { doneTs: syncNow() } : {});
+            writeShared(Object.fromEntries(Object.entries(changes).map(([k, v]) => [`wishes/${id}/${k}`, v])));
+            if (action === 'done') logActivity({ kind: 'wishDone' });
+            auditLog({ kind: 'wish', text: `${{ claim: 'Claimed', unclaim: 'Let go of', done: 'Got', cancel: 'Cancelled' }[action]} ${w.title}` });
+            renderBmView();
+        }
+
+        // Admin → BlackMarket: the extra fields on every wish list request
+        function renderAdminWishFields() {
+            const box = document.getElementById('admin-wish-fields');
+            if (!box || box.contains(document.activeElement)) return;
+            const fields = wishFields();
+            box.innerHTML = (fields.length ? fields : []).map(f => `<div class="flex gap-2"><input data-wf-id="${escapeHtml(f.id)}" value="${escapeHtml(f.label)}" maxlength="24" class="dx-input flex-1"><button type="button" class="dx-act" style="flex:none" onclick="this.parentElement.remove()" title="Remove"><i class="fa-solid fa-trash-can"></i></button></div>`).join('') +
+                (fields.length < 8 ? '' : '');
+        }
+
+        function addAdminWishField() {
+            const box = document.getElementById('admin-wish-fields');
+            if (box.children.length >= 8) return showAlert('Up to 8 fields.', 'warning');
+            box.insertAdjacentHTML('beforeend', `<div class="flex gap-2"><input data-wf-id="" placeholder="e.g. Buyer, Meet spot, Phone #" maxlength="24" class="dx-input flex-1"><button type="button" class="dx-act" style="flex:none" onclick="this.parentElement.remove()" title="Remove"><i class="fa-solid fa-trash-can"></i></button></div>`);
+            box.lastElementChild.querySelector('input').focus();
+        }
+
+        function saveAdminWishFields() {
+            if (!allowed('admin')) return;
+            const fields = [...document.querySelectorAll('#admin-wish-fields input')].map(i => ({ id: i.dataset.wfId || `f${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, label: i.value.trim().slice(0, 24) })).filter(f => f.label).slice(0, 8);
+            writeShared({ 'settings/wishFields': fields.length ? fields : null });
+            if (document.activeElement) document.activeElement.blur();
+            showAlert('Wish list fields saved.', 'success');
+        }
+
+        // ---- Money wash: each seller holds the dirty money from their sales until they wash it ----
+        function washPct() {
+            const p = Number(appState.washPct);
+            return Number.isFinite(p) && p >= 0 && p <= 100 ? p : 20;
+        }
+
+        function washPeople() {
+            const people = new Map();
+            const get = (key, name) => {
+                if (!people.has(key)) people.set(key, { key, name: nameForKey(key, name), dirtyIn: 0, washed: 0, clean: 0, lost: 0 });
+                return people.get(key);
+            };
+            (appState.sales || []).forEach(x => { if (typeof x.price === 'number' && x.price > 0) get(saleOwnerKey(x), x.who).dirtyIn += x.price; });
+            (appState.washes || []).forEach(w => { const p = get(w.whoKey || personKey(null, w.who), w.who); p.washed += toCount(w.dirty); p.clean += toCount(w.clean); });
+            people.forEach(p => { p.held = Math.max(0, p.dirtyIn - p.washed); p.lost = p.washed - p.clean; });
+            return [...people.values()].sort((a, b) => b.held - a.held || a.name.localeCompare(b.name));
+        }
+
+        function renderWash() {
+            const box = document.getElementById('wash-body');
+            if (!box) return;
+            const admin = hasAdminAccess();
+            const mine = myPersonKey();
+            const all = washPeople();
+            const visible = admin || canSeePrices() ? all : all.filter(p => p.key === mine);
+            const me = all.find(p => p.key === mine) || { held: 0, washed: 0, clean: 0, lost: 0 };
+            const tot = visible.reduce((t, p) => ({ held: t.held + p.held, clean: t.clean + p.clean, lost: t.lost + p.lost }), { held: 0, clean: 0, lost: 0 });
+            document.getElementById('wash-tiles').innerHTML = `
+                <div class="dx-glass dx-stat"><div class="lbl">Your dirty money</div><div class="num dx-mono bm-dirty">${money(me.held)}</div><div class="delta dx-muted">from your sales, not washed yet</div></div>
+                <div class="dx-glass dx-stat"><div class="lbl">You've washed</div><div class="num dx-mono">${money(me.clean)}</div><div class="delta dx-muted">clean, from ${money(me.washed)} dirty</div></div>
+                ${visible.length > 1 ? `<div class="dx-glass dx-stat"><div class="lbl">Crew dirty money</div><div class="num dx-mono bm-dirty">${money(tot.held)}</div><div class="delta dx-muted">held by ${visible.filter(p => p.held).length} people</div></div>
+                <div class="dx-glass dx-stat"><div class="lbl">Lost to washing</div><div class="num dx-mono" style="color:#fca5a5">${money(tot.lost)}</div><div class="delta dx-muted">launderers' cuts, all time</div></div>` : ''}`;
+            // the form: admins can wash for anyone, crew for themselves
+            const form = document.getElementById('wash-form');
+            if (!form.contains(document.activeElement)) {
+                const who = document.getElementById('wash-who');
+                const keep = who.value;
+                const opts = admin ? all.filter(p => p.held > 0 || p.key === mine) : all.filter(p => p.key === mine);
+                if (!opts.some(p => p.key === mine) && mine) opts.unshift({ key: mine, name: appState.crewName || 'Me', held: 0 });
+                who.innerHTML = opts.map(p => `<option value="${escapeHtml(p.key)}">${escapeHtml(p.name)} · ${money(p.held)} dirty</option>`).join('');
+                if (opts.some(p => p.key === keep)) who.value = keep;
+                who.disabled = !admin;
+                const pct = document.getElementById('wash-pct');
+                if (!pct.dataset.touched) pct.value = washPct();
+                updateWashPreview();
+            }
+            const rows = visible.map(p => `<tr><td>${nameHtml(p.name)}</td><td class="r bm-dirty">${money(p.held)}</td><td class="r">${money(p.washed)}</td><td class="r">${money(p.clean)}</td><td class="r" style="color:#fca5a5">${money(p.lost)}</td></tr>`).join('');
+            const log = (appState.washes || []).filter(w => admin || canSeePrices() || (w.whoKey || personKey(null, w.who)) === mine).sort((a, b) => (Number(b.ts) || 0) - (Number(a.ts) || 0)).slice(0, 50);
+            box.innerHTML = `<div class="dx-glass dx-sales"><div class="dx-sec"><h2>Who holds what</h2></div>
+                    <div class="overflow-x-auto"><table class="dx-sales-table"><thead><tr><th>Person</th><th class="r">Dirty held</th><th class="r">Washed</th><th class="r">Clean out</th><th class="r">Lost</th></tr></thead><tbody>${rows || '<tr><td colspan="5" class="dx-muted">No dirty money yet. Sales with a price add to the seller\'s dirty money.</td></tr>'}</tbody></table></div></div>
+                <div class="dx-glass dx-sales mt-4"><div class="dx-sec"><h2>Wash log</h2></div>
+                    <div class="overflow-x-auto"><table class="dx-sales-table"><thead><tr><th>When</th><th>Who</th><th class="r">Dirty</th><th class="r">Cut</th><th class="r">Clean</th><th>Note</th>${admin ? '<th></th>' : ''}</tr></thead><tbody>${log.map(w => {
+                        const d = new Date(w.ts - Sync.serverOffset);
+                        return `<tr><td class="m">${escapeHtml(d.toLocaleDateString([], { month: 'short', day: 'numeric' }))} ${escapeHtml(d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }))}</td><td>${nameHtml(nameForKey(w.whoKey || personKey(null, w.who), w.who))}</td>
+                            <td class="r bm-dirty">${money(w.dirty)}</td><td class="r">${toCount(w.pct)}%</td><td class="r">${money(w.clean)}</td><td class="m">${escapeHtml(w.note || '')}</td>
+                            ${admin ? `<td class="r"><button class="text-slate-500 hover:text-red-300" onclick="removeWash(${jsArg(w.id)})" title="Remove this wash (the money goes back to dirty)"><i class="fa-solid fa-rotate-left"></i></button></td>` : ''}</tr>`;
+                    }).join('') || `<tr><td colspan="7" class="dx-muted">Nothing washed yet.</td></tr>`}</tbody></table></div></div>`;
+        }
+
+        function updateWashPreview() {
+            const dirty = toCount(document.getElementById('wash-amount').value);
+            const pct = Math.max(0, Math.min(100, Number(document.getElementById('wash-pct').value) || 0));
+            const clean = Math.round(dirty * (100 - pct) / 100);
+            document.getElementById('wash-preview').innerHTML = dirty ? `You get <b>${money(clean)}</b> clean · <span style="color:#fca5a5">${money(dirty - clean)}</span> to the launderer` : 'Enter how much dirty money goes in.';
+        }
+
+        function washAll() {
+            const key = document.getElementById('wash-who').value;
+            const p = washPeople().find(x => x.key === key);
+            document.getElementById('wash-amount').value = p ? p.held : 0;
+            updateWashPreview();
+        }
+
+        function saveWash(event) {
+            event.preventDefault();
+            if (!can('sales')) return;
+            const key = hasAdminAccess() ? document.getElementById('wash-who').value : myPersonKey();
+            const person = washPeople().find(x => x.key === key);
+            const dirty = toCount(document.getElementById('wash-amount').value);
+            const pct = Math.max(0, Math.min(100, Math.round(Number(document.getElementById('wash-pct').value) || 0)));
+            if (!key || !dirty) return showAlert('Enter how much dirty money is being washed.', 'warning');
+            if (!person || dirty > person.held) return showAlert(`${person ? person.name : 'They'} only ${person && person.key === myPersonKey() ? 'have' : 'has'} ${money(person ? person.held : 0)} dirty.`, 'warning');
+            const clean = Math.round(dirty * (100 - pct) / 100);
+            const note = document.getElementById('wash-note').value.trim().replace(/\s+/g, ' ').slice(0, 60);
+            const id = newActivityId();
+            const record = { who: person.name, whoKey: key, dirty, pct, clean, note, by: appState.crewName || 'Someone', ts: timestampValue() };
+            appState.washes.push({ ...record, id, ts: syncNow() });
+            writeShared({ [`washes/${id}`]: record });
+            logActivity({ kind: 'wash' });
+            auditLog({ kind: 'wash', text: `Washed ${money(dirty)} dirty for ${person.name} at ${pct}% → ${money(clean)} clean` });
+            document.getElementById('wash-amount').value = '';
+            document.getElementById('wash-note').value = '';
+            showAlert(`Washed: ${money(clean)} clean.`, 'success');
+            renderWash();
+        }
+
+        function removeWash(id) {
+            if (!allowed('admin')) return;
+            const w = (appState.washes || []).find(x => x.id === id);
+            if (!w || !confirm(`Remove this wash of ${money(w.dirty)}? The money goes back to dirty.`)) return;
+            appState.washes = appState.washes.filter(x => x.id !== id);
+            writeShared({ [`washes/${id}`]: null });
+            auditLog({ kind: 'wash', text: `Removed a wash of ${money(w.dirty)} for ${w.who}` });
+            renderWash();
+        }
+
         // A Narco call: open the sell form and mark the sale as coming from one
         function narcoCall() {
             if (!can('sales')) return;
+            setBmView('sell');
             saleDraft.narco = true;
             document.getElementById('sale-narco-tag').classList.remove('hidden');
             const form = document.getElementById('sale-form');
@@ -7444,6 +7937,8 @@
             }
             const cutInput = document.getElementById('admin-default-cut');
             if (cutInput && cutInput !== document.activeElement) cutInput.value = appState.salesSettings.defaultCut;
+            const washInput = document.getElementById('admin-wash-pct');
+            if (washInput && washInput !== document.activeElement) washInput.value = washPct();
             const toggle = document.getElementById('sales-hide-prices');
             if (toggle && toggle !== document.activeElement) toggle.checked = appState.salesSettings.hidePrices;
             const count = document.getElementById('admin-sales-count');
@@ -7485,8 +7980,9 @@
                 prices[input.dataset.salePrice] = v > 0 ? v : null;
             });
             const cut = safeCut(document.getElementById('admin-default-cut').value);
-            writeShared({ 'settings/salePrices': prices, 'settings/defaultCut': cut === null ? 20 : cut });
-            showAlert('Prices and seller cut saved.', 'success');
+            const wash = Math.round(Number(document.getElementById('admin-wash-pct').value));
+            writeShared({ 'settings/salePrices': prices, 'settings/defaultCut': cut === null ? 20 : cut, 'settings/washPct': Number.isFinite(wash) ? Math.max(0, Math.min(100, wash)) : 20 });
+            showAlert('Prices, seller cut and wash % saved.', 'success');
         }
 
         function setHidePrices(on) {
