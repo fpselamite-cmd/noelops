@@ -428,7 +428,7 @@
         .dx-cookbar { display: flex; gap: 12px; align-items: center; min-width: 0; flex: 0 1 auto; max-width: 50%; padding-left: 14px; border-left: 1px solid rgba(103, 232, 249, 0.2); }
         .dx-cookbar.hidden { display: none; }
         #dx-cooks { display: flex; gap: 10px; overflow-x: auto; min-width: 0; padding: 2px 2px 4px; scrollbar-width: thin; }
-        .mx-gb { flex: 0 0 210px; border-color: rgba(103, 232, 249, 0.2); }
+        .mx-gb { flex: 0 0 236px; border-color: rgba(103, 232, 249, 0.2); }
         .mx-gb .pot { background: radial-gradient(circle at 50% 60%, rgba(34, 211, 238, 0.18), rgba(6, 10, 7, 0.8) 70%) !important; color: #a5f3fc; }
         .mx-gb .pot::after { display: none; }
         .mx-gb .pot .bk { width: 26px; height: 30px; }
@@ -621,7 +621,7 @@
         .mx-grid { display: grid; gap: 14px; }
         @media (min-width: 900px) { .mx-top { grid-template-columns: 1fr 2fr; } }
         .mx-card { padding: 18px; text-align: center; }
-        .mx-card > h2 { font-family: 'Teko', sans-serif; font-size: 24px; line-height: 1; letter-spacing: .04em; color: #fff; text-transform: uppercase; margin-bottom: 4px; }
+        .mx-card > h2 { font-size: 15px; font-weight: 700; letter-spacing: 0.02em; color: #e6efe8; margin-bottom: 4px; }
         .mx-card > h2 i { color: #67e8f9; margin-right: 6px; font-size: 18px; }
         .mx-sub { font-size: 12px; color: #8a9a8e; margin-bottom: 12px; }
         .mx-stock .logo { width: 84px; height: 84px; margin: 4px auto 6px; }
@@ -728,7 +728,8 @@
         body.raid :is(.dx-mono, .num, .big, .v, .count, .n, .alloc, td.r, td.n, .bm-dirty, .postal-hide, .dx-hbars b, #wash-preview b, .mx-where b, .dx-where b, .totline b, .row b, input[type=number]) { filter: blur(7px); }
         body.raid .price-svg .pa, body.raid .price-svg .pl, body.raid #price-table td.r { filter: blur(6px); }
         body.raid .dx-tc .clock .t, body.raid .dx-gb .time .t, body.raid .mx-tc .t, body.raid #live-clock, body.raid .rn-t, body.raid .ck-t { filter: none; }
-        .hdr-ico#nav-raid.gl-on { color: #fca5a5; border-color: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+        .hdr-ico#nav-raid.gl-on { color: #fca5a5; }
+        .hdr-ico#nav-raid.gl-on .ic { border-color: #ef4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.55); }
         .dx-panel.show-table #price-chart, .dx-panel:not(.show-table) #price-table { display: none; }
         .price-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
         .price-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; color: #8a9a8e; background: rgba(6, 10, 7, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); }
@@ -742,8 +743,11 @@
         .price-svg .px { stroke: rgba(255, 255, 255, 0.25); stroke-dasharray: 3 3; opacity: 0; pointer-events: none; }
         .price-svg .ph:hover + .px { opacity: 1; }
         .hdr-icos { display: flex; gap: 4px; margin-right: 6px; }
-        .hdr-ico { position: relative; width: 34px; height: 34px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; color: #8a9a8e; background: rgba(6, 10, 7, 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.22); font-size: 14px; }
-        .hdr-ico:hover, .hdr-ico.gl-on { color: #fff; border-color: hsl(var(--acc-h) 69% 58%); }
+        .hdr-ico { position: relative; display: inline-flex; flex-direction: column; align-items: center; gap: 2px; color: #8a9a8e; min-width: 40px; }
+        .hdr-ico .ic { position: relative; width: 32px; height: 32px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: rgba(6, 10, 7, 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.22); font-size: 13px; transition: border-color 0.2s, box-shadow 0.2s; }
+        .hdr-ico .cap { font-size: 9px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1; }
+        .hdr-ico:hover, .hdr-ico.gl-on { color: #fff; }
+        .hdr-ico:hover .ic, .hdr-ico.gl-on .ic { border-color: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 12px hsl(var(--acc-h) 71% 45% / 0.45); }
         .hdr-ico.hidden { display: none; }
         #hdr-cal-dot { position: absolute; top: -4px; right: -4px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 999px; font-size: 10px; font-weight: 800; line-height: 16px; color: #04140a; background: hsl(var(--acc-h) 69% 58%); }
         #hdr-cal-dot.hidden { display: none; }
@@ -1326,8 +1330,8 @@
         .qs-details label > span { font-weight: 500; color: #64748b; }
         .qs-details label.hidden { display: none; }
         .qs-details .dx-input { margin-top: 4px; padding: 10px 12px; font-size: 14px; }
-        .qs-submit { width: 100%; margin-top: 16px; padding: 16px; border-radius: 14px; font-size: 17px; font-weight: 900; color: #1a1203; background: linear-gradient(180deg, #fcd34d, #f59e0b);
-            box-shadow: 0 10px 28px rgba(245, 158, 11, 0.3); transition: filter 0.15s, transform 0.1s; }
+        .qs-submit { width: 100%; margin-top: 16px; padding: 16px; border-radius: 14px; font-size: 17px; font-weight: 900; color: #fff; background: linear-gradient(180deg, hsl(var(--acc-h) 71% 45%), hsl(var(--acc-h) 76% 36%));
+            box-shadow: inset 0 0 0 1px hsl(var(--acc-h) 69% 62% / 0.6), 0 8px 24px hsl(var(--acc-h) 71% 45% / 0.35); transition: filter 0.15s, transform 0.1s; }
         .qs-submit:hover:not(:disabled) { filter: brightness(1.08); }
         .qs-submit:active:not(:disabled) { transform: translateY(1px); }
         .qs-submit:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
@@ -1390,7 +1394,9 @@
             .dx-growbar-in { flex-wrap: wrap; }
             #dx-timers { flex: 1 0 100%; }
             .dx-cookbar { flex: 1 0 100%; padding: 8px 0 0; border-left: 0; border-top: 1px solid rgba(103, 232, 249, 0.2); }
-            .mx-gb { flex: 0 0 82%; }
+            #dx-cooks, #dx-runs { flex: 1; }
+            .dx-growbar .mx-gb { flex: 0 0 82%; }
+            .cal-day { min-height: 0; }
             .dx-feed-drop { right: 16px; }
             .dx-growbar .gb-label { display: none; }
             #dx-timers { scroll-snap-type: x mandatory; }
@@ -1456,9 +1462,9 @@
 
                     <!-- Who's online + my profile in one pill (sync status and the clock live in the footer) -->
                     <div class="hdr-icos shrink-0">
-                        <button onclick="switchTab('map')" id="nav-map" data-page="map" class="nav-btn hdr-ico" title="Map: grows, stash houses and spots"><i class="fa-solid fa-map-location-dot"></i></button>
-                        <button onclick="setRaidMode(!document.body.classList.contains('raid'))" id="nav-raid" class="hdr-ico" title="Raid mode: hide all numbers on your screen (Shift+R)"><i class="fa-solid fa-eye-slash"></i></button>
-                        <button onclick="switchTab('calendar')" id="nav-calendar" data-page="calendar" class="nav-btn hdr-ico" title="Calendar: what's on this week"><i class="fa-solid fa-calendar-days"></i><span id="hdr-cal-dot" class="hidden" title="Events today"></span></button>
+                        <button onclick="switchTab('map')" id="nav-map" data-page="map" class="nav-btn hdr-ico" title="Map: grows, stash houses and spots"><span class="ic"><i class="fa-solid fa-map-location-dot"></i></span><span class="cap">Map</span></button>
+                        <button onclick="setRaidMode(!document.body.classList.contains('raid'))" id="nav-raid" class="hdr-ico" title="Raid mode: hide all numbers on your screen (Shift+R)"><span class="ic"><i class="fa-solid fa-eye-slash"></i></span><span class="cap">Hide</span></button>
+                        <button onclick="switchTab('calendar')" id="nav-calendar" data-page="calendar" class="nav-btn hdr-ico" title="Calendar: what's on this week"><span class="ic"><i class="fa-solid fa-calendar-days"></i><span id="hdr-cal-dot" class="hidden" title="Events today"></span></span><span class="cap">Calendar</span></button>
                     </div>
                     <div class="dx-me-pill shrink-0">
                         <div id="presence-box" class="hidden lg:flex" onclick="onPresenceClick(event)" title="See who's online" role="button" aria-haspopup="true" aria-expanded="false">
@@ -1687,6 +1693,7 @@
 
             <section id="tab-timers" class="tab-content hidden">
                 <h1 class="dx-title text-2xl font-black text-white mb-4"><span class="text-cyan-300 mr-2"><svg class="bk" viewBox="0 0 40 48" aria-hidden="true"><defs><clipPath id="bk-h1"><path d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/></clipPath></defs><g clip-path="url(#bk-h1)"><rect class="bk-liq" x="0" y="29" width="40" height="20"/><circle class="bk-b" cx="15" cy="41" r="2"/><circle class="bk-b b2" cx="22" cy="42" r="1.6"/><circle class="bk-b b3" cx="26" cy="40" r="1.8"/></g><path class="bk-glass" d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/><path class="bk-rim" d="M13.5 5.5h13"/></svg></span>Timers</h1>
+                <p class="text-xs text-slate-400 -mt-3 mb-4">Grow timers, meth cooks and coke runs: what's going and when it's ready (ET).</p>
                 <div class="dx-tabs mb-4"><button id="timers-tab-grows" class="dx-tab on" data-page="grows" onclick="setTimersView('grows')"><i class="fa-solid fa-cannabis"></i>Grows</button><button id="timers-tab-meth" class="dx-tab" data-page="meth" onclick="setTimersView('meth')"><i class="fa-solid fa-flask"></i>Meth cooks <span id="timers-meth-count" class="count hidden"></span></button><button id="timers-tab-coke" class="dx-tab" data-page="coke" onclick="setTimersView('coke')"><i class="fa-solid fa-snowflake"></i>Coke runs <span id="timers-coke-count" class="count hidden"></span></button></div>
                 <div id="timers-grows">
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
@@ -4055,7 +4062,7 @@
             const pins = (appState.pins || []).map(p => `<button type="button" class="map-pin k-${escapeHtml(p.kind)}" style="left:${Number(p.x).toFixed(2)}%;top:${Number(p.y).toFixed(2)}%" data-pin="${escapeHtml(p.id)}" onclick="event.stopPropagation(); openPin(${jsArg(p.id)})" title="${escapeHtml(p.label)}">
                     <span class="dot"></span><span class="lb">${escapeHtml(p.label)}</span></button>`).join('');
             box.innerHTML = `<div class="map-scroll"><div class="map-inner ${mapPlacing ? 'placing' : ''}" style="width:${mapZoom * 100}%" onclick="mapClick(event)"><img src="${img}" alt="Map" draggable="false">${pins}</div></div>`;
-            document.getElementById('map-hint').textContent = mapPlacing ? (mapPlacing.move ? 'Click the new spot for the pin.' : `Click the map to drop "${mapPlacing.label}".`) : `${(appState.pins || []).length} pins. Click one for details.`;
+            document.getElementById('map-hint').textContent = mapPlacing ? (mapPlacing.move ? 'Click the new spot for the pin.' : `Click the map to drop "${mapPlacing.label}".`) : `${(appState.pins || []).length} pin${(appState.pins || []).length === 1 ? '' : 's'}. Click one for details.`;
             document.getElementById('map-cancel').classList.toggle('hidden', !mapPlacing);
         }
 
