@@ -403,7 +403,7 @@
         .dx-ticker { position: relative; max-width: 1440px; margin: 0 auto; padding: 0 32px 8px; display: flex; align-items: center; gap: 10px; font-size: 12px; }
         .dx-ticker .tk-live { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.14em; color: hsl(var(--acc-h) 69% 62%); padding: 3px 9px; border-radius: 999px; border: 1px solid hsl(var(--acc-h) 69% 58% / 0.3); background: rgba(6, 10, 7, 0.6); }
         .dx-ticker .tk-win { flex: 1; min-width: 0; overflow: hidden; cursor: pointer; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
-        .dx-ticker .tk-track { display: inline-flex; white-space: nowrap; animation: tkScroll var(--tk-dur, 40s) linear infinite; }
+        .dx-ticker .tk-track { display: inline-flex; white-space: nowrap; animation: tkScroll var(--tk-dur, 120s) linear infinite; }
         .dx-ticker .tk-win:hover .tk-track { animation-play-state: paused; }
         .dx-ticker .tk-run { display: inline-flex; align-items: center; }
         .dx-ticker .tk-item { display: inline-flex; align-items: center; gap: 6px; color: #b6c2b9; }
@@ -6412,7 +6412,7 @@
             track.innerHTML = `<span class="tk-run">${run}</span><span class="tk-run" aria-hidden="true">${run}</span>`;
             const width = track.firstElementChild.scrollWidth;
             track.style.animation = '';
-            track.style.setProperty('--tk-dur', `${Math.max(20, Math.round(width / 45))}s`); // ~45px a second
+            track.style.setProperty('--tk-dur', `${Math.max(60, Math.round(width / 15))}s`); // a slow drift: ~15px a second
         }
 
         function toggleActivityDrop(force) {
