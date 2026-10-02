@@ -72,9 +72,9 @@ It needs no setup: it reads the database address from `index.html`. To run it ri
 
 GitHub pauses scheduled workflows in repos with no activity for 60 days and emails you first; re-enable it from the Actions tab if that happens.
 
-## Discord harvest message
+## Discord messages
 
-**Admin → Discord** → **Discord Message** changes what the harvest alert says: bot name and picture, title, message, footer, side color, and whether the Postal / Pots / Ready At details are shown. Tags are filled in per harvest:
+**Admin → Discord** → **Discord Messages** has a **Grows | Meth cooks** switch. Grows send the grow message when they're ready to harvest; meth cooks send the meth message when their time is up (once per cook, even with many pages open). Both go to the same webhook. For each you can change the bot name and picture, title, message, footer, side color, and whether the details boxes are shown. Grow message tags are filled in per harvest:
 
 | Tag | Becomes |
 |---|---|
@@ -85,6 +85,8 @@ GitHub pauses scheduled workflows in repos with no activity for 60 days and emai
 | `{readyAt}` | Ready time in UTC |
 | `{readyLocal}` | Ready time shown in each reader's own time zone |
 
+Meth cook message tags: `{size}` (High / Medium / Low), `{bags}`, `{who}` (who put it down), `{duration}` (cook time), `{readyAt}` and `{readyLocal}`.
+
 The preview updates as you type, **Send Test** posts what's in the editor to your channel (even before saving), and **Reset to Default** brings back the original wording.
 
 ## Crew & permissions
@@ -94,7 +96,7 @@ In **Admin → Crew** you can add crew members, each with a name and a 4-8 digit
 - Until the first crew member is added, anyone with the link can use everything.
 - Once there's at least one, everyone signs in with their name and PIN, and stays signed in on that device until they sign out (from **My Profile**).
 - Pick a role (Manager, Grower, Viewer) to start from, then tick exactly what each person can do: edit inventory, timers & harvests, pot plans, sales / bricks out and **Meth** (the Meth page and meth cook timers). Managers and Growers start with Meth on; untick it to hide meth from someone. You can also set their sales cut %. You can also limit which grow locations and stash houses they see.
-- **The Admin page isn't a crew permission.** It only opens with the admin password, through the small **Admin** link at the bottom right of every page. The Admin tab appears in the menu only while it's unlocked; click **Lock admin** in the same spot (or Logout on the Admin page) to hide it again. Unlocking lasts until that browser tab is closed. Anyone who had the old Admin role is now a Manager.
+- **The Admin page isn't a crew permission.** It only opens with the admin password, through the small **Admin** link at the bottom right of every page. There's no Admin button in the header: while it's unlocked, a glowing **Admin** button (with the new-signups count) shows next to that link at the bottom of every page, and the link turns into **Lock**; click **Lock** in the same spot (or Logout on the Admin page) to hide it again. Unlocking lasts until that browser tab is closed. Anyone who had the old Admin role is now a Manager.
 - People with no permissions (Viewer) only see the dashboard stats: no locations, timers or activity.
 - **New people can sign themselves up:** on the sign-in screen they type a new name and PIN (twice) and get a profile as a **Viewer**, marked **New · needs review**. Admins see a badge on the Admin page; click **Review**, pick a role and save. Turn this off with **Let new people create their own profile** on the Crew tab.
 - Changing someone's PIN or removing them signs them out everywhere.
@@ -217,7 +219,7 @@ The **Meth** page is the crew's meth guide, built from Karma's Meth Guide (accur
 
 - **In the stash:** how many meth bins the crew has and where, with a link to the Stash. **Bins made** adds finished bins straight into the stash house you pick (with Undo).
 - **What to grab:** pick a number of bins or bags and it works out the sodium, ammonia, hammers, baking soda, water and plastic bags, plus which yields to put down (high = 5, medium = 3, low = 1; 2 high yields make a bin).
-- **Cooks down:** when you put a yield down, add it here or on **Timers → Meth cooks**. Each cook gets a countdown card with a beaker that fills up: **Cooking**, then **Might be ready** after 18 hours, then **Ready** after 24 hours. The Meth button shows how many are ready, and Live Activity says when one is. Press **Collected** to take it off. Admins see these in History.
+- **Cooks down:** when you put a yield down, add it here or on **Timers → Meth cooks** with the time it takes (hours and minutes, whatever the game shows; it remembers your last one). Each cook gets a countdown card with a beaker that fills up: **Cooking**, then **Might be ready** once 75% of its time has passed, then **Ready**, which also sends the Discord meth message. **Edit** on a card changes its time left. Active cooks also show in the dashboard's timer bar (for people with Meth access). The Meth button shows how many are ready, and Live Activity says when one is. Press **Collected** to take it off. Admins see these in History.
 - Meth shows up around the site too: a **Meth guide** link on the meth cards (Dashboard and Stash), cooks on profiles, a **Most meth cooks** leaderboard and four cook titles.
 - **How it's made** (the 5 steps, including the 1 · 3 · 3 mix), **Rules in the lab**, and **Places** (the Lab at 10102, the Blue Container at 9359 and Sodium at 10101).
 
@@ -248,6 +250,14 @@ The secret titles live in the site's code, which is public on GitHub, so someone
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 🧭 Oct 2, 2026: Meth alerts, custom cook times and a cleaner header
+- Meth cooks now send their own **Discord message** when ready. Edit it in **Admin → Discord** with the new **Grows | Meth cooks** switch
+- Enter the **cook time** (hours and minutes) when you put a cook down, and fix it later with **Edit** on the card. It shows **Might be ready** at 75% of the time
+- Active meth cooks show in the **dashboard timer bar** next to the grows
+- New menu order: **Dashboard, Stash, Timers, Meth, Log, Crew**
+- The **Admin** button moved to the bottom of the page (it glows there while unlocked)
+- **Who's online** and your profile button are merged into one small pill in the top right
 
 ### ⚗️ Oct 2, 2026: Timers, meth cooks and pot plans on Stash
 - **Grows** is now **Timers**, with a bubbling beaker icon. It has two tabs: **Grows** and **Meth cooks**

@@ -105,8 +105,18 @@
             background-size: auto, auto, 120px 120px;
         }
         img.dx-av { object-fit: cover; background: #0b140e; }
-        .dx-profile-btn { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; border-radius: 999px; background: rgba(6, 10, 7, 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.22); color: #e6efe8; font-size: 12px; font-weight: 700; max-width: 180px; }
-        .dx-profile-btn:hover { border-color: hsl(var(--acc-h) 69% 58%); }
+        .dx-me-pill { display: flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: rgba(6, 10, 7, 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.22); }
+        .dx-me-pill:has(#presence-box:hover), .dx-me-pill:has(.dx-profile-btn:hover) { border-color: hsl(var(--acc-h) 69% 58% / 0.5); }
+        #presence-box { align-items: center; gap: 6px; padding: 0 8px 0 2px; cursor: pointer; border-right: 1px solid rgba(255, 255, 255, 0.08); }
+        #presence-box .dx-av { width: 24px; height: 24px; font-size: 10px; }
+        #presence-count { font-size: 12px; font-weight: 800; color: #cbd5d0; display: inline-flex; align-items: center; gap: 4px; }
+        #presence-count::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+        #presence-count .w { display: none; }
+        .dx-profile-btn { display: flex; align-items: center; gap: 6px; padding: 0 2px; border-radius: 999px; color: #e6efe8; font-size: 12px; font-weight: 700; max-width: 160px; }
+        .dx-profile-btn .dx-av { width: 28px; height: 28px; }
+        .dx-profile-btn:hover .dx-av { box-shadow: 0 0 0 2px hsl(var(--acc-h) 69% 58%); }
+        .dx-profile-btn .nm { display: none; padding-right: 8px; }
+        @media (min-width: 1536px) { .dx-profile-btn .nm { display: inline; } }
         .dx-profile-btn.hidden, #profile-pin-box.hidden, #profile-signout.hidden { display: none; }
         .dx-profile-btn .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .dx-pf-sec { padding: 14px; border-radius: 14px; background: rgba(6, 10, 7, 0.55); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.12); }
@@ -399,6 +409,18 @@
         .dx-growbar .gb-label b { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a9a8e; font-weight: 800; }
         .dx-growbar .gb-label button { font-size: 11px; color: hsl(var(--acc-h) 69% 58%); font-weight: 700; text-align: left; }
         .dx-growbar .gb-label button:hover { color: hsl(var(--acc-h) 79% 73%); }
+        .dx-cookbar { display: flex; gap: 12px; align-items: center; min-width: 0; flex: 0 1 auto; max-width: 50%; padding-left: 14px; border-left: 1px solid rgba(103, 232, 249, 0.2); }
+        .dx-cookbar.hidden { display: none; }
+        #dx-cooks { display: flex; gap: 10px; overflow-x: auto; min-width: 0; padding: 2px 2px 4px; scrollbar-width: thin; }
+        .mx-gb { flex: 0 0 210px; border-color: rgba(103, 232, 249, 0.2); }
+        .mx-gb .pot { background: radial-gradient(circle at 50% 60%, rgba(34, 211, 238, 0.18), rgba(6, 10, 7, 0.8) 70%) !important; color: #a5f3fc; }
+        .mx-gb .pot::after { display: none; }
+        .mx-gb .pot .bk { width: 26px; height: 30px; }
+        .mx-gb .time .t { color: #67e8f9; }
+        .mx-gb .pid { font-family: inherit; font-size: 13px; }
+        .mx-gb .fill { background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.16) 0 6px, transparent 6px 12px), linear-gradient(90deg, #0e7490, #22d3ee) !important; box-shadow: 0 0 10px rgba(34, 211, 238, 0.45) !important; }
+        .mx-gb .fill::after { background: #cffafe !important; box-shadow: 0 0 8px 2px rgba(103, 232, 249, 0.8) !important; }
+        @media (max-width: 1023px) { .dx-cookbar { max-width: none; } .dx-cookbar .gb-label { display: none; } }
         #dx-timers { flex: 1; min-width: 0; display: flex; gap: 10px; overflow-x: auto; padding: 2px 2px 4px; scrollbar-width: thin; }
         .dx-gb { position: relative; flex: 1 0 236px; max-width: 330px; border-radius: 14px; padding: 8px 12px 9px 8px; background: rgba(10, 18, 12, 0.9); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.16); overflow: hidden;
             display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; column-gap: 10px; row-gap: 6px; align-items: center; }
@@ -565,6 +587,13 @@
         .mx-tc .m18 { position: absolute; top: -2px; bottom: -2px; left: 75%; width: 2px; background: #fde68a; opacity: 0.8; }
         body:not(.fx-off-plants) .dx-tc.mx-tc.ready { animation: mxHalo 2.4s ease-in-out infinite; }
         @keyframes mxHalo { 50% { box-shadow: 0 0 0 1px rgba(103, 232, 249, 0.6), 0 0 30px -4px rgba(34, 211, 238, 0.6); } }
+        .mx-edit { display: none; align-items: center; gap: 6px; font-size: 12px; color: #8a9a8e; flex-wrap: wrap; }
+        .editing .mx-edit { display: flex; }
+        .mx-edit .dx-input { width: 58px; padding: 5px 6px; text-align: center; font-size: 13px; }
+        .mx-edit .dx-btn { width: auto; padding: 6px 12px; }
+        .mx-tc .acts .mx-edit-btn { background: rgba(6, 10, 7, 0.6); color: #a5f3fc; border: 1px solid rgba(103, 232, 249, 0.3); }
+        .mx-add .mx-time { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #8a9a8e; }
+        .mx-add .mx-time .dx-input { width: 58px; text-align: center; }
         .mx-cook-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); margin-top: 12px; text-align: left; }
         .mx-binit { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(103, 232, 249, 0.12); font-size: 12px; color: #8a9a8e; }
         .mx-binit .dx-input { width: auto; font-size: 13px; padding: 7px 9px; }
@@ -830,6 +859,10 @@
         [data-page].hidden, .nav-btn.hidden, .dx-modal.hidden, [data-admin-panel].hidden, #signin-create.hidden, [data-admin-only].hidden, [data-sales-only].hidden { display: none; }
         .dx-footer-admin { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: #334155; transition: color 0.2s; }
         .dx-footer-admin:hover { color: #94a3b8; }
+        .dx-footer-admin-on { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px; color: #04140a; background: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 14px hsl(var(--acc-h) 69% 58% / 0.55); }
+        .dx-footer-admin-on.hidden { display: none; }
+        .dx-footer-admin-on:hover { filter: brightness(1.1); }
+        .dx-footer-admin-on.gl-on { box-shadow: 0 0 0 2px #fff, 0 0 18px hsl(var(--acc-h) 69% 58% / 0.7); }
         .dt-preview { background: #313338; border-radius: 12px; padding: 14px 16px; color: #dbdee1; font-size: 14px; }
         .dt-msg { display: flex; gap: 14px; }
         .dt-av { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
@@ -1193,47 +1226,41 @@
                             <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
                         </button>
-                        <button onclick="switchTab('timers')" id="nav-timers" title="Timers: grows and meth cooks" data-page="timers" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <span class="nav-bk"><svg class="bk" viewBox="0 0 40 48" aria-hidden="true"><defs><clipPath id="bk-nav"><path d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/></clipPath></defs><g clip-path="url(#bk-nav)"><rect class="bk-liq" x="0" y="29" width="40" height="20"/><circle class="bk-b" cx="15" cy="41" r="2"/><circle class="bk-b b2" cx="22" cy="42" r="1.6"/><circle class="bk-b b3" cx="26" cy="40" r="1.8"/></g><path class="bk-glass" d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/><path class="bk-rim" d="M13.5 5.5h13"/></svg></span>
-                            <span>Timers</span>
-                            <span id="active-timers-badge" class="hidden ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700" title="Ready to harvest">0</span>
-                        </button>
                         <button onclick="switchTab('inventory')" id="nav-inventory" title="Stash: what's in each stash house" data-page="inventory" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-warehouse"></i>
                             <span>Stash</span>
                         </button>
-                        <button onclick="switchTab('crew')" id="nav-crew" title="Crew: everyone and what they've been up to" data-page="crew" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <i class="fa-solid fa-users"></i>
-                            <span>Crew</span>
+                                                <button onclick="switchTab('timers')" id="nav-timers" title="Timers: grows and meth cooks" data-page="timers" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <span class="nav-bk"><svg class="bk" viewBox="0 0 40 48" aria-hidden="true"><defs><clipPath id="bk-nav"><path d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/></clipPath></defs><g clip-path="url(#bk-nav)"><rect class="bk-liq" x="0" y="29" width="40" height="20"/><circle class="bk-b" cx="15" cy="41" r="2"/><circle class="bk-b b2" cx="22" cy="42" r="1.6"/><circle class="bk-b b3" cx="26" cy="40" r="1.8"/></g><path class="bk-glass" d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/><path class="bk-rim" d="M13.5 5.5h13"/></svg></span>
+                            <span>Timers</span>
+                            <span id="active-timers-badge" class="hidden ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700" title="Ready to harvest">0</span>
                         </button>
-                        <button onclick="switchTab('meth')" id="nav-meth" title="Meth: the cook, start to finish" data-page="meth" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                                                <button onclick="switchTab('meth')" id="nav-meth" title="Meth: the cook, start to finish" data-page="meth" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-flask"></i>
                             <span>Meth</span>
                             <span id="meth-ready-badge" class="hidden ml-1 px-1.5 py-0.5 text-xs rounded-full bg-cyan-950 text-cyan-300 border border-cyan-700" title="Cooks ready to collect">0</span>
                         </button>
-                        <button onclick="switchTab('sales')" id="nav-sales" title="Log: what went out" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                                                <button onclick="switchTab('sales')" id="nav-sales" title="Log: what went out" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-truck-fast"></i>
                             <span>Log</span>
                         </button>
-                        <button onclick="switchTab('admin')" id="nav-admin" title="Admin" data-admin-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <i id="nav-admin-icon" class="fa-solid fa-lock"></i>
-                            <span>Admin</span>
+                                                <button onclick="switchTab('crew')" id="nav-crew" title="Crew: everyone and what they've been up to" data-page="crew" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Crew</span>
                         </button>
                     </nav>
 
-                    <!-- Who's online (sync status and the clock live in the footer) -->
-                    <div class="hidden lg:flex items-center whitespace-nowrap shrink-0">
-                        <div id="presence-box" class="flex items-center gap-2 cursor-pointer" onclick="onPresenceClick(event)" title="See who's online" role="button" aria-haspopup="true" aria-expanded="false">
+                    <!-- Who's online + my profile in one pill (sync status and the clock live in the footer) -->
+                    <div class="dx-me-pill shrink-0">
+                        <div id="presence-box" class="hidden lg:flex" onclick="onPresenceClick(event)" title="See who's online" role="button" aria-haspopup="true" aria-expanded="false">
                             <div id="presence-stack" class="dx-stack"></div>
-                            <span id="presence-count" class="text-xs text-slate-400 cursor-pointer"></span>
+                            <span id="presence-count"></span>
                         </div>
+                        <button id="profile-btn" onclick="openProfile()" class="dx-profile-btn hidden" title="My profile: picture, name, PIN and background color">
+                            <span id="profile-btn-av"></span>
+                            <span id="profile-btn-name" class="nm"></span>
+                        </button>
                     </div>
-
-                    <!-- My Profile -->
-                    <button id="profile-btn" onclick="openProfile()" class="dx-profile-btn hidden shrink-0" title="My profile: picture, name, PIN and background color">
-                        <span id="profile-btn-av"></span>
-                        <span id="profile-btn-name" class="nm hidden sm:inline"></span>
-                    </button>
 
                     <!-- Mobile Navigation Hamburger -->
                     <div class="md:hidden flex items-center">
@@ -1248,12 +1275,11 @@
             <!-- Mobile Menu Dropdown -->
             <div id="mobile-menu" class="hidden md:hidden border-t border-weed-900/60 bg-darkbg px-4 pt-2 pb-4 space-y-2">
                 <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Dashboard</button>
-                <button onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Timers</button>
                 <button onclick="switchTab('inventory'); toggleMobileMenu()" data-page="inventory" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
-                <button onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Crew</button>
+                <button onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Timers</button>
                 <button onclick="switchTab('meth'); toggleMobileMenu()" data-page="meth" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Meth</button>
                 <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Log</button>
-                <button onclick="switchTab('admin'); toggleMobileMenu()" data-admin-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Admin</button>
+                <button onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Crew</button>
                 <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
                 <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
             </div>
@@ -1263,6 +1289,10 @@
                 <div class="dx-growbar-in">
                     <div class="gb-label"><b><i class="fa-solid fa-cannabis mr-1 text-weed-500"></i>Grows</b><span id="gb-next" class="text-[10px] dx-muted"></span><button onclick="switchTab('timers')">Manage →</button></div>
                     <div id="dx-timers"></div>
+                    <div id="dx-cookbar" class="dx-cookbar hidden">
+                        <div class="gb-label"><b><i class="fa-solid fa-flask mr-1 text-cyan-300"></i>Meth</b><button onclick="switchTab('timers'); setTimersView('meth')">Manage →</button></div>
+                        <div id="dx-cooks"></div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -1406,7 +1436,7 @@
                 <div id="timers-meth" class="hidden">
                     <div class="dx-glass mx-card">
                         <h2><i class="fa-solid fa-fire-burner"></i>Cooks down</h2>
-                        <p class="mx-sub">Put a yield down? Add it here so the crew knows when it's ready. They take <b>18 to 24 hours</b>.</p>
+                        <p class="mx-sub">Put a yield down? Add it here with the time it takes (usually <b>18 to 24 hours</b>) so the crew knows when it's ready.</p>
                         <div class="mx-add" data-cook-add="timers"></div>
                         <div class="mx-binit" data-binit="timers"></div>
                     </div>
@@ -1473,7 +1503,7 @@
 
                 <div class="dx-glass mx-card">
                     <h2><i class="fa-solid fa-fire-burner"></i>Cooks down</h2>
-                    <p class="mx-sub">Put a yield down? Add it here so the crew knows when it's ready. They take <b>18 to 24 hours</b>.</p>
+                    <p class="mx-sub">Put a yield down? Add it here with the time it takes (usually <b>18 to 24 hours</b>) so the crew knows when it's ready.</p>
                     <div class="mx-add" data-cook-add="meth"></div>
                     <div id="meth-cooks" class="mx-cook-grid"></div>
                     <p class="mx-sub" style="margin:10px 0 0">The same timers are on <button class="text-cyan-300 font-bold underline" data-page="timers" onclick="switchTab('timers'); setTimersView('meth')">Timers → Meth cooks</button>.</p>
@@ -1717,7 +1747,7 @@
                             </div>
                             <div>
                                 <h2 class="font-bold text-white text-base">Discord Webhook Alerts</h2>
-                                <p class="text-xs text-slate-400">Send automatic messages to your server when harvests are ready</p>
+                                <p class="text-xs text-slate-400">Send automatic messages to your server when grows and meth cooks are ready</p>
                             </div>
                         </div>
 
@@ -1741,9 +1771,10 @@
                     <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                         <div class="w-8 h-8 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center"><i class="fa-brands fa-discord text-lg"></i></div>
                         <div>
-                            <h2 class="font-bold text-white text-base">Discord Message</h2>
-                            <p class="text-xs text-slate-400">Change what the harvest alert says. Click a tag to insert it where your cursor is; it's filled in with that harvest's details.</p>
+                            <h2 class="font-bold text-white text-base">Discord Messages</h2>
+                            <p class="text-xs text-slate-400">Grows send the grow message when they're ready to harvest; meth cooks send the meth message when their time is up. Click a tag to insert it where your cursor is.</p>
                         </div>
+                        <div id="dt-kind" class="dx-seg ml-auto shrink-0"><button type="button" data-kind="grow" class="on" onclick="setDiscordKind('grow')"><i class="fa-solid fa-cannabis"></i>Grows</button><button type="button" data-kind="meth" onclick="setDiscordKind('meth')"><i class="fa-solid fa-flask"></i>Meth cooks</button></div>
                     </div>
                     <form id="dt-form" onsubmit="saveDiscordTemplate(event)" oninput="renderDiscordPreview()" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="space-y-3">
@@ -1770,7 +1801,7 @@
                                     <input id="dt-color" type="color" class="h-8 w-12 rounded border border-weed-900 bg-transparent cursor-pointer">
                                 </label>
                                 <label class="flex items-center gap-2 text-xs font-semibold text-slate-300">
-                                    <input id="dt-fields" type="checkbox" class="accent-green-500"> Show Postal / Pots / Ready At details
+                                    <input id="dt-fields" type="checkbox" class="accent-green-500"> Show the details boxes <span id="dt-fields-hint" class="font-normal text-slate-500">(Postal, Pots, Ready At)</span>
                                 </label>
                             </div>
                             <div class="flex flex-wrap gap-2 pt-1">
@@ -1992,6 +2023,7 @@
             </div>
             <div class="flex items-center gap-3">
                 <span id="footer-built">Custom Built 2026</span>
+                <button id="nav-admin" onclick="switchTab('admin'); window.scrollTo({ top: 0, behavior: 'smooth' })" data-admin-only class="nav-btn dx-footer-admin-on hidden" title="Open the Admin page"><i class="fa-solid fa-user-shield"></i><span>Admin</span></button>
                 <button id="footer-admin-link" onclick="footerAdminClick()" class="dx-footer-admin" title="Admin">
                     <i id="footer-admin-icon" class="fa-solid fa-lock"></i><span id="footer-admin-text">Admin</span>
                 </button>
@@ -2467,6 +2499,7 @@
             mainStash: { name: 'Main Stash', excludeTotals: false }, // Shared: the built-in stash's name, and whether it counts in totals
             webhookUrl: '',
             discordTemplate: null, // Harvest message wording (shared); null = defaults
+            discordMethTemplate: null, // Meth cook ready message wording (shared); null = defaults
             badgeImages: {}, // Per-browser strain logo overrides (data URLs), keyed by strain id
             selectedPlannerLocId: '7078', // Selected planner location tab
             masterLogo: null, // Per-browser header logo override; null = repo default
@@ -2771,6 +2804,7 @@
                     fx: JSON.parse(JSON.stringify(state.fxSettings || FX_DEFAULTS)),
                     webhookUrl: state.webhookUrl || '',
                     discordTemplate: normalizeDiscordTemplate(state.discordTemplate),
+                    discordMethTemplate: normalizeDiscordTemplate(state.discordMethTemplate, DEFAULT_METH_DISCORD_TEMPLATE),
                     allowSignup: !(isPlainObject(state.signupSettings) && state.signupSettings.allowSignup === false),
                     hidePrices: Boolean(state.salesSettings && state.salesSettings.hidePrices),
                     salePrices: { ...((state.salesSettings && state.salesSettings.prices) || {}) },
@@ -2801,6 +2835,7 @@
                 .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
             appState.webhookUrl = isPlainObject(tree.settings) && typeof tree.settings.webhookUrl === 'string' ? tree.settings.webhookUrl : '';
             appState.discordTemplate = isPlainObject(tree.settings) ? tree.settings.discordTemplate : null;
+            appState.discordMethTemplate = isPlainObject(tree.settings) ? tree.settings.discordMethTemplate : null;
             appState.signupSettings = { allowSignup: !(isPlainObject(tree.settings) && tree.settings.allowSignup === false) };
             appState.salesSettings = { hidePrices: isPlainObject(tree.settings) && tree.settings.hidePrices === true, prices: isPlainObject(tree.settings) && isPlainObject(tree.settings.salePrices) ? tree.settings.salePrices : {},
                 defaultCut: isPlainObject(tree.settings) ? tree.settings.defaultCut : undefined };
@@ -3425,14 +3460,30 @@
         }
 
         // A cook goes "might be ready" at 18h and "ready" at 24h (server time, like the grow timers)
+        // How long a cook takes: whatever was entered when it went down (24h for older cooks)
+        function cookMins(c) {
+            const m = Math.round(Number(c.mins));
+            return m >= 1 && m <= 7 * 1440 ? m : METH_COOK_MAX_H * 60;
+        }
+
+        // "Might be ready" once 75% of its time has passed, "Ready" when the time is up (server time, like the grow timers)
         function methCookState(c, now = syncNow()) {
             const ts = Number(c.ts) || now;
-            const h = (now - ts) / 3600000;
-            const pct = Math.max(0, Math.min(1, h / METH_COOK_MAX_H));
-            const left = Math.max(0, Math.ceil((ts + METH_COOK_MAX_H * 3600e3 - now) / 1000));
-            if (h >= METH_COOK_MAX_H) return { cls: 'ready', text: 'Ready', ready: true, pct, left };
-            if (h >= METH_COOK_MIN_H) return { cls: 'maybe', text: 'Might be ready', ready: false, pct, left };
+            const total = cookMins(c) * 60000;
+            const pct = Math.max(0, Math.min(1, (now - ts) / total));
+            const left = Math.max(0, Math.ceil((ts + total - now) / 1000));
+            if (now - ts >= total) return { cls: 'ready', text: 'Ready', ready: true, pct, left };
+            if (pct >= 0.75) return { cls: 'maybe', text: 'Might be ready', ready: false, pct, left };
             return { cls: 'cooking', text: 'Cooking', ready: false, pct, left };
+        }
+
+        function cookReadyAt(c) {
+            return (Number(c.ts) || syncNow()) + cookMins(c) * 60000;
+        }
+
+        function minsLabel(m) {
+            const h = Math.floor(m / 60), r = m % 60;
+            return h && r ? `${h}h ${r}m` : h ? `${h}h` : `${r}m`;
         }
 
         function cookSize(c) {
@@ -3468,11 +3519,30 @@
                 ? '<div class="t">Ready!</div><div class="s">Go collect the trays</div>'
                 : `<div class="t ck-t">${formatTime(st.left)}</div><div class="s ck-s">${st.cls === 'maybe' ? 'might be ready now' : 'until ready'}</div>`;
             return `<div class="dx-glass dx-tc mx-tc ${st.cls}" data-cook="${escapeHtml(c.id)}">
-                    <div class="top"><div class="min-w-0"><h2>${METH_SIZES[size]} yield</h2><div class="alias">${size} bag${size === 1 ? '' : 's'} · ${nameHtml(c.who || 'Someone')}</div></div><span class="mx-pill ${st.cls}">${st.text}</span></div>
+                    <div class="top"><div class="min-w-0"><h2>${METH_SIZES[size]} yield</h2><div class="alias">${size} bag${size === 1 ? '' : 's'} · ${nameHtml(c.who || 'Someone')} · ${minsLabel(cookMins(c))} cook</div></div><span class="mx-pill ${st.cls}">${st.text}</span></div>
                     <div class="mid"><div class="bk-box">${beakerSvg(st.pct, st.ready ? 'ready' : '')}</div><div class="clock">${clock}</div></div>
-                    ${st.ready ? '' : `<div class="track"><div class="fill" style="width:${(st.pct * 100).toFixed(2)}%"></div><span class="m18" title="Might be ready from 18 hours"></span></div>`}
-                    <div class="eta"><span>Down ${escapeHtml(cookTimeLabel(ts))}</span><span>Ready by ${escapeHtml(cookTimeLabel(ts + METH_COOK_MAX_H * 3600e3))}</span></div>
-                    ${can('meth') ? `<div class="acts"><button class="dx-btn ${st.ready ? 'dx-btn-g' : 'dx-btn-o'}" onclick="collectMethCook(${jsArg(c.id)})" title="Collected or gone: take it off the timers"><i class="fa-solid fa-check mr-1"></i>Collected</button></div>` : ''}
+                    ${st.ready ? '' : `<div class="track"><div class="fill" style="width:${(st.pct * 100).toFixed(2)}%"></div><span class="m18" title="Might be ready from here (75% of the time)"></span></div>`}
+                    <div class="eta"><span>Down ${escapeHtml(cookTimeLabel(ts))}</span><span>Ready ${escapeHtml(cookTimeLabel(cookReadyAt(c)))}</span></div>
+                    ${can('meth') ? `<div class="mx-edit"><span>Time left</span><input type="number" min="0" max="168" class="dx-input dx-mono ck-eh" value="${Math.floor(st.left / 3600)}" aria-label="Hours left">h<input type="number" min="0" max="59" class="dx-input dx-mono ck-em" value="${Math.floor(st.left % 3600 / 60)}" aria-label="Minutes left">m<button class="dx-btn dx-btn-g" onclick="editCookTime(${jsArg(c.id)})">Save</button></div>
+                    <div class="acts"><button class="dx-btn ${st.ready ? 'dx-btn-g' : 'dx-btn-o'}" onclick="collectMethCook(${jsArg(c.id)})" title="Collected or gone: take it off the timers"><i class="fa-solid fa-check mr-1"></i>Collected</button>
+                        <button class="dx-btn dx-stop mx-edit-btn" onclick="this.closest('[data-cook]').classList.toggle('editing')" title="Change the time left"><i class="fa-solid fa-pen mr-1"></i>Edit</button></div>` : ''}
+                </div>`;
+        }
+
+        // The small version for the dashboard's timer bar
+        function cookMiniHtml(c, now) {
+            const st = methCookState(c, now);
+            const size = cookSize(c);
+            const time = st.ready ? '<span class="t">Ready!</span><span class="s">Collect</span>'
+                : `<span class="t ck-t">${formatTime(st.left)}</span><span class="s">${st.cls === 'maybe' ? 'might be ready' : 'cooking'}</span>`;
+            const low = st.ready
+                ? (can('meth') ? `<button onclick="collectMethCook(${jsArg(c.id)})" class="dx-btn dx-btn-g"><i class="fa-solid fa-check mr-1"></i>Collected</button>` : '<span class="note">Ready to collect</span>')
+                : `<div class="track"><div class="fill" style="width:${(st.pct * 100).toFixed(2)}%"></div></div><div class="eta">Ready ${escapeHtml(cookTimeLabel(cookReadyAt(c)))}</div>`;
+            return `<div class="dx-gb mx-gb ${st.ready ? 'ready' : 'running'}" data-cook="${escapeHtml(c.id)}" title="${METH_SIZES[size]} yield · ${escapeHtml(c.who || 'Someone')}">
+                    <div class="pot">${beakerSvg(st.pct, st.ready ? 'ready' : '')}</div>
+                    <div class="who"><span class="pid">${METH_SIZES[size]} yield</span><span class="alias">${escapeHtml(c.who || 'Someone')}</span></div>
+                    <div class="time">${time}</div>
+                    <div class="low">${low}</div>
                 </div>`;
         }
 
@@ -3486,6 +3556,12 @@
             const cooks = sortedCooks();
             cookSignature = cookStatesSignature(now);
             const empty = emptyState('Nothing cooking', 'Put a yield down at the lab, then add it here so the crew can see when it\'s ready.');
+            const bar = document.getElementById('dx-cookbar'), dash = document.getElementById('dx-cooks');
+            if (bar && dash) {
+                const show = can('meth') && cooks.length > 0;
+                bar.classList.toggle('hidden', !show);
+                dash.innerHTML = show ? cooks.map(c => cookMiniHtml(c, now)).join('') : '';
+            }
             ['meth-cooks', 'timers-cooks'].forEach(id => {
                 const box = document.getElementById(id);
                 if (box && !box.closest('.hidden')) box.innerHTML = cooks.length ? cooks.map(c => cookCardHtml(c, now)).join('') : `<div style="grid-column:1/-1">${empty}</div>`;
@@ -3496,6 +3572,7 @@
                 const p = box.dataset.cookAdd;
                 box.innerHTML = `<select id="${p}-cook-size" class="dx-input" aria-label="Yield"><option value="5">High yield (5)</option><option value="3">Medium yield (3)</option><option value="1">Low yield (1)</option></select>
                     <select id="${p}-cook-count" class="dx-input" aria-label="How many"><option value="1">×1</option><option value="2">×2</option><option value="3">×3</option><option value="4">×4</option></select>
+                    <span class="mx-time" title="How long it takes (what the game shows)"><input id="${p}-cook-h" type="number" min="0" max="168" value="${lastCookTime().h}" class="dx-input dx-mono" aria-label="Hours">h<input id="${p}-cook-m" type="number" min="0" max="59" value="${lastCookTime().m}" class="dx-input dx-mono" aria-label="Minutes">m</span>
                     <button class="dx-btn dx-btn-g" style="width:auto;padding:8px 14px" onclick="addMethCook('${p}')"><i class="fa-solid fa-plus mr-1"></i>Put down</button>`;
             });
             renderBinIt();
@@ -3533,7 +3610,7 @@
                 const claim = Sync.mode === 'cloud'
                     ? Sync.root.child(`cooks/${c.id}`).transaction(cur => (isPlainObject(cur) && !cur.told ? { ...cur, told: true } : undefined)).then(r => r.committed).catch(() => false)
                     : Promise.resolve((c.told = true, writeShared({ [`cooks/${c.id}/told`]: true }), true));
-                claim.then(won => { if (won) logActivity({ who: SYSTEM_NAME, kind: 'cookReady' }); });
+                claim.then(won => { if (won) { logActivity({ who: SYSTEM_NAME, kind: 'cookReady' }); sendCookWebhook(c); } });
             });
         }
 
@@ -3603,14 +3680,45 @@
             renderMethCalc();
         }
 
+        function lastCookTime() {
+            const t = localGet('noelops_cook_time', null);
+            return t && Number.isFinite(t.h) && Number.isFinite(t.m) ? t : { h: METH_COOK_MAX_H, m: 0 };
+        }
+
+        function readCookMins(hEl, mEl) {
+            const h = Math.max(0, Math.min(168, parseInt(hEl.value, 10) || 0)), m = Math.max(0, Math.min(59, parseInt(mEl.value, 10) || 0));
+            return { h, m, mins: h * 60 + m };
+        }
+
+        // Change a cook's time left (fix a typo or match the game); it can announce again if it was already ready
+        function editCookTime(id) {
+            if (!can('meth')) return;
+            const c = appState.cooks.find(x => x.id === id);
+            const card = document.querySelector(`[data-cook="${CSS.escape(id)}"].editing`) || document.querySelector(`[data-cook="${CSS.escape(id)}"]`);
+            if (!c || !card) return;
+            const { mins: leftMins } = readCookMins(card.querySelector('.ck-eh'), card.querySelector('.ck-em'));
+            const elapsed = Math.max(0, Math.round((syncNow() - Number(c.ts)) / 60000));
+            const mins = Math.max(1, elapsed + leftMins);
+            c.mins = mins; c.told = leftMins > 0 ? false : c.told;
+            writeShared({ [`cooks/${id}/mins`]: mins, ...(leftMins > 0 ? { [`cooks/${id}/told`]: null } : {}) });
+            cookClaims.delete(id);
+            auditLog({ kind: 'meth', text: `Changed a ${METH_SIZES[cookSize(c)].toLowerCase()} yield to ${minsLabel(leftMins)} left` });
+            renderCooks();
+        }
+
         function addMethCook(p = 'meth') {
             if (!can('meth')) return;
             const size = Number(document.getElementById(`${p}-cook-size`).value) || 5;
             const count = Math.max(1, Math.min(4, Number(document.getElementById(`${p}-cook-count`).value) || 1));
+            const time = readCookMins(document.getElementById(`${p}-cook-h`), document.getElementById(`${p}-cook-m`));
+            if (!time.mins) return showAlert('Enter how long the cook takes.', 'warning');
+            localSet('noelops_cook_time', { h: time.h, m: time.m });
+            document.querySelectorAll('[data-cook-add] input[id$="-cook-h"]').forEach(el => { el.value = time.h; });
+            document.querySelectorAll('[data-cook-add] input[id$="-cook-m"]').forEach(el => { el.value = time.m; });
             const changes = {};
             for (let i = 0; i < count; i++) {
                 const id = newActivityId();
-                const record = { who: appState.crewName || 'Someone', size, ts: timestampValue() };
+                const record = { who: appState.crewName || 'Someone', size, mins: time.mins, ts: timestampValue() };
                 changes[`cooks/${id}`] = record;
                 appState.cooks.push({ ...record, id, ts: syncNow() });
             }
@@ -3618,7 +3726,7 @@
             logActivity({ kind: 'cook' });
             trackAction('cook', { cooks: count });
             auditLog({ kind: 'meth', text: `Put down ${count > 1 ? `${count} ` : 'a '}${METH_SIZES[size].toLowerCase()} yield${count > 1 ? 's' : ''}` });
-            showAlert(`${count > 1 ? `${count} ${METH_SIZES[size].toLowerCase()} yields` : `${METH_SIZES[size]} yield`} down. Ready in 18 to 24 hours.`, 'success');
+            showAlert(`${count > 1 ? `${count} ${METH_SIZES[size].toLowerCase()} yields` : `${METH_SIZES[size]} yield`} down. Ready in ${minsLabel(time.mins)}.`, 'success');
             renderCooks();
         }
 
@@ -4700,7 +4808,7 @@
                 if (!dot) {
                     dot = document.createElement('span');
                     dot.id = 'nav-admin-pending';
-                    dot.className = 'ml-1 px-1.5 py-0.5 text-xs rounded-full bg-amber-400 text-black font-bold';
+                    dot.className = 'px-1.5 rounded-full bg-black/60 text-amber-300 font-bold';
                     nav.appendChild(dot);
                 }
                 dot.textContent = pending;
@@ -5298,9 +5406,11 @@
             appState.presence.forEach(p => {
                 if (p.client !== CLIENT_ID && typeof p.name === 'string' && p.name && !names.includes(p.name)) names.push(p.name);
             });
-            stack.innerHTML = names.slice(0, 4).map(n => avatarHtml(n)).join('') +
-                (names.length > 4 ? `<span class="dx-av" style="background:#1b2a1e;color:#8a9a8e">+${names.length - 4}</span>` : '');
-            count.textContent = names.length === 0 ? 'Set your name' : `${names.length} online`;
+            const others = names.filter(n => n !== appState.crewName || !document.getElementById('profile-btn') || document.getElementById('profile-btn').classList.contains('hidden'));
+            stack.innerHTML = others.slice(0, 3).map(n => avatarHtml(n)).join('') +
+                (others.length > 3 ? `<span class="dx-av" style="background:#1b2a1e;color:#8a9a8e">+${others.length - 3}</span>` : '');
+            count.innerHTML = names.length === 0 ? 'Set your name' : `${names.length}<span class="w"> online</span>`;
+            count.title = `${names.length} online`;
             renderOnlinePanel();
         }
 
@@ -5600,7 +5710,7 @@
             const icon = document.getElementById('footer-admin-icon');
             if (icon) icon.className = unlocked ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock';
             const text = document.getElementById('footer-admin-text');
-            if (text) text.textContent = unlocked ? 'Lock admin' : 'Admin';
+            if (text) text.textContent = unlocked ? 'Lock' : 'Admin';
         }
 
         function footerAdminClick() {
@@ -8364,6 +8474,74 @@
             color: '#229d44',
             showFields: true
         };
+        const DEFAULT_METH_DISCORD_TEMPLATE = {
+            username: 'NoelOps Operations Command',
+            avatarUrl: '',
+            title: '⚗️ Meth Cook Ready: {size} yield',
+            description: "{who}'s {size} yield ({bags} bags) is ready to collect at the lab.",
+            footer: 'NoelOps FiveM RP Operations',
+            color: '#22d3ee',
+            showFields: true
+        };
+        const DISCORD_METH_TAGS = [
+            ['{size}', 'Yield size', 'High'],
+            ['{bags}', 'Bags it makes', '5'],
+            ['{who}', 'Who put it down', 'Jay'],
+            ['{duration}', 'Cook time', '24h'],
+            ['{readyAt}', 'Ready time (UTC)', 'Tue, 29 Sep 2026 14:14:00 GMT'],
+            ['{readyLocal}', "Ready time in each reader's own time zone", '<t:…:f>']
+        ];
+        let discordKind = 'grow'; // which message the Admin editor is showing
+        const discordDefaults = kind => (kind === 'meth' ? DEFAULT_METH_DISCORD_TEMPLATE : DEFAULT_DISCORD_TEMPLATE);
+        const discordSaved = kind => (kind === 'meth' ? appState.discordMethTemplate : appState.discordTemplate);
+
+        function cookTagValues(c) {
+            const readyMs = cookReadyAt(c) - Sync.serverOffset;
+            const size = cookSize(c);
+            return {
+                '{size}': METH_SIZES[size],
+                '{bags}': String(size),
+                '{who}': c.who || 'Someone',
+                '{duration}': minsLabel(cookMins(c)),
+                '{readyAt}': new Date(readyMs).toUTCString(),
+                '{readyLocal}': `<t:${Math.floor(readyMs / 1000)}:f>`
+            };
+        }
+
+        function buildCookPayload(c, template = appState.discordMethTemplate) {
+            const t = normalizeDiscordTemplate(template, DEFAULT_METH_DISCORD_TEMPLATE);
+            const values = cookTagValues(c);
+            const embed = { title: fillTags(t.title, values) || undefined, description: fillTags(t.description, values) || undefined, color: parseInt(t.color.slice(1), 16) };
+            if (t.showFields) {
+                embed.fields = [
+                    { name: 'Yield', value: `${values['{size}']} (${values['{bags}']} bags)`, inline: true },
+                    { name: 'Put down by', value: values['{who}'], inline: true },
+                    { name: 'Ready At', value: values['{readyAt}'], inline: false }
+                ];
+            }
+            if (t.footer) embed.footer = { text: fillTags(t.footer, values) };
+            const payload = { username: fillTags(t.username, values) || DEFAULT_METH_DISCORD_TEMPLATE.username, embeds: [embed] };
+            if (t.avatarUrl) payload.avatar_url = t.avatarUrl;
+            return payload;
+        }
+
+        function sendCookWebhook(c) {
+            if (!appState.webhookUrl) return;
+            postDiscordWebhook(buildCookPayload(c)).then(ok => {
+                if (!ok) showAlert('Meth cook webhook failed to send.', 'warning');
+            });
+        }
+
+        function sampleCook() {
+            return { who: appState.crewName || 'Jay', size: 5, mins: lastCookTime().h * 60 + lastCookTime().m || 1440, ts: syncNow() - (lastCookTime().h * 60 + lastCookTime().m || 1440) * 60000 };
+        }
+
+        function setDiscordKind(kind) {
+            discordKind = kind;
+            document.querySelectorAll('#dt-kind button').forEach(b => b.classList.toggle('on', b.dataset.kind === kind));
+            renderDiscordEditor(true);
+        }
+
         const DISCORD_TAGS = [
             ['{postal}', 'Postal ID', '7078'],
             ['{alias}', 'Location alias', 'Leon VW'],
@@ -8373,17 +8551,17 @@
             ['{readyLocal}', "Ready time in each reader's own time zone", '<t:…:f>']
         ];
 
-        function normalizeDiscordTemplate(template) {
+        function normalizeDiscordTemplate(template, defaults = DEFAULT_DISCORD_TEMPLATE) {
             const t = isPlainObject(template) ? template : {};
-            const text = (key, max) => (typeof t[key] === 'string' ? t[key] : DEFAULT_DISCORD_TEMPLATE[key]).slice(0, max);
+            const text = (key, max) => (typeof t[key] === 'string' ? t[key] : defaults[key]).slice(0, max);
             return {
                 username: text('username', 80),
                 avatarUrl: text('avatarUrl', 500),
                 title: text('title', 256),
                 description: text('description', 2000),
                 footer: text('footer', 200),
-                color: /^#[0-9a-f]{6}$/i.test(t.color) ? t.color.toLowerCase() : DEFAULT_DISCORD_TEMPLATE.color,
-                showFields: typeof t.showFields === 'boolean' ? t.showFields : DEFAULT_DISCORD_TEMPLATE.showFields
+                color: /^#[0-9a-f]{6}$/i.test(t.color) ? t.color.toLowerCase() : defaults.color,
+                showFields: typeof t.showFields === 'boolean' ? t.showFields : defaults.showFields
             };
         }
 
@@ -8442,7 +8620,7 @@
                 footer: v('dt-footer').value,
                 color: v('dt-color').value,
                 showFields: v('dt-fields').checked
-            });
+            }, discordDefaults(discordKind));
         }
 
         // Sample location for the preview and the test message: the first one this person can see
@@ -8456,7 +8634,7 @@
             if (!form) return;
             // Don't overwrite what the admin is typing when someone else's change arrives
             if (!force && form.contains(document.activeElement)) return;
-            const t = normalizeDiscordTemplate(template || appState.discordTemplate);
+            const t = normalizeDiscordTemplate(template || discordSaved(discordKind), discordDefaults(discordKind));
             document.getElementById('dt-username').value = t.username;
             document.getElementById('dt-avatar').value = t.avatarUrl;
             document.getElementById('dt-title').value = t.title;
@@ -8464,7 +8642,8 @@
             document.getElementById('dt-footer').value = t.footer;
             document.getElementById('dt-color').value = t.color;
             document.getElementById('dt-fields').checked = t.showFields;
-            document.getElementById('dt-tags').innerHTML = DISCORD_TAGS.map(([tag, label]) =>
+            document.getElementById('dt-fields-hint').textContent = discordKind === 'meth' ? '(Yield, Put down by, Ready At)' : '(Postal, Pots, Ready At)';
+            document.getElementById('dt-tags').innerHTML = (discordKind === 'meth' ? DISCORD_METH_TAGS : DISCORD_TAGS).map(([tag, label]) =>
                 `<button type="button" class="dx-pill" title="${escapeHtml(label)}" onclick="insertDiscordTag(${jsArg(tag)})">${escapeHtml(tag)}</button>`).join('');
             renderDiscordPreview();
         }
@@ -8485,7 +8664,7 @@
         function renderDiscordPreview() {
             const box = document.getElementById('dt-preview');
             if (!box) return;
-            const payload = buildHarvestPayload(sampleHarvestLocation(), discordFormTemplate());
+            const payload = discordKind === 'meth' ? buildCookPayload(sampleCook(), discordFormTemplate()) : buildHarvestPayload(sampleHarvestLocation(), discordFormTemplate());
             const e = payload.embeds[0];
             // Show {readyLocal} the way Discord displays it
             const shown = text => escapeHtml(text || '').replace(/&lt;t:(\d+):f&gt;/g, (m, secs) =>
@@ -8515,27 +8694,28 @@
             if (/discord/i.test(template.username)) return showAlert('Discord won\'t accept a bot name containing "discord". Pick another name.', 'warning');
             if (template.avatarUrl && !/^https:\/\/\S+$/i.test(template.avatarUrl)) return showAlert('The avatar must be an https:// image link.', 'warning');
             if (!template.title.trim() && !template.description.trim()) return showAlert('Add a title or a message.', 'warning');
-            writeShared({ 'settings/discordTemplate': template });
+            writeShared({ [discordKind === 'meth' ? 'settings/discordMethTemplate' : 'settings/discordTemplate']: template });
             document.activeElement && document.activeElement.blur();
             logActivity({ kind: 'discord' });
-            showAlert('Discord harvest message saved.', 'success');
+            showAlert(`Discord ${discordKind === 'meth' ? 'meth cook' : 'harvest'} message saved.`, 'success');
         }
 
         function resetDiscordTemplate() {
             if (!allowed('admin')) return;
-            if (!confirm('Reset the Discord harvest message to the original wording?')) return;
-            writeShared({ 'settings/discordTemplate': { ...DEFAULT_DISCORD_TEMPLATE } });
+            const what = discordKind === 'meth' ? 'meth cook' : 'harvest';
+            if (!confirm(`Reset the Discord ${what} message to the original wording?`)) return;
+            writeShared({ [discordKind === 'meth' ? 'settings/discordMethTemplate' : 'settings/discordTemplate']: { ...discordDefaults(discordKind) } });
             if (document.activeElement) document.activeElement.blur();
-            renderDiscordEditor(true, DEFAULT_DISCORD_TEMPLATE);
-            showAlert('Discord harvest message reset to the original.', 'info');
+            renderDiscordEditor(true, discordDefaults(discordKind));
+            showAlert(`Discord ${what} message reset to the original.`, 'info');
         }
 
         function sendTestHarvestMessage() {
             if (!allowed('admin')) return;
             if (!appState.webhookUrl) return showAlert('Save a Discord Webhook URL first.', 'warning');
-            const payload = buildHarvestPayload(sampleHarvestLocation(), discordFormTemplate());
+            const payload = discordKind === 'meth' ? buildCookPayload(sampleCook(), discordFormTemplate()) : buildHarvestPayload(sampleHarvestLocation(), discordFormTemplate());
             postDiscordWebhook(payload).then(ok => showAlert(ok
-                ? 'Test harvest message sent to Discord (using what\'s in the editor, even if not saved).'
+                ? `Test ${discordKind === 'meth' ? 'meth cook' : 'harvest'} message sent to Discord (using what's in the editor, even if not saved).`
                 : 'Discord didn\'t accept the message. Check the webhook URL and the avatar link.', ok ? 'success' : 'warning'));
         }
 
