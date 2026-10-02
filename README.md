@@ -294,6 +294,13 @@ Newest first. Every merge adds an entry here, written so it can be pasted straig
 - Phone fixes: the dashboard timer bar, buttons and headings fit better on small screens
 - Checked that backups and restores include everything new
 
+### 🧹 Oct 2, 2026: Tidier menu and header
+- The phone menu is shorter: **Map** and **Calendar** are already buttons in the header, so they're gone from the menu
+- **Who's online** on phones: tap the green online count at the top right (it's no longer in the menu)
+- The phone menu has icons now, highlights the page you're on and shows the **Timers** and **Meth** ready counts
+- Raid mode moved to the footer as a **Hide numbers** button, on computers and phones. Shift+R still works
+- The **Dashboard** drops the small line under Totals & Trends that repeated numbers from the stash cards
+
 ### 🪪 Oct 2, 2026: Your own card on the Crew page
 - The **Crew** page now opens with a card about you: your picture, title, tags, MVP badges and stats (harvests, bud, meth cooks, coke runs, sold and your dirty money)
 - Quick buttons on it for **Picture**, **Name**, **PIN**, **Titles**, **Look** and **Alerts** jump straight to that part of **My Profile**
