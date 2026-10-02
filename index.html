@@ -154,7 +154,7 @@
 
         /* Compact cards */
         body.dx-compact .dx-sc { padding: 10px 10px 9px; }
-        body.dx-compact .dx-sc .logo { width: 60px; height: 60px; margin-bottom: 4px; }
+        body.dx-compact .dx-sc .logo { width: 46px; height: 46px; margin-bottom: 4px; }
         body.dx-compact .dx-sc .name { font-size: 12px; }
         body.dx-compact .dx-sc-nums { margin-top: 6px; }
         body.dx-compact .dx-sc-nums .v { font-size: 22px; }
@@ -396,14 +396,30 @@
         .dx-layout.solo { grid-template-columns: minmax(0, 1fr); }
         .dx-layout > .dx-main > .dx-panel:last-child { margin-bottom: 0; }
         /* Live Activity runs the full height of the main column and scrolls inside */
-        .dx-aside { position: relative; min-height: 420px; }
-        .dx-aside.hidden { display: none; }
-        .dx-feed-panel { position: absolute; inset: 0; margin: 0; display: flex; flex-direction: column; }
-        .dx-feed-panel .dx-feed { flex: 1; min-height: 0; overflow-y: auto; margin-right: -8px; padding-right: 8px; scrollbar-width: thin; }
 
         /* Grow timers sub-bar under the header (dashboard only) */
         .dx-growbar { border-top: 1px solid hsl(var(--acc-h) 69% 58% / 0.12); background: linear-gradient(180deg, rgba(4, 9, 6, 0.55), rgba(4, 9, 6, 0.85)); }
         .dx-growbar.hidden { display: none; }
+        .dx-ticker { position: relative; max-width: 1440px; margin: 0 auto; padding: 0 32px 8px; display: flex; align-items: center; gap: 10px; font-size: 12px; }
+        .dx-ticker .tk-live { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.14em; color: hsl(var(--acc-h) 69% 62%); padding: 3px 9px; border-radius: 999px; border: 1px solid hsl(var(--acc-h) 69% 58% / 0.3); background: rgba(6, 10, 7, 0.6); }
+        .dx-ticker .tk-win { flex: 1; min-width: 0; overflow: hidden; cursor: pointer; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+        .dx-ticker .tk-track { display: inline-flex; white-space: nowrap; animation: tkScroll var(--tk-dur, 40s) linear infinite; }
+        .dx-ticker .tk-win:hover .tk-track { animation-play-state: paused; }
+        .dx-ticker .tk-run { display: inline-flex; align-items: center; }
+        .dx-ticker .tk-item { display: inline-flex; align-items: center; gap: 6px; color: #b6c2b9; }
+        .dx-ticker .tk-item .dx-av { width: 18px; height: 18px; font-size: 8px; }
+        .dx-ticker .tk-item b { color: #f1f5f2; }
+        .dx-ticker .tk-item b.g { color: hsl(var(--acc-h) 69% 58%); }
+        .dx-ticker .tk-item .when { color: #6b7a70; font-size: 11px; }
+        .dx-ticker .tk-sep { color: hsl(var(--acc-h) 69% 58% / 0.5); margin: 0 14px; }
+        @keyframes tkScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @media (prefers-reduced-motion: reduce) { .dx-ticker .tk-track { animation: none; } }
+        .dx-ticker .tk-more { flex-shrink: 0; width: 26px; height: 26px; border-radius: 999px; color: #8a9a8e; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(6, 10, 7, 0.6); }
+        .dx-ticker .tk-more i { transition: transform 0.2s; font-size: 11px; }
+        .dx-ticker.open .tk-more i { transform: rotate(180deg); }
+        .dx-feed-drop { position: absolute; right: 32px; top: calc(100% - 2px); width: min(400px, calc(100vw - 32px)); max-height: min(70vh, 560px); display: flex; flex-direction: column; padding: 14px 16px; z-index: 60; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75); }
+        .dx-feed-drop.hidden { display: none; }
+        .dx-feed-drop .dx-feed { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; }
         .dx-growbar-in { max-width: 1440px; margin: 0 auto; padding: 10px 32px; display: flex; gap: 14px; align-items: center; }
         .dx-growbar .gb-label { flex-shrink: 0; display: flex; flex-direction: column; gap: 3px; }
         .dx-growbar .gb-label b { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a9a8e; font-weight: 800; }
@@ -652,6 +668,51 @@
         .mx-credit { text-align: center; font-size: 11px; color: #6b7a70; }
         .mx-link { color: #67e8f9 !important; border-color: rgba(103, 232, 249, 0.35) !important; white-space: nowrap; }
         .dx-sc .mx-link { margin: 8px auto 0; display: block; }
+        .st-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; padding: 1px 7px; border-radius: 999px; color: var(--sc); background: color-mix(in srgb, var(--sc) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 40%, transparent); white-space: nowrap; vertical-align: 1px; }
+        .st-chip i { font-size: 9px; }
+        .dx-status-pick { padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); display: grid; gap: 7px; }
+        .dx-status-pick:empty { display: none; }
+        .dx-status-pick .lbl { display: flex; justify-content: space-between; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #8a9a8e; }
+        .dx-status-pick .lbl button { color: #f87171; letter-spacing: 0; text-transform: none; font-size: 11px; }
+        .dx-status-pick .opts { display: flex; flex-wrap: wrap; gap: 5px; }
+        .dx-status-pick .opts button { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 999px; color: #cbd5d0; background: rgba(6, 10, 7, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .dx-status-pick .opts button i { color: var(--sc); }
+        .dx-status-pick .opts button.on { color: #fff; border-color: var(--sc); box-shadow: 0 0 10px color-mix(in srgb, var(--sc) 45%, transparent); }
+        .dx-status-pick form { display: flex; gap: 6px; }
+        .dx-status-pick .dx-input { font-size: 12px; padding: 6px 9px; }
+        .dx-status-pick .dx-btn { width: auto; padding: 6px 12px; font-size: 12px; }
+        /* BlackMarket page: black and blood red, dirty money in green */
+        .bm-page .dx-glass { border-color: rgba(220, 38, 38, 0.22); background: rgba(14, 8, 8, 0.78); }
+        .bm-page .dx-title.bm-title i { color: #ef4444; text-shadow: 0 0 12px rgba(239, 68, 68, 0.6); }
+        .bm-page .dx-title.bm-title::after { color: #ef4444; text-shadow: 0 0 8px #b91c1c; background: linear-gradient(90deg, #b91c1c, #450a0a) left center / 60px 2px no-repeat; }
+        .bm-page .dx-sec h2 { color: #fecaca; }
+        .bm-page .qs-step span { background: #7f1d1d; color: #fff; }
+        .bm-page .qs-submit:not(:disabled) { background: linear-gradient(180deg, #dc2626, #7f1d1d); box-shadow: 0 8px 24px rgba(220, 38, 38, 0.35); }
+        .bm-dirty { color: #4ade80; text-shadow: 0 0 8px rgba(74, 222, 128, 0.35); }
+        .bm-narco { display: inline-flex; align-items: center; font-size: 12px; font-weight: 800; padding: 8px 14px; border-radius: 10px; color: #fff; background: linear-gradient(180deg, #dc2626, #991b1b); box-shadow: 0 0 0 1px rgba(254, 202, 202, 0.25), 0 6px 18px rgba(220, 38, 38, 0.4); }
+        .bm-narco:hover { filter: brightness(1.12); }
+        body:not(.fx-off-glow) .bm-narco i { animation: bmRing 1.6s ease-in-out infinite; }
+        @keyframes bmRing { 0%, 60%, 100% { transform: rotate(0); } 10%, 30%, 50% { transform: rotate(-14deg); } 20%, 40% { transform: rotate(14deg); } }
+        .bm-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; color: #fecaca; background: rgba(220, 38, 38, 0.18); border: 1px solid rgba(248, 113, 113, 0.45); vertical-align: 1px; letter-spacing: 0; text-transform: none; }
+        .bm-tag.hidden { display: none; }
+        .bm-ring { animation: bmFlash 1.4s ease-out 1; }
+        @keyframes bmFlash { 0% { box-shadow: 0 0 0 2px #ef4444, 0 0 40px rgba(239, 68, 68, 0.7); } 100% { box-shadow: 0 0 0 0 transparent; } }
+        .inv-rows { display: grid; gap: 8px; }
+        .inv-row { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .inv-row .dx-tabs { flex: 1; min-width: 0; padding-bottom: 2px; }
+        .inv-row-lbl { flex: 0 0 132px; display: flex; flex-direction: column; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #cbd5d0; }
+        .inv-row-lbl i { display: none; }
+        .inv-row-lbl span { font-size: 10px; font-weight: 600; letter-spacing: 0; text-transform: none; color: #6b7a70; }
+        .inv-row.houses .inv-row-lbl { color: #fcd34d; }
+        .inv-row.grows .inv-row-lbl { color: hsl(var(--acc-h) 69% 62%); }
+        .dx-tab.inv-house:not(.on) { border-color: rgba(251, 191, 36, 0.22); }
+        .dx-tab.inv-house > i:first-child { color: #fbbf24; }
+        .dx-tab.inv-grow > i:first-child { color: hsl(var(--acc-h) 69% 58%); }
+        .dx-tab .inv-onsite { font-size: 10px; color: #fbbf24; }
+        .inv-kind { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-right: 6px; vertical-align: 1px; }
+        .inv-kind.house { color: #fcd34d; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.35); }
+        .inv-kind.grow { color: hsl(var(--acc-h) 69% 66%); background: hsl(var(--acc-h) 69% 58% / 0.1); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.35); }
+        @media (max-width: 640px) { .inv-row { flex-direction: column; align-items: stretch; gap: 4px; } .inv-row-lbl { flex: none; flex-direction: row; gap: 8px; align-items: baseline; } }
         .dx-crew-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
         .dx-crew-tools .dx-input { width: auto; min-width: 0; font-size: 13px; padding: 8px 10px; }
         .dx-crew-table .dx-act { flex: none; padding: 5px 10px; }
@@ -738,9 +799,9 @@
         /* Page titles: icon plus a short glowing underline that ends in a leaf */
         .dx-title::after { content: '\f55f'; font-family: 'Font Awesome 6 Free'; font-weight: 900; display: block; width: 74px; height: 12px; line-height: 12px; margin-top: 5px; font-size: 10px; text-align: right; color: hsl(var(--acc-h) 69% 62%); text-shadow: 0 0 8px hsl(var(--acc-h) 71% 45%); background: linear-gradient(90deg, hsl(var(--acc-h) 71% 45%), hsl(var(--gl))) left center / 60px 2px no-repeat; }
 
-        .dx-strains { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
-        .dx-sc { padding: 14px 14px 12px; display: flex; flex-direction: column; align-items: center; position: relative; transition: border-color 0.4s, box-shadow 0.4s; }
-        .dx-sc .logo { width: 118px; height: 118px; margin-bottom: 8px; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.6)); }
+        .dx-strains { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+        .dx-sc { padding: 11px 12px 10px; display: flex; flex-direction: column; align-items: center; position: relative; transition: border-color 0.4s, box-shadow 0.4s; }
+        .dx-sc .logo { width: 84px; height: 84px; margin-bottom: 6px; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.6)); }
         .dx-sc .name { font-weight: 800; font-size: 13px; text-align: center; }
         .dx-sc .row { width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-top: 6px; gap: 6px; }
         .dx-sc .row b { font-size: 13px; }
@@ -1180,8 +1241,6 @@
 
         @media (max-width: 1180px) {
             .dx-layout { grid-template-columns: minmax(0, 1fr); }
-            .dx-aside { min-height: 0; }
-            .dx-feed-panel { position: static; max-height: 520px; margin-top: 22px; }
             .dx-strains { grid-template-columns: repeat(4, minmax(0, 1fr)); }
         }
         @media (max-width: 960px) {
@@ -1192,6 +1251,8 @@
             .dx-stat .num { font-size: 26px; }
             .dx-stat svg { display: none; }
             .dx-growbar-in { padding: 8px 16px; }
+            .dx-ticker { padding: 0 16px 8px; }
+            .dx-feed-drop { right: 16px; }
             .dx-growbar .gb-label { display: none; }
             #dx-timers { scroll-snap-type: x mandatory; }
             .dx-gb { flex: 0 0 82%; max-width: none; scroll-snap-align: start; }
@@ -1240,9 +1301,9 @@
                             <span>Meth</span>
                             <span id="meth-ready-badge" class="hidden ml-1 px-1.5 py-0.5 text-xs rounded-full bg-cyan-950 text-cyan-300 border border-cyan-700" title="Cooks ready to collect">0</span>
                         </button>
-                                                <button onclick="switchTab('sales')" id="nav-sales" title="Log: what went out" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <i class="fa-solid fa-truck-fast"></i>
-                            <span>Log</span>
+                                                <button onclick="switchTab('sales')" id="nav-sales" title="BlackMarket: sell product for dirty money" data-sales-only class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <i class="fa-solid fa-mask"></i>
+                            <span>BlackMarket</span>
                         </button>
                                                 <button onclick="switchTab('crew')" id="nav-crew" title="Crew: everyone and what they've been up to" data-page="crew" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
                             <i class="fa-solid fa-users"></i>
@@ -1278,7 +1339,7 @@
                 <button onclick="switchTab('inventory'); toggleMobileMenu()" data-page="inventory" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Stash</button>
                 <button onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Timers</button>
                 <button onclick="switchTab('meth'); toggleMobileMenu()" data-page="meth" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Meth</button>
-                <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Log</button>
+                <button onclick="switchTab('sales'); toggleMobileMenu()" data-sales-only class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">BlackMarket</button>
                 <button onclick="switchTab('crew'); toggleMobileMenu()" data-page="crew" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Crew</button>
                 <button onclick="toggleMobileMenu(); openOnlinePanel()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">Who's Online</button>
                 <button onclick="openProfile(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-weed-900/40">My Profile</button>
@@ -1294,13 +1355,22 @@
                         <div id="dx-cooks"></div>
                     </div>
                 </div>
+                <div id="dx-ticker" class="dx-ticker">
+                    <button type="button" class="tk-live" onclick="toggleActivityDrop()" title="Show all Live Activity"><span class="dx-dot"></span>LIVE</button>
+                    <div class="tk-win" onclick="toggleActivityDrop()" title="Show all Live Activity"><div id="dx-ticker-track" class="tk-track"></div></div>
+                    <button type="button" class="tk-more" onclick="toggleActivityDrop()" aria-label="Show all Live Activity" aria-expanded="false"><i class="fa-solid fa-chevron-down"></i></button>
+                    <div id="dx-feed-drop" class="dx-feed-drop dx-glass hidden">
+                        <div class="dx-sec"><h2>Live Activity</h2><span class="dx-chip"><span class="dx-dot"></span>LIVE</span></div>
+                        <ul id="dx-feed" class="dx-feed"></ul>
+                    </div>
+                </div>
             </div>
         </header>
 
         <main class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
             <section id="tab-dashboard" class="tab-content">
-                <div id="dx-layout" class="dx-layout">
+                <div id="dx-layout" class="dx-layout solo">
                     <div class="dx-main min-w-0">
                         <div class="dx-sec"><h2>Stash</h2><button data-page="inventory" onclick="switchTab('inventory')">Open stash →</button></div>
                         <div id="dx-strains" class="dx-strains" style="margin-bottom:26px"></div>
@@ -1323,12 +1393,6 @@
                         </div>
                     </div>
 
-                    <aside id="dx-aside" class="dx-aside min-w-0" data-detail-only>
-                        <div class="dx-glass dx-panel dx-feed-panel">
-                            <div class="dx-sec"><h2>Live Activity</h2><span class="dx-chip"><span class="dx-dot"></span>LIVE</span></div>
-                            <ul id="dx-feed" class="dx-feed"></ul>
-                        </div>
-                    </aside>
                 </div>
             </section>
 
@@ -1343,20 +1407,21 @@
                         <input id="inv-step" type="number" min="1" step="1" value="100" oninput="renderInventory()" class="dx-input w-24 text-center">
                     </label>
                 </div>
-                <div id="inv-tabs" class="dx-tabs mb-5"></div>
+                <div id="inv-tabs" class="inv-rows mb-5"></div>
                 <div id="inv-stats" class="dx-inv-hero"></div>
                 <div id="inv-note" class="mb-4"></div>
                 <div id="inv-grid" class="dx-inv-grid"></div>
                 <div id="inv-plan"></div>
             </section>
 
-            <section id="tab-sales" class="tab-content hidden">
+            <section id="tab-sales" class="tab-content hidden bm-page">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
                     <div>
-                        <h1 class="dx-title text-2xl font-black text-white"><i class="fa-solid fa-truck-fast text-amber-400 mr-2"></i>Log</h1>
-                        <p class="text-xs text-slate-400 mt-1">Everything that went out: sold, delivered or handed off. Logging it takes it out of the stash.</p>
+                        <h1 class="dx-title bm-title text-2xl font-black text-white"><i class="fa-solid fa-mask mr-2"></i>BlackMarket</h1>
+                        <p class="text-xs text-slate-400 mt-1">Product sells for <b class="bm-dirty">dirty money</b> at the BlackMarket, usually from a Narco call. Selling takes it out of the stash.</p>
                     </div>
                     <div class="dx-plan-actions">
+                        <button class="bm-narco" onclick="narcoCall()" title="Got a Narco call? Start a sale"><i class="fa-solid fa-phone-volume mr-1"></i>Narco call</button>
                         <button class="dx-act" onclick="exportSalesCsv()"><i class="fa-solid fa-file-csv mr-1"></i>Export CSV</button>
                     </div>
                 </div>
@@ -1364,8 +1429,8 @@
                 <!-- Log bricks out: pick a strain, where from, how many, submit -->
                 <form id="sale-form" class="dx-glass dx-qs" onsubmit="saveSale(event)">
                     <input type="hidden" id="sale-strain"><input type="hidden" id="sale-from">
-                    <div class="dx-sec"><h2><i class="fa-solid fa-truck-fast text-amber-400 mr-1"></i>Log Something Going Out</h2><span class="text-xs dx-muted hidden sm:inline">Takes it out of the stash and adds it to the log.</span></div>
-                    <div class="qs-step"><span>1</span>What's going out</div>
+                    <div class="dx-sec"><h2><i class="fa-solid fa-sack-dollar bm-dirty mr-1"></i>Sell at the BlackMarket <span id="sale-narco-tag" class="bm-tag hidden"><i class="fa-solid fa-phone-volume"></i>Narco call</span></h2><span class="text-xs dx-muted hidden sm:inline">Takes it out of the stash and adds it to the ledger.</span></div>
+                    <div class="qs-step"><span>1</span>What's being sold</div>
                     <div id="qs-strains" class="qs-strains"></div>
                     <div class="qs-cols">
                         <div>
@@ -1389,7 +1454,7 @@
                         <label>Sold by <span data-admin-only class="hidden">(gets the seller's cut)</span>
                             <select id="sale-seller" class="dx-input w-full" onchange="saleDraft.sellerPicked = true"></select>
                         </label>
-                        <label id="sale-price-box">Total price <span>(fills in from the default)</span>
+                        <label id="sale-price-box">Dirty money <span>(total, fills in from the default)</span>
                             <input type="number" id="sale-price" min="0" step="1" placeholder="$" class="dx-input w-full font-mono" oninput="this.dataset.touched = '1'; renderQuickSaleSubmit()">
                         </label>
                         <label>Note <span>(optional)</span>
@@ -1414,7 +1479,7 @@
                     <div class="dx-glass dx-panel"><div class="dx-sec"><h2>By Person</h2><span class="text-xs dx-muted">went out</span></div><div id="sales-by-who" class="dx-hbars"></div></div>
                 </div>
                 <div class="dx-glass dx-sales">
-                    <div class="dx-sec"><h2>Log</h2></div>
+                    <div class="dx-sec"><h2>Ledger</h2></div>
                     <div class="overflow-x-auto"><table id="sales-table" class="dx-sales-table"></table></div>
                     <div id="sales-more" class="text-center mt-3"></div>
                 </div>
@@ -1890,7 +1955,7 @@
                     <div class="flex items-center space-x-3">
                         <div class="w-12 h-12 shrink-0 flex items-center justify-center" id="admin-meth-logo"></div>
                         <div><h2 class="font-bold text-white text-base">Meth Bins</h2>
-                            <p class="text-xs text-slate-400">Tracked as finished bins per location: add or remove them on the Meth Bins card, move them between locations, and log them going out on the Log page.</p></div>
+                            <p class="text-xs text-slate-400">Tracked as finished bins per location: add or remove them on the Meth Bins card, move them between locations, and sell them on the BlackMarket page.</p></div>
                     </div>
                 </div>
                 </div>
@@ -1913,7 +1978,7 @@
                     <div class="flex items-center space-x-3 border-b border-weed-900 pb-3">
                         <div class="w-8 h-8 rounded-lg bg-weed-950 text-weed-400 flex items-center justify-center"><i class="fa-solid fa-user-lock"></i></div>
                         <div><h2 class="font-bold text-white text-base">Who Sees What</h2>
-                            <p class="text-xs text-slate-400">Who can open the Log page and log things going out is the <b class="text-slate-200">Log things going out</b> permission on each person in the <button class="text-weed-400 underline" onclick="showAdminTab('crew')">Crew</button> tab (Managers have it by default).</p></div>
+                            <p class="text-xs text-slate-400">Who can open the BlackMarket page and sell is the <b class="text-slate-200">Sell at the BlackMarket</b> permission on each person in the <button class="text-weed-400 underline" onclick="showAdminTab('crew')">Crew</button> tab (Managers have it by default).</p></div>
                     </div>
                     <label class="dx-toggle"><input type="checkbox" id="sales-hide-prices" onchange="setHidePrices(this.checked)"><span class="sw"></span>
                         <span><b>Only admins see prices</b><small>Crew still see bricks and notes; prices, cash totals and the price box are hidden from them. Default prices still fill in.</small></span></label>
@@ -2037,6 +2102,7 @@
             <div><b>Crew</b> <span id="online-count" class="dx-chip"><span class="dx-dot"></span><span></span></span></div>
             <button type="button" onclick="closeOnlinePanel()" class="text-slate-400 hover:text-white" title="Close"><i class="fa-solid fa-xmark"></i></button>
         </div>
+        <div id="online-status" class="dx-status-pick"></div>
         <div id="online-list" class="dx-online-list"></div>
         <div class="dx-online-foots">
             <button type="button" data-page="crew" onclick="closeOnlinePanel(); switchTab('crew')" class="dx-online-foot"><i class="fa-solid fa-users mr-1"></i>Crew page</button>
@@ -2759,6 +2825,40 @@
         }
 
         // Value that becomes "now" when written: the server's clock in cloud mode
+        // Every clock and date on the site is US Eastern, whatever the viewer's own time zone
+        const SITE_TZ = 'America/New_York';
+        ['toLocaleString', 'toLocaleDateString', 'toLocaleTimeString'].forEach(name => {
+            const original = Date.prototype[name];
+            Date.prototype[name] = function (locales, options) { return original.call(this, locales, { timeZone: SITE_TZ, ...(options || {}) }); };
+        });
+        const ET_PARTS = new Intl.DateTimeFormat('en-US', { timeZone: SITE_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', weekday: 'short' });
+        const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        // The Eastern wall-clock parts of a moment
+        function etParts(ms) {
+            const o = {};
+            ET_PARTS.formatToParts(new Date(ms)).forEach(p => { o[p.type] = p.value; });
+            return { y: +o.year, mo: +o.month, d: +o.day, h: +o.hour % 24, mi: +o.minute, dow: WEEKDAYS.indexOf(o.weekday) };
+        }
+
+        function etDayKey(ms) {
+            const p = etParts(ms);
+            return `${p.y}-${String(p.mo).padStart(2, '0')}-${String(p.d).padStart(2, '0')}`;
+        }
+
+        // The moment it is a given Eastern wall-clock time
+        function etToEpoch(y, mo, d, h = 0, mi = 0) {
+            const want = Date.UTC(y, mo - 1, d, h, mi);
+            let t = want;
+            for (let i = 0; i < 3; i++) { const p = etParts(t); t += want - Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi); }
+            return t;
+        }
+
+        // "Fri, Oct 2, 3:14 PM ET" (Discord messages)
+        function etStamp(ms) {
+            return `${new Date(ms).toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })} ET`;
+        }
+
         function timestampValue() {
             return Sync.mode === 'cloud' ? firebase.database.ServerValue.TIMESTAMP : Date.now();
         }
@@ -3018,7 +3118,7 @@
             { key: 'inventory', label: 'Edit inventory', hint: 'Add/remove, trim, press, move stock' },
             { key: 'timers', label: 'Timers & harvests', hint: 'Start, stop, restart, harvest' },
             { key: 'planner', label: 'Pot plans', hint: 'Change pots and what gets planted' },
-            { key: 'sales', label: 'Log things going out', hint: 'See the Log page and log things going out' },
+            { key: 'sales', label: 'Sell at the BlackMarket', hint: 'See the BlackMarket page and sell product for dirty money' },
             { key: 'meth', label: 'Meth', hint: 'See the Meth page and meth cook timers, put down and collect cooks' }
         ];
         // The Admin page isn't a crew permission: it only opens with the admin password (link in the footer)
@@ -3254,7 +3354,7 @@
         // Click outside or Esc closes it
         document.addEventListener('click', event => {
             const panel = document.getElementById('online-panel');
-            if (panel && !panel.classList.contains('hidden') && !panel.contains(event.target) && !event.target.closest('#presence-box, #mobile-menu')) closeOnlinePanel();
+            if (panel && !panel.classList.contains('hidden') && event.target.isConnected && !panel.contains(event.target) && !event.target.closest('#presence-box, #mobile-menu')) closeOnlinePanel();
         });
         document.addEventListener('keydown', event => { if (event.key === 'Escape') closeOnlinePanel(); });
 
@@ -3279,10 +3379,11 @@
                 if (m) return roleLabel(m).replace(' (stats only)', '');
                 return crewMode() && name === me && isAdminUnlocked() ? 'Admin password' : crewMode() ? 'Guest' : 'Crew';
             };
+            renderStatusPicker();
             const onlineRows = [...online.values()].sort((a, b) => (b.you - a.you) || a.name.localeCompare(b.name)).map(r => `
                 <div class="dx-person ${wornTitleFor(r.name) ? 'has-bg' : ''}">${wornTitleFor(r.name) ? `<div class="pbg">${titleCardHtml(wornTitleFor(r.name), { noName: true, noTier: true, still: true })}</div>` : ''}
                     <span class="av">${avatarHtml(r.name)}<i class="on"></i></span>
-                    <div class="who"><b>${nameHtml(r.name)}</b><span>${escapeHtml(roleText(r.name))}${r.since ? ` · joined ${relativeTime(r.since)}` : ''}${r.devices > 1 ? ` · ${r.devices} devices` : ''}${harvestsTag(r.name)}</span></div>
+                    <div class="who"><b>${nameHtml(r.name)} ${statusChipHtml(statusFor(r.name))}</b><span>${escapeHtml(roleText(r.name))}${r.since ? ` · joined ${relativeTime(r.since)}` : ''}${r.devices > 1 ? ` · ${r.devices} devices` : ''}${harvestsTag(r.name)}</span></div>
                     ${r.you ? '<span class="tag you">You</span>' : ''}
                 </div>`).join('');
             const offline = crewMode() ? Object.values(appState.crew).filter(m => !online.has(m.name)).sort((a, b) => (b.pending - a.pending) || a.name.localeCompare(b.name)) : [];
@@ -3297,6 +3398,57 @@
                 `<h4>Online now</h4>${onlineRows || '<p class="text-xs dx-muted px-2 py-2">Nobody else is here right now.</p>'}` +
                 (offlineRows ? `<h4>Offline</h4>${offlineRows}` : '') +
                 (Sync.mode !== 'cloud' ? '<p class="text-[11px] dx-muted px-2 pt-2">Live sync is off, so only this device shows.</p>' : '');
+        }
+
+        // Your status (At the lab, Selling…): shared with your presence, gone when you go offline
+        const STATUS_PRESETS = [
+            { id: 'lab', text: 'At the lab', icon: 'flask', color: '#22d3ee' },
+            { id: 'grow', text: 'Growing', icon: 'cannabis', color: '#4ade80' },
+            { id: 'sell', text: 'Selling', icon: 'truck-fast', color: '#fbbf24' },
+            { id: 'run', text: 'On a run', icon: 'route', color: '#c084fc' },
+            { id: 'busy', text: 'Busy', icon: 'circle-minus', color: '#f87171' },
+            { id: 'afk', text: 'AFK', icon: 'moon', color: '#94a3b8' }
+        ];
+        let myStatus = (() => { try { return cleanStatus(JSON.parse(sessionStorage.getItem('noelops_status'))); } catch (e) { return null; } })();
+
+        function cleanStatus(st) {
+            if (!isPlainObject(st)) return null;
+            const preset = STATUS_PRESETS.find(p => p.id === st.id);
+            const text = String(st.text || (preset ? preset.text : '')).replace(/\s+/g, ' ').trim().slice(0, 20);
+            return text ? { id: preset ? preset.id : 'custom', text } : null;
+        }
+
+        function statusFor(name) {
+            if (name === appState.crewName) return myStatus;
+            const p = appState.presence.find(x => x.name === name && x.status);
+            return p ? cleanStatus(p.status) : null;
+        }
+
+        function statusChipHtml(st) {
+            if (!st) return '';
+            const p = STATUS_PRESETS.find(x => x.id === st.id) || { icon: 'comment', color: '#e2e8f0' };
+            return `<span class="st-chip" style="--sc:${p.color}" title="Status"><i class="fa-solid fa-${p.icon}"></i>${escapeHtml(st.text)}</span>`;
+        }
+
+        function setMyStatus(id, text) {
+            myStatus = id ? cleanStatus({ id, text }) : null;
+            try { myStatus ? sessionStorage.setItem('noelops_status', JSON.stringify(myStatus)) : sessionStorage.removeItem('noelops_status'); } catch (e) { /* optional */ }
+            if (presenceRef) presenceRef.child('status').set(myStatus).catch(err => console.error('Status update failed:', err));
+            const focused = document.activeElement;
+            if (focused && focused.closest && focused.closest('#online-status')) focused.blur();
+            renderOnlinePanel();
+            renderCrewPage();
+        }
+
+        function renderStatusPicker() {
+            const box = document.getElementById('online-status');
+            if (!box) return;
+            if (!appState.crewName) { box.innerHTML = ''; return; }
+            const custom = myStatus && myStatus.id === 'custom' ? myStatus.text : '';
+            if (box.contains(document.activeElement)) return;
+            box.innerHTML = `<div class="lbl">Your status ${myStatus ? `<button type="button" onclick="setMyStatus(null)">Clear</button>` : ''}</div>
+                <div class="opts">${STATUS_PRESETS.map(p => `<button type="button" class="${myStatus && myStatus.id === p.id ? 'on' : ''}" style="--sc:${p.color}" onclick="setMyStatus('${p.id}')"><i class="fa-solid fa-${p.icon}"></i>${escapeHtml(p.text)}</button>`).join('')}</div>
+                <form onsubmit="event.preventDefault(); setMyStatus('custom', this.elements.t.value)"><input name="t" maxlength="20" placeholder="Or type your own…" value="${escapeHtml(custom)}" class="dx-input" aria-label="Custom status"><button type="submit" class="dx-btn dx-btn-g">Set</button></form>`;
         }
 
         function harvestsTag(name) {
@@ -3508,7 +3660,7 @@
         }
 
         function cookTimeLabel(t) {
-            return new Date(t - Sync.serverOffset).toLocaleString([], { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+            return `${new Date(t - Sync.serverOffset).toLocaleString([], { weekday: 'short', hour: 'numeric', minute: '2-digit' })} ET`;
         }
 
         function cookCardHtml(c, now) {
@@ -3785,14 +3937,14 @@
             const actions = p => [
                 p.you ? `<button class="dx-act" onclick="openProfile()"><i class="fa-solid fa-user-gear mr-1"></i>My Profile</button>` : '',
                 admin && p.id ? `<button class="dx-act" onclick="openCrewEditor(${jsArg(p.id)})"><i class="fa-solid fa-pen mr-1"></i>Edit</button>` : '',
-                can('sales') && p.outCount ? `<button class="dx-act" onclick="crewShowLog(${jsArg(p.name)})"><i class="fa-solid fa-truck-fast mr-1"></i>Their log</button>` : ''
+                can('sales') && p.outCount ? `<button class="dx-act" onclick="crewShowLog(${jsArg(p.name)})"><i class="fa-solid fa-mask mr-1"></i>Their sales</button>` : ''
             ].filter(Boolean).join('');
             const flags = p => [p.you ? '<span class="dx-pill">You</span>' : '', admin && p.member && p.member.pending ? '<span class="dx-pill" style="background:#fbbf24;color:#000">New</span>' : ''].join('');
             if (view === 'list') {
                 body.innerHTML = `<div class="dx-glass dx-sales"><div class="overflow-x-auto"><table class="dx-sales-table dx-crew-table">
                     <thead><tr><th>Name</th><th>Role</th><th>Status</th><th class="r">Harvests</th><th class="r">Bud</th><th class="r">Gone out</th><th>Last did</th>${admin ? '<th>Access</th>' : ''}<th></th></tr></thead>
                     <tbody>${people.map(p => `<tr data-crew="${escapeHtml(p.name)}" class="${crewFocus === p.name ? 'focus' : ''}">
-                        <td><span class="who">${avatarHtml(p.name)}${nameHtml(p.name)} ${wornTagFor(p.name)} ${flags(p)}</span></td>
+                        <td><span class="who">${avatarHtml(p.name)}${nameHtml(p.name)} ${wornTagFor(p.name)} ${flags(p)} ${p.online ? statusChipHtml(statusFor(p.name)) : ''}</span></td>
                         <td class="m">${escapeHtml(p.role)}</td>
                         <td class="m"><span class="ondot ${p.online ? 'on' : ''}"></span>${escapeHtml(status(p))}</td>
                         <td class="r">${p.harvests.toLocaleString()}</td><td class="r">${p.bud.toLocaleString()}</td><td class="r">${p.outUnits.toLocaleString()}</td>
@@ -3806,7 +3958,7 @@
                     ${wornTitleFor(p.name) ? `<div class="mate-banner">${titleCardHtml(wornTitleFor(p.name), { noTier: true })}</div>` : ''}
                     <div class="flags">${flags(p)}</div>
                     <div class="top"><span class="avw">${avatarHtml(p.name)}<i class="dot ${p.online ? 'on' : ''}"></i></span>
-                        <div class="min-w-0"><div class="nm">${nameHtml(p.name)}</div><div class="rl">${escapeHtml(p.role)} ${wornTagFor(p.name)}</div><div class="status ${p.online ? 'on' : ''}">${escapeHtml(status(p))}</div></div></div>
+                        <div class="min-w-0"><div class="nm">${nameHtml(p.name)}</div><div class="rl">${escapeHtml(p.role)} ${wornTagFor(p.name)}</div><div class="status ${p.online ? 'on' : ''}">${escapeHtml(status(p))}</div>${p.online ? statusChipHtml(statusFor(p.name)) : ''}</div></div>
                     <div class="nums"><div><b>${p.harvests.toLocaleString()}</b><span>Harvests</span></div><div><b>${p.bud >= 10000 ? `${Math.round(p.bud / 1000)}k` : p.bud.toLocaleString()}</b><span>Bud in</span></div><div><b>${p.outUnits.toLocaleString()}</b><span>Gone out</span></div></div>
                     ${titlesOn() ? crewRoles(p.name) : ''}
                     <div class="last"><i class="fa-solid fa-clock-rotate-left mr-1 text-slate-500"></i>${lastLine(p)}</div>
@@ -3815,7 +3967,7 @@
                 </div>`).join('')}</div>`;
         }
 
-        // "Their log": the Log page filtered to that person
+        // "Their sales": the BlackMarket page filtered to that person
         function crewShowLog(name) {
             switchTab('sales');
             const sel = document.getElementById('sales-f-who');
@@ -4162,7 +4314,7 @@
 
         // ---- counting what people do ----
         function localDayKey(d) {
-            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            return etDayKey(d.getTime());
         }
 
         // Add to my counters, and keep a local copy so the next action sees it before the live update lands
@@ -4182,7 +4334,9 @@
         function trackAction(kind, counts = {}) {
             const me = myPersonKey();
             if (!me) return;
-            const now = new Date(), h = now.getHours(), m = now.getMinutes();
+            const et = etParts(Date.now()); // habits and time secrets go by Eastern time, like every clock on the site
+            const now = { getHours: () => et.h, getMinutes: () => et.mi, getMonth: () => et.mo - 1, getDate: () => et.d, getDay: () => et.dow, getTime: () => Date.now() };
+            const h = et.h, m = et.mi;
             const fields = { ...counts };
             if (h < 5) fields.night = 1; else if (h < 8) fields.morning = 1;
             const s = statsFor(me), day = localDayKey(now), sets = {};
@@ -5287,11 +5441,10 @@
         let lastActivity = null; // lets rapid repeat presses (+100, +100...) merge into one feed entry
         let activityFeedPrimed = false;
 
-        // Calendar day in this viewer's own time zone, `daysBack` days ago, as 'YYYY-MM-DD'
+        // Calendar day in US Eastern time, `daysBack` days ago, as 'YYYY-MM-DD'
         function dayKey(daysBack = 0) {
-            const d = new Date(syncNow());
-            d.setDate(d.getDate() - daysBack); // calendar days, so daylight-saving changes don't skip a day
-            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            const p = etParts(syncNow() - Sync.serverOffset);
+            return new Date(Date.UTC(p.y, p.mo - 1, p.d - daysBack)).toISOString().slice(0, 10); // calendar days, so daylight saving doesn't skip one
         }
 
         function initials(name) {
@@ -5388,6 +5541,7 @@
             if (!presenceRef) presenceRef = Sync.root.child('presence').push();
             presenceRef.onDisconnect().remove();
             const record = { name: appState.crewName, client: CLIENT_ID, since: timestampValue() };
+            if (myStatus) record.status = myStatus;
             // Crew members' pictures and name colors come from the crew list; anyone else shares theirs while online
             if (!currentMember() && appState.profileLocal.avatar) record.avatar = appState.profileLocal.avatar;
             if (!currentMember() && appState.profileLocal.nameColor) record.nameColor = appState.profileLocal.nameColor;
@@ -5450,7 +5604,7 @@
             discord: { pre: 'updated', hi: 'the Discord settings', post: '' },
             backup: { pre: 'restored', hi: 'a backup', post: '' },
             joined: { pre: 'created', hi: 'a profile', post: '(needs review)' },
-            sale: { pre: 'logged', hi: 'bricks going out', post: '' },
+            sale: { pre: 'sold', hi: 'product', post: 'at the BlackMarket' },
             budget: { pre: 'updated', hi: 'the budget', post: '' }
         };
         const ACTIVITY_MERGE_MS = 5 * 60 * 1000;
@@ -5863,7 +6017,7 @@
             document.querySelectorAll('[data-detail-only]').forEach(el => el.classList.toggle('hidden', statsOnly));
             applyPageAccess();
             const layout = document.getElementById('dx-layout');
-            if (layout) layout.classList.toggle('solo', statsOnly);
+            if (layout) layout.classList.add('solo'); // Live Activity lives in the ticker now
             renderGrowbarVisibility();
             checkAccessGate();
         }
@@ -6033,8 +6187,7 @@
             const out = [];
             for (let back = days - 1; back >= 0; back--) out.push({ key: dayKey(back), n: 0 });
             visibleSales().filter(x => group === 'all' || productGroup(x.strain) === group).forEach(x => {
-                const d = new Date(x.ts - Sync.serverOffset);
-                const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                const key = etDayKey(x.ts - Sync.serverOffset);
                 const slot = out.find(o => o.key === key);
                 if (slot) slot.n += x.bricks;
             });
@@ -6092,14 +6245,13 @@
             };
         }
 
-        // "Ready ~ 18:30", "Ready ~ 09:15 tomorrow", "Ready ~ Thu 09:15" in the viewer's own time zone
+        // "Ready ~ 06:30 PM ET", "Ready ~ 09:15 AM ET tomorrow", "Ready ~ Thu 09:15 AM ET" (US Eastern)
         function readyAtLabel(loc) {
             const readyAt = new Date(loc.startTime + durationSecs(loc) * 1000 - Sync.serverOffset);
-            const time = readyAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const today = new Date();
-            const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-            if (readyAt.toDateString() === today.toDateString()) return `Ready ~ ${time} your time`;
-            if (readyAt.toDateString() === tomorrow.toDateString()) return `Ready ~ ${time} tomorrow`;
+            const time = `${readyAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} ET`;
+            const day = etDayKey(readyAt.getTime());
+            if (day === dayKey(0)) return `Ready ~ ${time}`;
+            if (day === dayKey(-1)) return `Ready ~ ${time} tomorrow`;
             return `Ready ~ ${readyAt.toLocaleDateString([], { weekday: 'short' })} ${time}`;
         }
 
@@ -6243,8 +6395,38 @@
         }
 
         function activityTextHtml(entry) {
-            return `${nameHtml(entry.who)}${wornTitleFor(entry.who) ? ` ${wornTagFor(entry.who)}` : ''} ${escapeHtml(entry.pre || '')} <b class="g">${escapeHtml(entry.hi || '')}</b> ${escapeHtml(entry.post || '')}`;
+            return `${nameHtml(entry.who)} ${escapeHtml(entry.pre || '')} <b class="g">${escapeHtml(entry.hi || '')}</b> ${escapeHtml(entry.post || '')}`;
         }
+
+        // The slim ticker: the newest lines scroll past; click it for the full list
+        let tickerSignature = '';
+        function renderTicker(entries) {
+            const track = document.getElementById('dx-ticker-track');
+            if (!track) return;
+            const items = entries.slice(0, 12).map(e => `<span class="tk-item">${avatarHtml(e.who)}<span>${activityTextHtml(e)}</span><span class="when">${relativeTime(e.ts)}</span></span>`);
+            const sig = items.join('');
+            if (sig === tickerSignature) return;
+            tickerSignature = sig;
+            if (!items.length) { track.innerHTML = '<span class="tk-item tk-quiet">Quiet so far. Harvests, cooks and sales show up here live.</span>'; track.style.animation = 'none'; return; }
+            const run = items.join('<span class="tk-sep">•</span>') + '<span class="tk-sep">•</span>';
+            track.innerHTML = `<span class="tk-run">${run}</span><span class="tk-run" aria-hidden="true">${run}</span>`;
+            const width = track.firstElementChild.scrollWidth;
+            track.style.animation = '';
+            track.style.setProperty('--tk-dur', `${Math.max(20, Math.round(width / 45))}s`); // ~45px a second
+        }
+
+        function toggleActivityDrop(force) {
+            const drop = document.getElementById('dx-feed-drop');
+            if (!drop) return;
+            const open = force === undefined ? drop.classList.contains('hidden') : force;
+            drop.classList.toggle('hidden', !open);
+            document.getElementById('dx-ticker').classList.toggle('open', open);
+            document.querySelector('#dx-ticker .tk-more').setAttribute('aria-expanded', String(open));
+        }
+        document.addEventListener('click', e => {
+            const t = document.getElementById('dx-ticker');
+            if (t && t.classList.contains('open') && e.target.isConnected && !t.contains(e.target)) toggleActivityDrop(false);
+        });
 
         function renderActivityFeed() {
             const list = document.getElementById('dx-feed');
@@ -6254,6 +6436,7 @@
                 ? `<li style="display:block">${emptyState('Quiet so far', 'Harvests, presses and things going out show up here live as the crew works.')}</li>`
                 : entries.map(entry => `
                     <li>${avatarHtml(entry.who)}<div class="min-w-0">${activityTextHtml(entry)}<div class="when">${relativeTime(entry.ts)}</div></div></li>`).join('');
+            renderTicker(entries);
         }
 
         // Clean axis steps: 0 / 1 / 2…, 0 / 5 / 10…, 0 / 10 / 20…
@@ -6279,8 +6462,8 @@
             const days = outs.map((o, i) => {
                 const h = appState.history[o.key] || {};
                 const made = madeFields.reduce((sum, f) => sum + toCount(h[f]), 0);
-                const date = new Date(o.key + 'T00:00:00');
-                return { key: o.key, made, out: o.n, date, letter: letters[date.getDay()], today: i === outs.length - 1 };
+                const date = new Date(o.key + 'T16:00:00Z'); // midday Eastern on that date
+                return { key: o.key, made, out: o.n, date, letter: letters[date.getUTCDay()], today: i === outs.length - 1 };
             });
             const totalIn = days.reduce((sum, d) => sum + d.made, 0);
             const totalOut = days.reduce((sum, d) => sum + d.out, 0);
@@ -6410,15 +6593,22 @@
 
             // Tabs
             const allTotals = currentTotals();
-            document.getElementById('inv-tabs').innerHTML = (stockOk ? '' : '<span class="text-xs dx-muted self-center mr-1"><i class="fa-solid fa-table-cells mr-1"></i>Pot plans:</span>') +
-                (!stockOk ? '' : `<button class="dx-tab ${isAll ? 'on' : ''}" onclick="selectInvBucket('all')"><i class="fa-solid fa-layer-group"></i>All <span class="count">${allTotals.bricks.toLocaleString()}</span></button>`) +
-                buckets.map(b => `
-                    <button class="dx-tab ${view === b.key ? 'on' : ''}" onclick="selectInvBucket(${jsArg(b.key)})" title="${escapeHtml(b.label)}${b.alias ? ' · ' + escapeHtml(b.alias) : ''}">
-                        <i class="fa-solid ${bucketIcon(b)}"></i>
+            // Two rows so it's clear which is which: stash houses (stock) and grows (pot plans, plus stock if they store on site)
+            const isGrowTab = b => b.kind === 'grow' || (b.orphan && !b.key.startsWith(STASH_PREFIX));
+            const tabHtml = b => `
+                    <button class="dx-tab ${isGrowTab(b) ? 'inv-grow' : 'inv-house'} ${view === b.key ? 'on' : ''}" onclick="selectInvBucket(${jsArg(b.key)})" title="${escapeHtml(b.label)}${b.alias ? ' · ' + escapeHtml(b.alias) : ''}${b.kind === 'grow' ? (b.storage ? ' · keeps stock on site' : ' · no on-site storage') : ''}">
+                        <i class="fa-solid ${b.kind === 'grow' ? 'fa-cannabis' : bucketIcon(b)}"></i>
                         <span class="${b.kind === 'grow' ? 'font-mono' : ''}">${escapeHtml(b.short)}</span>${b.alias ? `<span class="sub">${escapeHtml(b.alias)}</span>` : ''}
                         ${b.excluded ? '<i class="fa-solid fa-eye-slash text-slate-500" title="Left out of totals"></i>' : ''}
+                        ${b.kind === 'grow' && b.storage ? '<i class="fa-solid fa-warehouse inv-onsite" title="Keeps stock on site"></i>' : ''}
                         ${stockOk && (b.storage || bucketHasStock(appState.stock[b.key])) ? `<span class="count" title="Bricks">${bucketTotals(appState.stock[b.key]).bricks.toLocaleString()}</span>` : ''}${b.kind === 'grow' && planTabs ? (a => `<span class="alloc ${a.cls}" title="Pots planned">${a.planned}/${a.total}</span>`)(allocState(appState.locations.find(l => l.id === b.locId))) : ''}
-                    </button>`).join('');
+                    </button>`;
+            const houses = buckets.filter(b => !isGrowTab(b)), grows = buckets.filter(isGrowTab);
+            const row = (cls, icon, label, hint, tabs) => `<div class="inv-row ${cls}"><div class="inv-row-lbl"><i class="fa-solid ${icon}"></i>${label}<span>${hint}</span></div><div class="dx-tabs">${tabs}</div></div>`;
+            document.getElementById('inv-tabs').innerHTML =
+                (stockOk ? row('houses', 'fa-warehouse', 'Stash houses', 'where stock is kept',
+                    `<button class="dx-tab inv-house ${isAll ? 'on' : ''}" onclick="selectInvBucket('all')"><i class="fa-solid fa-layer-group"></i>All <span class="count">${allTotals.bricks.toLocaleString()}</span></button>` + houses.map(tabHtml).join('')) : '') +
+                (grows.length ? row('grows', 'fa-cannabis', 'Grows', planTabs ? 'pot plans, and stock if kept on site' : 'stock kept on site', grows.map(tabHtml).join('')) : '');
 
             // Grows with no on-site storage (or crew who only plan pots): just the pot plan
             const currentTab = buckets.find(b => b.key === view);
@@ -6427,7 +6617,7 @@
                 document.getElementById('inv-stats').innerHTML = '';
                 grid.innerHTML = '';
                 document.getElementById('inv-note').innerHTML = !buckets.length ? emptyState('No grows for you yet', 'An admin can give you access to grows in Admin → Crew.')
-                    : currentTab && currentTab.kind === 'grow' && !currentTab.storage ? `<p class="text-xs text-slate-400"><i class="fa-solid fa-location-dot text-weed-500 mr-1"></i><b class="text-white">${escapeHtml(currentTab.label)}</b>${currentTab.alias ? ` · ${escapeHtml(currentTab.alias)}` : ''} has no on-site storage: harvests go to <b class="text-white">${escapeHtml(bucketLabel((appState.locations.find(l => l.id === currentTab.locId) || {}).stashTo || STASH_KEY))}</b>.</p>` : '';
+                    : currentTab && currentTab.kind === 'grow' && !currentTab.storage ? `<p class="text-xs text-slate-400"><span class="inv-kind grow"><i class="fa-solid fa-cannabis"></i>Grow</span><b class="text-white">${escapeHtml(currentTab.label)}</b>${currentTab.alias ? ` · ${escapeHtml(currentTab.alias)}` : ''} has no on-site storage: harvests go to <b class="text-white">${escapeHtml(bucketLabel((appState.locations.find(l => l.id === currentTab.locId) || {}).stashTo || STASH_KEY))}</b>.</p>` : '';
                 renderGrowPlanner();
                 return;
             }
@@ -6469,7 +6659,7 @@
                     (withheld.length ? `<p class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-eye-slash text-slate-500 mr-1"></i>Not counted in these totals: <b class="text-slate-200">${withheld.map(b => escapeHtml(b.label)).join(', ')}</b>.</p>` : '')
                 : current && current.orphan
                     ? `<p class="text-xs text-amber-300"><i class="fa-solid fa-triangle-exclamation mr-1"></i>This ${current.key.startsWith(STASH_PREFIX) ? 'stash house' : 'location'} was removed. Move its stock somewhere else.</p>`
-                    : `<p class="text-xs text-slate-400"><i class="fa-solid ${current ? bucketIcon(current) : 'fa-location-dot'} text-weed-500 mr-1"></i>Editing <b class="text-white">${escapeHtml(current ? current.label : '')}</b>${current && current.alias ? ` · ${escapeHtml(current.alias)}` : ''}. The − / + and Trim buttons use the step amount (${step.toLocaleString()}).</p>` +
+                    : `<p class="text-xs text-slate-400">${current ? (current.kind === 'grow' ? `<span class="inv-kind grow"><i class="fa-solid fa-cannabis"></i>Grow · stock on site</span>` : `<span class="inv-kind house"><i class="fa-solid fa-warehouse"></i>Stash house</span>`) : ''}Editing <b class="text-white">${escapeHtml(current ? current.label : '')}</b>${current && current.alias ? ` · ${escapeHtml(current.alias)}` : ''}. The − / + and Trim buttons use the step amount (${step.toLocaleString()}).</p>` +
                         (current && current.kind === 'grow' && !current.storage ? noStorageNote(current) : '') +
                         (current ? withholdNote(current) : '');
 
@@ -6926,7 +7116,20 @@
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+        // A Narco call: open the sell form and mark the sale as coming from one
+        function narcoCall() {
+            if (!can('sales')) return;
+            saleDraft.narco = true;
+            document.getElementById('sale-narco-tag').classList.remove('hidden');
+            const form = document.getElementById('sale-form');
+            form.classList.remove('bm-ring'); void form.offsetWidth; form.classList.add('bm-ring');
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         function resetSaleDetails() {
+            saleDraft.narco = false;
+            const tag = document.getElementById('sale-narco-tag');
+            if (tag) tag.classList.add('hidden');
             ['sale-price', 'sale-note'].forEach(id => { document.getElementById(id).value = ''; });
             delete document.getElementById('sale-price').dataset.touched;
             document.getElementById('sale-error').classList.add('hidden');
@@ -6985,7 +7188,7 @@
                     const n = saleBricksAt(b.key, saleDraft.strain);
                     return `<button type="button" class="${saleDraft.from === b.key ? 'on' : ''}" ${n ? '' : 'disabled'} onclick="selectSaleFrom(${jsArg(b.key)})">${escapeHtml(b.label)}<b>${n}</b></button>`;
                 }).join('')
-                : '<p class="text-xs dx-muted">Pick what\'s going out first.</p>';
+                : '<p class="text-xs dx-muted">Pick what\'s being sold first.</p>';
             const have = saleDraft.strain ? saleBricksAt(saleDraft.from, saleDraft.strain) : 0;
             document.getElementById('sale-available').textContent = saleDraft.strain ? `(${have} at ${bucketLabel(saleDraft.from)})` : '';
             // 4. sellers (keep the choice)
@@ -7011,13 +7214,13 @@
             const price = document.getElementById('sale-price').value.trim();
             if (!saleDraft.strain) {
                 btn.disabled = true;
-                btn.innerHTML = 'Pick what\'s going out to start';
+                btn.innerHTML = 'Pick what\'s being sold to start';
                 return;
             }
             btn.disabled = n < 1;
             const item = SALE_ITEMS().find(x => x.id === saleDraft.strain);
             const label = isProduct(saleDraft.strain) ? `${n === 1 ? item.name : `${item.name}s`}` : `${item.name} ${unitWord(saleDraft.strain, n)}`;
-            btn.innerHTML = `<i class="fa-solid fa-check mr-2"></i>Log ${n} ${escapeHtml(label)} out${price && canSeePrices() ? ` · ${money(price)}` : ''}`;
+            btn.innerHTML = `<i class="fa-solid fa-sack-dollar mr-2"></i>Sell ${n} ${escapeHtml(label)}${price && canSeePrices() ? ` for ${money(price)} dirty` : ''}`;
         }
 
         function saveSale(event) {
@@ -7053,6 +7256,7 @@
                 const seller = personFromKey(document.getElementById('sale-seller').value);
                 const record = { strain: strainId, bricks, bucket, who: seller.name, by: appState.crewName || 'Someone', cut: cutFor(seller.id, seller.name), ts: timestampValue(), note };
                 if (seller.id) record.sellerId = seller.id;
+                if (saleDraft.narco) record.src = 'narco';
                 if (priceRaw !== '') record.price = toCount(priceRaw);
                 else if (!canSeePrices() && appState.salesSettings.prices[strainId]) record.price = appState.salesSettings.prices[strainId] * bricks; // hidden box: default price
                 const changes = { [`sales/${id}`]: record };
@@ -7098,9 +7302,8 @@
         }
 
         function startOfToday() {
-            const d = new Date(syncNow());
-            d.setHours(0, 0, 0, 0);
-            return d.getTime();
+            const p = etParts(syncNow() - Sync.serverOffset);
+            return etToEpoch(p.y, p.mo, p.d) + Sync.serverOffset;
         }
 
         // Prices are hidden from crew when an admin turns that on
@@ -7192,14 +7395,14 @@
                     <td class="n r">−${x.bricks}</td>
                     <td class="m">${escapeHtml(bucketLabel(x.bucket))}</td>
                     ${prices ? `<td class="r">${x.price !== null ? money(x.price) : '<span class="dx-muted">—</span>'}</td>` : ''}
-                    <td class="m">${escapeHtml(x.note || '')}</td>
+                    <td class="m">${x.src === 'narco' ? '<span class="bm-tag" title="From a Narco call"><i class="fa-solid fa-phone-volume"></i>Narco</span> ' : ''}${escapeHtml(x.note || '')}</td>
                     ${admin ? `<td class="r"><button class="text-slate-500 hover:text-red-300" onclick="removeSale(${jsArg(x.id)})" title="Remove entry and return the bricks"><i class="fa-solid fa-rotate-left"></i></button></td>` : ''}
                 </tr>`;
             }).join('');
             document.getElementById('sales-table').innerHTML = list.length
-                ? `<thead><tr><th>When</th><th>Who</th><th>Product</th><th class="r">Qty</th><th>From</th>${prices ? '<th class="r">Price</th>' : ''}<th>Note</th>${admin ? '<th></th>' : ''}</tr></thead><tbody>${rows}</tbody>`
-                : `<tbody><tr><td class="m" style="padding:14px 8px">${all.length ? 'Nothing matches these filters.' : emptyState("Nothing's gone out yet", 'When something gets sold or handed off, log it with <b>Log Something Going Out</b> above and it comes out of the stash.',
-                    `<button class="dx-btn dx-btn-g" onclick="document.getElementById('sale-form').scrollIntoView({ behavior: 'smooth', block: 'center' })"><i class="fa-solid fa-truck-fast mr-1"></i>Log Something Going Out</button>`)}</td></tr></tbody>`;
+                ? `<thead><tr><th>When</th><th>Who</th><th>Product</th><th class="r">Qty</th><th>From</th>${prices ? '<th class="r">Dirty money</th>' : ''}<th>Note</th>${admin ? '<th></th>' : ''}</tr></thead><tbody>${rows}</tbody>`
+                : `<tbody><tr><td class="m" style="padding:14px 8px">${all.length ? 'Nothing matches these filters.' : emptyState('Nothing sold yet', 'Got a Narco call? Sell it with <b>Sell at the BlackMarket</b> above and it comes out of the stash.',
+                    `<button class="dx-btn dx-btn-g" onclick="document.getElementById('sale-form').scrollIntoView({ behavior: 'smooth', block: 'center' })"><i class="fa-solid fa-sack-dollar mr-1"></i>Sell at the BlackMarket</button>`)}</td></tr></tbody>`;
             document.getElementById('sales-more').innerHTML = list.length > salesShown
                 ? `<button class="dx-act" style="flex:none;padding:6px 14px" onclick="salesShown += ${SALES_PAGE_SIZE}; renderSalesPage()">Show more (${list.length - salesShown} left)</button>` : '';
         }
@@ -7226,7 +7429,7 @@
         }
 
         function dayKeyOf(d) {
-            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            return etDayKey(d.getTime());
         }
 
         // ---- Admin: sales settings ----
@@ -8269,14 +8472,13 @@
             const span = spanHours * 3600e3;
             const step = spanHours <= 48 ? 6 : spanHours <= 96 ? 12 : 24;
             const ticks = [];
-            const first = new Date(now - Sync.serverOffset);
-            first.setMinutes(0, 0, 0);
-            first.setHours(Math.ceil((first.getHours() + 1) / step) * step);
-            for (let t = first.getTime(); t < now - Sync.serverOffset + span; t += step * 3600e3) {
+            const p = etParts(now - Sync.serverOffset);
+            const first = etToEpoch(p.y, p.mo, p.d) + Math.ceil((p.h + 1) / step) * step * 3600e3;
+            for (let t = first; t < now - Sync.serverOffset + span; t += step * 3600e3) {
                 const d = new Date(t);
                 const pos = (t + Sync.serverOffset - now) / span * 100;
                 if (pos < 4 || pos > 97) continue;
-                const midnight = d.getHours() === 0;
+                const midnight = etParts(t).h === 0;
                 ticks.push(`<span class="tick ${midnight ? 'day' : ''}" style="left:${pos.toFixed(2)}%">${midnight ? d.toLocaleDateString([], { weekday: 'short' }) : d.toLocaleTimeString([], { hour: 'numeric' })}</span>`);
             }
             const markers = coming.map((h, i) => {
@@ -8488,8 +8690,8 @@
             ['{bags}', 'Bags it makes', '5'],
             ['{who}', 'Who put it down', 'Jay'],
             ['{duration}', 'Cook time', '24h'],
-            ['{readyAt}', 'Ready time (UTC)', 'Tue, 29 Sep 2026 14:14:00 GMT'],
-            ['{readyLocal}', "Ready time in each reader's own time zone", '<t:…:f>']
+            ['{readyAt}', 'Ready time (US Eastern)', 'Fri, Oct 2, 3:14 PM ET'],
+            ['{readyLocal}', 'Ready time (same as {readyAt})', 'Fri, Oct 2, 3:14 PM ET']
         ];
         let discordKind = 'grow'; // which message the Admin editor is showing
         const discordDefaults = kind => (kind === 'meth' ? DEFAULT_METH_DISCORD_TEMPLATE : DEFAULT_DISCORD_TEMPLATE);
@@ -8503,8 +8705,8 @@
                 '{bags}': String(size),
                 '{who}': c.who || 'Someone',
                 '{duration}': minsLabel(cookMins(c)),
-                '{readyAt}': new Date(readyMs).toUTCString(),
-                '{readyLocal}': `<t:${Math.floor(readyMs / 1000)}:f>`
+                '{readyAt}': etStamp(readyMs),
+                '{readyLocal}': etStamp(readyMs)
             };
         }
 
@@ -8547,8 +8749,8 @@
             ['{alias}', 'Location alias', 'Leon VW'],
             ['{duration}', 'Timer length', '36h'],
             ['{pots}', 'Pot count', '10'],
-            ['{readyAt}', 'Ready time (UTC)', 'Tue, 29 Sep 2026 14:14:00 GMT'],
-            ['{readyLocal}', "Ready time in each reader's own time zone", '<t:…:f>']
+            ['{readyAt}', 'Ready time (US Eastern)', 'Fri, Oct 2, 3:14 PM ET'],
+            ['{readyLocal}', 'Ready time (same as {readyAt})', 'Fri, Oct 2, 3:14 PM ET']
         ];
 
         function normalizeDiscordTemplate(template, defaults = DEFAULT_DISCORD_TEMPLATE) {
@@ -8572,8 +8774,8 @@
                 '{alias}': loc.alias || 'Grow Operation',
                 '{duration}': formatDuration(loc.durationHours),
                 '{pots}': String(loc.pots || 0),
-                '{readyAt}': new Date(readyMs).toUTCString(),
-                '{readyLocal}': `<t:${Math.floor(readyMs / 1000)}:f>`
+                '{readyAt}': etStamp(readyMs),
+                '{readyLocal}': etStamp(readyMs)
             };
         }
 
@@ -8802,7 +9004,7 @@
                     description: "Discord webhook integration test successful! Grow cycle automated alerts are online.",
                     color: 2268484,
                     fields: [
-                        { name: "Server Time", value: new Date().toUTCString(), inline: true },
+                        { name: "Time", value: etStamp(Date.now()), inline: true },
                         { name: "Status", value: "Operational", inline: true }
                     ],
                     footer: { text: "NoelOps FiveM RP Operations" }
@@ -9299,9 +9501,9 @@
             const update = () => {
                 const clock = document.getElementById('live-clock');
                 if (!clock) return;
-                // Each viewer's own time zone, e.g. "03:24:05 PM EDT"
+                // US Eastern for everyone, e.g. "03:24:05 PM EDT"
                 clock.innerText = new Date(syncNow()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' });
-                clock.title = `Your time zone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+                clock.title = 'All times on the site are US Eastern (ET)';
             };
             update();
             setInterval(update, 1000);
