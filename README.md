@@ -257,6 +257,9 @@ The secret titles live in the site's code, which is public on GitHub, so someone
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
 
+### 🐢 Oct 2, 2026: Slower Live ticker
+- The **Live Activity** ticker under the timer bar now drifts by slowly (about a third of the old speed) so it's easy to read
+
 ### 💀 Oct 2, 2026: BlackMarket, Live ticker, statuses and Eastern time
 - **Log** is now the **BlackMarket**: red and black, product sells for **dirty money**, and a ringing **Narco call** button starts a sale and tags it in the ledger
 - **Live Activity** is now a slim ticker under the timer bar; click it to open the full list. The stash cards use the whole width so they all fit on one screen
