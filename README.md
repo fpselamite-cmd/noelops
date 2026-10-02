@@ -82,8 +82,8 @@ GitHub pauses scheduled workflows in repos with no activity for 60 days and emai
 | `{alias}` | Location alias |
 | `{duration}` | Timer length, e.g. `36h` |
 | `{pots}` | Pot count |
-| `{readyAt}` | Ready time in UTC |
-| `{readyLocal}` | Ready time shown in each reader's own time zone |
+| `{readyAt}` | Ready time in US Eastern, e.g. `Fri, Oct 2, 3:14 PM ET` |
+| `{readyLocal}` | Same as `{readyAt}` (kept so older messages still work) |
 
 Meth cook message tags: `{size}` (High / Medium / Low), `{bags}`, `{who}` (who put it down), `{duration}` (cook time), `{readyAt}` and `{readyLocal}`.
 
@@ -107,17 +107,21 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 ## Day-to-day features
 
 - **Who's online:** click the avatars in the header (or **Who's Online** in the phone menu) to see everyone online now, with their role and how long they've been on, plus the rest of the crew who are offline.
+- **Your status:** in the same panel, pick **At the lab**, **Growing**, **Selling**, **On a run**, **Busy** or **AFK**, or type your own (up to 20 letters). It shows by your name in Who's online and on the Crew page, and clears when you close the site.
+- **Live Activity** is a slim ticker under the timer bar on the dashboard. Click it (or the arrow) to open the full list.
+- **Eastern time:** every clock and time on the site is US Eastern (ET), whatever your own time zone, and so are the Discord messages. Day totals, charts and the time-based titles go by the Eastern day too.
 - **Undo:** most changes show a pop-up with an **Undo** button for about 8 seconds: stock changes, trimming, pressing, moving stock, logging bricks out, harvests, timer starts/stops and plan changes. Repeated presses on the same thing (+100, +100) merge into one Undo. Undo reverses just your change, so anything someone else changed in the meantime is kept.
 - **Timers page → Grows:** a card per location with a growing plant, countdown, progress bar, ready time, pot plan and estimated bricks. Tick the boxes to **Start**, **Stop** or **Harvest** several grows at once (harvesting opens the harvest form for each in turn). **Start all idle** only starts grows that aren't running.
 - **Upcoming harvests:** a timeline at the top of Timers → Grows shows when each grow is due and roughly how many bricks it should give, plus what's ready now. The dashboard's grow bar shows the next 24 hours' total.
-- **Going out:** the truck button on anything in the **Stash**, or **Log Something Going Out** on the **Log** page, records it leaving. It takes it out of the stash and adds it to the log (see **Log & budget** below).
+- **Selling:** the truck button on anything in the **Stash**, or **Sell at the BlackMarket** on the **BlackMarket** page, records it being sold. It takes it out of the stash and adds it to the ledger (see **BlackMarket & budget** below).
 - **Dashboard charts:** headline tiles for bricks on hand, bricks ready to press, everything that went out this week (split into weed, coke and meth) and bricks coming in over the next 24 hours; a **Made & Out** chart (made vs out per day, last 14 days, filterable to All, Weed, Coke or Meth) and **What's in Stock** (on hand + what can still be made, for every strain plus small/large coke bricks and meth bins). Hover a bar for details, or click **Table** to see the numbers.
 
 ## Stash houses and storage
 
 - **Stash houses** hold bud, bricks, coke, meth and supplies. Add, rename or delete them in **Admin → Locations**. The built-in **Main Stash** can be renamed but not deleted. Deleting a stash house moves its stock to the Main Stash.
 - **Grow ops don't store stock by default.** Each grow location has a **Stash house** its harvests go to, plus an **On-site storage** switch for the few that do keep stock. The harvest form has a **Send to** picker that starts on the grow op's stash house, or on site if it has storage. Each grow timer card shows where its harvest goes.
-- A grow op without storage that still holds old stock keeps its Stash tab, with a warning and a **Move everything to…** button (Undo works).
+- A grow op without storage that still holds old stock shows a warning and a **Move everything to…** button (Undo works).
+- **The Stash page has two rows of tabs:** **Stash houses** (gold, where stock is kept, with brick counts) and **Grows** (green, every grow with its pot plan count; a warehouse icon and brick count mean it keeps stock on site). The opened tab says which kind it is.
 - **Leave out of totals:** any stash house or grow op can be left out of the totals. Its stock still shows on its own tab, but it doesn't count toward the dashboard, the All tab, the charts, the daily history or Smart Balance. Switch it on the place's Stash tab (anyone who can edit inventory), in the stash table, or in the grow location's Edit form. The All tab lists what isn't counted.
 - In **Admin → Crew**, stash houses can be given or kept from each person like grow locations.
 
@@ -132,17 +136,19 @@ Each stash house (and grow op with storage) also tracks:
   Oil, cement and acid aren't tracked; the card just reminds you what to bring. Change the recipe in **Admin → Products**. The card shows how many small and large bricks the leaves can make, with − / + and a truck button for each size.
 - **Meth Bins:** a finished product, counted in bins, with − / + and a truck button.
 
-Both can be moved between stashes (the leaves too), logged going out on the **Log** page (with their own default prices in Admin → Sales), and show on the dashboard next to the strains. Their logos are `logos/cokeSmall.png`, `logos/cokeLarge.png` and `logos/meth.png` (replaceable in Admin → Logos like the strain logos).
+Both can be moved between stashes (the leaves too), sold on the **BlackMarket** page (with their own default prices in Admin → Sales), and show on the dashboard next to the strains. Their logos are `logos/cokeSmall.png`, `logos/cokeLarge.png` and `logos/meth.png` (replaceable in Admin → Logos like the strain logos).
 
-## Log & budget
+## BlackMarket & budget
 
-The **Sales** page (in the main menu) is the log of bricks going out:
+The **BlackMarket** page (in the main menu, red and black) is where product sells for dirty money, usually from a Narco call:
+
+- **Narco call:** the ringing red button at the top opens the sell form and tags the sale as a Narco call (shown in the ledger).
 
 - **Totals:** today, last 7 days, last 30 days and all time, in bricks (and dollars when prices are entered).
 - **Filters** by period, strain, person and location, with **By Strain** and **By Person** charts and the full log underneath. **Export CSV** downloads it as a spreadsheet.
-- **Logging something out:** the **Log Something Going Out** panel at the top walks through it: tap a big button for the strain (or Small / Large Coke Brick, or Meth Bin), pick where it comes from, set how many (− / +, or 1 / 2 / 5 / 10 / All), check who sold it and the price, and hit the big submit button. If an admin has set a default price, the price fills in by itself. The truck button on a Stash card jumps here with that item and location picked.
+- **Selling:** the **Sell at the BlackMarket** panel at the top walks through it: tap a big button for the strain (or Small / Large Coke Brick, or Meth Bin), pick where it comes from, set how many (− / +, or 1 / 2 / 5 / 10 / All), check who sold it and the price, and hit the big submit button. If an admin has set a default price, the price fills in by itself. The truck button on a Stash card jumps here with that item and location picked.
 
-**Budget** (top of the Log page, admins only):
+**Budget** (top of the BlackMarket page, admins only):
 
 - The budget is **admin only** for now (behind the scenes): crew don't see cuts, earnings, payouts or the crew bank.
 - Every sale is credited to the person who sold it, and they earn their **cut** of the price (a %). The default cut is set in **Admin → Sales**; give someone a different cut when editing them in **Admin → Crew**. Each sale keeps the cut it had at the time.
@@ -150,7 +156,7 @@ The **Sales** page (in the main menu) is the log of bricks going out:
 - **Payouts by person** ranks sellers by what they earned, with sold / earned / paid / owed. Admins click **Pay** to record paying someone (it fills in what they're owed), or **Record Expense** for crew spending. Both can be undone or removed.
 - Admins see each person's cut and what they're owed in the crew list.
 
-**Who can use it:** the **Log things going out** permission on each person (Admin → Crew) controls the Log page and logging. Managers have it by default; Growers and Viewers don't. In **Admin → Sales** you can also set default prices, turn on **Only admins see prices**, export the log, or clear it.
+**Who can use it:** the **Sell at the BlackMarket** permission on each person (Admin → Crew) controls the BlackMarket page and selling. Managers have it by default; Growers and Viewers don't. In **Admin → Sales** you can also set default prices, turn on **Only admins see prices**, export the log, or clear it.
 
 ## Pot Plan (Stash page)
 
@@ -203,15 +209,15 @@ Admins set what's on for everyone, the stamp word and the rank names and harvest
 
 The **Crew** page shows everyone in the crew as cards or a list (switch with **Cards / List**; your choice is remembered). Each person shows their role, harvest rank, whether they're online or when they were last active, harvests, bud brought in, how much they've logged going out and the last thing they did. Search by name, and sort by online, harvests, gone out, last active or name.
 
-- Click anyone's name anywhere on the site (Who's online, Live Activity, the Log, pop-ups) to jump to them on the Crew page.
-- **Their log** opens the Log filtered to that person; **My Profile** is on your own card.
+- Click anyone's name anywhere on the site (Who's online, Live Activity, the BlackMarket, pop-ups) to jump to them on the Crew page.
+- **Their sales** opens the BlackMarket filtered to that person; **My Profile** is on your own card.
 - Admins also see what each person can access, who's waiting for review, and an **Edit** button.
 - **Leaderboards** (next to Cards and List): top 5 for harvests, bud brought in, bricks pressed, things gone out, moves, longest streak, most titles and rarest collection.
 - Each card shows that person's top 3 titles; the **+N** opens their full profile.
 
 **History (admins only):** **Admin → History** keeps the full story the Live Activity feed leaves out on purpose: who changed what, how much, where and when (the newest 500 actions). Search for a strain, postal or amount, or filter by person or kind of action. Undone actions stay in the list, crossed out. Note that this is hidden in the site only: like everything else, it's stored in the shared database.
 
-**Menu and permissions:** each menu button only shows once someone has the permission for it: **Timers** needs timers, pot plans or Meth (each tab inside only shows if you have it), **Stash** needs inventory or pot plans, **Meth** needs Meth, **Log** needs the log-things-out permission, **Crew** shows for every crew member, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
+**Menu and permissions:** each menu button only shows once someone has the permission for it: **Timers** needs timers, pot plans or Meth (each tab inside only shows if you have it), **Stash** needs inventory or pot plans, **Meth** needs Meth, **BlackMarket** needs the sell permission, **Crew** shows for every crew member, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
 
 ## Meth page
 
@@ -229,8 +235,8 @@ To update the guide text, edit the `tab-meth` section in `index.html`.
 
 124 titles to earn by doing things on the site: 96 you can see and work toward (harvests, bud, trimming, pressing, coke, coca leaves, meth bins and cooks, things going out, moving stock, starting grows and pot plans, streaks and odd hours, crew and profile) and 28 secret ones that nobody sees until someone in the crew finds one. Each title is a calling card in the style of old MW2 multiplayer titles, and its glow color is its rarity: Common, Uncommon, Rare, Epic, Legendary and Mythic (Legendary, Mythic and secret cards move).
 
-- **Unlocking:** you get a "Title unlocked" pop-up, and Live Activity tells the crew. Harvest counts that were already tracked count, so people start with what they've earned. Time-based titles use each person's own local time. Click secrets need at least 50 clicks in a row with no other clicks in between.
-- **My Profile → Titles:** wear one title (its card shows behind your name in Who's online and on the Crew page, and a small tag shows next to your name in Live Activity), and pick up to 10 to show on your profile, or let it pick your 10 rarest. Locked titles show how to earn them.
+- **Unlocking:** you get a "Title unlocked" pop-up, and Live Activity tells the crew. Harvest counts that were already tracked count, so people start with what they've earned. Time-based titles use US Eastern time. Click secrets need at least 50 clicks in a row with no other clicks in between.
+- **My Profile → Titles:** wear one title (its card shows behind your name in Who's online and on the Crew page, and a small tag shows next to your name in Who's online and the Crew page), and pick up to 10 to show on your profile, or let it pick your 10 rarest. Locked titles show how to earn them.
 - **Click anyone's name** anywhere on the site to see their profile: the card they're wearing, their stats and their titles as Discord-style badges (rarity dot, icon and name). Click a title to see how it was earned.
 - **Admin → Titles:** give anyone a title (secret ones too) for a big RP moment, take one back, or turn titles off for everyone. The Seedling / Grower / Kingpin ranks are now harvest titles.
 
@@ -250,6 +256,14 @@ The secret titles live in the site's code, which is public on GitHub, so someone
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 💀 Oct 2, 2026: BlackMarket, Live ticker, statuses and Eastern time
+- **Log** is now the **BlackMarket**: red and black, product sells for **dirty money**, and a ringing **Narco call** button starts a sale and tags it in the ledger
+- **Live Activity** is now a slim ticker under the timer bar; click it to open the full list. The stash cards use the whole width so they all fit on one screen
+- Set a **status** in Who's online: At the lab, Growing, Selling, On a run, Busy, AFK or your own
+- The **Stash** page splits its tabs into **Stash houses** and **Grows** so it's clear which is which
+- Every clock and time on the site is now **US Eastern (ET)**, Discord messages too
+- No more title tags next to names in Live Activity
 
 ### 🧭 Oct 2, 2026: Meth alerts, custom cook times and a cleaner header
 - Meth cooks now send their own **Discord message** when ready. Edit it in **Admin → Discord** with the new **Grows | Meth cooks** switch
