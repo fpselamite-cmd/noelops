@@ -1090,6 +1090,9 @@
         .dx-input:focus { border-color: hsl(var(--acc-h) 69% 58%); box-shadow: 0 0 0 3px hsl(var(--acc-h) 69% 58% / 0.12); }
         select.dx-input option { background: #0b140e; }
         .dx-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+        /* Rows that scroll sideways clip whatever sticks out, glows included: give the glow room inside and pull the edges back out so nothing moves */
+        .dx-tabs { padding: 14px 18px 16px; margin-top: -14px; margin-left: -18px; margin-right: -18px; scroll-padding-inline: 18px; }
+        #dx-timers, #dx-cooks, #dx-runs { padding: 16px 18px; margin: -16px -18px; scroll-padding-inline: 18px; }
         .dx-chip-btn { display: inline-flex; align-items: center; margin-left: 6px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; color: hsl(var(--acc-h) 69% 70%); background: hsl(var(--acc-h) 80% 10% / 0.7); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.35); transition: all 0.2s; }
         .dx-chip-btn:hover { color: #fff; border-color: hsl(var(--acc-h) 69% 58% / 0.7); }
         .dx-tab { white-space: nowrap; padding: 8px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; color: #8a9a8e; background: rgba(16, 26, 19, 0.72); border: 1px solid hsl(var(--acc-h) 69% 58% / 0.14); transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }

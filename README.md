@@ -294,6 +294,9 @@ Newest first. Every merge adds an entry here, written so it can be pasted straig
 - Phone fixes: the dashboard timer bar, buttons and headings fit better on small screens
 - Checked that backups and restores include everything new
 
+### ✨ Oct 2, 2026: Smoother glows
+- Button and card glows (BlackMarket tabs, Stash tabs, Timers tabs, the dashboard timer bar) no longer get cut off into boxy edges; they fade out evenly all the way around
+
 ### 👑 Oct 2, 2026: MVPs, crew tags, price history and raid mode
 - **MVPs of the week:** every Monday the top grower, seller, cook and runner from last week get a crown by their name and an MVP badge for the week (only if there was activity)
 - **Crew tags:** Grower, Cook, Runner and Seller in each person's crew settings. Ticking one turns that operation's permissions on. Tags show on the Crew page (with a filter) and profiles
