@@ -294,6 +294,9 @@ Newest first. Every merge adds an entry here, written so it can be pasted straig
 - Phone fixes: the dashboard timer bar, buttons and headings fit better on small screens
 - Checked that backups and restores include everything new
 
+### ⏱️ Oct 3, 2026: New Timers icon
+- **Timers** now has a stopwatch icon (its hand slowly sweeps round), so it no longer looks like the **Meth** flask. You'll see it in the menu, the phone menu and on the Timers page
+
 ### 🧹 Oct 2, 2026: Tidier menu and header
 - The phone menu is shorter: **Map** and **Calendar** are already buttons in the header, so they're gone from the menu
 - **Who's online** on phones: tap the green online count at the top right (it's no longer in the menu)
