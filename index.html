@@ -587,6 +587,15 @@
         /* Beaker (Timers icon and meth cook cards): bubbles rise, the liquid fills as a cook goes */
         .bk { display: inline-block; width: 1.15em; height: 1.3em; overflow: visible; vertical-align: -0.2em; }
         .nav-bk { display: inline-flex; color: currentColor; }
+        /* Stopwatch (Timers icon): the hand sweeps round slowly */
+        .stw { display: inline-block; width: 1.15em; height: 1.3em; overflow: visible; vertical-align: -0.2em; }
+        .sw-top, .sw-body { fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+        .sw-dot { fill: currentColor; }
+        .sw-hand { fill: none; stroke: hsl(var(--acc-h) 69% 58%); stroke-width: 2.8; stroke-linecap: round; transform-origin: 20px 29px; }
+        body:not(.fx-off-plants) .sw-hand { animation: swSweep 12s linear infinite; }
+        @keyframes swSweep { to { transform: rotate(360deg); } }
+        @media (prefers-reduced-motion: reduce) { .sw-hand { animation: none !important; } }
+        .mnav-btn .mn-svg .stw { width: 18px; height: 20px; }
         .bk-glass, .bk-rim { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
         .bk-liq { fill: #22d3ee; opacity: 0.8; transition: y 1s ease; }
         .bk-b { fill: #ecfeff; opacity: 0; transform-box: fill-box; }
@@ -1474,8 +1483,8 @@
                             <i class="fa-solid fa-warehouse"></i>
                             <span>Stash</span>
                         </button>
-                                                <button onclick="switchTab('timers')" id="nav-timers" title="Timers: grows and meth cooks" data-page="timers" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
-                            <span class="nav-bk"><svg class="bk" viewBox="0 0 40 48" aria-hidden="true"><defs><clipPath id="bk-nav"><path d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/></clipPath></defs><g clip-path="url(#bk-nav)"><rect class="bk-liq" x="0" y="29" width="40" height="20"/><circle class="bk-b" cx="15" cy="41" r="2"/><circle class="bk-b b2" cx="22" cy="42" r="1.6"/><circle class="bk-b b3" cx="26" cy="40" r="1.8"/></g><path class="bk-glass" d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/><path class="bk-rim" d="M13.5 5.5h13"/></svg></span>
+                                                <button onclick="switchTab('timers')" id="nav-timers" title="Timers: grows, meth cooks and coke runs" data-page="timers" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white hover:bg-weed-950/60 transition-all duration-200">
+                            <span class="nav-bk"><svg class="stw" viewBox="0 0 40 48" aria-hidden="true"><path class="sw-top" d="M15 5.5h10M20 5.5v6.5M32 15.5l3-3"/><circle class="sw-body" cx="20" cy="29" r="15"/><circle class="sw-dot" cx="20" cy="29" r="2.2"/><path class="sw-hand" d="M20 29V18.5"/></svg></span>
                             <span>Timers</span>
                             <span id="active-timers-badge" class="hidden ml-1 px-1.5 py-0.5 text-xs rounded-full bg-weed-900 text-weed-300 border border-weed-700" title="Ready to harvest">0</span>
                         </button>
@@ -1528,7 +1537,7 @@
             <div id="mobile-menu" class="hidden md:hidden border-t border-weed-900/60 bg-darkbg px-4 pt-2 pb-4 space-y-1">
                 <button type="button" onclick="switchTab('dashboard'); toggleMobileMenu()" data-tab="dashboard" class="mnav-btn on"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></button>
                 <button type="button" onclick="switchTab('inventory'); toggleMobileMenu()" data-page="inventory" data-tab="inventory" class="mnav-btn"><i class="fa-solid fa-warehouse"></i><span>Stash</span></button>
-                <button type="button" onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" data-tab="timers" class="mnav-btn"><span class="mn-svg"><svg class="bk" viewBox="0 0 40 48" aria-hidden="true"><defs><clipPath id="bk-mnav"><path d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/></clipPath></defs><g clip-path="url(#bk-mnav)"><rect class="bk-liq" x="0" y="29" width="40" height="20"/><circle class="bk-b" cx="15" cy="41" r="2"/><circle class="bk-b b2" cx="22" cy="42" r="1.6"/><circle class="bk-b b3" cx="26" cy="40" r="1.8"/></g><path class="bk-glass" d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/><path class="bk-rim" d="M13.5 5.5h13"/></svg></span><span>Timers</span><span class="mn-badge hidden" data-mirror="active-timers-badge"></span></button>
+                <button type="button" onclick="switchTab('timers'); toggleMobileMenu()" data-page="timers" data-tab="timers" class="mnav-btn"><span class="mn-svg"><svg class="stw" viewBox="0 0 40 48" aria-hidden="true"><path class="sw-top" d="M15 5.5h10M20 5.5v6.5M32 15.5l3-3"/><circle class="sw-body" cx="20" cy="29" r="15"/><circle class="sw-dot" cx="20" cy="29" r="2.2"/><path class="sw-hand" d="M20 29V18.5"/></svg></span><span>Timers</span><span class="mn-badge hidden" data-mirror="active-timers-badge"></span></button>
                 <button type="button" onclick="switchTab('meth'); toggleMobileMenu()" data-page="meth" data-tab="meth" class="mnav-btn"><i class="fa-solid fa-flask"></i><span>Meth</span><span class="mn-badge hidden" data-mirror="meth-ready-badge"></span></button>
                 <button type="button" onclick="switchTab('coke'); toggleMobileMenu()" data-page="coke" data-tab="coke" class="mnav-btn"><i class="fa-solid fa-snowflake"></i><span>Coke</span></button>
                 <button type="button" onclick="switchTab('sales'); toggleMobileMenu()" data-page="sales" data-tab="sales" class="mnav-btn"><i class="fa-solid fa-mask"></i><span>BlackMarket</span></button>
@@ -1725,7 +1734,7 @@
 
 
             <section id="tab-timers" class="tab-content hidden">
-                <h1 class="dx-title text-2xl font-black text-white mb-4"><span class="text-cyan-300 mr-2"><svg class="bk" viewBox="0 0 40 48" aria-hidden="true"><defs><clipPath id="bk-h1"><path d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/></clipPath></defs><g clip-path="url(#bk-h1)"><rect class="bk-liq" x="0" y="29" width="40" height="20"/><circle class="bk-b" cx="15" cy="41" r="2"/><circle class="bk-b b2" cx="22" cy="42" r="1.6"/><circle class="bk-b b3" cx="26" cy="40" r="1.8"/></g><path class="bk-glass" d="M16 6h8v13l11 21a3 3 0 0 1-2.7 4.4H7.7A3 3 0 0 1 5 40l11-21z"/><path class="bk-rim" d="M13.5 5.5h13"/></svg></span>Timers</h1>
+                <h1 class="dx-title text-2xl font-black text-white mb-4"><span class="text-weed-400 mr-2"><svg class="stw" viewBox="0 0 40 48" aria-hidden="true"><path class="sw-top" d="M15 5.5h10M20 5.5v6.5M32 15.5l3-3"/><circle class="sw-body" cx="20" cy="29" r="15"/><circle class="sw-dot" cx="20" cy="29" r="2.2"/><path class="sw-hand" d="M20 29V18.5"/></svg></span>Timers</h1>
                 <p class="text-xs text-slate-400 -mt-3 mb-4">Grow timers, meth cooks and coke runs: what's going and when it's ready (ET).</p>
                 <div class="dx-tabs mb-4"><button id="timers-tab-grows" class="dx-tab on" data-page="grows" onclick="setTimersView('grows')"><i class="fa-solid fa-cannabis"></i>Grows</button><button id="timers-tab-meth" class="dx-tab" data-page="meth" onclick="setTimersView('meth')"><i class="fa-solid fa-flask"></i>Meth cooks <span id="timers-meth-count" class="count hidden"></span></button><button id="timers-tab-coke" class="dx-tab" data-page="coke" onclick="setTimersView('coke')"><i class="fa-solid fa-snowflake"></i>Coke runs <span id="timers-coke-count" class="count hidden"></span></button></div>
                 <div id="timers-grows">
