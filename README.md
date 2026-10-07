@@ -74,7 +74,7 @@ GitHub pauses scheduled workflows in repos with no activity for 60 days and emai
 
 ## Discord messages
 
-**Admin → Discord** → **Discord Messages** has a **Grows | Meth cooks | Coke runs** switch. Grows send the grow message when they're ready to harvest; meth cooks and coke runs send theirs when their time is up (once per cook, even with many pages open). Both go to the same webhook. For each you can change the bot name and picture, title, message, footer, side color, and whether the details boxes are shown. Grow message tags are filled in per harvest:
+**Admin → Discord** → **Discord Messages** has a **Grows | Meth cooks | Coke runs | Coca fields** switch. Grows send the grow message when they're ready to harvest; meth cooks, coke runs and coca fields send theirs when their time is up (once each, even with many pages open). They all go to the same webhook. For each you can change the bot name and picture, title, message, footer, side color, and whether the details boxes are shown. Grow message tags are filled in per harvest:
 
 | Tag | Becomes |
 |---|---|
@@ -89,6 +89,8 @@ Meth cook message tags: `{size}` (High / Medium / Low), `{bags}`, `{who}` (who p
 
 Coke run message tags: `{n}` (how many bricks), `{size}` (Small / Large), `{crew}` (who's on it), `{who}` (who started it), `{duration}` and `{readyAt}`.
 
+Coca field message tags: `{postal}`, `{name}` (the field's name), `{duration}` (grow time, e.g. `7 days`) and `{readyAt}`.
+
 The preview updates as you type, **Send Test** posts what's in the editor to your channel (even before saving), and **Reset to Default** brings back the original wording.
 
 ## Crew & permissions
@@ -97,7 +99,7 @@ In **Admin → Crew** you can add crew members, each with a name and a 4-8 digit
 
 - Until the first crew member is added, anyone with the link can use everything.
 - Once there's at least one, everyone signs in with their name and PIN, and stays signed in on that device until they sign out (from **My Profile**).
-- Pick a role (Manager, Grower, Viewer) to start from, then tick their **operations** (tags) and exactly what each person can do. The tags are **Grower** (turns on timers, pot plans and edit inventory), **Cook** (Meth), **Runner** (Coke) and **Seller** (selling at the BlackMarket); ticking one turns its permissions on, unticking turns them off unless another tag still needs them, and you can still fine-tune the boxes. Tags show on Crew cards and rows (with a filter by tag) and in the profile pop-up. The permissions are: edit inventory, timers & harvests, pot plans, sales / bricks out and **Meth** (the Meth page and meth cook timers). Managers and Growers start with Meth on; untick it to hide meth from someone. You can also set their sales cut %. You can also limit which grow locations and stash houses they see.
+- Pick a role (Manager, Grower, Viewer) to start from, then tick their **operations** (tags) and exactly what each person can do. The tags are **Grower** (turns on timers, pot plans and edit inventory), **Cook** (Meth), **Runner** (Coke); ticking one turns its permissions on, unticking turns them off unless another tag still needs them, and you can still fine-tune the boxes. Tags show on Crew cards and rows (with a filter by tag) and in the profile pop-up. The permissions are: edit inventory, timers & harvests, pot plans, **Meth** (the Meth page and meth cook timers). Managers and Growers start with Meth on; untick it to hide meth from someone. You can also limit which grow locations and stash houses they see.
 - **The Admin page isn't a crew permission.** It only opens with the admin password, through the small **Admin** link at the bottom right of every page. There's no Admin button in the header: while it's unlocked, a glowing **Admin** button (with the new-signups count) shows next to that link at the bottom of every page, and the link turns into **Lock**; click **Lock** in the same spot (or Logout on the Admin page) to hide it again. Unlocking lasts until that browser tab is closed. Anyone who had the old Admin role is now a Manager.
 - People with no permissions (Viewer) only see the dashboard stats: no locations, timers or activity.
 - **New people can sign themselves up:** on the sign-in screen they type a new name and PIN (twice) and get a profile as a **Viewer**, marked **New · needs review**. Admins see a badge on the Admin page; click **Review**, pick a role and save. Turn this off with **Let new people create their own profile** on the Crew tab.
@@ -108,16 +110,17 @@ This is a simple lock that stops casual misuse. Someone technical could still ge
 
 ## Day-to-day features
 
-- **Who's online:** click the avatars in the header (or **Who's Online** in the phone menu) to see everyone online now, with their role and how long they've been on, plus the rest of the crew who are offline.
+- **Who's online:** click the avatars in the header (on phones, the green online count at the top right) to see everyone online now, with their role and how long they've been on, plus the rest of the crew who are offline.
 - **Your status:** in the same panel, pick **At the lab**, **Growing**, **Selling**, **On a run**, **Busy** or **AFK**, or type your own (up to 20 letters). It shows by your name in Who's online and on the Crew page, and clears when you close the site.
-- **Raid mode:** the eye button in the header (or **Shift+R**) blurs every stock number, price and amount on your own screen until you turn it off. Timers stay visible. Handy when streaming.
+- **Raid mode:** the **Hide numbers** button in the footer (or **Shift+R**) blurs every stock number and amount on your own screen until you turn it off. Timers stay visible. Handy when streaming.
 - **Live Activity** is a slim ticker under the timer bar on the dashboard. Click it (or the arrow) to open the full list.
 - **Eastern time:** every clock and time on the site is US Eastern (ET), whatever your own time zone, and so are the Discord messages. Day totals, charts and the time-based titles go by the Eastern day too.
-- **Undo:** most changes show a pop-up with an **Undo** button for about 8 seconds: stock changes, trimming, pressing, moving stock, logging bricks out, harvests, timer starts/stops and plan changes. Repeated presses on the same thing (+100, +100) merge into one Undo. Undo reverses just your change, so anything someone else changed in the meantime is kept.
+- **Undo:** most changes show a pop-up with an **Undo** button for about 8 seconds: stock changes, trimming, pressing, moving stock, harvests, timer starts/stops and plan changes. Repeated presses on the same thing (+100, +100) merge into one Undo. Undo reverses just your change, so anything someone else changed in the meantime is kept.
 - **Timers page → Grows:** a card per location with a growing plant, countdown, progress bar, ready time, pot plan and estimated bricks. Tick the boxes to **Start**, **Stop** or **Harvest** several grows at once (harvesting opens the harvest form for each in turn). **Start all idle** only starts grows that aren't running.
 - **Upcoming harvests:** a timeline at the top of Timers → Grows shows when each grow is due and roughly how many bricks it should give, plus what's ready now. The dashboard's grow bar shows the next 24 hours' total.
-- **Selling:** the truck button on anything in the **Stash**, or **Sell at the BlackMarket** on the **BlackMarket** page, records it being sold. It takes it out of the stash and adds it to the ledger (see **BlackMarket & budget** below).
-- **Dashboard charts:** headline tiles for bricks on hand, bricks ready to press, everything that went out this week (split into weed, coke and meth) and bricks coming in over the next 24 hours; a **Made & Out** chart (made vs out per day, last 14 days, filterable to All, Weed, Coke or Meth) and **What's in Stock** (on hand + what can still be made, for every strain plus small/large coke bricks and meth bins). Hover a bar for details, or click **Table** to see the numbers.
+- **Selling** happens in **ChosenOps HQ** (its BlackMarket page), not here. A sale there takes the product out of NoelOps' stock straight away.
+- **Timers page → Coke → Coca fields:** coca plant grows. Add a field with its postal (and a name), how many days it takes (7 by default) and which stash its leaves usually go to. **Start growing** when it's planted; the card counts down in days, glows when it's ready, and Discord gets the coca field message. **Harvest & Restart** asks how many leaves came in and which stash they go to, then starts the next grow (**Harvest** leaves the field empty). Growing fields show in the dashboard timer bar and can be pinned on the Map.
+- **Dashboard charts:** headline tiles for bricks on hand, bricks ready to press, what's cooking now (meth cooks and coke runs) and bricks coming in over the next 24 hours; a **Made** chart (bricks pressed, coke made and meth bins added per day, last 14 days, filterable to All, Weed, Coke or Meth) and **What's in Stock** (on hand + what can still be made, for every strain plus small/large coke bricks and meth bins). Hover a bar for details, or click **Table** to see the numbers.
 
 ## Stash houses and storage
 
@@ -136,34 +139,22 @@ Each stash house (and grow op with storage) also tracks:
   - Small brick: 2000 coca leaves (and bring 10 oil barrels, 40 cement bags, 25 battery acid).
   - Large brick: double that (4000 leaves, and 20 / 80 / 50).
 
-  Oil, cement and acid aren't tracked; the card just reminds you what to bring. Change the recipe in **Admin → Products**. The card shows how many small and large bricks the leaves can make, with − / + and a truck button for each size.
-- **Meth Bins:** a finished product, counted in bins, with − / + and a truck button.
+  Oil, cement and acid aren't tracked; the card just reminds you what to bring. Change the recipe in **Admin → Products**. The card shows how many small and large bricks the leaves can make, with − / + for each size.
+- **Meth Bins:** a finished product, counted in bins, with − / +.
 
-Both can be moved between stashes (the leaves too), sold on the **BlackMarket** page (with their own default prices in Admin → Sales), and show on the dashboard next to the strains. Their logos are `logos/cokeSmall.png`, `logos/cokeLarge.png` and `logos/meth.png` (replaceable in Admin → Logos like the strain logos).
+Both can be moved between stashes (the leaves too), are sold in ChosenOps HQ, and show on the dashboard next to the strains. Their logos are `logos/cokeSmall.png`, `logos/cokeLarge.png` and `logos/meth.png` (replaceable in Admin → Logos like the strain logos).
 
-## BlackMarket & budget
+## Selling and ChosenOps HQ
 
-The **BlackMarket** page (in the main menu, red and black) is where product sells for dirty money, usually from a Narco call:
+Selling, the wish list, washing, prices, cuts and the crew bank all live in **ChosenOps HQ** (chosenops.web.app). HQ reads NoelOps' stock live and takes product out when it's sold, so the counts here always match. Old sales stay in the database untouched; NoelOps just doesn't show them any more.
 
-- **Price history** (Sell tab): the average price per brick / bin each week (ET) for the last 12 weeks, up to 3 products at once (tap the product chips). Hover a week for the average, range and number of sales, or click **Table**. Hidden from crew when prices are admin-only.
-- **Narco call:** the ringing red button at the top opens the sell form and tags the sale as a Narco call (shown in the ledger).
-- **Tabs:** **Sell** (below), **Wish list** and **Wash**. Everyone in the crew (not Viewers) can open the BlackMarket to use the **Wish list**; **Sell** and **Wash** need the sell permission.
-- **Wish list:** things the crew needs got (supplies, guns, a boat…). Post what's needed, how many and any notes, plus the extra boxes an admin sets up in **Admin → BlackMarket → Wish List Fields** (up to 8, e.g. Meet spot). Someone taps **I'll get it** to claim it, then **Got it** when it's done; the poster or an admin can cancel. Done ones fold into a history list.
-- **Wash:** every sale with a price adds that amount to the **seller's dirty money**. Washing moves some of it to clean, minus the launderer's cut: the default % is set in **Admin → BlackMarket**, and it can be changed on each wash. Crew wash their own money; admins can wash for anyone and undo a wash. Shows each person's dirty money held, washed, clean out and lost to washing, plus the wash log. When prices are hidden from crew, they only see their own numbers.
+**Profiles are linked by name.** HQ shares each member's name, rank and picture with NoelOps. When someone has the same name on both sites:
 
-- **Totals:** today, last 7 days, last 30 days and all time, in bricks (and dollars when prices are entered).
-- **Filters** by period, strain, person and location, with **By Strain** and **By Person** charts and the full log underneath. **Export CSV** downloads it as a spreadsheet.
-- **Selling:** the **Sell at the BlackMarket** panel at the top walks through it: tap a big button for the strain (or Small / Large Coke Brick, or Meth Bin), pick where it comes from, set how many (− / +, or 1 / 2 / 5 / 10 / All), check who sold it and the price, and hit the big submit button. If an admin has set a default price, the price fills in by itself. The truck button on a Stash card jumps here with that item and location picked.
+- NoelOps shows their HQ rank (gold chip) on Crew cards, the list, the profile pop-up and your own card, plus an **HQ profile** button that opens their ChosenOps profile.
+- If they haven't set a picture in NoelOps, their HQ picture is used.
+- Their ChosenOps profile shows a **NoelOps record** card: harvests, bud, bricks, meth cooks, coke runs, coca leaves and titles.
 
-**Budget** (top of the BlackMarket page, admins only):
-
-- The budget is **admin only** for now (behind the scenes): crew don't see cuts, earnings, payouts or the crew bank.
-- Every sale is credited to the person who sold it, and they earn their **cut** of the price (a %). The default cut is set in **Admin → Sales**; give someone a different cut when editing them in **Admin → Crew**. Each sale keeps the cut it had at the time.
-- **Crew bank** = all sales income, minus payouts and expenses. **Owed to crew** = what sellers have earned but haven't been paid yet.
-- **Payouts by person** ranks sellers by what they earned, with sold / earned / paid / owed. Admins click **Pay** to record paying someone (it fills in what they're owed), or **Record Expense** for crew spending. Both can be undone or removed.
-- Admins see each person's cut and what they're owed in the crew list.
-
-**Who can use it:** the **Sell at the BlackMarket** permission on each person (Admin → Crew) controls the BlackMarket page and selling. Managers have it by default; Growers and Viewers don't. In **Admin → Sales** you can also set default prices, turn on **Only admins see prices**, export the log, or clear it.
+If your card on the Crew page says you're not linked, use the same name in both places (capitals don't matter).
 
 ## Pot Plan (Stash page)
 
@@ -204,29 +195,29 @@ For crew members, everything is saved to their profile and follows them to any d
 
 Little touches that make the site feel alive:
 
-- **Living plants:** the leaf on a growing timer sways; a ready grow pulses with a purple grow-light halo and the **Timers** badge pings. The beaker on the Timers button and on each meth cook bubbles, and fills up as the cook goes.
-- **Celebrations:** leaves float up when you harvest, a brick stamps down when you press one, and a stamp (SENT by default) lands when you log something going out.
+- **Living plants:** the leaf on a growing timer sways; a ready grow pulses with a purple grow-light halo and the **Timers** badge pings. The stopwatch hand on the Timers button sweeps round, and the beaker on each meth cook bubbles, and fills up as the cook goes.
+- **Celebrations:** leaves float up when you harvest and a brick stamps down when you press one.
 - **Smoke in the header**, **rolling numbers** (counts roll to their new number and flash when they change), **holo sticker cards** on the dashboard and **strain glow** when you hover a card.
 - **Harvest ranks:** a badge next to names in Who's online, the crew list and My Profile. By default Seedling at 10 harvests, Grower at 50 and Kingpin at 100.
 - **Friendly empty states** with a leaf drawing and a next step when there's nothing to show yet.
 
-Admins set what's on for everyone, the stamp word and the rank names and harvest counts in **Admin → Effects**. Each person can turn effects off for themselves in **My Profile → Look → Effects**, and **Reduce motion** turns them all off.
+Admins set what's on for everyone and the rank names and harvest counts in **Admin → Effects**. Each person can turn effects off for themselves in **My Profile → Look → Effects**, and **Reduce motion** turns them all off.
 
 ## Crew page
 
-The **Crew** page shows everyone in the crew as cards or a list (switch with **Cards / List**; your choice is remembered). Each person shows their role, harvest rank, whether they're online or when they were last active, harvests, bud brought in, how much they've logged going out and the last thing they did. Search by name, and sort by online, harvests, gone out, last active or name.
+The **Crew** page shows everyone in the crew as cards or a list (switch with **Cards / List**; your choice is remembered). Each person shows their role, harvest rank, whether they're online or when they were last active, harvests, bud brought in, bricks pressed and the last thing they did, plus their ChosenOps rank when they're linked. Search by name, filter by operation, and sort by online, harvests, last active or name.
 
-- Click anyone's name anywhere on the site (Who's online, Live Activity, the BlackMarket, pop-ups) to jump to them on the Crew page.
-- **Their sales** opens the BlackMarket filtered to that person; **My Profile** is on your own card.
+- Click anyone's name anywhere on the site (Who's online, Live Activity, pop-ups) to jump to them on the Crew page.
+- Your own card sits at the top of the page with quick links into **My Profile**, and an **HQ profile** button when you're linked.
 - Admins also see what each person can access, who's waiting for review, and an **Edit** button.
-- **Leaderboards** (next to Cards and List): top 5 for harvests, bud brought in, bricks pressed, things gone out, moves, longest streak, most titles and rarest collection.
+- **Leaderboards** (next to Cards and List): top 5 for harvests, bud brought in, bricks pressed, moves, longest streak, most titles and rarest collection.
 - Each card shows that person's top 3 titles; the **+N** opens their full profile.
 
-**MVPs of the week:** every Monday (ET) the site crowns last week's **Top grower** (harvests), **Top seller** (sold), **Top cook** (meth cooks) and **Top runner** (coke runs finished), only for the ones that had activity. MVPs get a gold crown next to their name everywhere and a temporary **MVP** title badge for the week; the Crew page shows them (and the past few weeks), and Live Activity announces it once.
+**MVPs of the week:** every Monday (ET) the site crowns last week's **Top grower** (harvests), **Top cook** (meth cooks) and **Top runner** (coke runs finished), only for the ones that had activity. MVPs get a gold crown next to their name everywhere and a temporary **MVP** title badge for the week; the Crew page shows them (and the past few weeks), and Live Activity announces it once.
 
 **History (admins only):** **Admin → History** keeps the full story the Live Activity feed leaves out on purpose: who changed what, how much, where and when (the newest 500 actions). Search for a strain, postal or amount, or filter by person or kind of action. Undone actions stay in the list, crossed out. Note that this is hidden in the site only: like everything else, it's stored in the shared database.
 
-**Menu and permissions:** each menu button only shows once someone has the permission for it: **Timers** needs timers, pot plans or Meth (each tab inside only shows if you have it), **Stash** needs inventory or pot plans, **Meth** needs Meth, **BlackMarket** needs the sell permission, **Crew** shows for every crew member, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
+**Menu and permissions:** each menu button only shows once someone has the permission for it: **Timers** needs timers, pot plans or Meth (each tab inside only shows if you have it), **Stash** needs inventory or pot plans, **Meth** needs Meth, **Coke** needs Coke, **Crew** shows for every crew member, and Viewers only see the Dashboard. **Admin** only shows after the admin password is entered.
 
 ## Coke page
 
@@ -261,7 +252,7 @@ Two small buttons in the header (next to Who's online) open these. Everyone in t
 
 ## Titles
 
-124 titles to earn by doing things on the site: 96 you can see and work toward (harvests, bud, trimming, pressing, coke, coca leaves, meth bins and cooks, things going out, moving stock, starting grows and pot plans, streaks and odd hours, crew and profile) and 28 secret ones that nobody sees until someone in the crew finds one. Each title is a calling card in the style of old MW2 multiplayer titles, and its glow color is its rarity: Common, Uncommon, Rare, Epic, Legendary and Mythic (Legendary, Mythic and secret cards move).
+112 titles to earn by doing things on the site: 84 you can see and work toward (harvests, bud, trimming, pressing, coke, coca leaves, meth bins and cooks, moving stock, starting grows and pot plans, streaks and odd hours, crew and profile) and 28 secret ones that nobody sees until someone in the crew finds one. Each title is a calling card in the style of old MW2 multiplayer titles, and its glow color is its rarity: Common, Uncommon, Rare, Epic, Legendary and Mythic (Legendary, Mythic and secret cards move).
 
 - **Unlocking:** you get a "Title unlocked" pop-up, and Live Activity tells the crew. Harvest counts that were already tracked count, so people start with what they've earned. Time-based titles use US Eastern time. Click secrets need at least 50 clicks in a row with no other clicks in between.
 - **My Profile → Titles:** wear one title (its card shows behind your name in Who's online and on the Crew page, and a small tag shows next to your name in Who's online and the Crew page), and pick up to 10 to show on your profile, or let it pick your 10 rarest. Locked titles show how to earn them.
@@ -284,6 +275,13 @@ The secret titles live in the site's code, which is public on GitHub, so someone
 ## Change notes
 
 Newest first. Every merge adds an entry here, written so it can be pasted straight into Discord.
+
+### 🌿 Oct 7, 2026: Coca fields, ChosenOps profiles, selling moves to HQ
+- **Coca fields** on **Timers → Coke**: add a field with its postal, start it when it's planted and it counts down the 7 days. Discord gets a message when it's ready, and **Harvest & Restart** puts the leaves in a stash and starts the next grow
+- Growing coca fields show in the dashboard timer bar and can be pinned on the **Map**
+- Selling now lives only in **ChosenOps HQ**: the **BlackMarket**, Narco call, wish list, washing, prices, cuts and the crew bank are gone from NoelOps
+- Sold counts, the Top seller MVP and the selling titles are gone too. The dashboard tile shows what's **Cooking now** instead, and the chart is just **Made**
+- **Profiles link up with ChosenOps** when you use the same name on both: your HQ rank shows on the **Crew** page with an **HQ profile** button, and your HQ profile shows your NoelOps stats
 
 ### ❄️ Oct 2, 2026: Coke page, wish list and money wash
 - New **Coke** page with the whole Cocaine Creation Guide: the 5 steps, the red zone, the 30/70 split, the places and a **What to bring** calculator for small or large bricks
