@@ -252,7 +252,7 @@ Two small buttons in the header (next to Who's online) open these. Everyone in t
 
 ## Titles
 
-124 titles to earn by doing things on the site: 96 you can see and work toward (harvests, bud, trimming, pressing, coke, coca leaves, meth bins and cooks, things going out, moving stock, starting grows and pot plans, streaks and odd hours, crew and profile) and 28 secret ones that nobody sees until someone in the crew finds one. Each title is a calling card in the style of old MW2 multiplayer titles, and its glow color is its rarity: Common, Uncommon, Rare, Epic, Legendary and Mythic (Legendary, Mythic and secret cards move).
+112 titles to earn by doing things on the site: 84 you can see and work toward (harvests, bud, trimming, pressing, coke, coca leaves, meth bins and cooks, moving stock, starting grows and pot plans, streaks and odd hours, crew and profile) and 28 secret ones that nobody sees until someone in the crew finds one. Each title is a calling card in the style of old MW2 multiplayer titles, and its glow color is its rarity: Common, Uncommon, Rare, Epic, Legendary and Mythic (Legendary, Mythic and secret cards move).
 
 - **Unlocking:** you get a "Title unlocked" pop-up, and Live Activity tells the crew. Harvest counts that were already tracked count, so people start with what they've earned. Time-based titles use US Eastern time. Click secrets need at least 50 clicks in a row with no other clicks in between.
 - **My Profile → Titles:** wear one title (its card shows behind your name in Who's online and on the Crew page, and a small tag shows next to your name in Who's online and the Crew page), and pick up to 10 to show on your profile, or let it pick your 10 rarest. Locked titles show how to earn them.
